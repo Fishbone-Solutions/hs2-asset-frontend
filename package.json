@@ -29,7 +29,6 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/ct-paper-dashboard-pro-react/issues"
   },
-  "homepage": "https://demos.creative-tim.com/paper-dashboard-pro-react/#/",
   "dependencies": {
     "bootstrap": "4.6.2",
     "chart.js": "3.9.1",
