@@ -1,13 +1,11 @@
 /*!
 
 =========================================================
-* Paper Dashboard React - v1.3.2
+* Paper Dashboard PRO React - v1.3.2
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-pro-react
 * Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
 
 * Coded by Creative Tim
 
@@ -21,7 +19,7 @@ import React from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
+import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
@@ -30,32 +28,59 @@ import routes from "routes.js";
 
 var ps;
 
-function Dashboard(props) {
+function Admin(props) {
+  const location = useLocation();
+
   const [backgroundColor, setBackgroundColor] = React.useState("black");
   const [activeColor, setActiveColor] = React.useState("info");
+  const [sidebarMini, setSidebarMini] = React.useState(false);
   const mainPanel = React.useRef();
-  const location = useLocation();
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
+      document.documentElement.className += " perfect-scrollbar-on";
+      document.documentElement.classList.remove("perfect-scrollbar-off");
       ps = new PerfectScrollbar(mainPanel.current);
-      document.body.classList.toggle("perfect-scrollbar-on");
     }
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
-        document.body.classList.toggle("perfect-scrollbar-on");
+        document.documentElement.className += " perfect-scrollbar-off";
+        document.documentElement.classList.remove("perfect-scrollbar-on");
       }
     };
   });
   React.useEffect(() => {
-    mainPanel.current.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+    mainPanel.current.scrollTop = 0;
   }, [location]);
+  const getRoutes = (routes) => {
+    return routes.map((prop, key) => {
+      if (prop.collapse) {
+        return getRoutes(prop.views);
+      }
+      if (prop.layout === "/admin") {
+        return (
+          <Route path={prop.path} element={prop.component} key={key} exact />
+        );
+      } else {
+        return null;
+      }
+    });
+  };
   const handleActiveClick = (color) => {
     setActiveColor(color);
   };
   const handleBgClick = (color) => {
     setBackgroundColor(color);
+  };
+  const handleMiniClick = () => {
+    if (document.body.classList.contains("sidebar-mini")) {
+      setSidebarMini(false);
+    } else {
+      setSidebarMini(true);
+    }
+    document.body.classList.toggle("sidebar-mini");
   };
   return (
     <div className="wrapper">
@@ -66,29 +91,25 @@ function Dashboard(props) {
         activeColor={activeColor}
       />
       <div className="main-panel" ref={mainPanel}>
-        <DemoNavbar {...props} />
-        <Routes>
-          {routes.map((prop, key) => {
-            return (
-              <Route
-                path={prop.path}
-                element={prop.component}
-                key={key}
-                exact
-              />
-            );
-          })}
-        </Routes>
-        <Footer fluid />
+        <AdminNavbar {...location} handleMiniClick={handleMiniClick} />
+        <Routes>{getRoutes(routes)}</Routes>
+        {
+          // we don't want the Footer to be rendered on full screen maps page
+          location.pathname.indexOf("full-screen-map") !== -1 ? null : (
+            <Footer fluid />
+          )
+        }
       </div>
       <FixedPlugin
         bgColor={backgroundColor}
         activeColor={activeColor}
+        sidebarMini={sidebarMini}
         handleActiveClick={handleActiveClick}
         handleBgClick={handleBgClick}
+        handleMiniClick={handleMiniClick}
       />
     </div>
   );
 }
 
-export default Dashboard;
+export default Admin;

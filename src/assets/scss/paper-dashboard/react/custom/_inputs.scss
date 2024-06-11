@@ -1,9 +1,5 @@
-select.form-control:not([size]):not([multiple]) {
-  height: calc(2.25rem + 4px);
-}
-
 .form-control {
-  height: unset;
+  height: unset
 }
 // Input files - hide actual input - requires specific markup in the sample.
 .form-group input[type=file] {

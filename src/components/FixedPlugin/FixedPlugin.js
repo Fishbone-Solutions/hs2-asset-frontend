@@ -1,13 +1,11 @@
 /*!
 
 =========================================================
-* Paper Dashboard React - v1.3.2
+* Paper Dashboard PRO React - v1.3.2
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-pro-react
 * Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
 
 * Coded by Creative Tim
 
@@ -16,7 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { Component } from "react";
+// react plugin used to create switch buttons
+import Switch from "react-bootstrap-switch";
 
 import { Button } from "reactstrap";
 
@@ -48,6 +48,17 @@ function FixedPlugin(props) {
                 data-color="black"
                 onClick={() => {
                   props.handleBgClick("black");
+                }}
+              />
+              <span
+                className={
+                  props.bgColor === "brown"
+                    ? "badge filter badge-default active"
+                    : "badge filter badge-default"
+                }
+                data-color="black"
+                onClick={() => {
+                  props.handleBgClick("brown");
                 }}
               />
               <span
@@ -123,37 +134,49 @@ function FixedPlugin(props) {
               />
             </div>
           </li>
+          <li className="header-title">SIDEBAR MINI</li>
+          <li className="adjustments-line">
+            <div className="togglebutton switch-sidebar-mini">
+              <Switch
+                onChange={props.handleMiniClick}
+                value={props.sidebarMini}
+                onColor="info"
+                offColor="info"
+              />
+            </div>
+          </li>
           <li className="button-container">
             <Button
-              href="https://www.creative-tim.com/product/paper-dashboard-react?ref=pdr-fixed-plugin"
+              href="https://www.creative-tim.com/product/paper-dashboard-pro-react"
               color="primary"
-              block
-              className="btn-round"
-            >
-              Download now
-            </Button>
-          </li>
-          <li className="button-container">
-            <Button
-              href="https://www.creative-tim.com/product/paper-dashboard-react/#/documentation/tutorial?ref=pdr-fixed-plugin"
-              color="default"
-              block
-              className="btn-round"
-              outline
-            >
-              <i className="nc-icon nc-paper" /> Documentation
-            </Button>
-          </li>
-          <li className="header-title">Want more components?</li>
-          <li className="button-container">
-            <Button
-              href="https://www.creative-tim.com/product/paper-dashboard-pro-react?ref=pdr-fixed-plugin"
-              color="danger"
               block
               className="btn-round"
               target="_blank"
             >
-              Get pro version
+              Buy now
+            </Button>
+          </li>
+          <li className="button-container">
+            <Button
+              href="https://demos.creative-tim.com/paper-dashboard-pro-react/#/documentation/tutorial"
+              color="default"
+              block
+              className="btn-round"
+              outline
+              target="_blank"
+            >
+              <i className="nc-icon nc-paper" /> Documentation
+            </Button>
+          </li>
+          <li className="button-container">
+            <Button
+              href="https://www.creative-tim.com/product/paper-dashboard-react"
+              color="info"
+              block
+              className="btn-round"
+              target="_blank"
+            >
+              Get free version
             </Button>
           </li>
         </ul>
