@@ -8,7 +8,7 @@
 
 We made it our priority to not add things that you don't need, so the Paper Dashboard PRO React comes with just enough features for you to easily use. It combines multiple components and plugins and features numerous example of how it can be used. Inside the archive, you will also find multiple example pages to get you started or provide inspiration.
 
-**[Paper Dashboard PRO React](https://demos.creative-tim.com/paper-dashboard-pro-react/#/admin/dashboard)** is the extended version of [Paper Dashboard](https://www.creative-tim.com/product/paper-dashboard-pro). Based on feedback from people that downloaded and used it, we have added needed components, and we have created multiple examples pages. We are curious to see how you want to use it and also improve it, so let us know any feedback you have.
+**[Paper Dashboard PRO React](https://demos.creative-tim.com/paper-dashboard-pro-react/#/admin/dashboard)** is the extended version of [Paper Dashboard](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro). Based on feedback from people that downloaded and used it, we have added needed components, and we have created multiple examples pages. We are curious to see how you want to use it and also improve it, so let us know any feedback you have.
 
 **Bootstrap 4 support**
 
@@ -34,14 +34,14 @@ View example pages [here](https://demos.creative-tim.com/paper-dashboard-pro-rea
 
 ## Versions
 
-[<img src="./github-assets/html.png" width="60" height="60" />](https://www.creative-tim.com/product/paper-dashboard-2-pro)
-[<img src="./github-assets/react.svg" width="60" height="60" />](https://www.creative-tim.com/product/paper-dashboard-pro-react)
-[<img src="./github-assets/angular.png" width="60" height="60" />](https://www.creative-tim.com/product/vue-paper-dashboard-2-pro)
-[<img src="./github-assets/vuejs.png" width="60" height="60" />](https://www.creative-tim.com/product/paper-dashboard-pro-angular)
+[<img src="./github-assets/html.png" width="60" height="60" />](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-2-pro)
+[<img src="./github-assets/react.svg" width="60" height="60" />](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-react)
+[<img src="./github-assets/angular.png" width="60" height="60" />](assetmanagement.fishbonesolutions.co.uk/product/vue-paper-dashboard-2-pro)
+[<img src="./github-assets/vuejs.png" width="60" height="60" />](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-angular)
 
 | HTML                                                                                                                                                                              | React                                                                                                                                                                            | Vue                                                                                                                                                                                      | Angular                                                                                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Paper Dashboard 2 Pro HTML](https://s3.amazonaws.com/creativetim_bucket/products/84/thumb/opt_pd2p_thumbnail.jpg)](https://www.creative-tim.com/product/paper-dashboard-2-pro) | [![Paper Dashboard Pro React](https://s3.amazonaws.com/creativetim_bucket/products/134/thumb/opt_pdp_react.jpg)](https://www.creative-tim.com/product/paper-dashboard-pro-react) | [![Vue Paper Dashboard 2 Pro](https://s3.amazonaws.com/creativetim_bucket/products/88/thumb/opt_pd2p_vue_thumbnail.jpg)](https://www.creative-tim.com/product/vue-paper-dashboard-2-pro) | [![Paper Dashboard Pro Angular](https://s3.amazonaws.com/creativetim_bucket/products/59/thumb/opt_pdp_angular_thumbnail.jpg)](https://www.creative-tim.com/product/paper-dashboard-pro-angular) |
+| [![Paper Dashboard 2 Pro HTML](https://s3.amazonaws.com/creativetim_bucket/products/84/thumb/opt_pd2p_thumbnail.jpg)](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-2-pro) | [![Paper Dashboard Pro React](https://s3.amazonaws.com/creativetim_bucket/products/134/thumb/opt_pdp_react.jpg)](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-react) | [![Vue Paper Dashboard 2 Pro](https://s3.amazonaws.com/creativetim_bucket/products/88/thumb/opt_pd2p_vue_thumbnail.jpg)](assetmanagement.fishbonesolutions.co.uk/product/vue-paper-dashboard-2-pro) | [![Paper Dashboard Pro Angular](https://s3.amazonaws.com/creativetim_bucket/products/59/thumb/opt_pdp_angular_thumbnail.jpg)](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-angular) |
 
 ## Demo
 
@@ -57,7 +57,7 @@ View example pages [here](https://demos.creative-tim.com/paper-dashboard-pro-rea
 
 Quick start options:
 
-- Buy from [Creative Tim](https://www.creative-tim.com/product/paper-dashboard-pro-react)
+- Buy from [Creative Tim](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-react)
 
 ## Documentation
 
@@ -82,39 +82,39 @@ At present, we officially aim to support the last two versions of the following 
 ## Resources
 
 - [Live Preview](https://demos.creative-tim.com/paper-dashboard-pro-react/#/admin/dashboard)
-- Buy Page: https://www.creative-tim.com/product/paper-dashboard-pro-react
+- Buy Page: assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-react
 - Documentation is [here](https://demos.creative-tim.com/paper-dashboard-pro-react/#/documentation/tutorial)
-- License Agreement: https://www.creative-tim.com/license
-- Support: https://www.creative-tim.com/contact-us
+- License Agreement: assetmanagement.fishbonesolutions.co.uk/license
+- Support: assetmanagement.fishbonesolutions.co.uk/contact-us
 - Issues: [Github Issues Page](https://github.com/creativetimofficial/ct-paper-dashboard-pro-react/issues)
-- Paper Dashboard React - [demo](https://www.creative-tim.com/product/paper-dashboard-react?ref=github-md-pro-react)
+- Paper Dashboard React - [demo](assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-react?ref=github-md-pro-react)
 
 ## Reporting Issues
 
 We use GitHub Issues as the official bug tracker for the Material Dashboard Pro. Here are some advices for our users that want to report an issue:
 
-1. Make sure that you are using the latest version of the Material Dashboard Pro. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/).
+1. Make sure that you are using the latest version of the Material Dashboard Pro. Check the CHANGELOG from your dashboard on our [website](assetmanagement.fishbonesolutions.co.uk/).
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
 3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 
 ## Technical Support or Questions
 
-If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
+If you have questions or need help integrating the product please [contact us](assetmanagement.fishbonesolutions.co.uk/contact-us) instead of opening an issue.
 
 ## Licensing
 
-- Copyright 2023 Creative Tim (https://www.creative-tim.com)
-- Creative Tim [license](https://www.creative-tim.com/license)
+- Copyright 2023 Creative Tim (assetmanagement.fishbonesolutions.co.uk)
+- Creative Tim [license](assetmanagement.fishbonesolutions.co.uk/license)
 
 ## Useful Links
 
-- [More products](https://www.creative-tim.com/bootstrap-themes) from Creative Tim
+- [More products](assetmanagement.fishbonesolutions.co.uk/bootstrap-themes) from Creative Tim
 
 - [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
 
-- [Freebies](https://www.creative-tim.com/bootstrap-themes/free) from Creative Tim
+- [Freebies](assetmanagement.fishbonesolutions.co.uk/bootstrap-themes/free) from Creative Tim
 
-- [Affiliate Program](https://www.creative-tim.com/affiliates/new) (earn money)
+- [Affiliate Program](assetmanagement.fishbonesolutions.co.uk/affiliates/new) (earn money)
 
 ##### Social Media
 

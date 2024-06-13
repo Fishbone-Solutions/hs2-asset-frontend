@@ -131,7 +131,7 @@ function FixedPlugin(props) {
           </li>
           <li className="button-container">
             <Button
-              href="https://www.creative-tim.com/product/paper-dashboard-pro-react"
+              href="assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-pro-react"
               color="primary"
               block
               className="btn-round"
@@ -154,7 +154,7 @@ function FixedPlugin(props) {
           </li>
           <li className="button-container">
             <Button
-              href="https://www.creative-tim.com/product/paper-dashboard-react"
+              href="assetmanagement.fishbonesolutions.co.uk/product/paper-dashboard-react"
               color="info"
               block
               className="btn-round"

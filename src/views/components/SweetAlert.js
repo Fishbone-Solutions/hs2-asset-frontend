@@ -68,7 +68,7 @@ function SweetAlert() {
         btnSize=""
       >
         You can use <b>bold</b> text,{" "}
-        <a href="https://www.creative-tim.com/">links</a> and other HTML tags
+        <a href="assetmanagement.fishbonesolutions.co.uk/">links</a> and other HTML tags
       </ReactBSAlert>
     );
   };

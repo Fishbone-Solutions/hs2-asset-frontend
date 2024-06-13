@@ -12,13 +12,13 @@ function Footer(props) {
           <nav className="footer-nav">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">Creative Tim</a>
+                <a href="assetmanagement.fishbonesolutions.co.uk">Creative Tim</a>
               </li>
               <li>
                 <a href="https://blog.creative-tim.com">Blog</a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/license" target="_blank">
+                <a href="assetmanagement.fishbonesolutions.co.uk/license" target="_blank">
                   Licenses
                 </a>
               </li>

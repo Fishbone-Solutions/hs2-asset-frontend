@@ -174,6 +174,22 @@ function ReactTables() {
                       accessor: "age",
                     },
                     {
+                      Header: "col 5",
+                      accessor: "col5",
+                    },
+                    {
+                      Header: "col 6 ",
+                      accessor: "col6",
+                    },
+                    {
+                      Header: "col 7",
+                      accessor: "col7",
+                    },
+                    {
+                      Header: "col 8",
+                      accessor: "col8",
+                    },
+                    {
                       Header: "Actions",
                       accessor: "actions",
                       sortable: false,
