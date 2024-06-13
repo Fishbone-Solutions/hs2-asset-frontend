@@ -1,19 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard PRO React - v1.3.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-pro-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // reactstrap components
@@ -31,7 +15,7 @@ import {
 import ReactTable from "components/ReactTable/ReactTable.js";
 
 const dataTable = [
-  ["Tiger Nixon", "System Architect", "Edinburgh", "61"],
+  ["1", "System Architect", "Edinburgh", "61"],
   ["Garrett Winters", "Accountant", "Tokyo", "63"],
   ["Ashton Cox", "Junior Technical Author", "San Francisco", "66"],
   ["Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "22"],
@@ -172,19 +156,21 @@ function ReactTables() {
                   data={dataState}
                   columns={[
                     {
-                      Header: "Name",
+                      Header: "ID",
                       accessor: "name",
                     },
+                    //  "ID", "Name", "Description", "Status"
+
                     {
-                      Header: "Position",
+                      Header: "Name",
                       accessor: "position",
                     },
                     {
-                      Header: "Office",
+                      Header: "Description",
                       accessor: "office",
                     },
                     {
-                      Header: "Age",
+                      Header: "Status",
                       accessor: "age",
                     },
                     {
