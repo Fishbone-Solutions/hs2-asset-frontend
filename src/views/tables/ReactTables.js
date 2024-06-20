@@ -149,7 +149,7 @@ function ReactTables() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">React-Tables</CardTitle>
+                <CardTitle tag="h4"> Inventory Management</CardTitle>
               </CardHeader>
               <CardBody>
                 <ReactTable

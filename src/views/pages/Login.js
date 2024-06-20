@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Label,
   FormGroup,
   Form,
   Input,
@@ -45,7 +44,7 @@ function Login() {
                         <i className="nc-icon nc-single-02" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="First Name..." type="text" />
+                    <Input placeholder="Username" type="text" />
                   </InputGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
@@ -61,13 +60,7 @@ function Login() {
                   </InputGroup>
                   <br />
                   <FormGroup>
-                    <FormGroup check>
-                      <Label check>
-                        <Input defaultChecked defaultValue="" type="checkbox" />
-                        <span className="form-check-sign" />
-                        Subscribe to newsletter
-                      </Label>
-                    </FormGroup>
+               
                   </FormGroup>
                 </CardBody>
                 <CardFooter>
@@ -78,7 +71,7 @@ function Login() {
                     href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
-                    Get Started
+Login
                   </Button>
                 </CardFooter>
               </Card>

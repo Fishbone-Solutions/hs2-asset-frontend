@@ -38,11 +38,11 @@ function Pages() {
   };
   return (
     <>
-      <AuthNavbar />
+     {/* <AuthNavbar /> */}
       <div className="wrapper wrapper-full-page" ref={fullPages}>
         <div className="full-page section-image">
           <Routes>{getRoutes(routes)}</Routes>
-          <Footer fluid />
+        {/*  <Footer fluid /> */}
         </div>
       </div>
     </>
