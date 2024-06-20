@@ -3,7 +3,6 @@ import React from "react";
 import {
   useTable,
   useFilters,
-  useAsyncDebounce,
   useSortBy,
   usePagination,
 } from "react-table";
