@@ -18,6 +18,7 @@ import {
   Row,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import { FaUnlockKeyhole } from "react-icons/fa6";
 
 function Login() {
   React.useEffect(() => {
@@ -35,7 +36,10 @@ function Login() {
               <Card className="card-login">
                 <CardHeader>
                   <CardHeader>
-                    <h3 className="header text-center">Login</h3>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <FaUnlockKeyhole size="5.5em" />
+                  </div>
+
                   </CardHeader>
                 </CardHeader>
                 <CardBody>
