@@ -64,6 +64,8 @@ function Login() {
                   </FormGroup>
                 </CardBody>
                 <CardFooter>
+                <NavLink to="/admin/react-tables" className="nav-link">
+
                   <Button
                     block
                     className="btn-round mb-3"
@@ -73,6 +75,7 @@ function Login() {
                   >
 Login
                   </Button>
+                  </NavLink>
                 </CardFooter>
               </Card>
             </Form>
