@@ -12,23 +12,17 @@ function Footer(props) {
           <nav className="footer-nav">
             <ul>
               <li>
-                <a href="assetmanagement.fishbonesolutions.co.uk">Creative Tim</a>
-              </li>
-              <li>
-                <a href="https://blog.creative-tim.com">Blog</a>
-              </li>
-              <li>
-                <a href="assetmanagement.fishbonesolutions.co.uk/license" target="_blank">
-                  Licenses
-                </a>
+                <a href="assetmanagement.fishbonesolutions.co.uk">POWERED BY FISH PLATFORM</a>
               </li>
             </ul>
           </nav>
           <div className="credits ml-auto">
-            <span className="copyright">
-              &copy; {1900 + new Date().getYear()}, made with{" "}
-              <i className="fa fa-heart heart" /> by Creative Tim
+          <span className="copyright">
+              &copy; {1900 + new Date().getYear()} 
+              {" "}
+              Fishbone Solutions (Project REM Limited)
             </span>
+           
           </div>
         </Row>
       </Container>

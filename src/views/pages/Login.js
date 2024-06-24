@@ -19,7 +19,8 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FaUnlockKeyhole } from "react-icons/fa6";
-
+import Footer from "components/Footer/Footer";
+import AuthNavbar from "components/Navbars/AuthNavbar";
 function Login() {
   React.useEffect(() => {
     document.body.classList.toggle("login-page");
@@ -29,6 +30,7 @@ function Login() {
   });
   return (
     <div className="login-page">
+      <AuthNavbar></AuthNavbar>
       <Container>
         <Row>
           <Col className="ml-auto mr-auto" lg="4" md="6">
@@ -86,6 +88,7 @@ Login
           </Col>
         </Row>
       </Container>
+      <Footer></Footer>
       <div
         className="full-page-background"
         style={{
