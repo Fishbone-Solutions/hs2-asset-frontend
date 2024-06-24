@@ -28,8 +28,43 @@ import Wizard from "views/forms/Wizard.js";
 const routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    name: "Bulk Import Records",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "Inventory Management",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "Asset Register",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "EoI Submission List",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "Equipment Requests",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboards",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/dashboard",
+    name: "Log Out",
     component: <Dashboard />,
     layout: "/admin",
   },
