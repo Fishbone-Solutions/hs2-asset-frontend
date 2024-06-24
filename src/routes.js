@@ -31,42 +31,56 @@ const routes = [
     name: "Bulk Import Records",
     component: <Dashboard />,
     layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "Inventory Management",
     component: <Calendar />,
     layout: "/invet",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "Asset Register",
     component: <Dashboard />,
     layout: "/invetw3",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "EoI Submission List",
     component: <Dashboard />,
     layout: "/fiasufoiauoi",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "Equipment Requests",
     component: <Dashboard />,
     layout: "/adduaoiudoiasmin",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "Dashboards",
     component: <Dashboard />,
     layout: "/admdhajsin",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/dashboard",
     name: "Log Out",
     component: <Dashboard />,
     layout: "/admdshdin",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     collapse: true,
