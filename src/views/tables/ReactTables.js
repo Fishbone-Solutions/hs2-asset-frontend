@@ -180,6 +180,8 @@ function ReactTables() {
                     {
                       Header: "Total EOI ",
                       accessor: "total_eoi",
+                      sortable: false,
+                      filterable: false,
                     },
                     {
                       Header: "Actions",
