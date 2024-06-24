@@ -91,8 +91,8 @@ function ReactTables() {
               size="sm"
               className="btn-icon btn-link like"
             >
-              <i className="fa fa-heart" />
-            </Button>{" "}
+          <i className="fa fa-eye" />
+          </Button>{" "}
             {/* use this button to add a edit kind of action */}
             <Button
               onClick={() => {
@@ -148,44 +148,38 @@ function ReactTables() {
         <Row>
           <Col md="12">
             <Card>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <CardTitle></CardTitle>
-            <Button>Add Asset</Button>
-          </div>
               
               <CardBody>
                 <ReactTable
                   data={dataState}
                   columns={[
                     {
-                      Header: "ID",
-                      accessor: "name",
+                      Header: "Asset ID",
+                      accessor: "asset_id",
                     },
-                    //  "ID", "Name", "Description", "Status"
-
+                    {
+                      Header: "Date",
+                      accessor: "date",
+                    },
+                    {
+                      Header: "Added By",
+                      accessor: "added_by",
+                    },
                     {
                       Header: "Name",
-                      accessor: "position",
+                      accessor: "name",
                     },
                     {
                       Header: "Description",
-                      accessor: "office",
+                      accessor: "description",
                     },
                     {
                       Header: "Status",
-                      accessor: "age",
+                      accessor: "status",
                     },
                     {
-                      Header: "col 5",
-                      accessor: "col5",
-                    },
-                    {
-                      Header: "col 6 ",
-                      accessor: "col6",
-                    },
-                    {
-                      Header: "col 7",
-                      accessor: "col7",
+                      Header: "Total EOI ",
+                      accessor: "total_eoi",
                     },
                     {
                       Header: "Actions",
@@ -194,9 +188,6 @@ function ReactTables() {
                       filterable: false,
                     },
                   ]}
-                  /*
-                      You can choose between primary-pagination, info-pagination, success-pagination, warning-pagination, danger-pagination or none - which will make the pagination buttons gray
-                    */
                   className="-striped -highlight primary-pagination"
                 />
               </CardBody>
