@@ -17,6 +17,7 @@ import {
   Col,
   Row,
 } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   React.useEffect(() => {
@@ -70,8 +71,7 @@ function Login() {
                     block
                     className="btn-round mb-3"
                     color="warning"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+             
                   >
 Login
                   </Button>
