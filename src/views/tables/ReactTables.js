@@ -148,9 +148,11 @@ function ReactTables() {
         <Row>
           <Col md="12">
             <Card>
-              <CardHeader>
-                <CardTitle tag="h4"> Inventory Management</CardTitle>
-              </CardHeader>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <CardTitle></CardTitle>
+            <Button>Add Asset</Button>
+          </div>
+              
               <CardBody>
                 <ReactTable
                   data={dataState}
@@ -184,10 +186,6 @@ function ReactTables() {
                     {
                       Header: "col 7",
                       accessor: "col7",
-                    },
-                    {
-                      Header: "col 8",
-                      accessor: "col8",
                     },
                     {
                       Header: "Actions",
