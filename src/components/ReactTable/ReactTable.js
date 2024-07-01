@@ -116,6 +116,7 @@ function Table({ columns, data }) {
   return (
     <>
       <div className="ReactTable -striped -highlight primary-pagination">
+    
         <table {...getTableProps()} className="rt-table">
           <thead className="rt-thead -header">
             {headerGroups.map((headerGroup) => (

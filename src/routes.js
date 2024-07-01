@@ -24,7 +24,7 @@ import ValidationForms from "views/forms/ValidationForms.js";
 import VectorMap from "views/maps/VectorMap.js";
 import Widgets from "views/Widgets.js";
 import Wizard from "views/forms/Wizard.js";
-
+import W0 from "views/pages/W0";
 const routes = [
   {
     path: "/dashboard",
@@ -123,6 +123,22 @@ const routes = [
         component: <UserProfile />,
         layout: "/admin",
       },
+    ],
+  },
+  {
+    collapse: true,
+    name: "WireFrame Pages",
+    icon: "nc-icon nc-book-bookmark",
+    state: "wireFramepagesCollapse",
+    views: [
+      {
+        path: "/timeline",
+        name: "W-0",
+        mini: "T",
+        component: <W0></W0>,
+        layout: "/admin",
+      },
+     
     ],
   },
   {
