@@ -25,6 +25,21 @@ import VectorMap from "views/maps/VectorMap.js";
 import Widgets from "views/Widgets.js";
 import Wizard from "views/forms/Wizard.js";
 import W0 from "views/pages/W0";
+import W1 from 'views/pages/W1';
+import W2 from 'views/pages/W2';
+import W3 from 'views/pages/W3';
+// Import W4 to W14
+import W4 from 'views/pages/W4';
+import W5 from 'views/pages/W5';
+import W6 from 'views/pages/W6';
+import W7 from 'views/pages/W7';
+import W8 from 'views/pages/W8';
+import W9 from 'views/pages/W9';
+import W10 from 'views/pages/W10';
+import W11 from 'views/pages/W11';
+import W12 from 'views/pages/W12';
+import W13 from 'views/pages/W13';
+import W14 from 'views/pages/W14';
 const routes = [
   {
     path: "/dashboard",
@@ -138,6 +153,108 @@ const routes = [
         component: <W0></W0>,
         layout: "/admin",
       },
+      {
+        path: "/w1",
+        name: "W-1",
+        mini: "W1",
+        component: <W1></W1>,
+        layout: "/admin",
+      },
+      {
+        path: "/w2",
+        name: "W-2",
+        mini: "W2",
+        component: <W2></W2>,
+        layout: "/admin",
+      },
+      // Add components W3 to W14
+      {
+        path: "/w3",
+        name: "W-3",
+        mini: "W3",
+        component: <W3></W3>,
+        layout: "/admin",
+      },
+      {
+        path: "/w4",
+        name: "W-4",
+        mini: "W4",
+        component: <W4></W4>,
+        layout: "/admin",
+      },
+      {
+        path: "/w5",
+        name: "W-5",
+        mini: "W5",
+        component: <W5></W5>,
+        layout: "/admin",
+      },
+      // Add components W6 to W14
+      {
+        path: "/w6",
+        name: "W-6",
+        mini: "W6",
+        component: <W6></W6>,
+        layout: "/admin",
+      },
+      {
+        path: "/w7",
+        name: "W-7",
+        mini: "W7",
+        component: <W7></W7>,
+        layout: "/admin",
+      },
+      // Continue adding components W8 to W14
+      {
+        path: "/w8",
+        name: "W-8",
+        mini: "W8",
+        component: <W8></W8>,
+        layout: "/admin",
+      },
+      {
+        path: "/w9",
+        name: "W-9",
+        mini: "W9",
+        component: <W9></W9>,
+        layout: "/admin",
+      },
+      {
+        path: "/w10",
+        name: "W-10",
+        mini: "W10",
+        component: <W10></W10>,
+        layout: "/admin",
+      },
+      {
+        path: "/w11",
+        name: "W-11",
+        mini: "W11",
+        component: <W11></W11>,
+        layout: "/admin",
+      },
+      {
+        path: "/w12",
+        name: "W-12",
+        mini: "W12",
+        component: <W12></W12>,
+        layout: "/admin",
+      },
+      {
+        path: "/w13",
+        name: "W-13",
+        mini: "W13",
+        component: <W13></W13>,
+        layout: "/admin",
+      },
+      {
+        path: "/w14",
+        name: "W-14",
+        mini: "W14",
+        component: <W14></W14>,
+        layout: "/admin",
+      },
+      
      
     ],
   },
