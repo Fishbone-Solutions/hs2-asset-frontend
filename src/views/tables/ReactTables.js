@@ -72,6 +72,8 @@ function ReactTables() {
           // we've added some custom button actions
           <div className="actions-right">
             {/* use this button to add a like kind of action */}
+            View EoI
+
             <Button
               onClick={() => {
                 let obj = dataState.find((o) => o.id === key);
@@ -91,8 +93,9 @@ function ReactTables() {
               size="sm"
               className="btn-icon btn-link like"
             >
-          <i className="fa fa-eye" />
-          </Button>{" "}
+          </Button>
+          Update
+
             {/* use this button to add a edit kind of action */}
             <Button
               onClick={() => {
@@ -114,6 +117,7 @@ function ReactTables() {
               className="btn-icon btn-link edit"
             >
               <i className="fa fa-edit" />
+              Delete
             </Button>{" "}
             {/* use this button to remove the data row */}
             <Button
