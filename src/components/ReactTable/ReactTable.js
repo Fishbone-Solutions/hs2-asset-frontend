@@ -23,13 +23,13 @@ function DefaultColumnFilter({
 
   return (
     <FormGroup>
-      <Input
+     {/*  <Input
         placeholder={`Search ${count} records...`}
         type="text"
         onChange={(e) => {
           setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
         }}
-      />
+      /> */}
     </FormGroup>
   );
 }
