@@ -68,7 +68,6 @@ const handleAction3= () => {
         <Row>
           <Col md="12">
             <Card>
-              
               <CardBody>
                 <ReactTable
                   data={dataState}
@@ -82,12 +81,11 @@ const handleAction3= () => {
                       Header: "Date",
                       accessor: "date",
                       Cell: ({ value }) => <span>{formatDate(value)}</span>,
-
                     },
                     {
                       Header: "Added By",
                       accessor: "added_by",
-                    },
+                    }, 
                     {
                       Header: "Name",
                       accessor: "name",
@@ -113,10 +111,10 @@ const handleAction3= () => {
                       filterable: false,
                       Cell: () => (
                         <div>
-                          <button  className="-btn"  onClick={() => handleAction1()}>View EOI</button>
-                          <button onClick={() => handleAction2()}>Update </button>
-                          <button onClick={() => handleAction3()}> Delete</button>
-                        </div>
+                        <button style={{ fontSize: '10px',  }} className="-btn" onClick={() => handleAction1()}>View EoI</button>
+                        <button style={{ fontSize: '10px',  }} onClick={() => handleAction2()}>Update</button>
+                        <button style={{ fontSize: '10px',}} onClick={() => handleAction3()}>Delete</button>
+                      </div>
                       ),
                     },
                   ]}

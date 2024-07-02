@@ -13,7 +13,7 @@ import { matchSorter } from "match-sorter";
 import Select from "react-select";
 
 // reactstrap components
-import { Container, Row, Col, FormGroup, Input } from "reactstrap";
+import { Container, Row, Col, FormGroup, Input ,Form,InputGroup,InputGroupAddon,InputGroupText, Button} from "reactstrap";
 
 // Define a default UI for filtering
 function DefaultColumnFilter({
@@ -115,6 +115,20 @@ function Table({ columns, data }) {
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
   return (
     <>
+    <Form>
+              <InputGroup className="no-border">
+                <Input defaultValue="" placeholder="Search..." type="text" />
+                <InputGroupAddon addonType="append">
+                  <InputGroupText>
+                    <i className="nc-icon nc-zoom-split" />
+
+                  </InputGroupText>
+
+                </InputGroupAddon>
+                <button class="btn btn-primary">Add Asset</button>         
+              </InputGroup>
+
+            </Form>
       <div className="ReactTable -striped -highlight primary-pagination">
     
         <table {...getTableProps()} className="rt-table">
@@ -160,9 +174,9 @@ function Table({ columns, data }) {
                 >
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()} className="rt-td">
-                        {cell.render("Cell")}
-                      </td>
+                      <td {...cell.getCellProps()} className="rt-td" style={{ width: '30px' }}>
+                      {cell.render("Cell")}
+                    </td>
                     );
                   })}
                 </tr>

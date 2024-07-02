@@ -16108,3 +16108,8 @@ This file was modified entirely by Creative Tim for React-Select v2.0.0
     color: inherit; }
 
 /*# sourceMappingURL=paper-dashboard.css.map */
+
+.-small {
+  font-size: 12px; /* Adjust the font size as needed */
+  padding: 4px 8px; /* Adjust the padding as needed */
+}
