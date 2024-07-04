@@ -135,10 +135,10 @@ const handleAction3= () => {
                       Cell: () => (
                         <div>
 
-                        <button style={{ fontSize: '12px',  }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
-                        <button style={{ fontSize: '12px',  }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
-                        <button style={{ fontSize: '12px',  }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                       <button style={{ fontSize: '12px',}} onClick={() => handleAction3()}><MdDelete></MdDelete></button>
+                        <button style={{ fontSize: '15px', backgroundColor:"transparent", border: 'none', outline: 'none'}} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
+                        <button style={{ fontSize: '15px',backgroundColor:"transparent", border: 'none', outline: 'none'  }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
+                        <button style={{ fontSize: '15px',  backgroundColor:"transparent", border: 'none', outline: 'none'}} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
+                       <button style={{ fontSize: '15px' , backgroundColor:"transparent", border: 'none', outline: 'none'}} onClick={() => handleAction3()}><MdDelete></MdDelete></button>
                       </div>
                       ),
                     },
