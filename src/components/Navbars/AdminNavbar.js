@@ -75,9 +75,10 @@ function AdminNavbar(props) {
                 color="primary"
                 id="minimizeSidebar"
                 onClick={props.handleMiniClick}
+                style={{ backgroundColor: 'grey'}}
               >
                 <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
-                <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" style={{ color: 'black', backgroundColor:'#50BCBE' }} />
+                <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" style={{ color: 'white'}} />
               </Button>
             </div>
             <div

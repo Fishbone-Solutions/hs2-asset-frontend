@@ -14,22 +14,29 @@ import Select from "react-select";
 
 // reactstrap components
 import { Container, Row, Col, FormGroup, Input ,Form,InputGroup,InputGroupAddon,InputGroupText, Button} from "reactstrap";
+import { IoAddCircleOutline } from "react-icons/io5";
 
-// Define a default UI for filtering
-function DefaultColumnFilter({
-  column: { filterValue, preFilteredRows, setFilter },
-}) {
+function DefaultColumnFilter({ column }) {
+  const { filterValue, preFilteredRows, setFilter } = column;
   const count = preFilteredRows.length;
+
+  // Define the columns where you want to enable the filter
+  const enableFilterOnColumns = ["name", "location", "status","available_from"];
+
+  if (!enableFilterOnColumns.includes(column.id)) {
+    return null; // Do not render the filter for this column
+  }
 
   return (
     <FormGroup>
-     {/*  <Input
+      <Input
         placeholder={`Search ${count} records...`}
         type="text"
+        value={filterValue || ""}
         onChange={(e) => {
-          setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+          setFilter(e.target.value || undefined);
         }}
-      /> */}
+      />
     </FormGroup>
   );
 }
@@ -117,22 +124,22 @@ function Table({ columns, data }) {
     <>
     <Form>
               <InputGroup className="no-border">
-                <Input defaultValue="" placeholder="Search..." type="text" />
+{/*                 <Input defaultValue="" placeholder="Search..." type="text" />
                 <InputGroupAddon addonType="append">
                   <InputGroupText>
-                    <i className="nc-icon nc-zoom-split" />
-
+                    <i className="nc-icon nc-zoom-split" /> */}
+{/* 
                   </InputGroupText>
 
-                </InputGroupAddon>
-                <button class="btn btn-primary">Add Asset</button>         
+                </InputGroupAddon> */}
+                <button class="btn btn-primary"> <IoAddCircleOutline size="2em" />Add Asset</button>         
               </InputGroup>
 
             </Form>
       <div className="ReactTable -striped -highlight primary-pagination">
     
         <table {...getTableProps()} className="rt-table">
-          <thead className="rt-thead -header">
+        <thead className="rt-thead -header">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
                 {headerGroup.headers.map((column, key) => (
@@ -148,6 +155,7 @@ function Table({ columns, data }) {
                       {column.render("Header")}
                     </div>
                     {/* Render the columns filter UI */}
+                    
                     <div>
                       {headerGroup.headers.length - 1 === key
                         ? null
@@ -174,7 +182,7 @@ function Table({ columns, data }) {
                 >
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()} className="rt-td" style={{ width: '30px' }}>
+                      <td {...cell.getCellProps()} className="rt-td" >
                       {cell.render("Cell")}
                     </td>
                     );

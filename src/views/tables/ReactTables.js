@@ -9,12 +9,26 @@ import {
   CardTitle,
   Row,
   Col,
+  Badge,
+
+  CardFooter,
+  Label,
+  FormGroup,
+  Input,
+  Table,
+ UncontrolledTooltip,
 } from "reactstrap";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { MdDelete } from "react-icons/md";
+import { GrDocumentUpdate } from "react-icons/gr";
+
 
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
-
+import Dashboard from "views/Dashboard";
+import { FaEye } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 
 function ReactTables() {
   const [dataTable, setDataTable] = React.useState([]);
@@ -64,6 +78,7 @@ const handleAction3= () => {
   );
   return (
     <>
+ 
       <div className="content">
         <Row>
           <Col md="12">
@@ -85,6 +100,14 @@ const handleAction3= () => {
                     {
                       Header: "Added By",
                       accessor: "added_by",
+                    }, {
+
+                      Header: "Available From",
+                      accessor:"available_from"
+                    },
+                    {
+                      Header: "Location",
+                      accessor: "location",
                     }, 
                     {
                       Header: "Name",
@@ -111,9 +134,11 @@ const handleAction3= () => {
                       filterable: false,
                       Cell: () => (
                         <div>
-                        <button style={{ fontSize: '10px',  }} className="-btn" onClick={() => handleAction1()}>View EoI</button>
-                        <button style={{ fontSize: '10px',  }} onClick={() => handleAction2()}>Update</button>
-                        <button style={{ fontSize: '10px',}} onClick={() => handleAction3()}>Delete</button>
+
+                        <button style={{ fontSize: '12px',  }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
+                        <button style={{ fontSize: '12px',  }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
+                        <button style={{ fontSize: '12px',  }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
+                       <button style={{ fontSize: '12px',}} onClick={() => handleAction3()}><MdDelete></MdDelete></button>
                       </div>
                       ),
                     },
