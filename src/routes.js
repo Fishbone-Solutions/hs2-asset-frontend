@@ -40,6 +40,7 @@ import W11 from 'views/pages/W11';
 import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
+import { FcFilingCabinet } from "react-icons/fc";
 const routes = [
   {
     path: "/dashboard",
@@ -54,7 +55,7 @@ const routes = [
     name: "Inventory Management",
     component: <Calendar />,
     layout: "/invet",
-    icon: "nc-icon nc-book-bookmark",
+    icon: <FcFilingCabinet></FcFilingCabinet>
 
   },
   {
