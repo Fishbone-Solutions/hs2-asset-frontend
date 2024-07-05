@@ -29,14 +29,14 @@ function DefaultColumnFilter({ column }) {
 
   return (
     <FormGroup>
-      <Input
+ {/*      <Input
         placeholder={`Search ${count} records...`}
         type="text"
         value={filterValue || ""}
         onChange={(e) => {
           setFilter(e.target.value || undefined);
         }}
-      />
+      /> */}
     </FormGroup>
   );
 }
@@ -122,20 +122,11 @@ function Table({ columns, data }) {
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
   return (
     <>
-    <Form>
-              <InputGroup className="no-border">
-{/*                 <Input defaultValue="" placeholder="Search..." type="text" />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="nc-icon nc-zoom-split" /> */}
-{/* 
-                  </InputGroupText>
-
-                </InputGroupAddon> */}
-                <button class="btn btn-primary"> <IoAddCircleOutline size="2em" />Add Asset</button>         
-              </InputGroup>
-
-            </Form>
+<div className="d-flex justify-content-end">
+  <button className="btn btn-primary">
+    <IoAddCircleOutline size="2em" />
+  </button>
+</div>
       <div className="ReactTable -striped -highlight primary-pagination">
     
         <table {...getTableProps()} className="rt-table">

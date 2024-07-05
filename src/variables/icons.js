@@ -1,3 +1,4 @@
+import { FcFilingCabinet } from "react-icons/fc";
 const icons = [
   {
     name: "nc-icon nc-air-baloon",
@@ -398,6 +399,10 @@ const icons = [
   {
     name: "nc-icon nc-zoom-split",
     content: "\\ea64",
+  },
+  {
+    name: "nc-icon nc-inventory",
+    content: <FcFilingCabinet/>
   },
 ];
 

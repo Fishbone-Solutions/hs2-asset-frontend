@@ -41,13 +41,14 @@ import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
 import { FcFilingCabinet } from "react-icons/fc";
+
 const routes = [
   {
     path: "/dashboard",
     name: "Bulk Import Records",
     component: <Dashboard />,
     layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
+    icon: "nc-icon nc-inventory",
 
   },
   {
@@ -90,15 +91,7 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
 
   },
-  {
-    path: "/dashboard",
-    name: "Log Out",
-    component: <Dashboard />,
-    layout: "/admdshdin",
-    icon: "nc-icon nc-book-bookmark",
-
-  },
-  {
+/*   {
     collapse: true,
     name: "Pages",
     icon: "nc-icon nc-book-bookmark",
@@ -140,7 +133,7 @@ const routes = [
         layout: "/admin",
       },
     ],
-  },
+  }, */
   {
     collapse: true,
     name: "WireFrame Pages",
@@ -259,7 +252,7 @@ const routes = [
      
     ],
   },
-  {
+/*   {
     collapse: true,
     name: "Components",
     icon: "nc-icon nc-layout-11",
@@ -351,7 +344,7 @@ const routes = [
         layout: "/admin",
       },
     ],
-  },
+  }, */
   {
     collapse: true,
     name: "Tables",
@@ -381,7 +374,7 @@ const routes = [
       },
     ],
   },
-  {
+/*   {
     collapse: true,
     name: "Maps",
     icon: "nc-icon nc-pin-3",
@@ -430,7 +423,7 @@ const routes = [
     icon: "nc-icon nc-calendar-60",
     component: <Calendar />,
     layout: "/admin",
-  },
+  }, */
 ];
 
 export default routes;
