@@ -400,10 +400,6 @@ const icons = [
     name: "nc-icon nc-zoom-split",
     content: "\\ea64",
   },
-  {
-    name: "nc-icon nc-inventory",
-    content: <FcFilingCabinet/>
-  },
 ];
 
 export default icons;
