@@ -2,31 +2,17 @@ import React from "react";
 
 // reactstrap components
 import {
-  Button,
   Card,
-  CardHeader,
   CardBody,
-  CardTitle,
   Row,
   Col,
-  Badge,
-
-  CardFooter,
-  Label,
-  FormGroup,
-  Input,
-  Table,
- UncontrolledTooltip,
 } from "reactstrap";
-import { Line, Bar, Doughnut } from "react-chartjs-2";
 import { MdDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
-
 
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
-import Dashboard from "views/Dashboard";
 import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
@@ -93,29 +79,21 @@ const handleAction3= () => {
                       width: 10, 
                     },
                     {
-                      Header: "Date",
-                      accessor: "date",
-                      Cell: ({ value }) => <span>{formatDate(value)}</span>,
-                    },
-                    {
-                      Header: "Added By",
-                      accessor: "added_by",
-                    }, {
-
-                      Header: "Available From",
-                      accessor:"available_from"
-                    },
-                    {
-                      Header: "Location",
-                      accessor: "location",
-                    }, 
-                    {
                       Header: "Name",
                       accessor: "name",
                     },
                     {
                       Header: "Description",
                       accessor: "description",
+                    },
+                    {
+                      Header: "Location",
+                      accessor: "location",
+                    }, 
+                    {
+
+                      Header: "Available From",
+                      accessor:"available_from"
                     },
                     {
                       Header: "Status",
@@ -126,6 +104,15 @@ const handleAction3= () => {
                       accessor: "total_eoi",
                       sortable: false,
                       filterable: false,
+                    },
+                    {
+                      Header: "Date",
+                      accessor: "date",
+                      Cell: ({ value }) => <span>{formatDate(value)}</span>,
+                    },
+                    {
+                      Header: "Added By",
+                      accessor: "added_by",
                     },
                     {
                       Header: "Actions",

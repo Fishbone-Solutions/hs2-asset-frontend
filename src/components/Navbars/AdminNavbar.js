@@ -20,12 +20,16 @@ import {
   Nav,
   Container,
 } from "reactstrap";
+import routes from "routes";
 
 function AdminNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [color, setColor] = React.useState("navbar-transparent");
   const location = useLocation();
+
+  const currentRoute = routes.find((route) => route.pathName === location.pathname);
+  const { name, icon } = currentRoute || {};
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
   });
@@ -97,11 +101,15 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-              <span className="d-none d-md-block">
-              Inventory Management
-              </span>
-              <span className="d-block d-md-none">PD PRO React</span>
-            </NavbarBrand>
+        <span className="d-none d-md-block">
+        {icon && <i className={icon}></i>} {/* Render the icon */}
+          {name}
+        </span>
+        <span className="d-block d-md-none">
+        {icon && <i className={icon}></i>} {/* Render the icon */}
+          {name}
+        </span>
+      </NavbarBrand>
           </div>
           <button
             aria-controls="navigation-index"
