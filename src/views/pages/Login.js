@@ -34,10 +34,10 @@ function Login() {
       <Container>
         <Row>
           <Col className="ml-auto mr-auto" lg="4" md="6">
-          <p style={{ textAlign: 'right', color: 'white', marginBottom: -10 }}>Connecting Buyers & Sellers</p>
+          <p style={{ textAlign: 'right', color: '#52CBCE', marginBottom: -10 }}>Connecting Buyers & Sellers</p>
 <p style={{ textAlign: 'left', fontSize: '28.3px', color: 'white', marginTop: 0 }}>
-  <span style={{ color: '#0391C9', fontWeight: 'bold' }}>HS2 </span> 
-  <span style={{ color: 'rgb(147, 22, 85)', fontWeight: 'bold' }}>Exchange Platform</span>
+  <span style={{ color: '#52CBCE', fontWeight: 'bold' }}>HS2 </span> 
+  <span style={{ color: 'white', fontWeight: 'bold' }}>Exchange Platform</span>
 </p>
             <Form action="" className="form" method="">
               <Card className="card-login">

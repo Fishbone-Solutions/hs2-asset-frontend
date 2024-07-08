@@ -28,13 +28,12 @@ function AuthNavbar(props) {
   };
   return (
     <Navbar
-      className={classnames("navbar-absolute fixed-top", color)}
-      expand="lg"
+    className={classnames("navbar-absolute fixed-top", color)}
+    expand="lg"
     >
       <Container>
         <div className="navbar-wrapper">
           <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-T
           </NavbarBrand>
         </div>
         <button
