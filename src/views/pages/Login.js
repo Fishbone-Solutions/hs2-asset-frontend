@@ -34,6 +34,8 @@ function Login() {
       <Container>
         <Row>
           <Col className="ml-auto mr-auto" lg="4" md="6">
+          <p style={{ textAlign: 'right' ,color:"white"  }}>Connecting Buyers & Sellers</p>
+          <p style={{ textAlign: 'left', fontSize: "25px", color: "white" }}><span style={{ color: "#0391C9", fontWeight: "bold" }}>HS2</span> <span style={{ color: "rgb(147,22,85)" , fontWeight: "bold"}}> Exchange</span></p>
             <Form action="" className="form" method="">
               <Card className="card-login">
                 <CardHeader>
@@ -92,7 +94,7 @@ Login
       <div
         className="full-page-background"
         style={{
-          backgroundImage: `url(${require("assets/img/bg/fabio-mangione.jpg")})`,
+          backgroundImage: `url(${require("assets/img/bg/bg.png")})`,
         }}
       />
     </div>

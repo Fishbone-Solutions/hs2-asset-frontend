@@ -76,7 +76,6 @@ const handleAction3= () => {
                     {
                       Header: "Asset ID",
                       accessor: "asset_id",
-                      width: 10, 
                     },
                     {
                       Header: "Name",

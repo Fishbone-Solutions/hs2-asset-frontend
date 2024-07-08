@@ -123,10 +123,13 @@ function Table({ columns, data }) {
   return (
     <>
 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-  <div style={{display: 'inline-flex', justifyContent: 'center', backgroundColor:"#52CBCE" ,alignItems: 'center', width: '40px', height: '40px', border: '1px solid black', borderRadius: '4px'}}>
-    <IoAddCircleOutline  color="white" size="8em" />
-  </div>
+<Button color="primary" >
+ <IoAddCircleOutline color="white" size="2em" />
+</Button>
+
 </div>
+<br></br>
+
       <div className="ReactTable -striped -highlight primary-pagination">
     
         <table {...getTableProps()} className="rt-table">
@@ -171,13 +174,21 @@ function Table({ columns, data }) {
                     { " -even": i % 2 === 1 }
                   )}
                 >
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()} className="rt-td" >
-                      {cell.render("Cell")}
-                    </td>
-                    );
-                  })}
+                           {row.cells.map((cell, cellIndex) => {
+            return (
+              <td
+                {...cell.getCellProps()}
+                className={classnames("rt-td", {
+                  "increase-width": cellIndex === 1, // Add this class to the second column
+                })}
+                style={{
+                  width: cellIndex === 1 ? '300px' : 'auto', // Increase width of the second column
+                }}
+              >
+                {cell.render("Cell")}
+              </td>
+            );
+          })}
                 </tr>
               );
             })}

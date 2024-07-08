@@ -101,7 +101,7 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-        <span className="d-none d-md-block">
+        <span className="d-none d-md-block" style={{ color: 'rgb(82,203,206)' }}>
         {icon && <i className={icon}></i>} {/* Render the icon */}
           {name}
         </span>
