@@ -78,8 +78,70 @@ function AssetRegister() {
               </CardBody>
             </Card>
           </Col>
-           {/* Asset Detail*/}
+                {/* Category Detail*/}
 
+           <Col md="12">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Category  Selection </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Form action="/" className="form-horizontal" method="get">
+                  <Row>
+                    <Label sm="2">Category 1</Label>
+                    <Col sm="4">
+                      <FormGroup>
+                      <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="singleSelect2"
+                          value={selectCondition}
+                          onChange={(value) => setSingleSelect(value)}
+                          options={[
+                            {
+                              value: "",
+                              label: "Single Option 2",
+                              isDisabled: true,
+                            },
+                            { value: "2", label: "Used" },
+                            { value: "3", label: "Wizardary" },
+                            { value: "4", label: "WitchCraft" },
+                          ]}
+                          placeholder="Single Select"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Label sm="2">Category 2</Label>
+                    <Col sm="4">
+                      <FormGroup>
+                      <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="singleSelect2"
+                          value={selectCondition}
+                          onChange={(value) => setSingleSelect(value)}
+                          options={[
+                            {
+                              value: "",
+                              label: "Single Option 2",
+                              isDisabled: true,
+                            },
+                            { value: "2", label: "Used" },
+                            { value: "3", label: "Wizardary" },
+                            { value: "4", label: "WitchCraft" },
+                          ]}
+                          placeholder="Single Select"
+                        />
+                      </FormGroup>
+                    </Col>
+                    
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+                         {/* Asset Detail*/}
+ 
           <Col md="12">
             <Card>
               <CardHeader>
@@ -97,27 +159,11 @@ function AssetRegister() {
                         
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Category</Label>
+                    <Label sm="2">Available From</Label>
                     <Col sm="4">
                       <FormGroup>
-                      <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="singleSelect2"
-                          value={singleSelect2}
-                          onChange={(value) => setSingleSelect2(value)}
-                          options={[
-                            {
-                              value: "",
-                              label: "Single Option",
-                              isDisabled: true,
-                            },
-                            { value: "2", label: "Machinery" },
-                            { value: "3", label: "Wizardary" },
-                            { value: "4", label: "WitchCraft" },
-                          ]}
-                          placeholder="Single Select"
-                        />
+                        <Input type="text" />
+                      
                         
                       </FormGroup>
                     </Col>
@@ -191,14 +237,7 @@ function AssetRegister() {
                     
                   </Row>
                   <Row>
-                    <Label sm="2">Available From</Label>
-                    <Col sm="4">
-                      <FormGroup>
-                        <Input type="text" />
-                      
-                        
-                      </FormGroup>
-                    </Col>
+               
               
                     
                   </Row>
@@ -218,6 +257,8 @@ function AssetRegister() {
               </CardBody>
             </Card>
           </Col>
+
+       
 
            {/* Upload Images*/}
 
