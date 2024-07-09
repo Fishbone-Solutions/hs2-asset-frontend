@@ -21,21 +21,11 @@ import {
 } from "reactstrap";
 
 function AssetRegister() {
-  const [singleSelect, setSingleSelect] = React.useState(null);
+  const [selectCondition, setSingleSelect] = React.useState(null);
   const [singleSelect2, setSingleSelect2] = React.useState(null);
-
-  const [multipleSelect, setMultipleSelect] = React.useState(null);
-  const [tagsinput, setTagsinput] = React.useState([
-    "Amsterdam",
-    "Washington",
-    "Sydney",
-    "Beijing",
-  ]);
-  
   return (
     <>
       <div className="content">
-        
         <Row>
           {/* Asset Seller Detail*/}
           <Col md="12">
@@ -113,7 +103,7 @@ function AssetRegister() {
                       <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
-                          name="singleSelect"
+                          name="singleSelect2"
                           value={singleSelect2}
                           onChange={(value) => setSingleSelect2(value)}
                           options={[
@@ -156,7 +146,7 @@ function AssetRegister() {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="singleSelect2"
-                          value={singleSelect}
+                          value={selectCondition}
                           onChange={(value) => setSingleSelect(value)}
                           options={[
                             {
@@ -238,7 +228,17 @@ function AssetRegister() {
               </CardHeader>
               <CardBody>
  
-              <FileUpload name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
+              <FileUpload
+      name="demo[]"
+      url="/api/upload"
+      multiple
+      accept="image/*"
+      maxFileSize={1000000}
+      emptyTemplate={<p className="m-0">Drag and drop files here to upload.</p>}
+      className="custom-fileupload"
+       uploadButtonClassName="p-button p-fileupload-choose p-component"
+      cancelButtonClassName="custom-cancel-button"
+    />
 
               </CardBody>
             </Card>
@@ -269,8 +269,8 @@ function AssetRegister() {
                       <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
-                          name="singleSelect"
-                          value={singleSelect}
+                          name="selectCondition"
+                          value={selectCondition}
                           onChange={(value) => setSingleSelect(value)}
                           options={[
                             {
