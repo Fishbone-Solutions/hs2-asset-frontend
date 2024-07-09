@@ -122,12 +122,12 @@ function Table({ columns, data }) {
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
   return (
     <>
-<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+{/* <div style={{display: 'flex', justifyContent: 'flex-end'}}>
 <Button color="primary" >
  <IoAddCircleOutline color="white" size="2em" />
 </Button>
 
-</div>
+</div> */}
 <br></br>
 
       <div className="ReactTable -striped -highlight primary-pagination">

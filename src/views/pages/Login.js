@@ -76,7 +76,7 @@ function Login() {
                   </FormGroup>
                 </CardBody>
                 <CardFooter>
-                <NavLink to="/admin/admin/react-tables" className="nav-link">
+                <NavLink to="/admin/inventory" className="nav-link">
 
                   <Button
                     block

@@ -1,6 +1,7 @@
 import Dashboard from "views/Dashboard.js";
 import Login from "views/pages/Login.js";
-import ReactTables from "views/tables/ReactTables.js";
+import AssetRegister from "views/pages/AssetRegister";
+import Inventory from "views/pages/Inventory.js";
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
 import W2 from 'views/pages/W2';
@@ -28,19 +29,20 @@ const routes = [
 
   },
   {
-    path: "/admin/react-tables",
-    pathName: "/admin/admin/react-tables",
+    path: "/inventory",
+    pathName: "/admin/inventory",
     name: "Inventory Management",
-    component: <ReactTables></ReactTables>,
+    component: <Inventory></Inventory>,
     layout: "/admin",
     icon: "nc-icon nc-controller-modern",
 
   },
   {
-    path: "/dashboard",
+    path: "/assetregister",
+    pathName: "/admin/assetregister",
     name: "Asset Register",
-    component: <Dashboard />,
-    layout: "/invetw3",
+    component: <AssetRegister />,
+    layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
 
   },
