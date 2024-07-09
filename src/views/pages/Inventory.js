@@ -8,6 +8,8 @@ import {
   Col,
   Button
 } from "reactstrap";
+import { NavLink } from "react-router-dom";
+
 import { MdDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -74,10 +76,14 @@ const handleAction3= () => {
            
 
               <CardBody>
-              
+              <NavLink to="/admin/assetregister" className="nav-link">
+
               <Button color="primary"style={{display: 'flex', justifyContent: 'flex-end'}}>
+
  <IoAddCircleOutline color="white" size="2em" />
 </Button>
+</NavLink>
+
                 <ReactTable
                   data={dataState}
                   columns={[

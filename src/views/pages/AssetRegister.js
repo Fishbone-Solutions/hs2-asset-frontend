@@ -263,12 +263,10 @@ function AssetRegister() {
               </CardHeader>
               <CardBody>
               <Row>
-              
-                      <Col lg="5" md="6" sm="3">
-                      <div>
-                Status
-                </div>
-                        <Select
+              <Label sm="2">Status</Label>
+                    <Col sm="4">
+                      <FormGroup>
+                      <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="singleSelect"
@@ -286,9 +284,10 @@ function AssetRegister() {
                           ]}
                           placeholder="Single Select"
                         />
-                      </Col>
-                    
-                    </Row>
+                        
+                      </FormGroup>
+                    </Col>
+</Row>
               </CardBody>
             </Card>
           </Col>
