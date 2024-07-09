@@ -92,7 +92,8 @@ const handleAction3= () => {
                     {
 
                       Header: "Available From",
-                      accessor:"available_from"
+                      accessor:"available_from",
+                      Cell: ({ value }) => <span>{formatDate(value)}</span>,
                     },
                     {
                       Header: "Status",
@@ -104,15 +105,15 @@ const handleAction3= () => {
                       sortable: false,
                       filterable: false,
                     },
-                    {
+/*                     {
                       Header: "Date",
                       accessor: "date",
                       Cell: ({ value }) => <span>{formatDate(value)}</span>,
-                    },
-                    {
+                    }, */
+/*                     {
                       Header: "Added By",
                       accessor: "added_by",
-                    },
+                    }, */
                     {
                       Header: "Actions",
                       accessor: "actions",
