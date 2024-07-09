@@ -159,7 +159,7 @@ function AssetRegister() {
                         
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Available From</Label>
+                    <Label sm="2">Name</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
@@ -170,13 +170,13 @@ function AssetRegister() {
                     
                   </Row>
                   <Row>
-                    <Label sm="2">Name</Label>
+                    <Label sm="2">Description</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Description</Label>
+                    <Label sm="2"> Available From</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />  
