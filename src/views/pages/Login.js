@@ -18,7 +18,7 @@ import {
   Row,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { FaUnlockKeyhole } from "react-icons/fa6";
+import login_lock_icon from "../../assets/img/login_lock_icon.png"
 import Footer from "components/Footer/Footer";
 import AuthNavbar from "components/Navbars/AuthNavbar";
 function Login() {
@@ -44,7 +44,7 @@ function Login() {
                 <CardHeader>
                   <CardHeader>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <FaUnlockKeyhole size="5.5em" />
+<img width={150} height={150} src={login_lock_icon}></img>
                   </div>
 
                   </CardHeader>

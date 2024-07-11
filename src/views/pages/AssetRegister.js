@@ -3,6 +3,7 @@ import Select from "react-select";
 import { FileUpload } from 'primereact/fileupload';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
 // reactstrap components
 import {
   Button,
@@ -23,6 +24,8 @@ import {
 function AssetRegister() {
   const [selectCondition, setSingleSelect] = React.useState(null);
   const [singleSelect2, setSingleSelect2] = React.useState(null);
+  const [requiredState, setrequiredState] = React.useState("");
+ 
   return (
     <>
       <div className="content">
@@ -36,7 +39,7 @@ function AssetRegister() {
               <CardBody>
               <Form action="/" className="form-horizontal" method="get">
                   <Row>
-                    <Label sm="2">Seller Title</Label>
+                    <Label sm="2">Seller Title * </Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
@@ -45,7 +48,7 @@ function AssetRegister() {
                         
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Contact No</Label>
+                    <Label sm="2">Contact No *</Label>
                     <Col sm="4">
                       <FormGroup>
                       <Input type="text" />
@@ -56,13 +59,13 @@ function AssetRegister() {
                     
                   </Row>
                   <Row>
-                    <Label sm="2">Email Address</Label>
+                    <Label sm="2">Email Address *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Location</Label>
+                    <Label sm="2">Location *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />  
@@ -88,7 +91,7 @@ function AssetRegister() {
               <CardBody>
                 <Form action="/" className="form-horizontal" method="get">
                   <Row>
-                    <Label sm="2">Category 1</Label>
+                    <Label sm="2">Category 1 *</Label>
                     <Col sm="4">
                       <FormGroup>
                       <Select
@@ -111,7 +114,7 @@ function AssetRegister() {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Category 2</Label>
+                    <Label sm="2">Category 2 *</Label>
                     <Col sm="4">
                       <FormGroup>
                       <Select
@@ -150,7 +153,7 @@ function AssetRegister() {
               <CardBody>
                 <Form action="/" className="form-horizontal" method="get">
                   <Row>
-                    <Label sm="2">Asset ID</Label>
+                    <Label sm="2">Asset ID *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
@@ -159,7 +162,7 @@ function AssetRegister() {
                         
                       </FormGroup>
                     </Col>
-                    <Label sm="2">Name</Label>
+                    <Label sm="2">Name *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
@@ -176,7 +179,7 @@ function AssetRegister() {
                         <Input type="text" />
                       </FormGroup>
                     </Col>
-                    <Label sm="2"> Available From</Label>
+                    <Label sm="2"> Available From </Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />  
@@ -185,7 +188,7 @@ function AssetRegister() {
                     
                   </Row>
                   <Row>
-                    <Label sm="2">Condition</Label>
+                    <Label sm="2">Condition *</Label>
                     <Col sm="4">
                       <FormGroup>
                       <Select
@@ -218,7 +221,7 @@ function AssetRegister() {
                     
                   </Row>
                   <Row>
-                    <Label sm="2">Location</Label>
+                    <Label sm="2">Location *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
@@ -300,11 +303,11 @@ function AssetRegister() {
       <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4"> Set Asset Status</CardTitle>
+                <CardTitle tag="h5" style={{ color:"rgb(82,203,206)"}}>  Asset Status</CardTitle>
               </CardHeader>
               <CardBody>
               <Row>
-              <Label sm="2">Status</Label>
+              <Label sm="2"  style={{ color:"greywhite"}} >Status *</Label>
                     <Col sm="4">
                       <FormGroup>
                       <Select
