@@ -44,7 +44,7 @@ function Login() {
                 <CardHeader>
                   <CardHeader>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-<img width={150} height={150} src={login_lock_icon}></img>
+<img width={90} height={90} src={login_lock_icon}></img>
                   </div>
 
                   </CardHeader>
