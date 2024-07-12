@@ -22,6 +22,8 @@ import { FaEdit } from "react-icons/fa";
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
+  const [dataTable2, setDataTable2] = React.useState([]);
+
 
   const formatDate = (date) => {
     const formattedDate = new Date(date).toLocaleDateString('en-GB', {
@@ -45,7 +47,7 @@ function Inventory() {
       redirect: "follow"
     };
     
-    fetch(`${BACKEND_ADDRESS}/inventory`, requestOptions)
+    fetch(`http://localhost/assets/-1`, requestOptions)
 
       .then((response) => response.json())
       .then((result) => setDataState(result))
@@ -89,20 +91,20 @@ const handleAction3= () => {
                   columns={[
                     {
                       Header: "Asset ID",
-                      accessor: "asset_id",
+                      accessor: "id",
                     },
                     {
                       Header: "Name",
-                      accessor: "name",
+                      accessor: "asset_name",
                     },
                     {
                       Header: "Description",
                       accessor: "description",
                     },
-                    {
+                  /*   {
                       Header: "Location",
                       accessor: "location",
-                    }, 
+                    },  */
                     {
 
                       Header: "Available From",
@@ -111,14 +113,14 @@ const handleAction3= () => {
                     },
                     {
                       Header: "Status",
-                      accessor: "status",
+                      accessor: "statuscode",
                     },
-                    {
+                 /*    {
                       Header: "Total EOI ",
                       accessor: "total_eoi",
                       sortable: false,
                       filterable: false,
-                    },
+                    }, */
 /*                     {
                       Header: "Date",
                       accessor: "date",
