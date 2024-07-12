@@ -2,7 +2,7 @@
 FROM node:gallium-buster-slim AS builder
 WORKDIR /usr/src/app
 COPY . .
-RUN npm ci
+RUN npm install
 #RUN npm install ajv --save-dev
 RUN npm run build
 
