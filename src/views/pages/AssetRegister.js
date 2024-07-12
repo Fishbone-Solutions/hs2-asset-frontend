@@ -10,7 +10,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   CardTitle,
   Label,
   FormGroup,
@@ -23,9 +22,6 @@ import {
 
 function AssetRegister() {
   const [selectCondition, setSingleSelect] = React.useState(null);
-  const [singleSelect2, setSingleSelect2] = React.useState(null);
-  const [requiredState, setrequiredState] = React.useState("");
- 
   return (
     <>
       <div className="content">
@@ -37,7 +33,7 @@ function AssetRegister() {
                 <CardTitle tag="h4">Asset Seller Details</CardTitle>
               </CardHeader>
               <CardBody>
-              <Form action="/" className="form-horizontal" method="get">
+                <Form action="/" className="form-horizontal" method="get">
                   <Row>
                     <Label sm="2">Seller Title * </Label>
                     <Col sm="4">
@@ -45,18 +41,18 @@ function AssetRegister() {
                         <Input type="text" />
                         <FormText color="default" tag="span">
                         </FormText>
-                        
+
                       </FormGroup>
                     </Col>
                     <Label sm="2">Contact No *</Label>
                     <Col sm="4">
                       <FormGroup>
-                      <Input type="text" />
+                        <Input type="text" />
 
-                        
+
                       </FormGroup>
                     </Col>
-                    
+
                   </Row>
                   <Row>
                     <Label sm="2">Email Address *</Label>
@@ -68,22 +64,21 @@ function AssetRegister() {
                     <Label sm="2">Location *</Label>
                     <Col sm="4">
                       <FormGroup>
-                        <Input type="text" />  
+                        <Input type="text" />
                       </FormGroup>
                     </Col>
-                    
+
                   </Row>
 
-                
-                
-                
+
+
                 </Form>
               </CardBody>
             </Card>
           </Col>
-                {/* Category Detail*/}
+          {/* Category Detail*/}
 
-           <Col md="12">
+          <Col md="12">
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">Category  Selection </CardTitle>
@@ -94,7 +89,7 @@ function AssetRegister() {
                     <Label sm="2">Category 1 *</Label>
                     <Col sm="4">
                       <FormGroup>
-                      <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="singleSelect2"
@@ -117,7 +112,7 @@ function AssetRegister() {
                     <Label sm="2">Category 2 *</Label>
                     <Col sm="4">
                       <FormGroup>
-                      <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="singleSelect2"
@@ -137,14 +132,14 @@ function AssetRegister() {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                   </Row>
                 </Form>
               </CardBody>
             </Card>
           </Col>
-                         {/* Asset Detail*/}
- 
+          {/* Asset Detail*/}
+
           <Col md="12">
             <Card>
               <CardHeader>
@@ -159,18 +154,18 @@ function AssetRegister() {
                         <Input type="text" />
                         <FormText color="default" tag="span">
                         </FormText>
-                        
+
                       </FormGroup>
                     </Col>
                     <Label sm="2">Name *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
-                      
-                        
+
+
                       </FormGroup>
                     </Col>
-                    
+
                   </Row>
                   <Row>
                     <Label sm="2">Description</Label>
@@ -182,16 +177,16 @@ function AssetRegister() {
                     <Label sm="2"> Available From </Label>
                     <Col sm="4">
                       <FormGroup>
-                        <Input type="text" />  
+                        <Input type="text" />
                       </FormGroup>
                     </Col>
-                    
+
                   </Row>
                   <Row>
                     <Label sm="2">Condition *</Label>
                     <Col sm="4">
                       <FormGroup>
-                      <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="singleSelect2"
@@ -209,7 +204,7 @@ function AssetRegister() {
                           ]}
                           placeholder="Single Select"
                         />
-                        
+
                       </FormGroup>
                     </Col>
                     <Label sm="2">Quantity</Label>
@@ -218,52 +213,47 @@ function AssetRegister() {
                         <Input type="text" />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
                     <Label sm="2">Location *</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
-                      
-                        
                       </FormGroup>
                     </Col>
                     <Label sm="2">Estimated Value</Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input type="text" />
-                      
-                        
+                     </FormGroup>
+                    </Col>
+
+                  </Row>
+                  <Row>
+
+
+
+                  </Row>
+                  <Row>
+                    <Label sm="4">Other Details</Label>
+                    <Col md="10">
+                      <FormGroup>
+                        <Input type="textarea" style={{ width: '100%', height: '100%' }} />
+
                       </FormGroup>
                     </Col>
-                    
                   </Row>
-                  <Row>
-               
-              
-                    
-                  </Row>
-                  <Row>
-  <Label sm="4">Other Details</Label>
-  <Col md="10">
-    <FormGroup>
-    <Input type="textarea" style={{ width: '100%', height: '100%' }} />
 
-    </FormGroup>
-  </Col>
-</Row>
-                
-                
-                
+
+
                 </Form>
               </CardBody>
             </Card>
           </Col>
 
-       
 
-           {/* Upload Images*/}
+
+          {/* Upload Images*/}
 
           <Col md="12">
             <Card>
@@ -271,75 +261,74 @@ function AssetRegister() {
                 <CardTitle tag="h4"> Upload Images </CardTitle>
               </CardHeader>
               <CardBody>
- 
-              <FileUpload
-      name="demo[]"
-      url="/api/upload"
-      multiple
-      accept="image/*"
-      maxFileSize={1000000}
-      emptyTemplate={<p className="m-0">Drag and drop files here to upload.</p>}
-      className="custom-fileupload"
-       uploadButtonClassName="p-button p-fileupload-choose p-component"
-      cancelButtonClassName="custom-cancel-button"
-    />
+
+                <FileUpload
+                  name="demo[]"
+                  url="/api/upload"
+                  multiple
+                  accept="image/*"
+                  maxFileSize={1000000}
+                  emptyTemplate={<p className="m-0">Drag and drop files here to upload.</p>}
+                  className="custom-fileupload"
+                  uploadButtonClassName="p-button p-fileupload-choose p-component"
+                  cancelButtonClassName="custom-cancel-button"
+                />
 
               </CardBody>
             </Card>
           </Col>
-     {/* Upload Documents*/}
+          {/* Upload Documents*/}
 
-     <Col md="12">
+          <Col md="12">
             <Card>
               <CardHeader>
                 <CardTitle tag="h4"> Upload Documents</CardTitle>
               </CardHeader>
               <CardBody>
-              <FileUpload name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
+                <FileUpload name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
               </CardBody>
             </Card>
           </Col>
-      {/* Set Asset Status */}
-      <Col md="12">
+          {/* Set Asset Status */}
+          <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5" style={{ color:"rgb(82,203,206)"}}>  Asset Status</CardTitle>
+                <CardTitle tag="h5" style={{ color: "rgb(82,203,206)" }}>  Asset Status</CardTitle>
               </CardHeader>
               <CardBody>
-              <Row>
-              <Label sm="2"  style={{ color:"greywhite"}} >Status *</Label>
-                    <Col sm="4">
-                      <FormGroup>
+                <Row>
+                  <Label sm="2" style={{ color: "greywhite" }} >Status *</Label>
+                  <Col sm="4">
+                    <FormGroup>
                       <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="selectCondition"
-                          value={selectCondition}
-                          onChange={(value) => setSingleSelect(value)}
-                          options={[
-                            {
-                              value: "",
-                              label: "Single Option",
-                              isDisabled: true,
-                            },
-                            { value: "2", label: "New Entry" },
-                            { value: "3", label: "Open for EoI" },
-                            { value: "4", label: "Unavailable-Sold" },
-                          ]}
-                          placeholder="Single Select"
-                        />
-                        
-                      </FormGroup>
-                    </Col>
-</Row>
+                        className="react-select primary"
+                        classNamePrefix="react-select"
+                        name="selectCondition"
+                        value={selectCondition}
+                        onChange={(value) => setSingleSelect(value)}
+                        options={[
+                          {
+                            value: "",
+                            label: "Single Option",
+                            isDisabled: true,
+                          },
+                          { value: "2", label: "New Entry" },
+                          { value: "3", label: "Open for EoI" },
+                          { value: "4", label: "Unavailable-Sold" },
+                        ]}
+                        placeholder="Single Select"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>
         </Row>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-  <Button color="primary">Close</Button>
-  <Button color="primary">Save</Button>
-</div>
+          <Button color="primary">Close</Button>
+          <Button color="primary">Save</Button>
+        </div>
       </div>
     </>
   );
