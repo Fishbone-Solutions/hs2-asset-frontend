@@ -52,15 +52,12 @@ function Inventory() {
     };
 
     fetchData();
-  }, []);
-
-  const  handleDelete = (assetId) => {
-  
-
-    console.log(assetId)
+  }, [dataTable]);
+  const handleDelete = (assetId) => {
+    console.log(assetId);
     // Construct the URL for the delete endpoint
     const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
-
+  
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
@@ -69,27 +66,30 @@ function Inventory() {
       headers: myHeaders,
       redirect: "follow"
     };
+  
     // Make the POST request to delete the asset
     fetch(deleteEndpoint, requestOptions)
-      .then((response) => {
-        console.log(response)
-        if (response.appRequestStatus === 'SUCCESS') {
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        if (result.appRequestStatus === "SUCCESS") {
           // Asset deleted successfully
-          console.log('Asset deleted successfully');
-          
+          console.log("Asset deleted successfully");
+          const updatedData = dataState.filter((row) => row.asset_id !== assetId);
+          setDataState(updatedData);
+  
           // Perform any additional actions or update state as needed
         } else {
           // Handle error response
-          console.log('Error deleting asset');
+          console.log("Error deleting asset");
           // Perform error handling or display error message
         }
       })
       .catch((error) => {
         // Handle network errors or exceptions
-        console.log('Network error or exception occurred:', error);
+        console.error("Network error or exception occurred:", error);
       });
   };
-
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
       return {
