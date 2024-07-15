@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: "/dashboard",
-    pathName: "/admin/dashboard",
+    pathName: "/admin/w1",
     name: "Item Requests",
     component: <W1 />,
     layout: "/admin",
@@ -48,7 +48,7 @@ const routes = [
   },
   {
     path: "/dashboard",
-    pathName: "/admin/dashboard",
+    pathName: "/admin/w2",
     name: "Approval Requests",
     component: <W2 />,
     layout: "/admin",
@@ -57,7 +57,7 @@ const routes = [
   },
   {
     path: "/dashboard",
-    pathName: "/admin/dashboard",
+    pathName: "/admin/w3",
     name: "Exchange Register",
     component: <W3 />,
     layout: "/admin",
@@ -67,7 +67,7 @@ const routes = [
   {
     path: "/dashboard",
     pathName: "/admin/dashboard",
-    name: "My EOI'sr",
+    name: "My EoI's",
     component: <W4 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",

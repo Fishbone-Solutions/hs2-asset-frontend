@@ -19,18 +19,35 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
 import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
+import ReactBSAlert from "react-bootstrap-sweetalert";
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
-  const formatDate = (date) => {
-    const formattedDate = new Date(date).toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-    return formattedDate;
+  const [alert, setAlert] = React.useState(null);
+
+
+  const cancelDetele = () => {
+
+    setAlert(
+      <ReactBSAlert
+        danger
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Cancelled"
+        onConfirm={() => hideAlert()}
+        onCancel={() => hideAlert()}
+        confirmBtnBsStyle="info"
+        btnSize=""
+      >
+No Changes made
+      </ReactBSAlert>
+    );
   };
 
+  const hideAlert = () => {
+    setAlert(null);
+  };
+  
+  
   React.useEffect(() => {
     const fetchData = async () => {
       const myHeaders = new Headers();
@@ -53,43 +70,92 @@ function Inventory() {
 
     fetchData();
   }, [dataTable]);
+
   const handleDelete = (assetId) => {
-    console.log(assetId);
-    // Construct the URL for the delete endpoint
-    const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
-  
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("token", "x8F!@p01,*MH");
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      redirect: "follow"
-    };
-  
-    // Make the POST request to delete the asset
-    fetch(deleteEndpoint, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        if (result.appRequestStatus === "SUCCESS") {
-          // Asset deleted successfully
-          console.log("Asset deleted successfully");
-          const updatedData = dataState.filter((row) => row.asset_id !== assetId);
-          setDataState(updatedData);
-  
-          // Perform any additional actions or update state as needed
-        } else {
-          // Handle error response
-          console.log("Error deleting asset");
-          // Perform error handling or display error message
-        }
-      })
-      .catch((error) => {
-        // Handle network errors or exceptions
-        console.error("Network error or exception occurred:", error);
-      });
+    setAlert(
+      <ReactBSAlert
+        warning
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Are you sure?"
+        onConfirm={() => successDelete(assetId)}
+        onCancel={() => cancelDetele()}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        confirmBtnText="Yes, delete it!"
+        cancelBtnText="Cancel"
+        showCancel
+        btnSize=""
+      >
+        You will not be able to recover this asset's listing.
+      </ReactBSAlert>
+    );
+   
+
+const  successDelete = (assetId) => {
+  console.log(assetId);
+  // Construct the URL for the delete endpoint
+  const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
+   
+  const myHeaders = new Headers();
+  myHeaders.append("accept", "application/json");
+  myHeaders.append("token", "x8F!@p01,*MH");
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    redirect: "follow"
   };
+
+  // Make the POST request to delete the asset
+  fetch(deleteEndpoint, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      if (result.appRequestStatus === "SUCCESS") {
+        // Asset deleted successfully
+        console.log("Asset deleted successfully");
+        const updatedData = dataState.filter((row) => row.asset_id !== assetId);
+        setDataState(updatedData);
+        setAlert(
+          <ReactBSAlert
+            success
+            style={{ display: "block", marginTop: "-100px" }}
+            title="Deleted!"
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            confirmBtnBsStyle="info"
+            btnSize=""
+          >
+    Asset ID {assetId } has been deleted successfully
+          </ReactBSAlert>
+        );
+
+        // Perform any additional actions or update state as needed
+      } else {
+        // Handle error response
+        setAlert(
+          <ReactBSAlert
+            success
+            style={{ display: "block", marginTop: "-100px" }}
+            title="Deleted Operation Failed"
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            confirmBtnBsStyle="danger"
+            btnSize=""
+          >
+Error deleting asset
+          </ReactBSAlert>
+        );
+        console.log("Error deleting asset");
+        // Perform error handling or display error message
+      }
+    })
+    .catch((error) => {
+      // Handle network errors or exceptions
+      console.error("Network error or exception occurred:", error);
+    });
+};
+}
+
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
       return {
@@ -102,6 +168,7 @@ function Inventory() {
 
       <div className="content">
         <Row>
+          {alert}
           <Col md="12">
             <Card>
 
@@ -156,13 +223,14 @@ function Inventory() {
                       accessor: "actions",
                       sortable: false,
                       filterable: false,
+                      //warningWithConfirmAndCancelMessage
                       Cell: ( { row }) => (
                         <div>
 
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: 'green' }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "blue" }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                          <button style={{ fontSize: '16px', backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'red', }} onClick={() => handleDelete(row.original.asset_id)}><MdDelete /></button>
+                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "red" }}  className="-btn" onClick={() =>handleDelete(row.original.asset_id)}><MdDelete /></button>
                         </div>
                       ),
                     },
