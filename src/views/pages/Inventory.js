@@ -22,9 +22,6 @@ import { FaEdit } from "react-icons/fa";
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
-  const [dataTable2, setDataTable2] = React.useState([]);
-
-
   const formatDate = (date) => {
     const formattedDate = new Date(date).toLocaleDateString('en-GB', {
       day: '2-digit',
@@ -34,32 +31,32 @@ function Inventory() {
     return formattedDate;
   };
 
- React.useEffect(() => {
-  const fetchData = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("token", "x8F!@p01,*MH");
-    console.log(BACKEND_ADDRESS)
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("token", "x8F!@p01,*MH");
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
 
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow"
+      fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setDataState(result.appRespData)
+          console.log(result)
+        })
+        .catch((error) => console.error(error));
     };
-    
-    fetch(`http://localhost/assets/-1`, requestOptions)
 
-      .then((response) => response.json())
-      .then((result) => setDataState(result))
-      .catch((error) => console.error(error));
-  };
+    fetchData();
+  }, []);
 
-  fetchData();
-}, []);
+  const handleAction3 = () => {
 
-const handleAction3= () => {
-
-}
+  }
 
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
@@ -70,22 +67,21 @@ const handleAction3= () => {
   );
   return (
     <>
- 
+
       <div className="content">
         <Row>
           <Col md="12">
             <Card>
-           
+
 
               <CardBody>
-              <NavLink to="/admin/assetregister" className="nav-link">
+                <NavLink to="/admin/assetregister" className="nav-link">
 
-              <Button color="primary"style={{display: 'flex', justifyContent: 'flex-end'}}>
-
- <IoAddCircleOutline color="white" size="2em" />
-</Button>
-</NavLink>
-
+                  <Button color="primary" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <IoAddCircleOutline color="white" size="2em" />
+                  </Button>
+                </NavLink>
+ 
                 <ReactTable
                   data={dataState}
                   columns={[
@@ -94,42 +90,36 @@ const handleAction3= () => {
                       accessor: "id",
                     },
                     {
+                      Header: "Entry Date",
+                      accessor: "entrydate",
+                    },
+                    {
                       Header: "Name",
                       accessor: "asset_name",
                     },
                     {
-                      Header: "Description",
+                      Header: "DESCRIPTION",
                       accessor: "description",
                     },
-                  /*   {
-                      Header: "Location",
-                      accessor: "location",
-                    },  */
                     {
-
-                      Header: "Available From",
-                      accessor:"available_from",
-                      Cell: ({ value }) => <span>{formatDate(value)}</span>,
+                      Header: "LOCATION",
+                      accessor: "asset_location",
                     },
                     {
-                      Header: "Status",
+                      Header: "AVAILABILITY",
+                      accessor: "available_from",
+                    },
+                    {
+                      Header: "STATUS",
                       accessor: "statuscode",
                     },
-                 /*    {
-                      Header: "Total EOI ",
+                    {
+                      Header: "EOI",
                       accessor: "total_eoi",
-                      sortable: false,
-                      filterable: false,
-                    }, */
-/*                     {
-                      Header: "Date",
-                      accessor: "date",
-                      Cell: ({ value }) => <span>{formatDate(value)}</span>,
-                    }, */
-/*                     {
-                      Header: "Added By",
-                      accessor: "added_by",
-                    }, */
+                    },
+                    
+
+                    
                     {
                       Header: "Actions",
                       accessor: "actions",
@@ -138,11 +128,11 @@ const handleAction3= () => {
                       Cell: () => (
                         <div>
 
-                        <button style={{ fontSize: '16px', backgroundColor:"transparent", border: 'none', outline: 'none'  , color: 'green'}} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
-                        <button style={{ fontSize: '16px',backgroundColor:"transparent", border: 'none', outline: 'none', color:"purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
-                        <button style={{ fontSize: '16px',  backgroundColor:"transparent", border: 'none', outline: 'none', color:"blue" }}  className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                        <button style={{  fontSize: '16px',  backgroundColor: 'transparent',  border: 'none',  outline: 'none', color: 'red', }} onClick={() => handleAction3()}><MdDelete /></button>
-                      </div>
+                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: 'green' }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
+                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
+                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "blue" }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
+                          <button style={{ fontSize: '16px', backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'red', }} onClick={() => handleAction3()}><MdDelete /></button>
+                        </div>
                       ),
                     },
                   ]}
