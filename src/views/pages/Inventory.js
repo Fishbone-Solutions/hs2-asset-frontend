@@ -54,9 +54,41 @@ function Inventory() {
     fetchData();
   }, []);
 
-  const handleAction3 = () => {
+  const  handleDelete = (assetId) => {
+  
 
-  }
+    console.log(assetId)
+    // Construct the URL for the delete endpoint
+    const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
+
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    // Make the POST request to delete the asset
+    fetch(deleteEndpoint, requestOptions)
+      .then((response) => {
+        console.log(response)
+        if (response.appRequestStatus === 'SUCCESS') {
+          // Asset deleted successfully
+          console.log('Asset deleted successfully');
+          
+          // Perform any additional actions or update state as needed
+        } else {
+          // Handle error response
+          console.log('Error deleting asset');
+          // Perform error handling or display error message
+        }
+      })
+      .catch((error) => {
+        // Handle network errors or exceptions
+        console.log('Network error or exception occurred:', error);
+      });
+  };
 
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
@@ -81,13 +113,12 @@ function Inventory() {
                         <IoAddCircleOutline color="white" size="2em" />
                   </Button>
                 </NavLink>
- 
                 <ReactTable
                   data={dataState}
                   columns={[
                     {
                       Header: "Asset ID",
-                      accessor: "id",
+                      accessor: "asset_id",
                     },
                     {
                       Header: "Entry Date",
@@ -125,13 +156,13 @@ function Inventory() {
                       accessor: "actions",
                       sortable: false,
                       filterable: false,
-                      Cell: () => (
+                      Cell: ( { row }) => (
                         <div>
 
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: 'green' }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "blue" }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                          <button style={{ fontSize: '16px', backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'red', }} onClick={() => handleAction3()}><MdDelete /></button>
+                          <button style={{ fontSize: '16px', backgroundColor: 'transparent', border: 'none', outline: 'none', color: 'red', }} onClick={() => handleDelete(row.original.asset_id)}><MdDelete /></button>
                         </div>
                       ),
                     },
