@@ -20,15 +20,6 @@ import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
 const routes = [
   {
-    path: "/dashboard",
-    pathName: "/admin/dashboard",
-    name: "Bulk Import Records",
-    component: <Dashboard />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-
-  },
-  {
     path: "/inventory",
     pathName: "/admin/inventory",
     name: "Inventory Management",
@@ -37,6 +28,52 @@ const routes = [
     icon: "nc-icon nc-controller-modern",
 
   },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "Bulk Import Records",
+    component: <W0 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "Item Requests",
+    component: <W1 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "Approval Requests",
+    component: <W2 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "Exchange Register",
+    component: <W3 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "My EOI'sr",
+    component: <W4 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+
   {
     path: "/assetregister",
     pathName: "/admin/assetregister",
@@ -49,7 +86,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "EoI Submission List",
-    component: <Dashboard />,
+    component: <W5 />,
     layout: "/fiasufoiauoi",
     icon: "nc-icon nc-delivery-fast",
 
@@ -57,7 +94,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "Equipment Requests",
-    component: <Dashboard />,
+    component: <W6 />,
     layout: "/adduaoiudoiasmin",
     icon: "nc-icon nc-book-bookmark",
 
