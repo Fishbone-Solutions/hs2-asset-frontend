@@ -9,6 +9,7 @@ import {
   Button
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import { IoSearchSharp } from "react-icons/io5";
 
 import { MdDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
@@ -171,15 +172,19 @@ Error deleting asset
           {alert}
           <Col md="12">
             <Card>
-
-
               <CardBody>
-                <NavLink to="/admin/assetregister" className="nav-link">
+              
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+  <div style={{ marginRight: '10px' }}>
+    <IoSearchSharp color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%'}} />
+  </div>
+  <NavLink to="/admin/assetregister" >
+  <div>
+    <IoAddCircleOutline color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%' }} />
+  </div>
+  </NavLink>
+  </div>
 
-                  <Button color="primary" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <IoAddCircleOutline color="white" size="2em" />
-                  </Button>
-                </NavLink>
                 <ReactTable
                   data={dataState}
                   columns={[
@@ -223,7 +228,6 @@ Error deleting asset
                       accessor: "actions",
                       sortable: false,
                       filterable: false,
-                      //warningWithConfirmAndCancelMessage
                       Cell: ( { row }) => (
                         <div>
 
