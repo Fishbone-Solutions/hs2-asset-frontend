@@ -25,7 +25,7 @@ import routes from "routes";
 function AdminNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  const [color, setColor] = React.useState("navbar-transparent");
+  const [color, setColor] = React.useState("");
   const location = useLocation();
 
   const currentRoute = routes.find((route) => route.pathName === location.pathname);
@@ -44,9 +44,9 @@ function AdminNavbar(props) {
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
-      setColor("bg-white");
+      setColor("bg-primary");
     } else {
-      setColor("navbar-transparent");
+      setColor("bg-primary");
     }
   };
   // this function opens and closes the sidebar on small devices
@@ -61,7 +61,7 @@ function AdminNavbar(props) {
     if (!collapseOpen) {
       setColor("bg-white");
     } else {
-      setColor("navbar-transparent");
+      setColor("bg-primary");
     }
     setCollapseOpen(!collapseOpen);
   };
@@ -101,14 +101,14 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-        <span className="d-none d-md-block" style={{ color: 'rgb(82,203,206)' }}>
-        {icon && <i className={icon}></i>} {/* Render the icon */}
-          {name}
-        </span>
-        <span className="d-block d-md-none">
-        {icon && <i className={icon}></i>} {/* Render the icon */}
-          {name}
-        </span>
+        <span className="d-none d-md-block" style={{ color: 'white' }}>
+    {icon && <i className={icon}></i>} {/* Render the icon */}
+    <span style={{ color: 'white' }}>{name}</span>
+  </span>
+  <span className="d-block d-md-none">
+    {icon && <i className={icon}></i>} {/* Render the icon */}
+    <span style={{ color: 'white' }}>{name}</span>
+  </span>
       </NavbarBrand>
           </div>
           <button
@@ -176,34 +176,12 @@ function AdminNavbar(props) {
                     href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
-                    Action
-                  </DropdownItem>
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
                     Another action
                   </DropdownItem>
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Something else here
-                  </DropdownItem>
+
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <NavItem>
-                <NavLink
-                  className="btn-rotate"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <i className="nc-icon nc-settings-gear-65" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Account</span>
-                  </p>
-                </NavLink>
-              </NavItem>
+
             </Nav>
           </Collapse>
         </Container>
