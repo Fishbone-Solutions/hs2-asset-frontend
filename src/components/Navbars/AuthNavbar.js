@@ -64,12 +64,6 @@ function AuthNavbar(props) {
                 Login
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink to="/" className="nav-link">
-                <i className="nc-icon nc-satisfied" />
-                User
-              </NavLink>
-            </NavItem>
           </Nav>
         </Collapse>
       </Container>
