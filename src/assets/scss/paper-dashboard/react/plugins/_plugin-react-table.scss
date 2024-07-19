@@ -127,7 +127,7 @@
   }
 }
 .ReactTable .rt-thead .rt-tr{
-  text-align:center
+  text-align:center;
 }
 .ReactTable .rt-thead .rt-th:last-child{
   text-align: right;
@@ -520,3 +520,13 @@
   margin: 0 3px;
   padding: 5px 8px;
 }
+
+
+
+/* If you want to target a specific column, for example, the first column: */
+.ReactTable .rt-th:first-child, .ReactTable .rt-td:first-child {
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+}
+

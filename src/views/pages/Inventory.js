@@ -153,6 +153,108 @@ function Inventory() {
       };
     })
   );
+  const columns = React.useMemo(
+    () => [
+
+    {
+      Header: "ID",
+      accessor: "asset_id",
+    },
+    {
+      Header: "Entry Date",
+      accessor: "entrydate",
+      style: { width: '50px', minWidth: '50px', maxWidth: '50px' },
+
+    },
+    {
+      Header: "Name",
+      accessor: "asset_name",
+    },
+    {
+      Header: "DESCRIPTION",
+      accessor: "description",
+    },
+    {
+      Header: "LOCATION",
+      accessor: "asset_location",
+    },
+    {
+      Header: "AVAILABILITY",
+      accessor: "available_from",
+    },
+    {
+      Header: "STATUS",
+      accessor: "statuscode",
+    },
+    {
+      Header: "EOI",
+      accessor: "total_eoi",
+    },
+
+    {
+      Header: "Actions",
+      accessor: "actions",
+      sortable: false,
+      filterable: false,
+      Cell: ({ row }) => (
+        <div>
+          <Button
+            className="btn-icon btn-simple"
+            color="info"
+            size="sm"
+          >
+            <i
+              className="fa fa-eye"
+              onClick={() => handleView(row.original.asset_id)}
+            ></i>
+          </Button>
+          {` `}
+          <Button
+            className="btn-icon btn-simple"
+            color="success"
+            size="sm"
+          >
+            <i className="fa fa-edit"></i>
+          </Button>
+
+          <Button
+            className="btn-icon btn-simple"
+            color="secondary"
+            size="sm"
+          >
+            <i className="fa fa-files-o	"></i>
+          </Button>
+          {` `}
+
+          <Button
+            className="btn-icon btn-simple"
+            color="danger"
+            size="sm"
+            outline={true}
+            onClick={() => handleDelete(row.original.asset_id)}
+          >
+            <i
+              className="fa fa-trash"
+              style={{
+                color: "#EE8257",
+                transition: "color 0.3s",
+              }}
+              onMouseOver={(e) =>
+                (e.target.style.color = "white")
+              }
+              onMouseOut={(e) =>
+                (e.target.style.color = "#EE8257")
+              }
+            ></i>
+          </Button>
+        </div>
+      ),
+    },
+  ],
+)
+
+
+
   return (
     <>
       <div className="content">
@@ -190,101 +292,7 @@ function Inventory() {
 
                 <ReactTable
                   data={dataState}
-                  columns={[
-                    {
-                      Header: "ID",
-                      accessor: "asset_id",
-                      width: "20",
-                    },
-                    {
-                      Header: "Entry Date",
-                      accessor: "entrydate",
-                    },
-                    {
-                      Header: "Name",
-                      accessor: "asset_name",
-                    },
-                    {
-                      Header: "DESCRIPTION",
-                      accessor: "description",
-                    },
-                    {
-                      Header: "LOCATION",
-                      accessor: "asset_location",
-                    },
-                    {
-                      Header: "AVAILABILITY",
-                      accessor: "available_from",
-                    },
-                    {
-                      Header: "STATUS",
-                      accessor: "statuscode",
-                    },
-                    {
-                      Header: "EOI",
-                      accessor: "total_eoi",
-                    },
-
-                    {
-                      Header: "Actions",
-                      accessor: "actions",
-                      sortable: false,
-                      filterable: false,
-                      Cell: ({ row }) => (
-                        <div>
-                          <Button
-                            className="btn-icon btn-simple"
-                            color="info"
-                            size="sm"
-                          >
-                            <i
-                              className="fa fa-eye"
-                              onClick={() => handleView(row.original.asset_id)}
-                            ></i>
-                          </Button>
-                          {` `}
-                          <Button
-                            className="btn-icon btn-simple"
-                            color="success"
-                            size="sm"
-                          >
-                            <i className="fa fa-edit"></i>
-                          </Button>
-
-                          <Button
-                            className="btn-icon btn-simple"
-                            color="success"
-                            size="sm"
-                          >
-                            <i className="fa fa-edit"></i>
-                          </Button>
-                          {` `}
-
-                          <Button
-                            className="btn-icon btn-simple"
-                            color="danger"
-                            size="sm"
-                            outline={true}
-                            onClick={() => handleDelete(row.original.asset_id)}
-                          >
-                            <i
-                              className="fa fa-trash"
-                              style={{
-                                color: "#EE8257",
-                                transition: "color 0.3s",
-                              }}
-                              onMouseOver={(e) =>
-                                (e.target.style.color = "white")
-                              }
-                              onMouseOut={(e) =>
-                                (e.target.style.color = "#EE8257")
-                              }
-                            ></i>
-                          </Button>
-                        </div>
-                      ),
-                    },
-                  ]}
+                columns={columns}
                   className="-striped -highlight primary-pagination"
                 />
               </CardBody>

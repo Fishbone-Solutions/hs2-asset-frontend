@@ -5,15 +5,16 @@ import {
   useFilters,
   useSortBy,
   usePagination,
+  
 } from "react-table";
 import classnames from "classnames";
 // A great library for fuzzy filtering/sorting items
 import { matchSorter } from "match-sorter";
 // react plugin used to create DropdownMenu for selecting items
 import Select from "react-select";
-
+import "./ReactTableMod.scss";
 // reactstrap components
-import { Container, Row, Col, FormGroup, Input ,Form,InputGroup,InputGroupAddon,InputGroupText, Button} from "reactstrap";
+import { Container, Row, Col, FormGroup} from "reactstrap";
 
 function DefaultColumnFilter({ column }) {
   const { filterValue, preFilteredRows, setFilter } = column;
@@ -81,6 +82,9 @@ function Table({ columns, data }) {
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
+      minWidth: 3,
+      width: 10,
+      maxWidth: 40,
     }),
     []
   );
@@ -127,34 +131,34 @@ function Table({ columns, data }) {
     
         <table {...getTableProps()} className="rt-table">
         <thead className="rt-thead -header">
-    {headerGroups.map((headerGroup) => (
-      <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
-        {headerGroup.headers.map((column, key) => (
-          <th
-            {...column.getHeaderProps(column.getSortByToggleProps())}
-            className={classnames("rt-th rt-resizable-header", {
-              "-cursor-pointer": headerGroup.headers.length - 1 !== key,
-              "-sort-asc": column.isSorted && !column.isSortedDesc,
-              "-sort-desc": column.isSorted && column.isSortedDesc,
-            })}
-          >
-            <div className="rt-resizable-header-content">
-              {column.render("Header")}
-            </div>
-            {/* Render the column's filter UI */}
-            <div>
-              {headerGroup.headers.length - 1 === key
-                ? null
-                : column.canFilter
-                ? column.render("Filter")
-                : null}
-            </div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-        
+  {headerGroups.map((headerGroup) => (
+    <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
+      {headerGroup.headers.map((column, key) => (
+        <th
+          {...column.getHeaderProps(column.getSortByToggleProps())}
+          className={classnames("rt-th rt-resizable-header", {
+            "-cursor-pointer": headerGroup.headers.length - 1 !== key,
+            "-sort-asc": column.isSorted && !column.isSortedDesc,
+            "-sort-desc": column.isSorted && column.isSortedDesc,
+          })}
+          style={{ width: column.width }} // Set the width of the column
+        >
+          <div className="rt-resizable-header-content">
+            {column.render("Header")}
+          </div>
+          {/* Render the column's filter UI */}
+          <div>
+            {headerGroup.headers.length - 1 === key
+              ? null
+              : column.canFilter
+              ? column.render("Filter")
+              : null}
+          </div>
+        </th>
+      ))}
+    </tr>
+  ))}
+</thead>
   <tbody {...getTableBodyProps()} className="rt-tbody">
   {page.map((row, i) => {
     prepareRow(row);
