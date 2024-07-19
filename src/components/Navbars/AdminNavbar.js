@@ -9,14 +9,8 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   NavbarBrand,
   Navbar,
-  NavItem,
-  NavLink,
   Nav,
   Container,
 } from "reactstrap";
@@ -25,7 +19,7 @@ import routes from "routes";
 function AdminNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  const [color, setColor] = React.useState("");
+  const [color, setColor] = React.useState("#52CBCE");
   const location = useLocation();
 
   const currentRoute = routes.find((route) => route.pathName === location.pathname);
@@ -68,8 +62,9 @@ function AdminNavbar(props) {
   return (
     <>
       <Navbar
-        className={classnames("navbar-absolute fixed-top", color)}
+        className={classnames("navbar-absolute fixed-top", '#52CBCE')}
         expand="lg"
+        style={{backgroundColor:"#52CBCE"}}
       >
         <Container fluid>
           <div className="navbar-wrapper">
@@ -101,14 +96,14 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-        <span className="d-none d-md-block" style={{ color: 'white' }}>
+        <span className="d-none d-md-block" style={{ color: 'grey' }}>
     {icon && <i className={icon}></i>} {/* Render the icon */}
-    <span style={{ color: 'white' }}>{name}</span>
+    <span style={{ color: 'grey' , fontWeight: 'bold' }}>{name}</span>
   </span>
   <span className="d-block d-md-none">
-    {icon && <i className={icon}></i>} {/* Render the icon */}
-    <span style={{ color: 'white' }}>{name}</span>
-  </span>
+  {icon && <i className={icon}></i>} {/* Render the icon */}
+  <span style={{ color: 'grey', fontWeight: 'bold' }}>{name}</span>
+</span>
       </NavbarBrand>
           </div>
           <button
@@ -157,14 +152,14 @@ function AdminNavbar(props) {
                 <DropdownToggle
                   aria-haspopup={true}
                   caret
-                  color="default"
+                  color="grey"
                   data-toggle="dropdown"
                   id="navbarDropdownMenuLink"
                   nav
                 >
                   <i className="nc-icon nc-bell-55" />
                   <p>
-                    <span className="d-lg-none d-md-block">Logouts</span>
+                    <span className="d-lg-none d-md-block">Logout</span>
                   </p>
                 </DropdownToggle>
                 <DropdownMenu

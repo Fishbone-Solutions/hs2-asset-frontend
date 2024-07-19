@@ -191,8 +191,10 @@ Error deleting asset
                   data={dataState}
                   columns={[
                     {
-                      Header: "Asset ID",
+                      Header: "ID",
                       accessor: "asset_id",
+                      width: "20"
+
                     },
                     {
                       Header: "Entry Date",
@@ -240,7 +242,12 @@ Error deleting asset
                 </Button>{` `}
                 <Button className="btn-icon btn-simple" color="success" size="sm">
                     <i className="fa fa-edit"></i>
+                </Button>
+
+                <Button className="btn-icon btn-simple" color="success" size="sm">
+                    <i className="fa fa-edit"></i>
                 </Button>{` `}
+                
                 <Button
   className="btn-icon btn-simple"
   color="danger"
