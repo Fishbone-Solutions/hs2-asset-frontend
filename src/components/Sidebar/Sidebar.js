@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Collapse } from "reactstrap";
+import {NavLink,NavItem} from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -146,11 +147,12 @@ function Sidebar(props) {
             <img src={logo} alt="react-logo" />
           </div>
         </a>
-        
-        <a
-          href="exchange.hs2.fishbonesolutions.co.uk"
-        >Exchange Platform
-        </a>
+        <NavItem>
+  <NavLink to="#" className="nav-link" onClick={() => window.location.href = 'https://exchange.hs2.fishbonesolutions.co.uk'}>
+    <i className="nc-icon nc-book-bookmark" />
+    Exchange Platform
+  </NavLink>
+</NavItem>
       </div>
 
       <div className="sidebar-wrapper" ref={sidebar}>

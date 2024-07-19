@@ -57,7 +57,7 @@ const routes = [
   },
   {
     path: "/exchangeregister",
-    pathName: "/admin/w3",
+    pathName: "/admin/exchangeregister",
     name: "Exchange Register",
     component: <AssetRegister />,
     layout: "/admin",

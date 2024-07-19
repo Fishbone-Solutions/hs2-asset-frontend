@@ -18,7 +18,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 
@@ -179,7 +179,7 @@ Error deleting asset
   <div style={{ marginRight: '10px' }}>
     <IoSearchSharp color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%'}} />
   </div>
-  <NavLink to="/admin/exchangeregister" >
+  <NavLink to="/admin/" >
   <div>
     <IoAddCircleOutline color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%' }} />
   </div>
@@ -232,18 +232,20 @@ Error deleting asset
                       Cell: ( { row }) => (
                         <div>
                 <Button className="btn-icon btn-simple" color="info" size="sm">
-                    <i className="fa fa-user"></i>
+                    <i className="fa fa-eye"></i>
                 </Button>{` `}
                 <Button className="btn-icon btn-simple" color="success" size="sm">
                     <i className="fa fa-edit"></i>
                 </Button>{` `}
-                <Button className="btn-icon btn-simple" color="danger" size="sm" onClick={() =>handleDelete(row.original.asset_id)}>
-                <i ><MdDelete></MdDelete></i>
-                </Button>{` `}
-                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: 'green' }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
-                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
-                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "blue" }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "red" }}  className="-btn" onClick={() =>handleDelete(row.original.asset_id)}></button>
+                <Button
+  className="btn-icon btn-simple"
+  color="danger"
+  size="sm"
+  outline={true}
+  onClick={() => handleDelete(row.original.asset_id)}
+>
+<i className="fa fa-trash" style={{ color: '#EE8257', transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color = 'white'} onMouseOut={(e) => e.target.style.color = '#EE8257'}></i>
+</Button>
                         </div>
                       ),
                     },
