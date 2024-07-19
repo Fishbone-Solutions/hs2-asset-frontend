@@ -179,7 +179,7 @@ Error deleting asset
   <div style={{ marginRight: '10px' }}>
     <IoSearchSharp color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%'}} />
   </div>
-  <NavLink to="/admin/assetregister" >
+  <NavLink to="/admin/exchangeregister" >
   <div>
     <IoAddCircleOutline color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%' }} />
   </div>

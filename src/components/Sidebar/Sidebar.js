@@ -139,17 +139,17 @@ function Sidebar(props) {
     >
       <div className="logo">
         <a
-          href="assetmanagement.fishbonesolutions.co.uk"
+          href="exchange.hs2.fishbonesolutions.co.uk"
           className="simple-text logo-mini"
         >
           <div className="logo-img">
             <img src={logo} alt="react-logo" />
           </div>
         </a>
+        
         <a
-          href="assetmanagement.fishbonesolutions.co.uk"
-          className="simple-text logo-normal"
-        >Asset Management 
+          href="exchange.hs2.fishbonesolutions.co.uk"
+        >Exchange Platform
         </a>
       </div>
 
