@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Collapse } from "reactstrap";
-import { NavLink, NavItem } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
-import logo from "assets/img/react-logo.png";
+import logo from "assets/img/faces/ex_logo.jpg";
 
 var ps;
 
@@ -139,22 +137,22 @@ function Sidebar(props) {
       data-active-color={props.activeColor}
     >
       <div className="logo">
-          <NavLink
-            to=""
-            className="nav-link"
-            onClick={() =>
-              (window.location.href =
-                "https://exchange.hs2.fishbonesolutions.co.uk")
-            }
-          >
-            Exchange Platform
-          </NavLink>
+        <a
+          href="assetmanagement.fishbonesolutions.co.uk"
+          className="simple-text logo-mini"
+        >
+          <div className="logo-img">
+            <img src={logo} width={90} height={90} alt="react-logo" />
+          </div>
+        </a>
+        <a
+          className="simple-text logo-normal"
+        >HS2 EXCHANGE 
+        </a>
       </div>
-
       <div className="sidebar-wrapper" ref={sidebar}>
         <div className="user">
           <div className="photo">
-            <img src={avatar} alt="Avatar" />
           </div>
           <div className="info">
             <a
