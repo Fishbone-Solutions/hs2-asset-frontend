@@ -10,16 +10,10 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { IoSearchSharp } from "react-icons/io5";
-
-import { MdDelete } from "react-icons/md";
-import { GrDocumentUpdate } from "react-icons/gr";
 import { IoAddCircleOutline } from "react-icons/io5";
-
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
-import { FaEye, FaTrash } from "react-icons/fa";
-import { FaEdit } from "react-icons/fa";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 
 function Inventory() {
@@ -72,6 +66,13 @@ No Changes made
 
     fetchData();
   }, [dataTable]);
+
+
+  const handleView= (assetId) => {
+    
+
+  }
+
 
   const handleDelete = (assetId) => {
     setAlert(
@@ -179,7 +180,7 @@ Error deleting asset
   <div style={{ marginRight: '10px' }}>
     <IoSearchSharp color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%'}} />
   </div>
-  <NavLink to="/admin/" >
+  <NavLink to="/admin/exchangeregister" >
   <div>
     <IoAddCircleOutline color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%' }} />
   </div>
@@ -231,8 +232,11 @@ Error deleting asset
                       filterable: false,
                       Cell: ( { row }) => (
                         <div>
-                <Button className="btn-icon btn-simple" color="info" size="sm">
-                    <i className="fa fa-eye"></i>
+                <Button className="btn-icon btn-simple" color="info" size="sm"
+                
+                >
+                    <i className="fa fa-eye"   onClick={() => handleView(row.original.asset_id)}
+                    ></i>
                 </Button>{` `}
                 <Button className="btn-icon btn-simple" color="success" size="sm">
                     <i className="fa fa-edit"></i>

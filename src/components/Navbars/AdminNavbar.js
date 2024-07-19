@@ -131,17 +131,17 @@ function AdminNavbar(props) {
             isOpen={collapseOpen}
           >
             <Form>
-              <InputGroup className="no-border">
+{/*               <InputGroup className="no-border">
                 <Input defaultValue="" placeholder="Search..." type="text" />
                 <InputGroupAddon addonType="append">
                   <InputGroupText>
                     <i className="nc-icon nc-zoom-split" />
                   </InputGroupText>
                 </InputGroupAddon>
-              </InputGroup>
+              </InputGroup> */}
             </Form>
             <Nav navbar>
-              <NavItem>
+{/*               <NavItem>
                 <NavLink
                   className="btn-magnify"
                   href="#pablo"
@@ -152,7 +152,7 @@ function AdminNavbar(props) {
                     <span className="d-lg-none d-md-block">Stats</span>
                   </p>
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
               <UncontrolledDropdown className="btn-rotate" nav>
                 <DropdownToggle
                   aria-haspopup={true}
@@ -164,7 +164,7 @@ function AdminNavbar(props) {
                 >
                   <i className="nc-icon nc-bell-55" />
                   <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
+                    <span className="d-lg-none d-md-block">Logouts</span>
                   </p>
                 </DropdownToggle>
                 <DropdownMenu

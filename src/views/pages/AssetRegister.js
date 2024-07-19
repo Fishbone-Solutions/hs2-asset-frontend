@@ -22,10 +22,7 @@ import {
   Col,
 } from "reactstrap";
 
-
-
-
-function AssetRegister() {
+function AssetRegister({ code,mode }) {
 
   const   options= [
     { value: "New", label: "New" },
@@ -84,6 +81,71 @@ function AssetRegister() {
     statuscode:""
   });
 
+  useEffect(() => {
+    if (mode == "view") {
+      return; // Early return if mode is not "view" or code is null/undefined
+    }
+  
+    const fetchData = async () => {
+      try {
+        const myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("token", "x8F!@p01,*MH");
+        myHeaders.append("user_id", "tabish.hb");
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow"
+        };
+  
+        const response = await fetch(`${BACKEND_ADDRESS}/assets/${code}`, requestOptions);
+        if (response.ok) {
+          const result = await response.json();
+          setDataState(result.appRespData);
+          console.log(result);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+  
+    fetchData();
+  }, [code, mode]);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("token", "x8F!@p01,*MH");
+       // myHeaders.append("user_id", "tabish.hb");
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow"
+        };
+  
+        const response = await fetch(`${BACKEND_ADDRESS}/assets/${code}`, requestOptions);
+        if (response.ok) {
+          const result = await response.json();
+          setFormData(result.appRespData);
+          console.log(result);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+  
+    fetchData();
+  }, [formData]);
+
+
+
     // useEffect hook to perform initial setup or fetches
     useEffect(() => {
       console.log("Component did mount or update specific props");
@@ -129,7 +191,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="p" style={{ color: "rgb(82,203,206)",}} >Asset Seller Details</CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>Asset Seller Details </CardTitle>
               </CardHeader>
               <CardBody>
               <Form  onSubmit={handleSubmit}>
@@ -211,7 +273,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Category  Selection </CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>Category  Selection </CardTitle>
               </CardHeader>
               <CardBody>
                   <Row>
@@ -269,7 +331,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Asset Detail</CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>Asset Detail </CardTitle>
               </CardHeader>
               <CardBody>
                 <Form action="/" className="form-horizontal" method="get">
@@ -416,7 +478,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4"> Upload Images </CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>Upload Images </CardTitle>
               </CardHeader>
               <CardBody>
 
@@ -440,7 +502,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4"> Upload Documents</CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>Upload Documents </CardTitle>
               </CardHeader>
               <CardBody>
                 <FileUpload name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000} emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />
@@ -451,7 +513,9 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5" style={{ color: "rgb(82,203,206)" }}>  Asset Status</CardTitle>
+              <CardTitle tag="h6" style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}>
+  Asset Status
+</CardTitle>
               </CardHeader>
               <CardBody>
                 <Row>

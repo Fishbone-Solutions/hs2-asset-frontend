@@ -148,8 +148,7 @@ function Sidebar(props) {
           </div>
         </a>
         <NavItem>
-  <NavLink to="#" className="nav-link" onClick={() => window.location.href = 'https://exchange.hs2.fishbonesolutions.co.uk'}>
-    <i className="nc-icon nc-book-bookmark" />
+  <NavLink to="" className="nav-link" onClick={() => window.location.href = 'https://exchange.hs2.fishbonesolutions.co.uk'}>
     Exchange Platform
   </NavLink>
 </NavItem>
