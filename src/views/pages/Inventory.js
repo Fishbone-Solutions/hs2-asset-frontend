@@ -1,28 +1,20 @@
 import React from "react";
 
 // reactstrap components
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-  Button
-} from "reactstrap";
+import { Card, CardBody, Row, Col, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { IoSearchSharp } from "react-icons/io5";
 import { IoAddCircleOutline } from "react-icons/io5";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
-import BACKEND_ADDRESS from "../components/serverAddress"
+import BACKEND_ADDRESS from "../components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
 
-
   const cancelDetele = () => {
-
     setAlert(
       <ReactBSAlert
         danger
@@ -33,7 +25,7 @@ function Inventory() {
         confirmBtnBsStyle="info"
         btnSize=""
       >
-No Changes made
+        No Changes made
       </ReactBSAlert>
     );
   };
@@ -41,25 +33,24 @@ No Changes made
   const hideAlert = () => {
     setAlert(null);
   };
-  
-  
+
   React.useEffect(() => {
     const fetchData = async () => {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id","tabish.hb")
+      myHeaders.append("user_id", "tabish.hb");
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
-        redirect: "follow"
+        redirect: "follow",
       };
 
       fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          setDataState(result.appRespData)
-          console.log(result)
+          setDataState(result.appRespData);
+          console.log(result);
         })
         .catch((error) => console.error(error));
     };
@@ -67,12 +58,7 @@ No Changes made
     fetchData();
   }, [dataTable]);
 
-
-  const handleView= (assetId) => {
-    
-
-  }
-
+  const handleView = (assetId) => {};
 
   const handleDelete = (assetId) => {
     setAlert(
@@ -92,72 +78,73 @@ No Changes made
         You will not be able to recover this asset's listing.
       </ReactBSAlert>
     );
-   
 
-const  successDelete = (assetId) => {
-  console.log(assetId);
-  // Construct the URL for the delete endpoint
-  const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
-   
-  const myHeaders = new Headers();
-  myHeaders.append("accept", "application/json");
-  myHeaders.append("token", "x8F!@p01,*MH");
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    redirect: "follow"
+    const successDelete = (assetId) => {
+      console.log(assetId);
+      // Construct the URL for the delete endpoint
+      const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
+
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("token", "x8F!@p01,*MH");
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      // Make the POST request to delete the asset
+      fetch(deleteEndpoint, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          if (result.appRequestStatus === "SUCCESS") {
+            // Asset deleted successfully
+            console.log("Asset deleted successfully");
+            const updatedData = dataState.filter(
+              (row) => row.asset_id !== assetId
+            );
+            setDataState(updatedData);
+            setAlert(
+              <ReactBSAlert
+                success
+                style={{ display: "block", marginTop: "-100px" }}
+                title="Deleted!"
+                onConfirm={() => hideAlert()}
+                onCancel={() => hideAlert()}
+                confirmBtnBsStyle="info"
+                btnSize=""
+              >
+                Asset ID {assetId} has been deleted successfully
+              </ReactBSAlert>
+            );
+
+            // Perform any additional actions or update state as needed
+          } else {
+            // Handle error response
+            setAlert(
+              <ReactBSAlert
+                success
+                style={{ display: "block", marginTop: "-100px" }}
+                title="Deleted Operation Failed"
+                onConfirm={() => hideAlert()}
+                onCancel={() => hideAlert()}
+                confirmBtnBsStyle="danger"
+                btnSize=""
+              >
+                Error deleting asset
+              </ReactBSAlert>
+            );
+            console.log("Error deleting asset");
+            // Perform error handling or display error message
+          }
+        })
+        .catch((error) => {
+          // Handle network errors or exceptions
+          console.error("Network error or exception occurred:", error);
+        });
+    };
   };
-
-  // Make the POST request to delete the asset
-  fetch(deleteEndpoint, requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-      if (result.appRequestStatus === "SUCCESS") {
-        // Asset deleted successfully
-        console.log("Asset deleted successfully");
-        const updatedData = dataState.filter((row) => row.asset_id !== assetId);
-        setDataState(updatedData);
-        setAlert(
-          <ReactBSAlert
-            success
-            style={{ display: "block", marginTop: "-100px" }}
-            title="Deleted!"
-            onConfirm={() => hideAlert()}
-            onCancel={() => hideAlert()}
-            confirmBtnBsStyle="info"
-            btnSize=""
-          >
-    Asset ID {assetId } has been deleted successfully
-          </ReactBSAlert>
-        );
-
-        // Perform any additional actions or update state as needed
-      } else {
-        // Handle error response
-        setAlert(
-          <ReactBSAlert
-            success
-            style={{ display: "block", marginTop: "-100px" }}
-            title="Deleted Operation Failed"
-            onConfirm={() => hideAlert()}
-            onCancel={() => hideAlert()}
-            confirmBtnBsStyle="danger"
-            btnSize=""
-          >
-Error deleting asset
-          </ReactBSAlert>
-        );
-        console.log("Error deleting asset");
-        // Perform error handling or display error message
-      }
-    })
-    .catch((error) => {
-      // Handle network errors or exceptions
-      console.error("Network error or exception occurred:", error);
-    });
-};
-}
 
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
@@ -168,24 +155,38 @@ Error deleting asset
   );
   return (
     <>
-
       <div className="content">
         <Row>
           {alert}
           <Col md="12">
             <Card>
               <CardBody>
-              
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-  <div style={{ marginRight: '10px' }}>
-    <IoSearchSharp color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%'}} />
-  </div>
-  <NavLink to="/admin/exchangeregister" >
-  <div>
-    <IoAddCircleOutline color="white" size="2.4em" style={{ backgroundColor: '#52CBCE', border: '2px solid #52CBCE', borderRadius: '15%' }} />
-  </div>
-  </NavLink>
-  </div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div style={{ marginRight: "10px" }}>
+                    <IoSearchSharp
+                      color="white"
+                      size="2.4em"
+                      style={{
+                        backgroundColor: "#52CBCE",
+                        border: "2px solid #52CBCE",
+                        borderRadius: "15%",
+                      }}
+                    />
+                  </div>
+                  <NavLink to="/admin/exchangeregister">
+                    <div>
+                      <IoAddCircleOutline
+                        color="white"
+                        size="2.4em"
+                        style={{
+                          backgroundColor: "#52CBCE",
+                          border: "2px solid #52CBCE",
+                          borderRadius: "15%",
+                        }}
+                      />
+                    </div>
+                  </NavLink>
+                </div>
 
                 <ReactTable
                   data={dataState}
@@ -193,8 +194,7 @@ Error deleting asset
                     {
                       Header: "ID",
                       accessor: "asset_id",
-                      width: "20"
-
+                      width: "20",
                     },
                     {
                       Header: "Entry Date",
@@ -224,39 +224,63 @@ Error deleting asset
                       Header: "EOI",
                       accessor: "total_eoi",
                     },
-                    
 
-                    
                     {
                       Header: "Actions",
                       accessor: "actions",
                       sortable: false,
                       filterable: false,
-                      Cell: ( { row }) => (
+                      Cell: ({ row }) => (
                         <div>
-                <Button className="btn-icon btn-simple" color="info" size="sm"
-                
-                >
-                    <i className="fa fa-eye"   onClick={() => handleView(row.original.asset_id)}
-                    ></i>
-                </Button>{` `}
-                <Button className="btn-icon btn-simple" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>
+                          <Button
+                            className="btn-icon btn-simple"
+                            color="info"
+                            size="sm"
+                          >
+                            <i
+                              className="fa fa-eye"
+                              onClick={() => handleView(row.original.asset_id)}
+                            ></i>
+                          </Button>
+                          {` `}
+                          <Button
+                            className="btn-icon btn-simple"
+                            color="success"
+                            size="sm"
+                          >
+                            <i className="fa fa-edit"></i>
+                          </Button>
 
-                <Button className="btn-icon btn-simple" color="success" size="sm">
-                    <i className="fa fa-edit"></i>
-                </Button>{` `}
-                
-                <Button
-  className="btn-icon btn-simple"
-  color="danger"
-  size="sm"
-  outline={true}
-  onClick={() => handleDelete(row.original.asset_id)}
->
-<i className="fa fa-trash" style={{ color: '#EE8257', transition: 'color 0.3s' }} onMouseOver={(e) => e.target.style.color = 'white'} onMouseOut={(e) => e.target.style.color = '#EE8257'}></i>
-</Button>
+                          <Button
+                            className="btn-icon btn-simple"
+                            color="success"
+                            size="sm"
+                          >
+                            <i className="fa fa-edit"></i>
+                          </Button>
+                          {` `}
+
+                          <Button
+                            className="btn-icon btn-simple"
+                            color="danger"
+                            size="sm"
+                            outline={true}
+                            onClick={() => handleDelete(row.original.asset_id)}
+                          >
+                            <i
+                              className="fa fa-trash"
+                              style={{
+                                color: "#EE8257",
+                                transition: "color 0.3s",
+                              }}
+                              onMouseOver={(e) =>
+                                (e.target.style.color = "white")
+                              }
+                              onMouseOut={(e) =>
+                                (e.target.style.color = "#EE8257")
+                              }
+                            ></i>
+                          </Button>
                         </div>
                       ),
                     },

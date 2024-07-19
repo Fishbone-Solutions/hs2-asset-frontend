@@ -25,7 +25,7 @@ const routes = [
     name: "Inventory ",
     component: <Inventory></Inventory>,
     layout: "/admin",
-    icon: "nc-icon nc-controller-modern",
+    icon: "nc-icon nc-profile",
 
   },
   {

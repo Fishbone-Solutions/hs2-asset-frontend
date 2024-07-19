@@ -1,4 +1,3 @@
-import { FcFilingCabinet } from "react-icons/fc";
 const icons = [
   {
     name: "nc-icon nc-air-baloon",
