@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/inventory",
     pathName: "/admin/inventory",
-    name: "Inventory Management",
+    name: "Inventory ",
     component: <Inventory></Inventory>,
     layout: "/admin",
     icon: "nc-icon nc-controller-modern",
@@ -31,14 +31,14 @@ const routes = [
   {
     path: "/dashboard",
     pathName: "/admin/dashboard",
-    name: "Bulk Import Records",
+    name: "Bulk Import",
     component: <W0 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
 
   },
   {
-    path: "/dashboard",
+    path: "/itemsrequests",
     pathName: "/admin/w1",
     name: "Item Requests",
     component: <W1 />,
@@ -47,7 +47,7 @@ const routes = [
 
   },
   {
-    path: "/dashboard",
+    path: "/approvalsrequests",
     pathName: "/admin/w2",
     name: "Approval Requests",
     component: <W2 />,
@@ -56,46 +56,20 @@ const routes = [
 
   },
   {
-    path: "/dashboard",
+    path: "/exchangeregister",
     pathName: "/admin/w3",
     name: "Exchange Register",
-    component: <W3 />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-
-  },
-  {
-    path: "/dashboard",
-    pathName: "/admin/dashboard",
-    name: "My EoI's",
-    component: <W4 />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-
-  },
-
-  {
-    path: "/assetregister",
-    pathName: "/admin/assetregister",
-    name: "Asset Register",
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
 
   },
   {
-    path: "/dashboard",
-    name: "EoI Submission List",
-    component: <W5 />,
-    layout: "/fiasufoiauoi",
-    icon: "nc-icon nc-delivery-fast",
-
-  },
-  {
-    path: "/dashboard",
-    name: "Equipment Requests",
-    component: <W6 />,
-    layout: "/adduaoiudoiasmin",
+    path: "/myeoi",
+    pathName: "/admin/dashboard",
+    name: "My EoI's",
+    component: <W4 />,
+    layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
 
   },
