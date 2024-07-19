@@ -231,11 +231,19 @@ Error deleting asset
                       filterable: false,
                       Cell: ( { row }) => (
                         <div>
-
+                <Button className="btn-icon btn-simple" color="info" size="sm">
+                    <i className="fa fa-user"></i>
+                </Button>{` `}
+                <Button className="btn-icon btn-simple" color="success" size="sm">
+                    <i className="fa fa-edit"></i>
+                </Button>{` `}
+                <Button className="btn-icon btn-simple" color="danger" size="sm" onClick={() =>handleDelete(row.original.asset_id)}>
+                <i ><MdDelete></MdDelete></i>
+                </Button>{` `}
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: 'green' }} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
                           <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "blue" }} className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "red" }}  className="-btn" onClick={() =>handleDelete(row.original.asset_id)}><MdDelete /></button>
+                          <button style={{ fontSize: '16px', backgroundColor: "transparent", border: 'none', outline: 'none', color: "red" }}  className="-btn" onClick={() =>handleDelete(row.original.asset_id)}></button>
                         </div>
                       ),
                     },

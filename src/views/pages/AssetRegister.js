@@ -22,8 +22,48 @@ import {
   Col,
 } from "reactstrap";
 
+
+
+
 function AssetRegister() {
-  const [selectCondition, setSingleSelect] = React.useState(null);
+
+  const   options= [
+    { value: "New", label: "New" },
+    { value: "Old", label: "Old" },
+  ]
+ 
+  const optionsCategory1 =[
+    { value: "plant", label: "Plant" },
+    { value: "machinery", label: "Machinery" },
+    { value: "fencing", label: "Fencing" },
+    { value: "lighting", label: "Lighting" },
+    { value: "office-equipment", label: "Office Equipment" },
+    { value: "materials", label: "Materials" },
+    { value: "aggregate", label: "Aggregate" },
+    { value: "signs", label: "Signs" },
+  ]
+
+
+  const [registerEmailState, setregisterEmailState] = React.useState("");
+  const registerClick = () => {
+    if (registerEmailState === "") {
+      setregisterEmailState("has-danger");
+    }
+    if (registerPasswordState === "" || registerConfirmPasswordState === "") {
+      setregisterPasswordState("has-danger");
+      setregisterConfirmPasswordState("has-danger");
+    }
+  };
+  const verifyEmail = (value) => {
+    var emailRex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRex.test(value)) {
+      return true;
+    }
+    return false;
+  };
+
+
   const [formData, setFormData] = useState({
      code:"",
      entrydate:"",
@@ -68,7 +108,7 @@ function AssetRegister() {
           headers: {
             'Content-Type': 'application/json',
             'token': 'x8F!@p01,*MH',
-            'userId': 'tabish.hb'
+        //    'userId': 'tabish.hb'
           },
           body: JSON.stringify(formData)
         });
@@ -89,7 +129,7 @@ function AssetRegister() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Asset Seller Details</CardTitle>
+                <CardTitle tag="p" style={{ color: "rgb(82,203,206)",}} >Asset Seller Details</CardTitle>
               </CardHeader>
               <CardBody>
               <Form  onSubmit={handleSubmit}>
@@ -123,12 +163,28 @@ function AssetRegister() {
                   <Row>
                     <Label sm="2">Email Address *</Label>
                     <Col sm="4">
-                      <FormGroup>
-                        <Input type="text" 
-                           name="seller_email"
-                           value={formData.seller_email}
-                           onChange={handleChange}
-                           required />
+                      <FormGroup className={`has-label ${formData.seller_email}`}>
+                      <Input
+  type="text"
+  name="seller_email"
+  value={formData.seller_email}
+  onChange={(e) => {
+    if (!verifyEmail(e.target.value)) {
+      setregisterEmailState("has-danger");
+    } else {
+      setregisterEmailState("has-success");
+    }
+    setFormData((prevState) => ({
+      ...prevState,
+      seller_email: e.target.value
+    }));
+  }}
+/>
+{registerEmailState === "has-danger" ? (
+  <label className="error">
+    Please enter a valid email address.
+  </label>
+) : null}
                       </FormGroup>
                     </Col>
                     <Label sm="2">Location *</Label>
@@ -166,23 +222,15 @@ function AssetRegister() {
   className="react-select primary"
   classNamePrefix="react-select"
   name="category1"
-  value={formData.categorycode1}
+  value={options.find((option) => option.value === formData.categorycode1)}
+
   onChange={(selectedOption) =>
     setFormData((prevState) => ({
       ...prevState,
-      categorycode1 : selectedOption
+      category1: selectedOption.value // Use selectedOption.value to update the category1 field
     }))
   }
-  options={[
-    { value: "plant", label: "Plant" },
-    { value: "machinery", label: "Machinery" },
-    { value: "fencing", label: "Fencing" },
-    { value: "lighting", label: "Lighting" },
-    { value: "office-equipment", label: "Office Equipment" },
-    { value: "materials", label: "Materials" },
-    { value: "aggregate", label: "Aggregate" },
-    { value: "signs", label: "Signs" },
-  ]}
+  options={optionsCategory1}
   placeholder="Select an option"
   required
 />
@@ -191,24 +239,24 @@ function AssetRegister() {
                     <Label sm="2">Category 2 *</Label>
                     <Col sm="4">
                       <FormGroup>
-                        <Select
-                        className="react-select primary"
-                        classNamePrefix="react-select"
-                        name="category2"
-                        value={formData.categorycode2}
-                        onChange={(categorycode2) =>
-                          setFormData((prevState) => ({
-                            ...prevState,
-                            categorycode2  : categorycode2
-                          }))
-                        }
-                        options={[
-                          { value: "Option 1", label: "Option 1" },
-                          { value: "Option 2", label: "Option 2" },
-                        ]}
-                        placeholder="Select an option"
-                        required
-                        />
+                      <Select
+  className="react-select primary"
+  classNamePrefix="react-select"
+  name="category2"
+  value={formData.categorycode2}
+  onChange={(selectedOption2 ) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      categorycode2 : selectedOption2
+    }))
+  }
+  options={[
+    { value: "Option 1", label: "Option 1" },
+    { value: "Option 2", label: "Option 2" },
+  ]}
+  placeholder="Select an option"
+  required
+/>
                       </FormGroup>
                     </Col>
 
@@ -316,7 +364,7 @@ function AssetRegister() {
                     <Col sm="4">
                       <FormGroup>
                       <Input type="text" 
-                           name="quantity"
+                           name="asset_location"
                            value={formData.asset_location}
                            onChange={handleChange}
                            required />
@@ -326,9 +374,10 @@ function AssetRegister() {
                     <Col sm="4">
                       <FormGroup>
                       <Input type="text" 
-                           name="estimatedvalue"
+                           name="value"
                            value={formData.value}
                            onChange={handleChange}
+                           required
                             />
                      </FormGroup>
                     </Col>
@@ -409,24 +458,24 @@ function AssetRegister() {
                   <Label sm="2" style={{ color: "greywhite" }} >Status *</Label>
                   <Col sm="4">
                     <FormGroup>
-                      <Select
-                        className="react-select primary"
-                        classNamePrefix="react-select"
-                        name="statuscode"
-                         value={formData.statuscode}
-                        onChange={(statuscode) =>
-                          setFormData((prevState) => ({
-                            ...prevState,
-                            statuscode : statuscode
-                          }))
-                        }
-                        options={[
-                          { value: "New", label: "New" },
-                          { value: "Old", label: "Old" },
-                        ]}
-                        placeholder="Select an option"
-                        required
-                      />
+                    <Select
+  className="react-select primary"
+  classNamePrefix="react-select"
+  name="statuscode"
+  value={options.find((option) => option.value === formData.statuscode)}
+  onChange={(selectedOption) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      statuscode: selectedOption.value,
+    }))
+  }
+  options={[
+    { value: "New", label: "New" },
+    { value: "Old", label: "Old" },
+  ]}
+  placeholder="Select an option"
+  required
+/>
                     </FormGroup>
                   </Col>
                 </Row>
