@@ -10,7 +10,7 @@ import "assets/scss/paper-dashboard.scss?v=1.3.1";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import AssetRegister from "views/pages/AssetRegister";
+import AssetRegisterView from "views/pages/AssetRegisterView";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -19,8 +19,8 @@ root.render(
     <Routes>
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="/admin/*" element={<AdminLayout />} />
-      <Route path="*" element={<Navigate to="/auth/login" replace />} />
-      <Route path='/:id' element={ <AssetRegister></AssetRegister>} />
+     <Route path="*" element={<Navigate to="/auth/login" replace />} /> 
+     <Route path="/asset/: code" element={<AssetRegisterView />} />
 
     </Routes>
   </BrowserRouter>

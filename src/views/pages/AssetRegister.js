@@ -131,12 +131,7 @@ function AssetRegister({ code, mode }) {
 const hideAlert = () => {
   setAlert(null);
 };
-
-
-
-
-
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
       try {
         const myHeaders = new Headers();

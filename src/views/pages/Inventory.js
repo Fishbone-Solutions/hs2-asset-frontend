@@ -9,10 +9,19 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
+import { useNavigate } from 'react-router-dom';
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
+
+
+  const navigate = useNavigate();
+
+  const handleView = (assetId) => {
+    console.log ("asset ID iventory ",assetId)
+    navigate(`/asset/${22}`);
+  };
 
   const cancelDetele = () => {
     setAlert(
@@ -58,7 +67,7 @@ function Inventory() {
     fetchData();
   }, [dataTable]);
 
-  const handleView = (assetId) => {};
+
 
   const handleDelete = (assetId) => {
     setAlert(
