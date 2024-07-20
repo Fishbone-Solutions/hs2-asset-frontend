@@ -27,6 +27,7 @@ const routes = [
     component: <AssetRegisterView />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    hidden: "true"
   },
   
   {

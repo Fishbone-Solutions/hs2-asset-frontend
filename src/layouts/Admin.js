@@ -16,7 +16,7 @@ function Admin(props) {
   const [activeColor, setActiveColor] = React.useState("info");
   const [sidebarMini, setSidebarMini] = React.useState(false);
   const mainPanel = React.useRef();
-  
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
@@ -31,13 +31,13 @@ function Admin(props) {
       }
     };
   }, []);
-  
+
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
   }, [location]);
-  
+
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
@@ -56,11 +56,11 @@ function Admin(props) {
   const handleActiveClick = (color) => {
     setActiveColor(color);
   };
-  
+
   const handleBgClick = (color) => {
     setBackgroundColor(color);
   };
-  
+
   const handleMiniClick = () => {
     if (document.body.classList.contains("sidebar-mini")) {
       setSidebarMini(false);
@@ -69,7 +69,7 @@ function Admin(props) {
     }
     document.body.classList.toggle("sidebar-mini");
   };
-  
+
   return (
     <div className="wrapper">
       <Sidebar

@@ -12,8 +12,8 @@ function Sidebar(props) {
   const [openAvatar, setOpenAvatar] = React.useState(false);
   const [collapseStates, setCollapseStates] = React.useState({});
   const sidebar = React.useRef();
-  // this creates the intial state of this component based on the collapse routes
-  // that it gets through props.routes
+
+  // Initialize collapse states based on routes
   const getCollapseStates = (routes) => {
     let initialState = {};
     routes.map((prop, key) => {
@@ -28,9 +28,8 @@ function Sidebar(props) {
     });
     return initialState;
   };
-  // this verifies if any of the collapses should be default opened on a rerender of this component
-  // for example, on the refresh of the page,
-  // while on the src/views/forms/RegularForms.js - route /admin/regular-forms
+
+  // Check if any collapses should be default opened
   const getCollapseInitialState = (routes) => {
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].collapse && getCollapseInitialState(routes[i].views)) {
@@ -41,9 +40,13 @@ function Sidebar(props) {
     }
     return false;
   };
-  // this function creates the links and collapses that appear in the sidebar (left menu)
+
+  // Create sidebar links
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (prop.hidden) {
+        return null; // Skip hidden routes
+      }
       if (prop.redirect) {
         return null;
       }
@@ -107,12 +110,14 @@ function Sidebar(props) {
       );
     });
   };
-  // verifies if routeName is the one active (in browser input)
+
+  // Check if the route is active
   const activeRoute = (routeName) => {
-    return location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    return window.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+
   React.useEffect(() => {
-    // if you are using a Windows Machine, the scrollbars will have a Mac look
+    // Add perfect scrollbar if using Windows
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(sidebar.current, {
         suppressScrollX: true,
@@ -120,16 +125,17 @@ function Sidebar(props) {
       });
     }
     return function cleanup() {
-      // we need to destroy the false scrollbar when we navigate
-      // to a page that doesn't have this component rendered
+      // Destroy the scrollbar when component is unmounted
       if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
       }
     };
   });
+
   React.useEffect(() => {
     setCollapseStates(getCollapseStates(props.routes));
-  }, []);
+  }, [props.routes]);
+
   return (
     <div
       className="sidebar"
@@ -138,22 +144,18 @@ function Sidebar(props) {
     >
       <div className="logo">
         <a
-          href="assetmanagement.fishbonesolutions.co.uk"
+          href="https://assetmanagement.fishbonesolutions.co.uk"
           className="simple-text logo-mini"
         >
           <div className="logo-img">
             <img src={logo} width={90} height={90} alt="react-logo" />
           </div>
         </a>
-        <a
-          className="simple-text logo-normal"
-        >HS2 EXCHANGE 
-        </a>
+        <a className="simple-text logo-normal">HS2 EXCHANGE</a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
         <div className="user">
-          <div className="photo">
-          </div>
+          <div className="photo"></div>
           <div className="info">
             <a
               href="#pablo"
