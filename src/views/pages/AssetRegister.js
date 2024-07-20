@@ -2,11 +2,13 @@ import React from "react";
 import Select from "react-select";
 import { FileUpload } from "primereact/fileupload";
 import "primereact/resources/primereact.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { useState, useEffect } from "react";
 import ReactDatetime from "react-datetime";
 import BACKEND_ADDRESS from "../components/serverAddress";
 import moment from "moment";
+import "./AssetRegister.css"
+import ReactBSAlert from "react-bootstrap-sweetalert";
+
 // reactstrap components
 import {
   Button,
@@ -27,6 +29,8 @@ function AssetRegister({ code, mode }) {
   const [registerEmailState, setregisterEmailState] = React.useState("");
   const [requiredState, setrequiredState] = React.useState("");
   const [required, setrequired] = React.useState("");
+  const [alert, setAlert] = React.useState(null);
+
   const [formData, setFormData] = useState({
     code: "",
     entrydate: "",
@@ -123,6 +127,15 @@ function AssetRegister({ code, mode }) {
     fetchData();
   }, [code, mode]);
 
+// Reset Alert
+const hideAlert = () => {
+  setAlert(null);
+};
+
+
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -186,6 +199,19 @@ function AssetRegister({ code, mode }) {
       console.log(formData);
       const data = await response.json();
       console.log("Form submitted successfully:", data);
+      setAlert(
+        <ReactBSAlert
+         success
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Submitted"
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          confirmBtnBsStyle="info"
+          btnSize=""
+        >
+Asset Listing submitted 
+        </ReactBSAlert>
+      );
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -201,10 +227,11 @@ function AssetRegister({ code, mode }) {
                 <CardHeader>
                   <CardTitle
                     tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
-                  >
-                    Asset Seller Details{" "}
-                  </CardTitle>
+                    style={{ color: "rgb(82,203,206)" }}
+
+>
+Asset Seller Details
+</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
@@ -646,8 +673,8 @@ function AssetRegister({ code, mode }) {
                             }))
                           }
                           options={[
-                            { value: "New", label: "New" },
-                            { value: "Old", label: "Old" },
+                            { value: "New" },
+                            { value: "Old" },
                           ]}
                           placeholder="Select an option"
                           required
@@ -659,12 +686,15 @@ function AssetRegister({ code, mode }) {
               </Card>
             </Col>
           </Row>
+          {alert}
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button color="primary">Close</Button>
-            <Button color="primary" type="submit">
-              Save
-            </Button>
-          </div>
+  <Button color="primary">Close</Button>
+  {/* {mode === 'edit' || mode === 'add' && ( */}
+    <Button color="primary" type="submit"  >
+      Save
+    </Button>
+
+</div>
         </Form>
       </div>
     </>
