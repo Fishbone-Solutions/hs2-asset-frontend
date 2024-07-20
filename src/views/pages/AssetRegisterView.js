@@ -67,13 +67,7 @@ function AssetRegisterView() {
     { value: "signs", label: "Signs" },
   ];
 
-  const verifyEmail = (value) => {
-    var emailRex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return emailRex.test(value);
-  };
 
-  const verifyLength = (value, length) => value.length >= length;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +92,7 @@ function AssetRegisterView() {
 
 
     fetchData();
-  }, [assetId]);
+  }, [code]);
 
   return (
     <>

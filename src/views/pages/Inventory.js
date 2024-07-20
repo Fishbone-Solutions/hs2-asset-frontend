@@ -20,7 +20,7 @@ function Inventory() {
 
   const handleView = (assetId) => {
     console.log ("asset ID iventory ",assetId)
-    navigate(`/asset/${22}`);
+    navigate(`/admin/asset/${assetId}`);
   };
 
   const cancelDetele = () => {

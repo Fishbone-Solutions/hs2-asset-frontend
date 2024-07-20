@@ -18,7 +18,17 @@ import W11 from 'views/pages/W11';
 import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
-const routes = [
+import AssetRegisterView from "views/pages/AssetRegisterView";
+const routes = [ 
+  {
+    path: "/asset/:code",
+    pathName: "/admin/asset",
+    name: "Asset Register View",
+    component: <AssetRegisterView />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+  },
+  
   {
     path: "/inventory",
     pathName: "/admin/inventory",
