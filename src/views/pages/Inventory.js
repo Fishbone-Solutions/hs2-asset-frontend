@@ -1,4 +1,5 @@
 import React from "react";
+import DataTable from "react-data-table-component";
 
 // reactstrap components
 import { Card, CardBody, Row, Col, Button } from "reactstrap";
@@ -15,7 +16,38 @@ function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
 
+  const customStyles = {
+    rows: {
+      style: (index) => ({
+        background: index % 2 === 0 ? "white" : "rgb(176,150,166)", // Apply white color for even index rows and red color for odd index rows
+      }),
+    },
+    headCells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for head cells
+        paddingRight: "8px",
+        backgroundColor: "rgb(76, 47, 72)",
+        height: "58.5px",
+        fontSize: "16px",
+        color: "#fff",
+        border: "1px solid black", // add a black border */
+        padding: "3px",
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
 
+      },
+    },
+
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+        color: "#32192f",
+        fontSize: "16px"
+      },
+    },
+  };
   const navigate = useNavigate();
 
   const handleEdit = (assetId, mode) => {
@@ -189,9 +221,9 @@ function Inventory() {
     {
       Header: "DESCRIPTION",
       accessor: "description",
-      width: 300, // Set column width
-      minWidth: 300, // Set minimum column width
-      maxWidth: 300, // Set maximum column width
+      width: 430, // Set column width
+      minWidth: 430, // Set minimum column width
+      maxWidth: 430, // Set maximum column width
 
     },
     {
@@ -215,7 +247,9 @@ function Inventory() {
     {
       Header: "EOI",
       accessor: "total_eoi",
-      width: "100px", // Set a manual width
+      width: 40, // Set column width
+      minWidth: 40, // Set minimum column width
+      maxWidth: 40, // Set maximum column width
 
     },
 
@@ -319,12 +353,12 @@ function Inventory() {
                     </div>
                   </NavLink>
                 </div>
-
-                <ReactTable
+              
+                 <ReactTable
                   data={dataState}
                 columns={columns}
                   className="-striped -highlight primary-pagination"
-                />
+                /> 
               </CardBody>
             </Card>
           </Col>
