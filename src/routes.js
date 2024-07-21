@@ -30,7 +30,7 @@ const routes = [
   }, */
   {
     path: "/exchangeregister/:code",
-    pathName: "/admin/exchangeregister",
+    pathName: "/admin/exchangeregister/:code",
     name: "Exchange Register",
     component: <AssetRegister />,
     layout: "/admin",

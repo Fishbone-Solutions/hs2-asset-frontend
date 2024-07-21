@@ -22,7 +22,8 @@ function AdminNavbar(props) {
   const [color, setColor] = React.useState("#52CBCE");
   const location = useLocation();
 
-  const currentRoute = routes.find((route) => route.pathName === location.pathname);
+  const currentRoute = routes.find((route) => location.pathname.includes(route.pathName));
+
   const { name, icon } = currentRoute || {};
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);

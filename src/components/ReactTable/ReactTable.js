@@ -5,7 +5,7 @@ import {
   useFilters,
   useSortBy,
   usePagination,
-  
+  useResizeColumns,
 } from "react-table";
 import classnames from "classnames";
 // A great library for fuzzy filtering/sorting items
@@ -14,14 +14,14 @@ import { matchSorter } from "match-sorter";
 import Select from "react-select";
 import "./ReactTableMod.scss";
 // reactstrap components
-import { Container, Row, Col, FormGroup} from "reactstrap";
+import { Container, Row, Col, FormGroup } from "reactstrap";
 
 function DefaultColumnFilter({ column }) {
   const { filterValue, preFilteredRows, setFilter } = column;
   const count = preFilteredRows.length;
 
   // Define the columns where you want to enable the filter
-  const enableFilterOnColumns = ["name", "location", "status","available_from"];
+  const enableFilterOnColumns = [];
 
   if (!enableFilterOnColumns.includes(column.id)) {
     return null; // Do not render the filter for this column
@@ -29,14 +29,15 @@ function DefaultColumnFilter({ column }) {
 
   return (
     <FormGroup>
- {/*      <Input
+      <input
         placeholder={`Search ${count} records...`}
         type="text"
         value={filterValue || ""}
         onChange={(e) => {
           setFilter(e.target.value || undefined);
         }}
-      /> */}
+        className="form-control"
+      />
     </FormGroup>
   );
 }
@@ -82,9 +83,9 @@ function Table({ columns, data }) {
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
-      minWidth: 3,
-      width: 10,
-      maxWidth: 40,
+      minWidth: 30,
+      width: 150,
+      maxWidth: 400,
     }),
     []
   );
@@ -112,12 +113,10 @@ function Table({ columns, data }) {
     },
     useFilters, // useFilters!
     useSortBy,
-    usePagination
+    usePagination,
+    useResizeColumns // Add useResizeColumns hook
   );
 
-  // We don't want to render all of the rows for this example, so cap
-  // it for this use case
-  // const firstPageRows = rows.slice(0, 10);
   let pageSelectData = Array.apply(
     null,
     Array(pageOptions.length)
@@ -125,69 +124,74 @@ function Table({ columns, data }) {
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
   return (
     <>
-<br></br>
-
+      <br></br>
       <div className="ReactTable -striped -highlight primary-pagination">
-    
         <table {...getTableProps()} className="rt-table">
-        <thead className="rt-thead -header">
-  {headerGroups.map((headerGroup) => (
-    <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
-      {headerGroup.headers.map((column, key) => (
-        <th
-          {...column.getHeaderProps(column.getSortByToggleProps())}
-          className={classnames("rt-th rt-resizable-header", {
-            "-cursor-pointer": headerGroup.headers.length - 1 !== key,
-            "-sort-asc": column.isSorted && !column.isSortedDesc,
-            "-sort-desc": column.isSorted && column.isSortedDesc,
-          })}
-          style={{ width: column.width }} // Set the width of the column
-        >
-          <div className="rt-resizable-header-content">
-            {column.render("Header")}
-          </div>
-          {/* Render the column's filter UI */}
-          <div>
-            {headerGroup.headers.length - 1 === key
-              ? null
-              : column.canFilter
-              ? column.render("Filter")
-              : null}
-          </div>
-        </th>
-      ))}
-    </tr>
-  ))}
-</thead>
-  <tbody {...getTableBodyProps()} className="rt-tbody">
-  {page.map((row, i) => {
-    prepareRow(row);
-    return (
-      <tr
-        {...row.getRowProps()}
-        className={classnames(
-          "rt-tr",
-          { " -odd": i % 2 === 0 },
-          { " -even": i % 2 === 1 }
-        )}
-      >
-        {row.cells.map((cell, cellIndex) => {
-          return (
-            <td
-              {...cell.getCellProps()}
-              className={classnames("rt-td", {
-                "increase-width": cellIndex === 1, // Add this class to the second column
-              })}
-            
-            >
-              {cell.render("Cell")}
-            </td>
-          );
-        })}
-      </tr>
-    );
-  })}
-</tbody>
+          <thead className="rt-thead -header">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
+                {headerGroup.headers.map((column, key) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className={classnames("rt-th rt-resizable-header", {
+                      "-cursor-pointer": headerGroup.headers.length - 1 !== key,
+                      "-sort-asc": column.isSorted && !column.isSortedDesc,
+                      "-sort-desc": column.isSorted && column.isSortedDesc,
+                    })}
+                    style={{ width: column.width }} // Set the width of the column
+                  >
+                    <div className="rt-resizable-header-content">
+                      {column.render("Header")}
+                    </div>
+                    {/* Render the column's filter UI */}
+                    <div>
+                      {headerGroup.headers.length - 1 === key
+                        ? null
+                        : column.canFilter
+                        ? column.render("Filter")
+                        : null}
+                    </div>
+                    {/* Add resizer handle */}
+                    {column.canResize && (
+                      <div
+                        {...column.getResizerProps()}
+                        className="resizer"
+                      />
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()} className="rt-tbody">
+            {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  className={classnames(
+                    "rt-tr",
+                    { " -odd": i % 2 === 0 },
+                    { " -even": i % 2 === 1 }
+                  )}
+                >
+                  {row.cells.map((cell, cellIndex) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className={classnames("rt-td", {
+                          "increase-width": cellIndex === 1, // Add this class to the second column
+                          "text-left": cellIndex === row.cells.length - 1, // Align last column to the left
+                        })}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
         <div className="pagination-top">
           <div className="-pagination">

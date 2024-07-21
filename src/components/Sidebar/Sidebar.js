@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Nav, Collapse } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
+import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 
 import logo from "assets/img/faces/ex_logo.jpg";
 
@@ -142,20 +143,20 @@ function Sidebar(props) {
       data-color={props.bgColor}
       data-active-color={props.activeColor}
     >
-      <div className="logo">
-        <a
-          href="https://assetmanagement.fishbonesolutions.co.uk"
-          className="simple-text logo-mini"
-        >
-          <div className="logo-img">
-            <img src={logo} width={90} height={90} alt="react-logo" />
-          </div>
-        </a>
-        <a className="simple-text logo-normal">HS2 EXCHANGE</a>
-      </div>
+<div className="logo">
+    <div className="photo" style={{ display: 'flex', alignItems: 'center' }}>
+      <img src={logo} alt="react-logo" width={50} height={50} style={{ marginRight: '10px' }} />
+      <a className="simple-text logo-normal" style={{ fontSize: '1.2em', textDecoration: 'none', color: 'white' }}>
+        HS2 EXCHANGE
+      </a>
+    </div>
+  </div>
+
       <div className="sidebar-wrapper" ref={sidebar}>
-        <div className="user">
-          <div className="photo"></div>
+      <div className="user">
+          <div className="photo">
+            <img src={avatar} alt="Avatar" />
+          </div>
           <div className="info">
             <a
               href="#pablo"

@@ -125,6 +125,43 @@ const AssetRegister = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if all required fields are filled
+    const requiredFields = [
+      "seller_title",
+      "seller_contactno",
+      "seller_email",
+      "seller_location",
+      "categorycode1",
+      "categorycode2",
+      "code",
+      "asset_name",
+      "asset_condition",
+      "quantity",
+      "asset_location",
+      "value",
+      "statuscode",
+    ];
+
+    for (let field of requiredFields) {
+      if (!formData[field]) {
+        setAlert(
+          <ReactBSAlert
+            warning
+            style={{ display: "block", marginTop: "-100px" }}
+            title="Missing Information"
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            confirmBtnBsStyle="info"
+            btnSize=""
+          >
+            Please fill in all required fields.
+          </ReactBSAlert>
+        );
+        return;
+      }
+    }
+
     try {
       const response = await fetch(`${BACKEND_ADDRESS}/assets/`, {
         method: "POST",
@@ -164,17 +201,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                <CardTitle
-        tag="h6"
-        style={{
-          color: "rgb(82,203,206)",
-          fontWeight: "bold",
-          textTransform: "capitalize",
-          WebkitTextTransform: "capitalize", 
-        }}
-      >
-        {camelCaseWithSpaces("Asset Seller Details")}
-      </CardTitle>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    {camelCaseWithSpaces("Asset Seller Details")}
+                  </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -231,6 +268,7 @@ const AssetRegister = () => {
                               seller_email: value,
                             }));
                           }}
+                          required
                           readOnly={isReadOnly}
                         />
                         {registerEmailState === "has-danger" ? (
@@ -263,17 +301,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                <CardTitle
-        tag="h6"
-        style={{
-          color: "rgb(82,203,206)",
-          fontWeight: "bold",
-          textTransform: "capitalize",
-          WebkitTextTransform: "capitalize", 
-        }}
-      >
-        {camelCaseWithSpaces("Category Selection")}
-      </CardTitle>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    {camelCaseWithSpaces("Category Selection")}
+                  </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -339,17 +377,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                <CardTitle
-        tag="h6"
-        style={{
-          color: "rgb(82,203,206)",
-          fontWeight: "bold",
-          textTransform: "capitalize",
-          WebkitTextTransform: "capitalize", // for Safari
-        }}
-      >
-        {camelCaseWithSpaces("Asset Detail")}
-      </CardTitle>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    {camelCaseWithSpaces("Asset Detail")}
+                  </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -456,7 +494,7 @@ const AssetRegister = () => {
                       </FormGroup>
                     </Col>
                     <Label sm="2" style={{ color: "#36454F" }}>
-                      Quantity
+                      Quantity *
                     </Label>
                     <Col sm="4">
                       <FormGroup>
@@ -488,7 +526,7 @@ const AssetRegister = () => {
                       </FormGroup>
                     </Col>
                     <Label sm="2" style={{ color: "#36454F" }}>
-                      Estimated Value
+                      Estimated Value *
                     </Label>
                     <Col sm="4">
                       <FormGroup>
@@ -537,22 +575,22 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                   {camelCaseWithSpaces( "Upload Images")}
+                    {camelCaseWithSpaces("Upload Images")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                <FileUpload
-        name="demo[]"
-        url="/api/upload"
-        multiple
-        accept="image/*"
-        maxFileSize={1000000}
-        emptyTemplate={
-          <p className="m-0">Drag and drop files here to upload.</p>
-        }
-        disabled={isReadOnly}
-        className="custom-file-upload"
-      />
+                  <FileUpload
+                    name="demo[]"
+                    url="/api/upload"
+                    multiple
+                    accept="image/*"
+                    maxFileSize={1000000}
+                    emptyTemplate={
+                      <p className="m-0">Drag and drop files here to upload.</p>
+                    }
+                    disabled={isReadOnly}
+                    className="custom-file-upload"
+                  />
                 </CardBody>
               </Card>
             </Col>
@@ -561,15 +599,15 @@ const AssetRegister = () => {
               <Card>
                 <CardHeader>
                   <CardTitle
-                  tag="h6"
-                  style={{
-                    color: "rgb(82,203,206)",
-                    fontWeight: "bold",
-                    textTransform: "capitalize",
-                    WebkitTextTransform: "capitalize", // for Safari
-                  }}
-                  >   {camelCaseWithSpaces("Upload Documents")}
-
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    {camelCaseWithSpaces("Upload Documents")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -580,7 +618,6 @@ const AssetRegister = () => {
                     accept="image/*"
                     maxFileSize={1000000}
                     className="custom-file-upload"
-
                     emptyTemplate={
                       <p className="m-0">Drag and drop files to here to upload.</p>
                     }
@@ -594,16 +631,16 @@ const AssetRegister = () => {
               <Card>
                 <CardHeader>
                   <CardTitle
-                  tag="h6"
-                  style={{
-                    color: "rgb(82,203,206)",
-                    fontWeight: "bold",
-                    textTransform: "capitalize",
-                    WebkitTextTransform: "capitalize", // for Safari
-                  }}
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
                   >
-                  {camelCaseWithSpaces("Asset Status")}
-                </CardTitle>
+                    {camelCaseWithSpaces("Asset Status")}
+                  </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -642,16 +679,15 @@ const AssetRegister = () => {
           </Row>
           {alert}
 
-<div style={{ display: "flex", justifyContent: "flex-end" }}>
-<Button   className="btn-simple"
- color="primary" onClick={() => window.history.back()}>
-    Close
-  </Button>
-{mode !== 'view' && (
-  <Button color="primary" type="submit">
-    Save
-  </Button>
-)}
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button className="btn-simple" color="primary" onClick={() => window.history.back()}>
+              Close
+            </Button>
+            {mode !== 'view' && (
+              <Button color="primary" type="submit">
+                Save
+              </Button>
+            )}
           </div>
         </Form>
       </div>
