@@ -18,9 +18,8 @@ function Inventory() {
 
   const navigate = useNavigate();
 
-  const handleView = (assetId) => {
-    console.log ("asset ID iventory ",assetId)
-    navigate(`/admin/asset/${assetId}`);
+  const handleEdit = (assetId, mode) => {
+    navigate(`/admin/asset/${assetId}?mode=${mode}`);
   };
 
   const cancelDetele = () => {
@@ -214,7 +213,7 @@ function Inventory() {
           >
             <i
               className="fa fa-eye"
-              onClick={() => handleView(row.original.asset_id)}
+              onClick={() => handleEdit(row.original.asset_id,'view')}
             ></i>
           </Button>
           {` `}
@@ -223,7 +222,9 @@ function Inventory() {
             color="success"
             size="sm"
           >
-            <i className="fa fa-edit"></i>
+            <i className="fa fa-edit"
+            onClick={() => handleEdit(row.original.asset_id, 'edit')}
+            ></i>
           </Button>
 
           <Button
