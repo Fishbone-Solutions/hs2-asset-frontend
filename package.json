@@ -57,7 +57,9 @@
     "react-table": "^7.8.0",
     "react-tagsinput": "3.20.1",
     "reactstrap": "8.10.0",
-    "sass": "1.62.1"
+    "sass": "1.62.1",
+    "styled": "^1.0.0",
+    "styled-components": "^6.1.12"
   },
   "browserslist": [
     ">0.2%",

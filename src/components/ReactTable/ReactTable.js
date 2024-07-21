@@ -79,13 +79,11 @@ function Table({ columns, data }) {
     []
   );
 
-  const defaultColumn = React.useMemo(
+  const defaultColumn = React.useMemo(       
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
-      minWidth: 30,
-      width: 150,
-      maxWidth: 400,
+      width: 100,
     }),
     []
   );
@@ -109,7 +107,7 @@ function Table({ columns, data }) {
       data,
       defaultColumn, // Be sure to pass the defaultColumn option
       filterTypes,
-      initialState: { pageSize: 10, pageIndex: 0 },
+     
     },
     useFilters, // useFilters!
     useSortBy,
@@ -133,13 +131,13 @@ function Table({ columns, data }) {
                 {headerGroup.headers.map((column, key) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className={classnames("rt-th rt-resizable-header", {
+                    className={classnames( {
                       "-cursor-pointer": headerGroup.headers.length - 1 !== key,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,
                       "-sort-desc": column.isSorted && column.isSortedDesc,
                     })}
-                    style={{ width: column.width }} // Set the width of the column
-                  >
+                    style={{ width: "120px"  }}
+>
                     <div className="rt-resizable-header-content">
                       {column.render("Header")}
                     </div>
@@ -151,13 +149,9 @@ function Table({ columns, data }) {
                         ? column.render("Filter")
                         : null}
                     </div>
-                    {/* Add resizer handle */}
-                    {column.canResize && (
-                      <div
-                        {...column.getResizerProps()}
-                        className="resizer"
-                      />
-                    )}
+                  
+                     
+                  
                   </th>
                 ))}
               </tr>
@@ -175,19 +169,24 @@ function Table({ columns, data }) {
                     { " -even": i % 2 === 1 }
                   )}
                 >
-                  {row.cells.map((cell, cellIndex) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        className={classnames("rt-td", {
-                          "increase-width": cellIndex === 1, // Add this class to the second column
-                          "text-left": cellIndex === row.cells.length - 1, // Align last column to the left
-                        })}
-                      >
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
+{row.cells.map((cell, cellIndex) => {
+  return (
+    <td
+      {...cell.getCellProps()}
+      className={classnames("rt-td", {})}
+      style={{
+        width: cell.column.width,
+        minWidth: cell.column.width,
+        maxWidth: cell.column.width,
+        backgroundColor: 'red', // Add any additional styles you need
+      }}
+>
+      {cell.render("Cell")}
+    </td>
+  );
+})}
+
+
                 </tr>
               );
             })}

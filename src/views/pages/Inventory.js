@@ -167,43 +167,57 @@ function Inventory() {
     {
       Header: "ID",
       accessor: "asset_id",
+      width: "70px", // Set a manual width
     },
     {
       Header: "Entry Date",
       accessor: "entrydate",
-      style: { width: '50px', minWidth: '50px', maxWidth: '50px' },
+      width: "150px", // Set a manual width
+
 
     },
     {
       Header: "Name",
       accessor: "asset_name",
+      width: "100px", // Set a manual width
+
     },
     {
       Header: "DESCRIPTION",
       accessor: "description",
+      minwidth: "180px", // Set a manual width
+
     },
     {
       Header: "LOCATION",
       accessor: "asset_location",
+      width: "100px", // Set a manual width
+
     },
     {
       Header: "AVAILABILITY",
       accessor: "available_from",
+      width: "100px", // Set a manual width
+
     },
     {
       Header: "STATUS",
       accessor: "statuscode",
+      width: "100px", // Set a manual width
+
     },
     {
       Header: "EOI",
       accessor: "total_eoi",
+      width: "100px", // Set a manual width
+
     },
 
     {
       Header: "Actions",
       accessor: "actions",
-      sortable: false,
-      filterable: false,
+      width: "200px", // Set a manual width
+
       Cell: ({ row }) => (
         <div>
           <Button
