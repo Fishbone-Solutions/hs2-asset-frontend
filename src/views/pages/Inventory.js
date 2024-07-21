@@ -172,14 +172,14 @@ function Inventory() {
       maxWidth: 40, // Set maximum column width
     },
     {
-      Header: "Entry Date",
+      Header: "ENTRY DATE",
       accessor: "entrydate",
       width: "150px", // Set a manual width
 
 
     },
     {
-      Header: "Name",
+      Header: "NAME",
       accessor: "asset_name",
       width: 100, // Set column width
       minWidth: 100, // Set minimum column width
@@ -220,7 +220,7 @@ function Inventory() {
     },
 
     {
-      Header: "Actions",
+      Header: "ACTIONS",
       accessor: "actions",
       width: "200px", // Set a manual width
 
