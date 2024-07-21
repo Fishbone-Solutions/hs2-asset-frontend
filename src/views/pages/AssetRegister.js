@@ -20,6 +20,14 @@ import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
+
+const camelCaseWithSpaces = (text) => {
+  return text
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const AssetRegister = () => {
   const { code } = useParams();
   const location = useLocation();
@@ -154,9 +162,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h6" style={{ color: "rgb(82,203,206)" }}>
-                    Asset Seller Details
-                  </CardTitle>
+                <CardTitle
+        tag="h6"
+        style={{
+          color: "rgb(82,203,206)",
+          fontWeight: "bold",
+          textTransform: "capitalize",
+          WebkitTextTransform: "capitalize", 
+        }}
+      >
+        {camelCaseWithSpaces("Asset Seller Details")}
+      </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -245,12 +261,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
-                  >
-                    Category Selection
-                  </CardTitle>
+                <CardTitle
+        tag="h6"
+        style={{
+          color: "rgb(82,203,206)",
+          fontWeight: "bold",
+          textTransform: "capitalize",
+          WebkitTextTransform: "capitalize", 
+        }}
+      >
+        {camelCaseWithSpaces("Category Selection")}
+      </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -316,12 +337,17 @@ const AssetRegister = () => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
-                  >
-                    Asset Detail
-                  </CardTitle>
+                <CardTitle
+        tag="h6"
+        style={{
+          color: "rgb(82,203,206)",
+          fontWeight: "bold",
+          textTransform: "capitalize",
+          WebkitTextTransform: "capitalize", // for Safari
+        }}
+      >
+        {camelCaseWithSpaces("Asset Detail")}
+      </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -502,9 +528,14 @@ const AssetRegister = () => {
                 <CardHeader>
                   <CardTitle
                     tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
                   >
-                    Upload Images
+                   {camelCaseWithSpaces( "Upload Images")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -527,10 +558,15 @@ const AssetRegister = () => {
               <Card>
                 <CardHeader>
                   <CardTitle
-                    tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
-                  >
-                    Upload Documents
+                  tag="h6"
+                  style={{
+                    color: "rgb(82,203,206)",
+                    fontWeight: "bold",
+                    textTransform: "capitalize",
+                    WebkitTextTransform: "capitalize", // for Safari
+                  }}
+                  >   {camelCaseWithSpaces("Upload Documents")}
+
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -553,11 +589,16 @@ const AssetRegister = () => {
               <Card>
                 <CardHeader>
                   <CardTitle
-                    tag="h6"
-                    style={{ color: "rgb(82,203,206)", fontWeight: "bold" }}
+                  tag="h6"
+                  style={{
+                    color: "rgb(82,203,206)",
+                    fontWeight: "bold",
+                    textTransform: "capitalize",
+                    WebkitTextTransform: "capitalize", // for Safari
+                  }}
                   >
-                    Asset Status
-                  </CardTitle>
+                  {camelCaseWithSpaces("Asset Status")}
+                </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
