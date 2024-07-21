@@ -123,20 +123,22 @@ function Table({ columns, data }) {
   return (
     <>
       <br></br>
-      <div className="ReactTable -striped -highlight primary-pagination">
-        <table {...getTableProps()} className="rt-table">
-          <thead className="rt-thead -header">
+   {/*    <div  className="ReactTable -striped -highlight primary-pagination">  */}
+   <div className=" -striped">
+        <table {...getTableProps()} >
+          <thead >
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="rt-tr">
+              <tr {...headerGroup.getHeaderGroupProps()} >
                 {headerGroup.headers.map((column, key) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className={classnames( {
+                    {...column.getHeaderProps()} style={{ width: column.width }}
+                    className={classnames("rt-th rt-resizable-header", {
                       "-cursor-pointer": headerGroup.headers.length - 1 !== key,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,
                       "-sort-desc": column.isSorted && column.isSortedDesc,
                     })}
-                    style={{ width: "120px"  }}
+             
 >
                     <div className="rt-resizable-header-content">
                       {column.render("Header")}
@@ -169,24 +171,19 @@ function Table({ columns, data }) {
                     { " -even": i % 2 === 1 }
                   )}
                 >
-{row.cells.map((cell, cellIndex) => {
-  return (
-    <td
-      {...cell.getCellProps()}
-      className={classnames("rt-td", {})}
-      style={{
-        width: cell.column.width,
-        minWidth: cell.column.width,
-        maxWidth: cell.column.width,
-        backgroundColor: 'red', // Add any additional styles you need
-      }}
->
-      {cell.render("Cell")}
-    </td>
-  );
-})}
-
-
+                  {row.cells.map((cell, cellIndex) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{ width: cell.column.width }}
+                        
+                        className={classnames("rt-td", {              
+                        })}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}

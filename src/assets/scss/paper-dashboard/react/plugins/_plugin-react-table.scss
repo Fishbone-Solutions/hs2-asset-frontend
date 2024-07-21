@@ -186,8 +186,12 @@
 }
 .ReactTable .rt-thead .rt-resizable-header{
   overflow:visible;
+  width: 30px;
+
 }
 .ReactTable .rt-thead .rt-resizable-header:last-child{
+  background-color: red;
+ width: 30px;
   overflow:hidden
 }
 .ReactTable .rt-thead .rt-resizable-header-content{

@@ -167,7 +167,9 @@ function Inventory() {
     {
       Header: "ID",
       accessor: "asset_id",
-      width: "70px", // Set a manual width
+      width: 40, // Set column width
+      minWidth: 40, // Set minimum column width
+      maxWidth: 40, // Set maximum column width
     },
     {
       Header: "Entry Date",
@@ -179,13 +181,17 @@ function Inventory() {
     {
       Header: "Name",
       accessor: "asset_name",
-      width: "100px", // Set a manual width
+      width: 100, // Set column width
+      minWidth: 100, // Set minimum column width
+      maxWidth: 100, // Set maximum column width
 
     },
     {
       Header: "DESCRIPTION",
       accessor: "description",
-      minwidth: "180px", // Set a manual width
+      width: 300, // Set column width
+      minWidth: 300, // Set minimum column width
+      maxWidth: 300, // Set maximum column width
 
     },
     {
