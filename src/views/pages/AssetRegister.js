@@ -542,10 +542,10 @@ const AssetRegister = () => {
                   </Row>
                   <Row></Row>
                   <Row>
-                    <Label sm="4" style={{ color: "#36454F" }}>
+                    <Label sm="8" style={{ color: "#36454F" }}>
                       Other Details
                     </Label>
-                    <Col md="10">
+                    <Col md="12">
                       <FormGroup>
                         <Input
                           type="textarea"
