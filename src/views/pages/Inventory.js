@@ -19,7 +19,7 @@ function Inventory() {
   const navigate = useNavigate();
 
   const handleEdit = (assetId, mode) => {
-    navigate(`/admin/asset/${assetId}?mode=${mode}`);
+    navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
 
   const cancelDetele = () => {

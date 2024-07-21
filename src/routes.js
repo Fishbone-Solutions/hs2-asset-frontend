@@ -29,12 +29,13 @@ const routes = [
     hidden: "true"
   }, */
   {
-    path: "/asset/:code",
-    pathName: "/admin/asset",
-    name: "Asset Register",
+    path: "/exchangeregister/:code",
+    pathName: "/admin/exchangeregister",
+    name: "Exchange Register",
     component: <AssetRegister />,
     layout: "/admin",
-    icon: "nc-icon nc-book-bookmark"
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
   },
   {
     path: "/inventory",
