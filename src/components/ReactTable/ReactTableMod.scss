@@ -1,9 +1,8 @@
-/* Ensure you import this CSS file in your component file */
 .pagination-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px; /* Reduced margin */
 }
 
 .pagination-top .-pagination {
@@ -27,8 +26,8 @@
 }
 
 .pagination-top .-btn {
-  padding: 10px 20px;
-  background-color:  rgb(82,203,206) !important;
+  padding: 5px 10px; /* Reduced padding */
+  background-color: rgb(82, 203, 206) !important;
   color: white;
   border: none;
   cursor: pointer;
@@ -63,7 +62,7 @@
 .-striped .rt-thead .rt-th {
   background-color: #d3d3d3; /* Grey color for headers */
   color: #000; /* Black text color for headers */
-  padding: 8px;
+  padding: 4px; /* Reduced padding */
   border: 1px solid black; /* Border for header cells */
 }
 
@@ -75,5 +74,5 @@
 .rt-th,
 .rt-td {
   border: 1px solid black; /* Border for table cells */
-  padding: 8px;
+  padding: 4px; /* Reduced padding */
 }

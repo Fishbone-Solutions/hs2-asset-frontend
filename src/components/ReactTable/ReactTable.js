@@ -256,7 +256,7 @@ function Table({ columns, data }) {
             </div>
           </div>
         </div>
-      </div>
+    </div>
     </>
   );
 }
