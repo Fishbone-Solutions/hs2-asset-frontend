@@ -1,4 +1,14 @@
-.p-button p-fileupload-choose p-component {
-    color:red
-}
-
+.custom-file-upload .p-button {
+    background-color: rgb(82,203,206) !important;
+    border-color: rgb(82,203,206) !important;
+    color: white !important;
+    padding: 4px 8px !important; /* Adjust padding to reduce button size */
+    font-size: 12px !important; /* Adjust font size to reduce button size */
+    height: auto !important; /* Ensure height adjusts to content */
+  }
+  
+  .custom-file-upload .p-button:hover {
+    background-color: darkred !important;
+    border-color: darkred !important;
+  }
+  

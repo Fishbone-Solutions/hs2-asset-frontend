@@ -20,6 +20,8 @@ import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import "./AssetRegister.css";
 
 const camelCaseWithSpaces = (text) => {
   return text
@@ -539,17 +541,18 @@ const AssetRegister = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <FileUpload
-                    name="demo[]"
-                    url="/api/upload"
-                    multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
-                    emptyTemplate={
-                      <p className="m-0">Drag and drop files here to upload.</p>
-                    }
-                    disabled={isReadOnly}
-                  />
+                <FileUpload
+        name="demo[]"
+        url="/api/upload"
+        multiple
+        accept="image/*"
+        maxFileSize={1000000}
+        emptyTemplate={
+          <p className="m-0">Drag and drop files here to upload.</p>
+        }
+        disabled={isReadOnly}
+        className="custom-file-upload"
+      />
                 </CardBody>
               </Card>
             </Col>
@@ -576,6 +579,8 @@ const AssetRegister = () => {
                     multiple
                     accept="image/*"
                     maxFileSize={1000000}
+                    className="custom-file-upload"
+
                     emptyTemplate={
                       <p className="m-0">Drag and drop files to here to upload.</p>
                     }
