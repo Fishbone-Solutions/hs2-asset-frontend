@@ -391,7 +391,7 @@ const AssetRegister = () => {
                 <CardBody>
                   <Row>
                     <Label sm="2" style={{ color: "#36454F" }}>
-                      Asset ID *
+                      ID *
                     </Label>
                     <Col sm="4">
                       <FormGroup>
@@ -662,8 +662,11 @@ const AssetRegister = () => {
                             }))
                           }
                           options={[
-                            { value: "New", label: "New" },
-                            { value: "Old", label: "Old" },
+                            { value: "  New Entry", label: "New Entry" },
+                            { value: "Open for EOI", label: "Open for EOI" },
+                            { value: "Unavailable-Sold", label: "Unavailable-Sold" },
+                            
+
                           ]}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}

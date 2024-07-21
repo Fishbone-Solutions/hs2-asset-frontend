@@ -165,7 +165,7 @@ function Sidebar(props) {
               onClick={() => setOpenAvatar(!openAvatar)}
             >
               <span>
-                Tabish Habib
+                Tabish 
                 <b className="caret" />
               </span>
             </a>
