@@ -12,3 +12,8 @@
     border-color: darkred !important;
   }
   
+
+.buttonClose {
+  background-color: rgb(82,203,206) !important;
+  border-color: rgb(82,203,206) !important;
+}

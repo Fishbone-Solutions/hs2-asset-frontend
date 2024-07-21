@@ -161,7 +161,6 @@ const AssetRegister = () => {
         return;
       }
     }
-
     try {
       const response = await fetch(`${BACKEND_ADDRESS}/assets/`, {
         method: "POST",
@@ -210,7 +209,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Asset Seller Details")}
+                    {camelCaseWithSpaces("Seller Information")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -310,7 +309,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Category Selection")}
+                    {camelCaseWithSpaces("Category")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -373,7 +372,7 @@ const AssetRegister = () => {
                 </CardBody>
               </Card>
             </Col>
-            {/* Asset Detail*/}
+            {/* Item Information*/}
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -386,7 +385,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Asset Detail")}
+                    {camelCaseWithSpaces("Item Information")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -575,7 +574,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Upload Images")}
+                    {camelCaseWithSpaces(" Images")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -607,7 +606,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Upload Documents")}
+                    {camelCaseWithSpaces("Documents")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -639,7 +638,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Asset Status")}
+                    {camelCaseWithSpaces("Item Status")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -680,16 +679,18 @@ const AssetRegister = () => {
           {alert}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button className="btn-simple" color="primary" onClick={() => window.history.back()}>
-              Close
-            </Button>
-            {mode !== 'view' && (
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            )}
-          </div>
-        </Form>
+  <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
+    Close
+  </Button>
+  {mode !== 'view' && (
+    <Button color="primary" type="submit">
+      Save
+    </Button>
+  )}
+</div>
+
+</Form>
+
       </div>
     </>
   );

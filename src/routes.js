@@ -31,7 +31,7 @@ const routes = [
   {
     path: "/exchangeregister/:code",
     pathName: "/admin/exchangeregister/:code",
-    name: "Exchange Register",
+    name: "Add New Item",
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
@@ -76,7 +76,7 @@ const routes = [
   {
     path: "/exchangeregister",
     pathName: "/admin/exchangeregister",
-    name: "Exchange Register",
+    name: "Add New Item",
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",

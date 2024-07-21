@@ -97,13 +97,13 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-        <span className="d-none d-md-block" style={{ color: 'grey' }}>
+        <span className="d-none d-md-block" style={{ color: 'white' }}>
     {icon && <i className={icon}></i>} {/* Render the icon */}
-    <span style={{ color: 'grey' , fontWeight: 'bold' }}>{name}</span>
+    <span style={{ color: 'white' , fontWeight: 'bold' }}>{name}</span>
   </span>
   <span className="d-block d-md-none">
   {icon && <i className={icon}></i>} {/* Render the icon */}
-  <span style={{ color: 'grey', fontWeight: 'bold' }}>{name}</span>
+  <span style={{ color: 'white', fontWeight: 'bold' }}>{name}</span>
 </span>
       </NavbarBrand>
           </div>

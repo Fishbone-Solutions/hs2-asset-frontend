@@ -145,7 +145,7 @@ function Sidebar(props) {
     >
 <div className="logo">
     <div className="photo" style={{ display: 'flex', alignItems: 'center' }}>
-      <img src={logo} alt="react-logo" width={50} height={50} style={{ marginRight: '10px' }} />
+      <img src={logo} alt="react-logo" width={35} height={35} style={{ marginRight: '10px' }} />
       <a className="simple-text logo-normal" style={{ fontSize: '1.2em', textDecoration: 'none', color: 'white' }}>
         HS2 EXCHANGE
       </a>
