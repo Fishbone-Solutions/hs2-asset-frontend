@@ -595,15 +595,17 @@ const AssetRegister = () => {
             </Col>
           </Row>
           {alert}
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button color="primary" onClick={() => window.history.back()}>
-              Close
-            </Button>
-            {mode !== 'view' && (
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            )}
+
+<div style={{ display: "flex", justifyContent: "flex-end" }}>
+<Button   className="btn-simple"
+ color="primary" onClick={() => window.history.back()}>
+    Close
+  </Button>
+{mode !== 'view' && (
+  <Button color="primary" type="submit">
+    Save
+  </Button>
+)}
           </div>
         </Form>
       </div>
