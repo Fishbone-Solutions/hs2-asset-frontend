@@ -208,12 +208,12 @@ function Inventory() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>ENTRY DATE</span>
+            <span>ENTRY </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "entrydate",
-        width: '8%', // Set column width
+        width: '2%', // Set column width
       },
       {
         Header: ({ column }) => (
@@ -233,7 +233,7 @@ function Inventory() {
           </div>
         ),
         accessor: "description",
-        width: '20%', // Set column width
+        width: '16%', // Set column width
       },
       {
         Header: ({ column }) => (
@@ -253,7 +253,7 @@ function Inventory() {
           </div>
         ),
         accessor: "available_from",
-        width: '8%', // Set column width
+        width: '2%', // Set column width
       },
       {
         Header: ({ column }) => (

@@ -1,42 +1,39 @@
-.pagination-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px; /* Reduced margin */
-}
+/* ReactTableMod.scss */
+.primary-pagination {
+  .-pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
 
-.pagination-top .-pagination {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
+  .-previous,
+  .-next {
+    flex: 1; /* Allow buttons to take up equal space */
+    display: flex;
+    justify-content: center;
+  }
 
-.pagination-top .-previous,
-.pagination-top .-next {
-  flex: 1; /* Allow buttons to take up equal space */
-  display: flex;
-  justify-content: center;
-}
+  .-center {
+    flex: 2; /* Take up two-thirds of the space */
+    display: flex;
+    justify-content: center;
+  }
 
-.pagination-top .-center {
-  flex: 2; /* Take up two-thirds of the space */
-  display: flex;
-  justify-content: center;
-}
+  .-btn {
+    padding: 5px 10px; /* Reduced padding */
+    background-color: rgb(82, 203, 206) !important;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex-grow: 1;
 
-.pagination-top .-btn {
-  padding: 5px 10px; /* Reduced padding */
-  background-color: rgb(82, 203, 206) !important;
-  color: white;
-  border: none;
-  cursor: pointer;
-  flex-grow: 1;
-}
-
-.pagination-top .-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .react-select.primary {
@@ -48,11 +45,11 @@
 }
 
 .table tbody tr:nth-child(odd) {
-  background-color: #F7F7F7; /* White for odd rows */
+  background-color: #f7f7f7; /* White for odd rows */
 }
 
 .-striped .rt-tbody .rt-tr.-odd {
-  background-color:  #F7F7F7; 
+  background-color: #f7f7f7;
 }
 
 .-striped .rt-tbody .rt-tr.-even {
@@ -73,7 +70,7 @@
 
 .rt-th,
 .rt-td {
-  border: 1px solid #DEE2E7; /* Border for table cells */
+  border: 1px solid #dee2e7; /* Border for table cells */
   padding: 10px; /* Reduced padding */
 }
 

@@ -120,25 +120,26 @@ function Table({ columns, data }) {
     Array(pageOptions.length)
   ).map(function () {});
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
+  
   return (
     <>
       <br></br>
-   <div className="-striped  -highlight primary-pagination ">
-        <table {...getTableProps()} >
-          <thead >
+      <div className="-striped -highlight primary-pagination">
+        <table {...getTableProps()}>
+          <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} >
+              <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, key) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    {...column.getHeaderProps()} style={{ width: column.width }}
+                    {...column.getHeaderProps()}
+                    style={{ width: column.width }}
                     className={classnames("rt-th rt-resizable-header", {
                       "-cursor-pointer": headerGroup.headers.length - 1 !== key,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,
                       "-sort-desc": column.isSorted && column.isSortedDesc,
                     })}
-             
->
+                  >
                     <div className="rt-resizable-header-content">
                       {column.render("Header")}
                     </div>
@@ -150,9 +151,6 @@ function Table({ columns, data }) {
                         ? column.render("Filter")
                         : null}
                     </div>
-                  
-                     
-                  
                   </th>
                 ))}
               </tr>
@@ -166,8 +164,8 @@ function Table({ columns, data }) {
                   {...row.getRowProps()}
                   className={classnames(
                     "rt-tr",
-                    { " -odd": i % 2 === 0 },
-                    { " -even": i % 2 === 1 }
+                    { "-odd": i % 2 === 0 },
+                    { "-even": i % 2 === 1 }
                   )}
                 >
                   {row.cells.map((cell, cellIndex) => {
@@ -175,9 +173,7 @@ function Table({ columns, data }) {
                       <td
                         {...cell.getCellProps()}
                         style={{ width: cell.column.width }}
-                        
-                        className={classnames("rt-td", {              
-                        })}
+                        className={classnames("rt-td")}
                       >
                         {cell.render("Cell")}
                       </td>
@@ -201,49 +197,50 @@ function Table({ columns, data }) {
               </button>
             </div>
             <div className="-center">
-              <Container>
-                <Row className="justify-content-center">
-                  <Col md="4" sm="6" xs="12">
-                    <Select
-                      className="react-select primary"
-                      classNamePrefix="react-select"
-                      name="pageSelect"
-                      value={pageSelect}
-                      onChange={(value) => {
-                        gotoPage(value.value);
-                        handlePageSelect(value);
-                      }}
-                      options={pageSelectData.map((prop, key) => {
-                        return {
-                          value: key,
-                          label: "Page " + (key + 1),
-                        };
-                      })}
-                      placeholder="Choose Page"
-                    />
-                  </Col>
-                  <Col md="4" sm="6" xs="12">
-                    <Select
-                      className="react-select primary"
-                      classNamePrefix="react-select"
-                      name="numberOfRows"
-                      value={numberOfRows}
-                      onChange={(value) => {
-                        setPageSize(value.value);
-                        setNumberOfRows(value);
-                      }}
-                      options={numberOfRowsData.map((prop) => {
-                        return {
-                          value: prop,
-                          label: prop + " rows",
-                        };
-                      })}
-                      placeholder="Choose Rows"
-                    />
-                  </Col>
-                </Row>
-              </Container>
-            </div>
+  <Container>
+    <Row className="justify-content-center mt-2">
+      <Col md="4" sm="6" xs="12">
+        <Select
+          className="react-select primary"
+          classNamePrefix="react-select"
+          name="pageSelect"
+          value={pageSelect}
+          onChange={(value) => {
+            gotoPage(value.value);
+            handlePageSelect(value);
+          }}
+          options={pageSelectData.map((prop, key) => {
+            return {
+              value: key,
+              label: "Page " + (key + 1),
+            };
+          })}
+          placeholder="Choose Page"
+        />
+      </Col>
+      <Col md="4" sm="6" xs="12">
+        <Select
+          className="react-select primary"
+          classNamePrefix="react-select"
+          name="numberOfRows"
+          value={numberOfRows}
+          onChange={(value) => {
+            setPageSize(value.value);
+            setNumberOfRows(value);
+          }}
+          options={numberOfRowsData.map((prop) => {
+            return {
+              value: prop,
+              label: prop + " rows",
+            };
+          })}
+          placeholder="Choose Rows"
+        />
+      </Col>
+    </Row>
+  </Container>
+</div>
+
             <div className="-next">
               <button
                 type="button"
@@ -256,7 +253,7 @@ function Table({ columns, data }) {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </>
   );
 }
