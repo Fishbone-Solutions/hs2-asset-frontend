@@ -316,7 +316,7 @@ function Inventory() {
               color="secondary"
               size="sm"
             >
-    <i className="fa fa-handshake-o" style={{ fontSize: '1.4em' }}></i>
+    <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
 
 
             </Button>
