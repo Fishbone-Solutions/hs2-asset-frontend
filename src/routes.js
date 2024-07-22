@@ -43,7 +43,7 @@ const routes = [
     name: "Inventory ",
     component: <Inventory></Inventory>,
     layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
+    icon: "nc-icon nc-tile-56",
 
   },
   {
