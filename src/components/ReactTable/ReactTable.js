@@ -123,7 +123,7 @@ function Table({ columns, data }) {
   return (
     <>
       <br></br>
-   <div className="-striped  -highlight primary-pagination ">
+   <div className="striped  -highlight primary-pagination ">
         <table {...getTableProps()} >
           <thead >
             {headerGroups.map((headerGroup) => (

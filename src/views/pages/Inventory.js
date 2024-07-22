@@ -195,128 +195,109 @@ function Inventory() {
   );
   const columns = React.useMemo(
     () => [
-
-    {
-      Header: "ID",
-      accessor: "asset_id",
-      width: 40, // Set column width
-      minWidth: 40, // Set minimum column width
-      maxWidth: 40, // Set maximum column width
-    },
-    {
-      Header: "ENTRY DATE",
-      accessor: "entrydate",
-      width: "150px", // Set a manual width
-
-
-    },
-    {
-      Header: "NAME",
-      accessor: "asset_name",
-      width: 100, // Set column width
-      minWidth: 100, // Set minimum column width
-      maxWidth: 100, // Set maximum column width
-
-    },
-    {
-      Header: "DESCRIPTION",
-      accessor: "description",
-      width: 430, // Set column width
-      minWidth: 430, // Set minimum column width
-      maxWidth: 430, // Set maximum column width
-
-    },
-    {
-      Header: "LOCATION",
-      accessor: "asset_location",
-      width: "100px", // Set a manual width
-
-    },
-    {
-      Header: "AVAILABILITY",
-      accessor: "available_from",
-      width: "100px", // Set a manual width
-
-    },
-    {
-      Header: "STATUS",
-      accessor: "statuscode",
-      width: "100px", // Set a manual width
-
-    },
-    {
-      Header: "EOI",
-      accessor: "total_eoi",
-      width: 40, // Set column width
-      minWidth: 40, // Set minimum column width
-      maxWidth: 40, // Set maximum column width
-
-    },
-
-    {
-      Header: "ACTIONS",
-      accessor: "actions",
-      width: "200px", // Set a manual width
-
-      Cell: ({ row }) => (
-        <div>
-          <Button
-            className="btn-icon btn-simple"
-            color="info"
-            size="sm"
-          >
-            <i
-              className="fa fa-eye"
-              onClick={() => handleEdit(row.original.asset_id,'view')}
-            ></i>
-          </Button>
-          {` `}
-          <Button
-            className="btn-icon btn-simple"
-            color="success"
-            size="sm"
-          >
-            <i className="fa fa-edit"
-            onClick={() => handleEdit(row.original.asset_id, 'edit')}
-            ></i>
-          </Button>
-
-          <Button
-            className="btn-icon btn-simple"
-            color="secondary"
-            size="sm"
-          >
-            <i className="fa fa-files-o	"></i>
-          </Button>
-          {` `}
-
-          <Button
-            className="btn-icon btn-simple"
-            color="danger"
-            size="sm"
-            outline={true}
-            onClick={() => handleDelete(row.original.asset_id)}
-          >
-            <i
-              className="fa fa-trash"
-              style={{
-                color: "#EE8257",
-                transition: "color 0.3s",
-              }}
-              onMouseOver={(e) =>
-                (e.target.style.color = "white")
-              }
-              onMouseOut={(e) =>
-                (e.target.style.color = "#EE8257")
-              }
-            ></i>
-          </Button>
-        </div>
-      ),
-    },
-  ],
-)
-
+      {
+        Header: "ID",
+        accessor: "asset_id",
+        width: '2%', // Set column width
+      },
+      {
+        Header: "ENTRY DATE",
+        accessor: "entrydate",
+        width: '8%', // Set column width
+      },
+      {
+        Header: "NAME",
+        accessor: "asset_name",
+        width: '10%', // Set column width
+      },
+      {
+        Header: "DESCRIPTION",
+        accessor: "description",
+        width: '20%', // Set column width
+      },
+      {
+        Header: "LOCATION",
+        accessor: "asset_location",
+        width: '8%', // Set column width
+      },
+      {
+        Header: "AVAILABILITY",
+        accessor: "available_from",
+        width: '8%', // Set column width
+      },
+      {
+        Header: "STATUS",
+        accessor: "statuscode",
+        width: '5%', // Set column width
+      },
+      {
+        Header: "EOI",
+        accessor: "total_eoi",
+        width: '2%', // Set column width
+      },
+      {
+        Header: "ACTIONS",
+        accessor: "actions",
+        width: '12.5%', // Set column width
+        Cell: ({ row }) => (
+          <div>
+            <Button
+              className="btn-icon btn-simple"
+              color="info"
+              size="sm"
+            >
+              <i
+                className="fa fa-eye"
+                onClick={() => handleEdit(row.original.asset_id, 'view')}
+              ></i>
+            </Button>
+            {` `}
+            <Button
+              className="btn-icon btn-simple"
+              color="success"
+              size="sm"
+            >
+              <i className="fa fa-edit"
+                onClick={() => handleEdit(row.original.asset_id, 'edit')}
+              ></i>
+            </Button>
+  
+            <Button
+              className="btn-icon btn-simple"
+              color="secondary"
+              size="sm"
+            >
+              <i className="fa fa-files-o"></i>
+            </Button>
+            {` `}
+  
+            <Button
+              className="btn-icon btn-simple"
+              color="danger"
+              size="sm"
+              outline={true}
+              onClick={() => handleDelete(row.original.asset_id)}
+            >
+              <i
+                className="fa fa-trash"
+                style={{
+                  color: "#EE8257",
+                  transition: "color 0.3s",
+                }}
+                onMouseOver={(e) =>
+                  (e.target.style.color = "white")
+                }
+                onMouseOut={(e) =>
+                  (e.target.style.color = "#EE8257")
+                }
+              ></i>
+            </Button>
+          </div>
+        ),
+      },
+    ],
+  )
+  
 
 
   return (
