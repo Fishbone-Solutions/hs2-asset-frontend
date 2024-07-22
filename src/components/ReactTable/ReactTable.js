@@ -133,7 +133,7 @@ function Table({ columns, data }) {
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     {...column.getHeaderProps()}
-                    style={{ width: column.width }}
+                    style={{ width: column.width, backgroundColor:"rgb(221,221,221)" }}
                     className={classnames("rt-th rt-resizable-header", {
                       "-cursor-pointer": headerGroup.headers.length - 1 !== key,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,

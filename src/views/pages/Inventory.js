@@ -329,7 +329,6 @@ function Inventory() {
               <i
                 className="fa fa-trash"
                 style={{
-                  color: "#EE8257",
                   fontSize: '1.4em' 
                 }}
       
