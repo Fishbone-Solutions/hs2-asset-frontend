@@ -16,38 +16,6 @@ function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
 
-  const customStyles = {
-    rows: {
-      style: (index) => ({
-        background: index % 2 === 0 ? "white" : "rgb(176,150,166)", // Apply white color for even index rows and red color for odd index rows
-      }),
-    },
-    headCells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for head cells
-        paddingRight: "8px",
-        backgroundColor: "rgb(76, 47, 72)",
-        height: "58.5px",
-        fontSize: "16px",
-        color: "#fff",
-        border: "1px solid black", // add a black border */
-        padding: "3px",
-        position: "sticky",
-        top: 0,
-        zIndex: 1,
-
-      },
-    },
-
-    cells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for data cells
-        paddingRight: "8px",
-        color: "#32192f",
-        fontSize: "16px"
-      },
-    },
-  };
   const navigate = useNavigate();
 
   const handleEdit = (assetId, mode) => {
@@ -186,6 +154,49 @@ function Inventory() {
     };
   };
 
+
+  const searchMode = (e) => {
+    console.log("hi")
+    setAlert(
+      <ReactBSAlert
+        input
+        showCancel
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Input something"
+        onConfirm={(e) => inputConfirmAlert(e)}
+        onCancel={() => hideAlert()}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        btnSize=""
+      />
+    );
+  };
+
+  const inputConfirmAlert = (e) => {
+    setAlert(
+      <ReactBSAlert
+        style={{ display: "block", marginTop: "-100px" }}
+        onConfirm={() => hideAlert()}
+        onCancel={() => hideAlert()}
+        confirmBtnBsStyle="info"
+        btnSize=""
+        title={
+          <p>
+            You entered: <b>{e}</b>
+          </p>
+        }
+      />
+    );
+  };
+
+
+
+
+
+
+
+
+
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
       return {
@@ -288,7 +299,9 @@ function Inventory() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              <i className="fa fa-eye"></i>
+              <i className="fa fa-eye"
+               style={{ fontSize: '1.4em' }}
+              ></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -296,30 +309,30 @@ function Inventory() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-              <i className="fa fa-edit"></i>
+              <i className="fa fa-edit"  style={{ fontSize: '1.4em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
               color="secondary"
               size="sm"
             >
-              <i className="fa fa-files-o"></i>
+    <i className="fa fa-handshake-o" style={{ fontSize: '1.4em' }}></i>
+
+
             </Button>
             <Button
               className="btn-icon btn-simple"
               color="danger"
               size="sm"
-              outline={true}
               onClick={() => handleDelete(row.original.asset_id)}
             >
               <i
                 className="fa fa-trash"
                 style={{
                   color: "#EE8257",
-                  transition: "color 0.3s",
+                  fontSize: '1.4em' 
                 }}
-                onMouseOver={(e) => (e.target.style.color = "white")}
-                onMouseOut={(e) => (e.target.style.color = "#EE8257")}
+      
               ></i>
             </Button>
           </div>
@@ -362,6 +375,7 @@ function Inventory() {
         border: "2px solid #52CBCE",
         borderRadius: "15%",
       }}
+      onClick={(e) => searchMode(e)}
     />
   </div>
 </NavLink>
