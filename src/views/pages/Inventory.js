@@ -352,19 +352,19 @@ function Inventory() {
                       }}
                     />
                   </div>
-                  <NavLink to="/admin/exchangeregister">
-                    <div>
-                      <IoAddCircleOutline
-                        color="white"
-                        size="2.4em"
-                        style={{
-                          backgroundColor: "#52CBCE",
-                          border: "2px solid #52CBCE",
-                          borderRadius: "15%",
-                        }}
-                      />
-                    </div>
-                  </NavLink>
+                  <NavLink to="/admin/exchangeregister?mode=add">
+  <div>
+    <IoAddCircleOutline
+      color="white"
+      size="2.4em"
+      style={{
+        backgroundColor: "#52CBCE",
+        border: "2px solid #52CBCE",
+        borderRadius: "15%",
+      }}
+    />
+  </div>
+</NavLink>
                 </div>
               
                  <ReactTable

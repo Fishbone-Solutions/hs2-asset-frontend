@@ -38,6 +38,7 @@ const AssetRegister = () => {
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const [formData, setFormData] = useState({
+    id: "",
     code: "",
     entrydate: "",
     categorycode1: "",
@@ -161,9 +162,13 @@ const AssetRegister = () => {
         return;
       }
     }
+
+    const url = mode === "edit" ? `${BACKEND_ADDRESS}/assets/${code}` : `${BACKEND_ADDRESS}/assets`;
+    const method = "POST";
+
     try {
-      const response = await fetch(`${BACKEND_ADDRESS}/assets/`, {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
           token: "x8F!@p01,*MH",
@@ -432,7 +437,6 @@ const AssetRegister = () => {
                           name="description"
                           value={formData.description}
                           onChange={handleChange}
-                          required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -459,7 +463,6 @@ const AssetRegister = () => {
                             }))
                           }
                           timeFormat={false}
-                          required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -574,7 +577,7 @@ const AssetRegister = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces(" Images")}
+                    {camelCaseWithSpaces("Images")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -662,11 +665,9 @@ const AssetRegister = () => {
                             }))
                           }
                           options={[
-                            { value: "  New Entry", label: "New Entry" },
+                            { value: "New Entry", label: "New Entry" },
                             { value: "Open for EOI", label: "Open for EOI" },
                             { value: "Unavailable-Sold", label: "Unavailable-Sold" },
-                            
-
                           ]}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
@@ -682,18 +683,16 @@ const AssetRegister = () => {
           {alert}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-  <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
-    Close
-  </Button>
-  {mode !== 'view' && (
-    <Button color="primary" type="submit">
-      Save
-    </Button>
-  )}
-</div>
-
-</Form>
-
+            <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
+              Close
+            </Button>
+            {mode !== 'view' && (
+              <Button color="primary" type="submit">
+                Save
+              </Button>
+            )}
+          </div>
+        </Form>
       </div>
     </>
   );

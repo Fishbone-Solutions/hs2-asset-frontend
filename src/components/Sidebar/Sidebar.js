@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Collapse } from "reactstrap";
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
-
 import logo from "assets/img/faces/ex_logo.jpg";
 
 var ps;
+
+const getQueryParams = () => {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    mode: params.get('mode'),
+  };
+};
 
 function Sidebar(props) {
   const [openAvatar, setOpenAvatar] = React.useState(false);
@@ -137,30 +142,31 @@ function Sidebar(props) {
     setCollapseStates(getCollapseStates(props.routes));
   }, [props.routes]);
 
+  const { mode } = getQueryParams();
+
   return (
     <div
       className="sidebar"
       data-color={props.bgColor}
       data-active-color={props.activeColor}
     >
-<div className="logo">
-    <div className="photo" style={{ display: 'flex', alignItems: 'center' }}>
-    <img
-  src={logo}
-  alt="react-logo"
-  width={35}
-  height={35}
-  style={{ transform: 'translate(10px, 0px)' }}
-/>
-
-      <a className="simple-text logo-normal" style={{ fontSize: '1.2em', fontWeight:"bold", textDecoration: 'none', color: 'white'  ,transform: 'translate(20px, 0px)' }}>
-        HS2 EXCHANGE
-      </a>
-    </div>
-  </div>
+      <div className="logo">
+        <div className="photo" style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={logo}
+            alt="react-logo"
+            width={35}
+            height={35}
+            style={{ transform: 'translate(10px, 0px)' }}
+          />
+          <a className="simple-text logo-normal" style={{ fontSize: '1.2em', fontWeight:"bold", textDecoration: 'none', color: 'white', transform: 'translate(20px, 0px)' }}>
+            HS2 EXCHANGE
+          </a>
+        </div>
+      </div>
 
       <div className="sidebar-wrapper" ref={sidebar}>
-      <div className="user">
+        <div className="user">
           <div className="photo">
             <img src={avatar} alt="Avatar" />
           </div>
@@ -201,6 +207,9 @@ function Sidebar(props) {
           </div>
         </div>
         <Nav>{createLinks(props.routes)}</Nav>
+        {mode === 'add' && <div>Add New Asset</div>}
+        {mode === 'view' && <div>View Asset</div>}
+        {mode === 'edit' && <div>Edit Asset</div>}
       </div>
     </div>
   );
