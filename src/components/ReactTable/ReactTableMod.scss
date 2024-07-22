@@ -48,11 +48,11 @@
 }
 
 .table tbody tr:nth-child(odd) {
-  background-color: white; /* White for odd rows */
+  background-color: #F7F7F7; /* White for odd rows */
 }
 
 .-striped .rt-tbody .rt-tr.-odd {
-  background-color: #f2f2f2; /* Light grey for odd rows */
+  background-color:  #F7F7F7; 
 }
 
 .-striped .rt-tbody .rt-tr.-even {
@@ -62,7 +62,7 @@
 .-striped .rt-thead .rt-th {
   background-color: #d3d3d3; /* Grey color for headers */
   color: #000; /* Black text color for headers */
-  padding: 4px; /* Reduced padding */
+  padding: 8px; /* Reduced padding */
   border: 1px solid black; /* Border for header cells */
 }
 
@@ -73,6 +73,33 @@
 
 .rt-th,
 .rt-td {
-  border: 1px solid black; /* Border for table cells */
-  padding: 4px; /* Reduced padding */
+  border: 1px solid #DEE2E7; /* Border for table cells */
+  padding: 10px; /* Reduced padding */
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.action-buttons .btn-icon {
+  flex: 1 1 auto;
+  margin: 0 2px; /* Adjust margin as needed */
+  border: 1px solid #ccc; /* Add border */
+  background: transparent; /* Transparent background */
+  padding: 5px; /* Add some padding for better click area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.action-buttons .btn-icon:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+.action-buttons .btn-icon i {
+  margin: 0;
+  padding: 0;
 }

@@ -196,72 +196,108 @@ function Inventory() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "ID",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>ID</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "asset_id",
         width: '2%', // Set column width
       },
       {
-        Header: "ENTRY DATE",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>ENTRY DATE</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "entrydate",
         width: '8%', // Set column width
       },
       {
-        Header: "NAME",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>NAME</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "asset_name",
         width: '10%', // Set column width
       },
       {
-        Header: "DESCRIPTION",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>DESCRIPTION</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "description",
         width: '20%', // Set column width
       },
       {
-        Header: "LOCATION",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>LOCATION</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "asset_location",
         width: '8%', // Set column width
       },
       {
-        Header: "AVAILABILITY",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>AVAILABILITY</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "available_from",
         width: '8%', // Set column width
       },
       {
-        Header: "STATUS",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>STATUS</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "statuscode",
         width: '5%', // Set column width
       },
       {
-        Header: "EOI",
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>EOI</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
         accessor: "total_eoi",
         width: '2%', // Set column width
       },
       {
         Header: "ACTIONS",
         accessor: "actions",
+        sortable: false,
         width: '12.5%', // Set column width
         Cell: ({ row }) => (
-          <div>
+          <div className="action-buttons">
             <Button
               className="btn-icon btn-simple"
               color="info"
               size="sm"
+              onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              <i
-                className="fa fa-eye"
-                onClick={() => handleEdit(row.original.asset_id, 'view')}
-              ></i>
+              <i className="fa fa-eye"></i>
             </Button>
-            {` `}
             <Button
               className="btn-icon btn-simple"
               color="success"
               size="sm"
+              onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-              <i className="fa fa-edit"
-                onClick={() => handleEdit(row.original.asset_id, 'edit')}
-              ></i>
+              <i className="fa fa-edit"></i>
             </Button>
-  
             <Button
               className="btn-icon btn-simple"
               color="secondary"
@@ -269,8 +305,6 @@ function Inventory() {
             >
               <i className="fa fa-files-o"></i>
             </Button>
-            {` `}
-  
             <Button
               className="btn-icon btn-simple"
               color="danger"
@@ -284,19 +318,17 @@ function Inventory() {
                   color: "#EE8257",
                   transition: "color 0.3s",
                 }}
-                onMouseOver={(e) =>
-                  (e.target.style.color = "white")
-                }
-                onMouseOut={(e) =>
-                  (e.target.style.color = "#EE8257")
-                }
+                onMouseOver={(e) => (e.target.style.color = "white")}
+                onMouseOut={(e) => (e.target.style.color = "#EE8257")}
               ></i>
             </Button>
           </div>
         ),
       },
     ],
-  )
+    []
+  );
+  
   
 
 
