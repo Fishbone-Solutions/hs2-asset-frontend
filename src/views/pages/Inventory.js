@@ -41,30 +41,7 @@ function Inventory() {
 
   const hideAlert = () => {
     setAlert(null);
-    const fetchData = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", "tabish.hb");
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
-      fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          setDataState(result.appRespData);
-          console.log(result);
-        })
-        .catch((error) => {
-          setErrorMessage("Unable to load data. Please refresh the page or load after time");
-          console.error(error);
-        });
-    };
-
-    fetchData();
+  
   };
 
   React.useEffect(() => {
@@ -92,7 +69,7 @@ function Inventory() {
     };
 
     fetchData();
-  }, []);
+  }, [dataState]);
 
   const successDelete = (assetId) => {
     console.log(assetId);
@@ -116,8 +93,7 @@ function Inventory() {
         if (result.appRequestStatus === "SUCCESS") {
           // Asset deleted successfully
           console.log("Asset deleted successfully");
-          const updatedData = dataState.filter((row) => row.asset_id !== assetId);
-          setDataState(updatedData);
+         
           setAlert(
             <ReactBSAlert
               success
@@ -131,6 +107,9 @@ function Inventory() {
               Asset ID {assetId} has been deleted successfully
             </ReactBSAlert>
           );
+          const updatedData = dataState.filter((row) => row.asset_id !== asset_id);
+          setDataState(updatedData);
+          console.log("Updated Data",dataState)
         } else {
           // Handle error response
           setAlert(
