@@ -391,7 +391,7 @@ function Inventory() {
             <Card>
               <CardBody>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <div onClick={handleSearch} style={{ marginRight: "10px" }}>
+                  <div onClick={handleSearch} style={{ marginRight: "10px"  ,cursor: 'pointer'}}>
                     <IoSearchSharp
                       color="white"
                       size="2.4em"
