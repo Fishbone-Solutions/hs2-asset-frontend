@@ -196,33 +196,45 @@ you will not be able to recover this item.
   const handleSearch = () => {
     setAlert(
       <ReactBSAlert
-        style={{ display: "block", marginTop: "-100px" }}
+        style={{ display: "block", marginTop: "-100px", width: "80%", maxWidth: "800px", margin: "0 auto" }}
         title="Search"
-        showConfirm={false} // Hide the default OK button
+        showConfirm={false}
         onCancel={hideAlert}
       >
         <Card>
-        <CardBody>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-            <div style={{ flex: "1 1 45%" }}>
-              <Input id="id" placeholder="Enter ID" style={{ height: '40px', fontSize: '16px' }} />
+          <CardBody>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "30px" }}>
+              <div style={{ flex: "1 1 45%" }}>
+                <FormGroup>
+                  <Label for="id" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>ID</Label>
+                  <Input id="id" style={{ height: '40px', fontSize: '16px' }} />
+                </FormGroup>
+              </div>
+              <div style={{ flex: "1 1 45%" }}>
+                <FormGroup>
+                  <Label for="name" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Name</Label>
+                  <Input id="name" style={{ height: '40px', fontSize: '16px' }} />
+                </FormGroup>
+              </div>
+              <div style={{ flex: "1 1 45%" }}>
+                <FormGroup>
+                  <Label for="status" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Status</Label>
+                  <Input id="status" style={{ height: '40px', fontSize: '16px' }} />
+                </FormGroup>
+              </div>
+              <div style={{ flex: "1 1 45%" }}>
+                <FormGroup>
+                  <Label for="availability" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Availability</Label>
+                  <Input id="availability" style={{ height: '40px', fontSize: '16px' }} />
+                </FormGroup>
+              </div>
             </div>
-            <div style={{ flex: "1 1 45%" }}>
-              <Input id="name" placeholder="Enter name" style={{ height: '40px', fontSize: '16px' }} />
-            </div>
-            <div style={{ flex: "1 1 45%" }}>
-              <Input id="status" placeholder="Enter status" style={{ height: '40px', fontSize: '16px' }} />
-            </div>
-            <div style={{ flex: "1 1 45%" }}>
-              <Input id="availability" placeholder="Enter availability" style={{ height: '40px', fontSize: '16px' }} />
-            </div>
-          </div>
-        </CardBody>
+          </CardBody>
           <CardFooter>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button   style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle clear action */ }}>Clear</Button>
-              <Button  style={{backgroundColor:"rgb(82,203,206)"}}onClick={hideAlert}>Close</Button>
-              <Button style={{backgroundColor:"rgb(82,203,206)"}}onClick={() => { /* handle filter action */ }}>Filter</Button>
+              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle clear action */ }}>Clear</Button>
+              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={hideAlert}>Close</Button>
+              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle filter action */ }}>Filter</Button>
             </div>
           </CardFooter>
         </Card>
