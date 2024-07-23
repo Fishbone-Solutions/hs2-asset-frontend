@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
+  const [errorMessage,setErrorMessage] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -60,7 +61,11 @@ function Inventory() {
           setDataState(result.appRespData);
           console.log(result);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+          setErrorMessage("Unable to load data. Please refresh the page or load after time")
+          console.error(error)
+          
+        });
     };
 
     fetchData();
@@ -384,7 +389,8 @@ function Inventory() {
                   data={dataState}
                 columns={columns}
                   className="-striped -highlight primary-pagination"
-                /> 
+                />
+                {errorMessage}
               </CardBody>
             </Card>
           </Col>
