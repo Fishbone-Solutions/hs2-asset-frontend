@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  CardFooter,
 } from "reactstrap";
 import Select from "react-select";
 import ReactDatetime from "react-datetime";
@@ -31,7 +32,7 @@ const camelCaseWithSpaces = (text) => {
 };
 
 const AssetRegister = () => {
-  const { code } = useParams();
+  const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const mode = query.get('mode');
@@ -80,6 +81,7 @@ const AssetRegister = () => {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
           myHeaders.append("token", "x8F!@p01,*MH");
+
           const requestOptions = {
             method: "GET",
             headers: myHeaders,
@@ -87,7 +89,7 @@ const AssetRegister = () => {
           };
 
           const response = await fetch(
-            `${BACKEND_ADDRESS}/assets/${code}`,
+            `${BACKEND_ADDRESS}/assets/${id}`,
             requestOptions
           );
 
@@ -104,7 +106,7 @@ const AssetRegister = () => {
     };
 
     fetchData();
-  }, [code, mode]);
+  }, [id, mode]);
 
   const hideAlert = () => {
     setAlert(null);
@@ -125,6 +127,45 @@ const AssetRegister = () => {
   };
 
   const handleSubmit = async (event) => {
+    
+
+    const url = `${BACKEND_ADDRESS}/assets/`;
+    const requestBody = { ...formData };
+
+    if (mode === "edit") {
+      requestBody.id = id; // Send the record ID for update
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          token: "x8F!@p01,*MH",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      setAlert(
+        <ReactBSAlert
+          success
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Submitted"
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          confirmBtnBsStyle="info"
+          btnSize=""
+        >
+          Asset Listing submitted
+        </ReactBSAlert>
+      );
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+
+  const handleFormSubmission = async (event) => {
     event.preventDefault();
 
     // Check if all required fields are filled
@@ -135,7 +176,6 @@ const AssetRegister = () => {
       "seller_location",
       "categorycode1",
       "categorycode2",
-      "code",
       "asset_name",
       "asset_condition",
       "quantity",
@@ -162,36 +202,23 @@ const AssetRegister = () => {
         return;
       }
     }
+    setAlert(
+      <ReactBSAlert
+        warning
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Are you sure?"
+        onConfirm={() => handleSubmit()}
+        onCancel={() => hideAlert()}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        confirmBtnText="Yes, Submit it!"
+        cancelBtnText="Cancel"
+        showCancel
+        btnSize=""
+      >
+      </ReactBSAlert>
+    );
 
-    const url = mode === "edit" ? `${BACKEND_ADDRESS}/assets/${code}` : `${BACKEND_ADDRESS}/assets`;
-    const method = "POST";
-
-    try {
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-          token: "x8F!@p01,*MH",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      setAlert(
-        <ReactBSAlert
-          success
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Submitted"
-          onConfirm={() => hideAlert()}
-          onCancel={() => hideAlert()}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        >
-          Asset Listing submitted
-        </ReactBSAlert>
-      );
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
   };
 
   const isReadOnly = mode === 'view';
@@ -199,7 +226,7 @@ const AssetRegister = () => {
   return (
     <>
       <div className="content">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleFormSubmission}>
           <Row>
             {/* Asset Seller Detail*/}
             <Col md="12">
@@ -299,6 +326,9 @@ const AssetRegister = () => {
                     </Col>
                   </Row>
                 </CardBody>
+                <CardFooter>
+               
+                </CardFooter>
               </Card>
             </Col>
             {/* Category Detail*/}
@@ -396,16 +426,17 @@ const AssetRegister = () => {
                 <CardBody>
                   <Row>
                     <Label sm="2" style={{ color: "#36454F" }}>
-                      ID *
+                      ID * (Auto Generated)
                     </Label>
                     <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
-                          name="code"
-                          value={formData.code}
+                          name="id"
+                          value={formData.asset_id}
                           onChange={handleChange}
                           required
+                          disabled
                           readOnly={isReadOnly}
                         />
                       </FormGroup>

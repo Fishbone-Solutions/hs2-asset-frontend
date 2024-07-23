@@ -29,13 +29,22 @@ const routes = [
     hidden: "true"
   }, */
   {
-    path: "/exchangeregister/:code",
-    pathName: "/admin/exchangeregister/:code",
+    path: "/exchangeregister/:id",
+    pathName: "/admin/exchangeregister/:id?mode=view",
     name: "Inventory | Item",
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true
+  },
+  {
+    path: "/exchangeregister",
+    pathName: "/admin/exchangeregister",
+    name: "Add New Item",
+    component: <AssetRegister />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
   },
   {
     path: "/inventory",
@@ -73,15 +82,7 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
 
   },
-  {
-    path: "/exchangeregister",
-    pathName: "/admin/exchangeregister",
-    name: "Add New Item",
-    component: <AssetRegister />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
 
-  },
   {
     path: "/myeoi",
     pathName: "/admin/dashboard",

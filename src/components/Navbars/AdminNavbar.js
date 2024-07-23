@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   Button,
   Collapse,
@@ -21,8 +21,16 @@ function AdminNavbar(props) {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [color, setColor] = React.useState("#52CBCE");
   const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const mode = query.get('mode');
+  const id = query.get('id');
+
+  
+  console.log("location", location.pathname,mode)
 
   const currentRoute = routes.find((route) => location.pathname.includes(route.pathName));
+
+  console.log("current Route",currentRoute)
 
   const { name, icon } = currentRoute || {};
   React.useEffect(() => {

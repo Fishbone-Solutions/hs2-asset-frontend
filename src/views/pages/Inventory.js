@@ -2,7 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 
 // reactstrap components
-import { Card, CardBody, Row, Col, Button } from "reactstrap";
+import { Card, CardBody, Row, Col, Button,InputGroup,Input ,Label,FormGroup,CardFooter} from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { IoSearchSharp } from "react-icons/io5";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -88,7 +88,7 @@ function Inventory() {
         showCancel
         btnSize=""
       >
-        You will not be able to recover this asset's listing.
+you will not be able to recover this item.
       </ReactBSAlert>
     );
 
@@ -193,7 +193,43 @@ function Inventory() {
       />
     );
   };
-
+  const handleSearch = () => {
+    setAlert(
+      <ReactBSAlert
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Search"
+        showConfirm={false} // Hide the default OK button
+        onCancel={hideAlert}
+      >
+        <Card>
+        <CardBody>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+            <div style={{ flex: "1 1 45%" }}>
+              <Input id="id" placeholder="Enter ID" style={{ height: '40px', fontSize: '16px' }} />
+            </div>
+            <div style={{ flex: "1 1 45%" }}>
+              <Input id="name" placeholder="Enter name" style={{ height: '40px', fontSize: '16px' }} />
+            </div>
+            <div style={{ flex: "1 1 45%" }}>
+              <Input id="status" placeholder="Enter status" style={{ height: '40px', fontSize: '16px' }} />
+            </div>
+            <div style={{ flex: "1 1 45%" }}>
+              <Input id="availability" placeholder="Enter availability" style={{ height: '40px', fontSize: '16px' }} />
+            </div>
+          </div>
+        </CardBody>
+          <CardFooter>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button   style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle clear action */ }}>Clear</Button>
+              <Button  style={{backgroundColor:"rgb(82,203,206)"}}onClick={hideAlert}>Close</Button>
+              <Button style={{backgroundColor:"rgb(82,203,206)"}}onClick={() => { /* handle filter action */ }}>Filter</Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </ReactBSAlert>
+    );
+  };
+  
 
 
 
@@ -358,7 +394,7 @@ function Inventory() {
             <Card>
               <CardBody>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <div style={{ marginRight: "10px" }}>
+                  <div onClick={handleSearch} style={{ marginRight: "10px" }}>
                     <IoSearchSharp
                       color="white"
                       size="2.4em"
