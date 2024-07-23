@@ -68,7 +68,7 @@ function Inventory() {
     };
 
     fetchData();
-  }, [hideAlert]);
+  }, []);
 
   const successDelete = (assetId) => {
     console.log(assetId);
