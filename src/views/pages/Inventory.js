@@ -144,7 +144,7 @@ function Inventory() {
         onCancel={cancelDelete}
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
-        confirmBtnText="Yes, delete it!"
+        confirmBtnText="Yes"
         cancelBtnText="Cancel"
         showCancel
         btnSize=""

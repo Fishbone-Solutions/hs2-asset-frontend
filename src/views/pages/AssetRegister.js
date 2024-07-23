@@ -225,7 +225,7 @@ const AssetRegister = () => {
         onCancel={() => hideAlert()}
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
-        confirmBtnText="Yes, Submit it!"
+        confirmBtnText="Yes"
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
