@@ -30,6 +30,12 @@ function Login() {
   const [alert,setAlert] =useState("");
   const navigate = useNavigate();
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      // Handle Enter key press event here
+      handleLogin();
+    }
+  }
   const handleLogin = () => {
     if (username === 'fish.admin' && password === 'admin') {
       navigate('/admin/inventory');
