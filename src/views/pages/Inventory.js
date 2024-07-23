@@ -2,10 +2,9 @@ import React from "react";
 import DataTable from "react-data-table-component";
 
 // reactstrap components
-import { Card, CardBody, Row, Col, Button,InputGroup,Input ,Label,FormGroup,CardFooter} from "reactstrap";
+import { Card, CardBody, Row, Col, Button, InputGroup, Input, Label, FormGroup, CardFooter, CardHeader, CardTitle } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { IoSearchSharp } from "react-icons/io5";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress";
@@ -15,7 +14,8 @@ import { useNavigate } from 'react-router-dom';
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
-  const [errorMessage,setErrorMessage] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [dataState, setDataState] = React.useState([]);
 
   const navigate = useNavigate();
 
@@ -23,14 +23,14 @@ function Inventory() {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
 
-  const cancelDetele = () => {
+  const cancelDelete = () => {
     setAlert(
       <ReactBSAlert
         danger
         style={{ display: "block", marginTop: "-100px" }}
         title="Cancelled"
-        onConfirm={() => hideAlert()}
-        onCancel={() => hideAlert()}
+        onConfirm={hideAlert}
+        onCancel={hideAlert}
         confirmBtnBsStyle="info"
         btnSize=""
       >
@@ -62,16 +62,74 @@ function Inventory() {
           console.log(result);
         })
         .catch((error) => {
-          setErrorMessage("Unable to load data. Please refresh the page or load after time")
-          console.error(error)
-          
+          setErrorMessage("Unable to load data. Please refresh the page or load after time");
+          console.error(error);
         });
     };
 
     fetchData();
-  }, [dataTable]);
+  }, [hideAlert]);
 
+  const successDelete = (assetId) => {
+    console.log(assetId);
+    // Construct the URL for the delete endpoint
+    const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
 
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    // Make the POST request to delete the asset
+    fetch(deleteEndpoint, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        if (result.appRequestStatus === "SUCCESS") {
+          // Asset deleted successfully
+          console.log("Asset deleted successfully");
+          const updatedData = dataState.filter((row) => row.asset_id !== assetId);
+          setDataState(updatedData);
+          setAlert(
+            <ReactBSAlert
+              success
+              style={{ display: "block", marginTop: "-100px" }}
+              title="Deleted!"
+              onConfirm={hideAlert}
+              onCancel={hideAlert}
+              confirmBtnBsStyle="info"
+              btnSize=""
+            >
+              Asset ID {assetId} has been deleted successfully
+            </ReactBSAlert>
+          );
+        } else {
+          // Handle error response
+          setAlert(
+            <ReactBSAlert
+              danger
+              style={{ display: "block", marginTop: "-100px" }}
+              title="Deletion Failed"
+              onConfirm={hideAlert}
+              onCancel={hideAlert}
+              confirmBtnBsStyle="danger"
+              btnSize=""
+            >
+              Error deleting asset
+            </ReactBSAlert>
+          );
+          console.log("Error deleting asset");
+        }
+      })
+      .catch((error) => {
+        // Handle network errors or exceptions
+        console.error("Network error or exception occurred:", error);
+      });
+  };
 
   const handleDelete = (assetId) => {
     setAlert(
@@ -80,7 +138,7 @@ function Inventory() {
         style={{ display: "block", marginTop: "-100px" }}
         title="Are you sure?"
         onConfirm={() => successDelete(assetId)}
-        onCancel={() => cancelDetele()}
+        onCancel={cancelDelete}
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         confirmBtnText="Yes, delete it!"
@@ -88,88 +146,20 @@ function Inventory() {
         showCancel
         btnSize=""
       >
-you will not be able to recover this item.
+        You will not be able to recover this item.
       </ReactBSAlert>
     );
-
-    const successDelete = (assetId) => {
-      console.log(assetId);
-      // Construct the URL for the delete endpoint
-      const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
-
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("token", "x8F!@p01,*MH");
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
-      // Make the POST request to delete the asset
-      fetch(deleteEndpoint, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          if (result.appRequestStatus === "SUCCESS") {
-            // Asset deleted successfully
-            console.log("Asset deleted successfully");
-            const updatedData = dataState.filter(
-              (row) => row.asset_id !== assetId
-            );
-            setDataState(updatedData);
-            setAlert(
-              <ReactBSAlert
-                success
-                style={{ display: "block", marginTop: "-100px" }}
-                title="Deleted!"
-                onConfirm={() => hideAlert()}
-                onCancel={() => hideAlert()}
-                confirmBtnBsStyle="info"
-                btnSize=""
-              >
-                Asset ID {assetId} has been deleted successfully
-              </ReactBSAlert>
-            );
-
-            // Perform any additional actions or update state as needed
-          } else {
-            // Handle error response
-            setAlert(
-              <ReactBSAlert
-                success
-                style={{ display: "block", marginTop: "-100px" }}
-                title="Deleted Operation Failed"
-                onConfirm={() => hideAlert()}
-                onCancel={() => hideAlert()}
-                confirmBtnBsStyle="danger"
-                btnSize=""
-              >
-                Error deleting asset
-              </ReactBSAlert>
-            );
-            console.log("Error deleting asset");
-            // Perform error handling or display error message
-          }
-        })
-        .catch((error) => {
-          // Handle network errors or exceptions
-          console.error("Network error or exception occurred:", error);
-        });
-    };
   };
 
-
   const searchMode = (e) => {
-    console.log("hi")
     setAlert(
       <ReactBSAlert
         input
         showCancel
         style={{ display: "block", marginTop: "-100px" }}
         title="Input something"
-        onConfirm={(e) => inputConfirmAlert(e)}
-        onCancel={() => hideAlert()}
+        onConfirm={inputConfirmAlert}
+        onCancel={hideAlert}
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         btnSize=""
@@ -181,8 +171,8 @@ you will not be able to recover this item.
     setAlert(
       <ReactBSAlert
         style={{ display: "block", marginTop: "-100px" }}
-        onConfirm={() => hideAlert()}
-        onCancel={() => hideAlert()}
+        onConfirm={hideAlert}
+        onCancel={hideAlert}
         confirmBtnBsStyle="info"
         btnSize=""
         title={
@@ -193,70 +183,75 @@ you will not be able to recover this item.
       />
     );
   };
+
   const handleSearch = () => {
     setAlert(
       <ReactBSAlert
         style={{ display: "block", marginTop: "-100px", width: "80%", maxWidth: "800px", margin: "0 auto" }}
-        title="Search"
         showConfirm={false}
         onCancel={hideAlert}
       >
         <Card>
-          <CardBody>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "30px" }}>
-              <div style={{ flex: "1 1 45%" }}>
-                <FormGroup>
-                  <Label for="id" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>ID</Label>
-                  <Input id="id" style={{ height: '40px', fontSize: '16px' }} />
-                </FormGroup>
-              </div>
-              <div style={{ flex: "1 1 45%" }}>
-                <FormGroup>
-                  <Label for="name" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Name</Label>
-                  <Input id="name" style={{ height: '40px', fontSize: '16px' }} />
-                </FormGroup>
-              </div>
-              <div style={{ flex: "1 1 45%" }}>
-                <FormGroup>
-                  <Label for="status" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Status</Label>
-                  <Input id="status" style={{ height: '40px', fontSize: '16px' }} />
-                </FormGroup>
-              </div>
-              <div style={{ flex: "1 1 45%" }}>
-                <FormGroup>
-                  <Label for="availability" style={{ marginBottom: '5px', fontSize: '14px', fontWeight: 'bold' }}>Availability</Label>
-                  <Input id="availability" style={{ height: '40px', fontSize: '16px' }} />
-                </FormGroup>
-              </div>
+          <CardHeader>
+            <CardTitle>Filter</CardTitle>
+          </CardHeader>
+          <div style={{ backgroundColor: '#4dc0b5', padding: '1rem', borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }}></div>
+          <div style={{ padding: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
+              <label htmlFor="email1" style={{  display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email1"
+                placeholder="Enter email"
+                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
+              />
             </div>
-          </CardBody>
-          <CardFooter>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle clear action */ }}>Clear</Button>
-              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={hideAlert}>Close</Button>
-              <Button style={{backgroundColor:"rgb(82,203,206)"}} onClick={() => { /* handle filter action */ }}>Filter</Button>
+            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
+              <label htmlFor="email2" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email2"
+                placeholder="Enter email"
+                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
+              />
             </div>
-          </CardFooter>
+            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
+              <label htmlFor="email3" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email3"
+                placeholder="Enter email"
+                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
+              />
+            </div>
+            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
+              <label htmlFor="email4" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
+                Email address
+              </label>
+              <input
+                type="email"
+                id="email4"
+                placeholder="Enter email"
+                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
+              />
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem', gap: '1rem', backgroundColor: '#f7fafc', borderBottomLeftRadius: '0.5rem', borderBottomRightRadius: '0.5rem' }}>
+            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>CLOSE</button>
+            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>CLEAR</button>
+            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>FILTER</button>
+          </div>
         </Card>
       </ReactBSAlert>
     );
   };
-  
 
-
-
-
-
-
-
-
-  const [dataState, setDataState] = React.useState(
-    dataTable.map((prop, key) => {
-      return {
-        id: key,
-      };
-    })
-  );
   const columns = React.useMemo(
     () => [
       {
@@ -267,17 +262,17 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "asset_id",
-        width: '2%', // Set column width
+        width: '2%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>ENTRY </span>
+            <span>ENTRY</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "entrydate",
-        width: '2%', // Set column width
+        width: '2%',
       },
       {
         Header: ({ column }) => (
@@ -287,7 +282,7 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "asset_name",
-        width: '10%', // Set column width
+        width: '10%',
       },
       {
         Header: ({ column }) => (
@@ -297,7 +292,7 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "description",
-        width: '16%', // Set column width
+        width: '16%',
       },
       {
         Header: ({ column }) => (
@@ -307,7 +302,7 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "asset_location",
-        width: '8%', // Set column width
+        width: '8%',
       },
       {
         Header: ({ column }) => (
@@ -317,7 +312,7 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "available_from",
-        width: '2%', // Set column width
+        width: '2%',
       },
       {
         Header: ({ column }) => (
@@ -327,7 +322,7 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "statuscode",
-        width: '5%', // Set column width
+        width: '5%',
       },
       {
         Header: ({ column }) => (
@@ -337,13 +332,13 @@ you will not be able to recover this item.
           </div>
         ),
         accessor: "total_eoi",
-        width: '2%', // Set column width
+        width: '2%',
       },
       {
         Header: "ACTIONS",
         accessor: "actions",
         sortable: false,
-        width: '12.5%', // Set column width
+        width: '12.5%',
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
@@ -352,9 +347,7 @@ you will not be able to recover this item.
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              <i className="fa fa-eye"
-               style={{ fontSize: '1.4em' }}
-              ></i>
+              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -362,16 +355,14 @@ you will not be able to recover this item.
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-              <i className="fa fa-edit"  style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
               color="secondary"
               size="sm"
             >
-    <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
-
-
+              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -379,13 +370,7 @@ you will not be able to recover this item.
               size="sm"
               onClick={() => handleDelete(row.original.asset_id)}
             >
-              <i
-                className="fa fa-trash"
-                style={{
-                  fontSize: '1.4em' 
-                }}
-      
-              ></i>
+              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
             </Button>
           </div>
         ),
@@ -393,9 +378,6 @@ you will not be able to recover this item.
     ],
     []
   );
-  
-  
-
 
   return (
     <>
@@ -418,24 +400,24 @@ you will not be able to recover this item.
                     />
                   </div>
                   <NavLink to="/admin/exchangeregister?mode=add">
-  <div>
-    <IoAddCircleOutline
-      color="white"
-      size="2.4em"
-      style={{
-        backgroundColor: "#52CBCE",
-        border: "2px solid #52CBCE",
-        borderRadius: "15%",
-      }}
-      onClick={(e) => searchMode(e)}
-    />
-  </div>
-</NavLink>
+                    <div>
+                      <IoAddCircleOutline
+                        color="white"
+                        size="2.4em"
+                        style={{
+                          backgroundColor: "#52CBCE",
+                          border: "2px solid #52CBCE",
+                          borderRadius: "15%",
+                        }}
+                        onClick={searchMode}
+                      />
+                    </div>
+                  </NavLink>
                 </div>
-              
-                 <ReactTable
+
+                <ReactTable
                   data={dataState}
-                columns={columns}
+                  columns={columns}
                   className="-striped -highlight primary-pagination"
                 />
                 {errorMessage}
