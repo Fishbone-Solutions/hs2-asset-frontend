@@ -1,6 +1,5 @@
 import React from "react";
-import DataTable from "react-data-table-component";
-
+import { useState } from "react";
 // reactstrap components
 import { Card, CardBody, Row, Col, Button, InputGroup, Input, Label, FormGroup, CardFooter, CardHeader, CardTitle } from "reactstrap";
 import { NavLink } from "react-router-dom";
@@ -10,18 +9,44 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+
+
 
 function Inventory() {
   const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
 
   const navigate = useNavigate();
 
   const handleEdit = (assetId, mode) => {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '60%',  // Increase the width
+      height: '50%', // Increase the height
+      padding: '0',  // Remove default padding
+      backgroundColor:"#F7F7F7"
+    },
+  };
+  
+  
+
+
 
   const cancelDelete = () => {
     setAlert(
@@ -181,73 +206,7 @@ function Inventory() {
     );
   };
 
-  const handleSearch = () => {
-    setAlert(
-      <ReactBSAlert
-        style={{ display: "block", marginTop: "-100px", width: "80%", maxWidth: "800px", margin: "0 auto" }}
-        showConfirm={false}
-        onCancel={hideAlert}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle>Filter</CardTitle>
-          </CardHeader>
-          <div style={{ backgroundColor: '#4dc0b5', padding: '1rem', borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }}></div>
-          <div style={{ padding: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
-              <label htmlFor="email1" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email1"
-                placeholder="Enter email"
-                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
-              />
-            </div>
-            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
-              <label htmlFor="email2" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email2"
-                placeholder="Enter email"
-                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
-              />
-            </div>
-            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
-              <label htmlFor="email3" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email3"
-                placeholder="Enter email"
-                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
-              />
-            </div>
-            <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
-              <label htmlFor="email4" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email4"
-                placeholder="Enter email"
-                style={{ display: 'block', width: '100%', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.375rem' }}
-              />
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem', gap: '1rem', backgroundColor: '#f7fafc', borderBottomLeftRadius: '0.5rem', borderBottomRightRadius: '0.5rem' }}>
-            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>CLOSE</button>
-            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>CLEAR</button>
-            <button style={{ padding: '0.5rem 1rem', fontWeight: '600', color: 'white', backgroundColor: '#4dc0b5', borderRadius: '0.375rem' }}>FILTER</button>
-          </div>
-        </Card>
-      </ReactBSAlert>
-    );
-  };
+
 
   const columns = React.useMemo(
     () => [
@@ -378,6 +337,51 @@ function Inventory() {
 
   return (
     <>
+            <Card>
+
+            <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel="Filter Modal"
+    >
+      <div>
+        <h4 style={{
+          textAlign: 'center',
+          margin: '0',
+          padding: '1rem',
+          backgroundColor: "#52CBCE",
+          color: "white",
+          width: '100%',
+        }}>
+          FILTER
+        </h4>
+        <div style={{ padding: '1rem 2rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label htmlFor="input1" style={{ marginBottom: '0.5rem' }}>ID</label>
+            <input id="input1" type="text" style={{ padding: '0.5rem' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
+            <input id="input2" type="text" style={{ padding: '0.5rem' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
+            <input id="input3" type="text" style={{ padding: '0.5rem' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
+            <input id="input4" type="text" style={{ padding: '0.5rem' }} />
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
+          <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
+          <Button className="buttonClose" color="primary" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
+          <Button className="buttonClose" color="primary" style={{ padding: '0.5rem 1rem' }}>Filter</Button>
+        </div>
+      </div>
+    </Modal>
+    </Card>
       <div className="content">
         <Row>
           {alert}
@@ -385,7 +389,7 @@ function Inventory() {
             <Card>
               <CardBody>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <div onClick={handleSearch} style={{ marginRight: "10px"  ,cursor: 'pointer'}}>
+                  <div onClick={openModal} style={{ marginRight: "10px"  ,cursor: 'pointer'}}>
                     <IoSearchSharp
                       color="white"
                       size="2.4em"
