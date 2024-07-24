@@ -41,7 +41,6 @@ function Inventory() {
 
   const hideAlert = () => {
     setAlert(null);
-  
   };
 
   React.useEffect(() => {
@@ -49,51 +48,48 @@ function Inventory() {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", "tabish.hb");
+
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
         redirect: "follow",
       };
 
-      fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          setDataState(result.appRespData);
-          console.log(result);
-        })
-        .catch((error) => {
-          setErrorMessage("Unable to load data. Please refresh the page or load after time");
-          console.error(error);
-        });
+      try {
+        const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
+        const result = await response.json();
+        setDataState(result.appRespData);
+        console.log(result);
+      } catch (error) {
+        setErrorMessage("Unable to load data. Please refresh the page or load after time");
+        console.error(error);
+      }
     };
 
     fetchData();
-  }, [dataState]);
+  }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
   const successDelete = (assetId) => {
     console.log(assetId);
-    // Construct the URL for the delete endpoint
     const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
 
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
+
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
       redirect: "follow",
     };
 
-    // Make the POST request to delete the asset
     fetch(deleteEndpoint, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
         if (result.appRequestStatus === "SUCCESS") {
-          // Asset deleted successfully
           console.log("Asset deleted successfully");
-         
+
           setAlert(
             <ReactBSAlert
               success
@@ -107,11 +103,10 @@ function Inventory() {
               Asset ID {assetId} has been deleted successfully
             </ReactBSAlert>
           );
-          const updatedData = dataState.filter((row) => row.asset_id !== asset_id);
-          setDataState(updatedData);
-          console.log("Updated Data",dataState)
+
+          setDataState((prevState) => prevState.filter((row) => row.asset_id !== assetId));
+          console.log("Updated Data", dataState);
         } else {
-          // Handle error response
           setAlert(
             <ReactBSAlert
               danger
@@ -129,7 +124,6 @@ function Inventory() {
         }
       })
       .catch((error) => {
-        // Handle network errors or exceptions
         console.error("Network error or exception occurred:", error);
       });
   };
@@ -201,7 +195,7 @@ function Inventory() {
           <div style={{ backgroundColor: '#4dc0b5', padding: '1rem', borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }}></div>
           <div style={{ padding: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
             <div style={{ flex: '1 1 45%', marginBottom: '1rem' }}>
-              <label htmlFor="email1" style={{  display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
+              <label htmlFor="email1" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#4a5568' }}>
                 Email address
               </label>
               <input

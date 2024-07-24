@@ -38,7 +38,7 @@ const AssetRegister = () => {
   const mode = query.get('mode');
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
     code: "",
@@ -137,15 +137,9 @@ const AssetRegister = () => {
     }));
   };
 
-  const handleSubmit = async (event) => {
-    
-
-    const url = `${BACKEND_ADDRESS}/assets/`;
+  const handleSubmit = async () => {
+    const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? id : ""}`;
     const requestBody = { ...formData };
-
-    if (mode === "edit") {
-      requestBody.id = id; // Send the record ID for update
-    }
 
     try {
       const response = await fetch(url, {
@@ -169,20 +163,16 @@ const AssetRegister = () => {
         >
           Asset Listing submitted
         </ReactBSAlert>
-
       );
       navigate('/admin/inventory');
-
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
 
-
   const handleFormSubmission = async (event) => {
     event.preventDefault();
 
-    // Check if all required fields are filled
     const requiredFields = [
       "seller_title",
       "seller_contactno",
@@ -229,10 +219,8 @@ const AssetRegister = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      >
-      </ReactBSAlert>
+      />
     );
-
   };
 
   const isReadOnly = mode === 'view';
@@ -341,7 +329,6 @@ const AssetRegister = () => {
                   </Row>
                 </CardBody>
                 <CardFooter>
-               
                 </CardFooter>
               </Card>
             </Col>
