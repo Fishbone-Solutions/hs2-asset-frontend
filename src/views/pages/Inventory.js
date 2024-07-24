@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 // reactstrap components
-import { Card, CardBody, Row, Col, Button, InputGroup, Input, Label, FormGroup, CardFooter, CardHeader, CardTitle } from "reactstrap";
+import { Card, CardBody, Row, Col, Button  } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
 // core components

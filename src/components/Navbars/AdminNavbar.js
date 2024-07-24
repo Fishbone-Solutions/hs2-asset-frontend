@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Button,
   Collapse,
@@ -25,17 +25,14 @@ function AdminNavbar(props) {
   const mode = query.get('mode');
   const id = query.get('id');
 
-  
-  console.log("location", location.pathname,mode)
-
   const currentRoute = routes.find((route) => location.pathname.includes(route.pathName));
 
-  console.log("current Route",currentRoute)
-
   const { name, icon } = currentRoute || {};
+  
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
   });
+
   React.useEffect(() => {
     if (
       window.outerWidth < 993 &&
@@ -44,7 +41,7 @@ function AdminNavbar(props) {
       document.documentElement.classList.toggle("nav-open");
     }
   }, [location]);
-  // function that adds color white/transparent to the navbar on resize (this is for the collapse)
+
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
       setColor("bg-primary");
@@ -52,14 +49,12 @@ function AdminNavbar(props) {
       setColor("bg-primary");
     }
   };
-  // this function opens and closes the sidebar on small devices
+
   const toggleSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
     setSidebarOpen(!sidebarOpen);
   };
-  // this function opens and closes the collapse on small devices
-  // it also adds navbar-transparent class to the navbar when closed
-  // ad bg-white when opened
+
   const toggleCollapse = () => {
     if (!collapseOpen) {
       setColor("bg-white");
@@ -68,6 +63,17 @@ function AdminNavbar(props) {
     }
     setCollapseOpen(!collapseOpen);
   };
+
+  const renderTitle = () => {
+    if (mode === 'view') {
+      return `Inventory | View Item `;
+    } else if (mode === 'edit') {
+      return `Inventory | Edit Item `;
+    } else {
+      return name;
+    }
+  };
+
   return (
     <>
       <Navbar
@@ -105,22 +111,21 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-        <span className="d-none d-md-block" style={{ color: 'white' }}>
-    {icon && <i className={icon}></i>} {/* Render the icon */}
-    <span style={{ color: 'white' , fontWeight: 'bold' }}>{name}</span>
-  </span>
-  <span className="d-block d-md-none">
-  {icon && <i className={icon}></i>} {/* Render the icon */}
-  <span style={{ color: 'white', fontWeight: 'bold' }}>{name}</span>
-</span>
-      </NavbarBrand>
+              <span className="d-none d-md-block" style={{ color: 'white' }}>
+                {icon && <i className={icon}></i>}
+                <span style={{ color: 'white', fontWeight: 'bold' }}>{renderTitle()}</span>
+              </span>
+              <span className="d-block d-md-none">
+                {icon && <i className={icon}></i>}
+                <span style={{ color: 'white', fontWeight: 'bold' }}>{renderTitle()}</span>
+              </span>
+            </NavbarBrand>
           </div>
           <button
             aria-controls="navigation-index"
             aria-expanded={collapseOpen}
             aria-label="Toggle navigation"
             className="navbar-toggler"
-            // data-target="#navigation"
             data-toggle="collapse"
             type="button"
             onClick={toggleCollapse}
@@ -135,28 +140,8 @@ function AdminNavbar(props) {
             isOpen={collapseOpen}
           >
             <Form>
-{/*               <InputGroup className="no-border">
-                <Input defaultValue="" placeholder="Search..." type="text" />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="nc-icon nc-zoom-split" />
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup> */}
             </Form>
             <Nav navbar>
-{/*               <NavItem>
-                <NavLink
-                  className="btn-magnify"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <i className="nc-icon nc-layout-11" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </NavLink>
-              </NavItem> */}
               <UncontrolledDropdown className="btn-rotate" nav>
                 <DropdownToggle
                   aria-haspopup={true}
@@ -182,10 +167,8 @@ function AdminNavbar(props) {
                   >
                     Another action
                   </DropdownItem>
-
                 </DropdownMenu>
               </UncontrolledDropdown>
-
             </Nav>
           </Collapse>
         </Container>
