@@ -1,164 +1,298 @@
 import React from "react";
-
+import { useState } from "react";
 // reactstrap components
 import {
   Badge,
   Card,
   CardBody,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
+Form,
+FormGroup,
+Input,
+Label,
+CardHeader,
+CardTitle,
+CardFooter,
+
   Row,
   Col,
 } from "reactstrap";
 
+import ReactTable from "components/ReactTable/ReactTable.js";
+
 function W8() {
+  const [dataState,setDataState] = useState([])
+  const[errorMessage,setErrorMessage] = useState("")
+  const [formData, setFormData] = useState({
+    id: "",
+    code: "",
+    entrydate: "",
+    categorycode1: "",
+    categorycode2: "",
+    asset_name: "",
+    description: "",
+    asset_condition: "",
+    quantity: "",
+    asset_location: "",
+    value: "",
+    additional_info: "",
+    available_from: "",
+    seller_title: "",
+    seller_contactno: "",
+    seller_email: "",
+    seller_location: "",
+    statuscode: "",
+  });
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("token", "x8F!@p01,*MH");
+      myHeaders.append("user_id", "tabish.hb");
+
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      try {
+        const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
+        const result = await response.json();
+        setDataState(result.appRespData);
+        console.log(result);
+      } catch (error) {
+        setErrorMessage("Unable to load data. Please refresh the page or load after time");
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
+
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>EoI. No</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "asset_id",
+        width: '2%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>ENTRY</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "entrydate",
+        width: '2%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>NAME</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "asset_name",
+        width: '10%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>DESCRIPTION</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "description",
+        width: '16%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>LOCATION</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "asset_location",
+        width: '8%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>AVAILABILITY</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "available_from",
+        width: '2%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>STATUS</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "statuscode",
+        width: '5%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>EOI</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "total_eoi",
+        width: '2%',
+      },
+   
+    ],
+    []
+  );
   return (
     <>
-      <div className="content">
-        <div className="header text-center">
-          <h3 className="title">Timeline</h3>
-        </div>
-        <Row>
-          <Col md="12">
-            <Card className="card-timeline card-plain">
-              <CardBody>
-                <ul className="timeline">
-                  <li className="timeline-inverted">
-                    <div className="timeline-badge danger">
-                      <i className="nc-icon nc-single-copy-04" />
-                    </div>
-                    <div className="timeline-panel">
-                      <div className="timeline-heading">
-                        <Badge color="danger" pill>
-                          Some Title
-                        </Badge>
-                      </div>
-                      <div className="timeline-body">
-                        <p>
-                          Wifey made the best Father's Day meal ever. So
-                          thankful so happy so blessed. Thank you for making my
-                          family We just had fun with the “future” theme !!! It
-                          was a fun night all together ... The always rude Kanye
-                          Show at 2am Sold Out Famous viewing @ Figueroa and
-                          12th in downtown.
-                        </p>
-                      </div>
-                      <h6>
-                        <i className="fa fa-clock-o" />
-                        11 hours ago via Twitter
-                      </h6>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="timeline-badge success">
-                      <i className="nc-icon nc-sun-fog-29" />
-                    </div>
-                    <div className="timeline-panel">
-                      <div className="timeline-heading">
-                        <Badge color="success" pill>
-                          Another One
-                        </Badge>
-                      </div>
-                      <div className="timeline-body">
-                        <p>
-                          Thank God for the support of my wife and real friends.
-                          I also wanted to point out that it’s the first album
-                          to go number 1 off of streaming!!! I love you Ellen
-                          and also my number one design rule of anything I do
-                          from shoes to music to homes is that Kim has to like
-                          it....
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="timeline-inverted">
-                    <div className="timeline-badge info">
-                      <i className="nc-icon nc-world-2" />
-                    </div>
-                    <div className="timeline-panel">
-                      <div className="timeline-heading">
-                        <Badge color="info" pill>
-                          Another Title
-                        </Badge>
-                      </div>
-                      <div className="timeline-body">
-                        <p>
-                          Called I Miss the Old Kanye That’s all it was Kanye
-                          And I love you like Kanye loves Kanye Famous viewing @
-                          Figueroa and 12th in downtown LA 11:10PM
-                        </p>
-                        <p>
-                          What if Kanye made a song about Kanye Royère doesn't
-                          make a Polar bear bed but the Polar bear couch is my
-                          favorite piece of furniture we own It wasn’t any
-                          Kanyes Set on his goals Kanye
-                        </p>
-                        <hr />
-                      </div>
-                      <div className="timeline-footer">
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            caret
-                            className="btn-round"
-                            color="info"
-                            data-toggle="dropdown"
-                            type="button"
-                          >
-                            <i className="nc-icon nc-settings-gear-65" />
-                          </DropdownToggle>
-                          <DropdownMenu persist>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Something else here
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="timeline-badge warning">
-                      <i className="nc-icon nc-istanbul" />
-                    </div>
-                    <div className="timeline-panel">
-                      <div className="timeline-heading">
-                        <Badge color="warning" pill>
-                          Another One
-                        </Badge>
-                      </div>
-                      <div className="timeline-body">
-                        <p>
-                          Tune into Big Boy's 92.3 I'm about to play the first
-                          single from Cruel Winter also to Kim’s hair and makeup
-                          Lorraine jewelry and the whole style squad at Balmain
-                          and the Yeezy team. Thank you Anna for the invite
-                          thank you to the whole Vogue team
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
+         <div className="content">
+        <Form >
+          <Row>
+            {/* Asset Seller Detail*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    
+                    
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Label sm="2" style={{ color: "#36454F" }}>
+                      Asset ID
+                    </Label>
+                    <Col sm="4">
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title"
+                          value={formData.seller_title}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Label sm="2" style={{ color: "#36454F" }}>
+                      Name
+                    </Label>
+                    <Col sm="4">
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_contactno"
+                          value={formData.seller_contactno}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Label sm="2" style={{ color: "#36454F" }}>
+                     Description
+                    </Label>
+                    <Col sm="4">
+                      <FormGroup >
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                          onChange={(e) => {
+                          
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              seller_email: value,
+                            }));
+                          }}
+                          required
+                        />
+                       
+                         
+                      </FormGroup>
+                    </Col>
+                    <Label sm="2" style={{ color: "#36454F" }}>
+Status
+                    </Label>
+                    <Col sm="4">
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_location"
+                          value={formData.seller_location}
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                </CardFooter>
+              </Card>
+            </Col>
+           
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    Expression of Interests
+                    
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+               
+                <ReactTable
+                  data={dataState}
+                  columns={columns}
+                  className="-striped -highlight primary-pagination"
+                />
+                {errorMessage}
+                </CardBody>
+                <CardFooter>
+                </CardFooter>
+              </Card>
+            </Col>
+            </Row>
+            </Form>
+            </div>
     </>
   );
 }

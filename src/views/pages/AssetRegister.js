@@ -92,6 +92,8 @@ const AssetRegister = () => {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
           myHeaders.append("token", "x8F!@p01,*MH");
+          myHeaders.append("user_id", "tabish.hb");
+
 
           const requestOptions = {
             method: "GET",
