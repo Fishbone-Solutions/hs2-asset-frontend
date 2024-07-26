@@ -183,6 +183,7 @@ const AssetRegister = () => {
       "categorycode1",
       "categorycode2",
       "asset_name",
+      "available_from",
       "asset_condition",
       "quantity",
       "asset_location",
@@ -476,7 +477,7 @@ const AssetRegister = () => {
                       </FormGroup>
                     </Col>
                     <Label sm="2" style={{ color: "#36454F" }}>
-                      Available From
+                    Forecasted Availability*
                     </Label>
                     <Col sm="4">
                       <FormGroup>
