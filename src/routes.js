@@ -44,6 +44,8 @@ const routes = [
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    hidden: true
+
 
   },
   {
