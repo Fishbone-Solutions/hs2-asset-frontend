@@ -73,6 +73,9 @@ function Inventory() {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
+      myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+
+
 
       const requestOptions = {
         method: "GET",
