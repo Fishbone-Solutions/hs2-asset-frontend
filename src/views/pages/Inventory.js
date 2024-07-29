@@ -30,6 +30,9 @@ function Inventory() {
   };
 
   const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // 20% opacity black background
+    },
     content: {
       top: '50%',
       left: '50%',
@@ -37,7 +40,7 @@ function Inventory() {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '60%',  // Increase the width
+      width: '40%',  // Increase the width
       height: '50%', // Increase the height
       padding: '0',  // Remove default padding
       backgroundColor:"#F7F7F7"
@@ -351,17 +354,29 @@ function Inventory() {
       contentLabel="Filter Modal"
     >
       <div>
+     
+         
         <h4 style={{
-          textAlign: 'center',
+          textAlign: 'left',
           margin: '0',
-          padding: '1rem',
+          padding: '0.5rem',
           backgroundColor: "#52CBCE",
           color: "white",
           width: '100%',
+
         }}>
+           <IoSearchSharp
+                      color="white"
+                      size="1.5em"
+                      style={{
+                        backgroundColor: "#52CBCE",
+                        border: "2px solid #52CBCE",
+                        borderRadius: "15%",
+                      }}
+                    />
           FILTER
         </h4>
-        <div style={{ padding: '1rem 2rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label htmlFor="input1" style={{ marginBottom: '0.5rem' }}>ID</label>
             <input id="input1" type="text" style={{ padding: '0.5rem' }} />
