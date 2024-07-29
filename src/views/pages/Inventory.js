@@ -33,6 +33,13 @@ function Inventory() {
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.5)', // 20% opacity black background
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: '1000'
+
     },
     content: {
       top: '50%',
@@ -351,78 +358,78 @@ function Inventory() {
   );
 
   return (
-    <>
-            <Card>
+    <><Modal
+    isOpen={modalIsOpen}
+    onRequestClose={closeModal}
+    style={customStyles}
+    contentLabel="Filter Modal"
+  >
+    <div>
+   
+       
+      <h4 style={{
+        textAlign: 'left',
+        margin: '0',
+        padding: '0.5rem',
+        backgroundColor: "#52CBCE",
+        color: "white",
+        width: '100%',
 
-            <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      style={customStyles}
-      contentLabel="Filter Modal"
-    >
-      <div>
-     
-         
-        <h4 style={{
-          textAlign: 'left',
-          margin: '0',
-          padding: '0.5rem',
-          backgroundColor: "#52CBCE",
-          color: "white",
-          width: '100%',
-
-        }}>
-           <IoSearchSharp
-                      color="white"
-                      size="1.5em"
-                      style={{
-                        backgroundColor: "#52CBCE",
-                        border: "2px solid #52CBCE",
-                        borderRadius: "15%",
-                      }}
-                    />
-          FILTER
-        </h4>
-        <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="input1" style={{ marginBottom: '0.5rem' }}>ID</label>
-            <input id="input1" type="text" style={{ padding: '0.5rem' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
-            <input id="input2" type="text" style={{ padding: '0.5rem' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
-            <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="statuscode"
-                         
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              statuscode: selectedOption.value,
-                            }))
-                          }
-                          options23={options23}
-                          placeholder="Select an option"
-              //            isDisabled={isReadOnly}
-                          required
-                        />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
-            <input id="input4" type="text" style={{ padding: '0.5rem' }} />
-          </div>
+      }}>
+         <IoSearchSharp
+                    color="white"
+                    size="1.5em"
+                    style={{
+                      backgroundColor: "#52CBCE",
+                      border: "2px solid #52CBCE",
+                      borderRadius: "15%",
+                    }}
+                  />
+        FILTER
+      </h4>
+      <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="input1" style={{ marginBottom: '0.5rem' }}>ID</label>
+          <input id="input1" type="text" style={{ padding: '0.5rem' }} />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
-          <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
-          <Button className="buttonClose" color="primary" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
-          <Button className="buttonClose" color="primary" style={{ padding: '0.5rem 1rem' }}>Filter</Button>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
+          <input id="input2" type="text" style={{ padding: '0.5rem' }} />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
+          <Select
+                        className="react-select primary"
+                        classNamePrefix="react-select"
+                        name="statuscode"
+                       
+                        onChange={(selectedOption) =>
+                          setFormData((prevState) => ({
+                            ...prevState,
+                            statuscode: selectedOption.value,
+                          }))
+                        }
+                        options23={options23}
+                        placeholder="Select an option"
+            //            isDisabled={isReadOnly}
+                        required
+                      />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
+          <input id="input4" type="text" style={{ padding: '0.5rem' }} />
         </div>
       </div>
-    </Modal>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
+        <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
+        <Button className="buttonClose" color="primary" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
+        <Button className="buttonClose" color="primary" style={{ padding: '0.5rem 1rem' }}>Filter</Button>
+      </div>
+    </div>
+  </Modal>
+            <Card>
+
+            
     </Card>
       <div className="content">
         <Row>
