@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 // reactstrap components
 import { Card, CardBody, Row, Col, Button  } from "reactstrap";
+import Select from "react-select";
 import { NavLink } from "react-router-dom";
 import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
 // core components
@@ -47,6 +48,8 @@ function Inventory() {
     },
   };
   
+
+  const formData = {}
   
 
 
@@ -214,7 +217,11 @@ function Inventory() {
     );
   };
 
-
+ const  options23= [
+    { value: "New Entry", label: "New Entry" },
+    { value: "Open for EOI", label: "Open for EOI" },
+    { value: "Unavailable-Sold", label: "Unavailable-Sold" },
+  ];
 
   const columns = React.useMemo(
     () => [
@@ -387,7 +394,22 @@ function Inventory() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
-            <input id="input3" type="text" style={{ padding: '0.5rem' }} />
+            <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="statuscode"
+                         
+                          onChange={(selectedOption) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              statuscode: selectedOption.value,
+                            }))
+                          }
+                          options23={options23}
+                          placeholder="Select an option"
+              //            isDisabled={isReadOnly}
+                          required
+                        />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>

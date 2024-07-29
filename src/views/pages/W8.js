@@ -16,7 +16,7 @@ CardFooter,
   Row,
   Col,
 } from "reactstrap";
-
+import Select from "react-select";
 import ReactTable from "components/ReactTable/ReactTable.js";
 
 function W8() {
