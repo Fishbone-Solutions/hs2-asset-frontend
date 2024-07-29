@@ -104,6 +104,8 @@ function Inventory() {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
+    myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+
 
     const requestOptions = {
       method: "POST",
@@ -266,7 +268,7 @@ function Inventory() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>AVAILABILITY</span>
+            <span></span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),

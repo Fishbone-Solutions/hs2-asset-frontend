@@ -19,7 +19,7 @@ CardFooter,
 
 import ReactTable from "components/ReactTable/ReactTable.js";
 
-function W8() {
+function EoIPages() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
   const [formData, setFormData] = useState({
@@ -89,22 +89,22 @@ function W8() {
           </div>
         ),
         accessor: "asset_id",
-        width: '2.5%',
+        width: '2%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> User ID</span>
+            <span></span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "entrydate",
-        width: '2.8%',
+        width: '2%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> Interested Buyers </span>
+            <span>NAME</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -114,7 +114,7 @@ function W8() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>EoI Submission Date</span>
+            <span>DESCRIPTION</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -124,7 +124,7 @@ function W8() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Status</span>
+            <span>LOCATION</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -132,47 +132,38 @@ function W8() {
         width: '8%',
       },
       {
-        Header: "ACTIONS",
-        accessor: "actions",
-        sortable: false,
-        width: '12.5%',
-        Cell: ({ row }) => (
-          <div className="action-buttons">
-            <Button
-              className="btn-icon btn-simple"
-              color="info"
-              size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'view')}
-            >
-              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="success"
-              size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'edit')}
-            >
-              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="secondary"
-              size="sm"
-            >
-              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="danger"
-              size="sm"
-              onClick={() => handleDelete(row.original.asset_id)}
-            >
-              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
-            </Button>
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>AVAILABILITY</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-      }
-    ]
+        accessor: "available_from",
+        width: '2%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>STATUS</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "statuscode",
+        width: '5%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>EOI</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "total_eoi",
+        width: '2%',
+      },
+   
+    ],
+    []
   );
   return (
     <>
@@ -306,4 +297,4 @@ Status
   );
 }
 
-export default W8;
+export default EoIPages;
