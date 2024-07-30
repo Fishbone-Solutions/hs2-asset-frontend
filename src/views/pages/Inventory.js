@@ -28,7 +28,7 @@ function Inventory() {
   const[filterFormData, setFilterFormDate] = useState({
     
     id:"",
-    name:"",
+    asset_name:"",
     available_from:"",
     statuscode:""
 
@@ -87,7 +87,7 @@ function Inventory() {
   const getValueOrDefault = (value) => value ? value : '-1';
 
   
-    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}&fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}&fltr_name=${getValueOrDefault(filterFormData.name)}&fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
+    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}&fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}&fltr_name=${getValueOrDefault(filterFormData.asset_name)}&fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
 
     const requestOptions = {
       method: 'GET', // or 'POST' depending on your API
@@ -485,7 +485,7 @@ function Inventory() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
-          <Input name="name" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
+          <Input name="asset_name" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="" style={{ marginBottom: '0.5rem' }}>Status</label>
