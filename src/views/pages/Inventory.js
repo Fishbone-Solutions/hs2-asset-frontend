@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 // reactstrap components
-import { Card, CardBody, Row, Col, Button  } from "reactstrap";
+import { Card, CardBody, Row, Col, Button,Input  } from "reactstrap";
 import Select from "react-select";
-import { NavLink } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
@@ -15,16 +15,28 @@ import Modal from 'react-modal';
 
 
 function Inventory() {
-  const [dataTable, setDataTable] = React.useState([]);
   const [alert, setAlert] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+  const[filterFormData, setFilterFormDate] = useState({
+    
+    id:"",
+    name:"",
+    status:"",
+    statuscode:""
+
+
+  });
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
-
   const navigate = useNavigate();
+
+  const statusOptions = [
+    { value: "New Entry", label: "New Entry" },
+    { value: "Open for EOI", label: "Open for EOI" },
+    { value: "Unavailable-Sold", label: "Unavailable-Sold" },
+  ];
 
   const handleEdit = (assetId, mode) => {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
@@ -51,15 +63,23 @@ function Inventory() {
       width: '40%',  // Increase the width
       height: '50%', // Increase the height
       padding: '0',  // Remove default padding
-      backgroundColor:"#F7F7F7"
+      backgroundColor:"#FFFFFF"
     },
   };
   
 
-  const formData = {}
-  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };  
 
 
+  const handleFilterFormDataSubmission = async (event) => {
+     console.log(filterFormData);
+  };
 
   const cancelDelete = () => {
     setAlert(
@@ -224,11 +244,7 @@ function Inventory() {
     );
   };
 
- const  options23= [
-    { value: "New Entry", label: "New Entry" },
-    { value: "Open for EOI", label: "Open for EOI" },
-    { value: "Unavailable-Sold", label: "Unavailable-Sold" },
-  ];
+
 
   const columns = React.useMemo(
     () => [
@@ -285,7 +301,7 @@ function Inventory() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span></span>
+            <span>AVAILABILITY</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -358,12 +374,14 @@ function Inventory() {
   );
 
   return (
-    <><Modal
+    <>
+    <Modal
     isOpen={modalIsOpen}
     onRequestClose={closeModal}
     style={customStyles}
     contentLabel="Filter Modal"
   >
+
     <div>
    
        
@@ -387,14 +405,17 @@ function Inventory() {
                   />
         FILTER
       </h4>
+
       <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="input1" style={{ marginBottom: '0.5rem' }}>ID</label>
-          <input id="input1" type="text" style={{ padding: '0.5rem' }} />
+        <label htmlFor="input1" style={{ marginBottom: '0.5rem', color: "#36454F" }}>
+        ID
+      </label>
+          <Input id="input1" type="text" style={{ padding: '0.5rem'  }} onChange={handleChange} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
-          <input id="input2" type="text" style={{ padding: '0.5rem' }} />
+          <Input id="input2" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
@@ -404,30 +425,31 @@ function Inventory() {
                         name="statuscode"
                        
                         onChange={(selectedOption) =>
-                          setFormData((prevState) => ({
+                          setFilterFormDate((prevState) => ({
                             ...prevState,
                             statuscode: selectedOption.value,
                           }))
                         }
-                        options23={options23}
+                        options={statusOptions}
                         placeholder="Select an option"
-            //            isDisabled={isReadOnly}
                         required
                       />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
-          <input id="input4" type="text" style={{ padding: '0.5rem' }} />
+          <Input id="input4" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
         <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
         <Button className="buttonClose" color="primary" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
-        <Button className="buttonClose" color="primary" style={{ padding: '0.5rem 1rem' }}>Filter</Button>
+        <Button className="buttonClose" color="primary" onClick={handleFilterFormDataSubmission} style={{ padding: '0.5rem 1rem' }}  >Filter</Button>
       </div>
+
     </div>
+
   </Modal>
-            <Card>
+  <Card>
 
             
     </Card>
