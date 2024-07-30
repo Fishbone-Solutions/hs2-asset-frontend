@@ -125,7 +125,7 @@ function Table({ columns, data }) {
     <>
       <br></br>
       <div className="-striped -highlight primary-pagination">
-        <table {...getTableProps()}>
+        <table className="table-responsive" {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>

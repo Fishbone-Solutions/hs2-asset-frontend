@@ -1,5 +1,6 @@
 import React from "react";
 
+import BACKEND_ADDRESS from "../components/serverAddress";
 // reactstrap components
 import {
   Button,
@@ -16,278 +17,200 @@ import {
 } from "reactstrap";
 
 function UserProfile() {
+  const [dataState, setDataState] = React.useState({});
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const camelCaseWithSpaces = (text) => {
+    return text
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("token", "x8F!@p01,*MH");
+      myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+
+
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      try {
+        const response = await fetch(`${BACKEND_ADDRESS}/users/tabish.hb`, requestOptions);
+        const result = await response.json();
+        setDataState(result.appRespData[0]);
+        console.log(dataState.firstname);
+      } catch (error) {
+        setErrorMessage("Unable to load data. Please refresh the page or load after time");
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className="content">
         <Row>
-          <Col md="4">
-            <Card className="card-user">
-              <div className="image">
-                <img
-                  alt="..."
-                  src={require("assets/img/bg/damir-bosnjak.jpg")}
-                />
-              </div>
-              <CardBody>
-                <div className="author">
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={require("assets/img/mike.jpg")}
-                    />
-                    <h5 className="title">Chet Faker</h5>
-                  </a>
-                  <p className="description">@chetfaker</p>
-                </div>
-                <p className="description text-center">
-                  "I like the way you work it <br />
-                  No diggity <br />I wanna bag it up"
-                </p>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="button-container">
-                  <Row>
-                    <Col className="ml-auto" lg="3" md="6" xs="6">
-                      <h5>
-                        12 <br />
-                        <small>Files</small>
-                      </h5>
-                    </Col>
-                    <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
-                      <h5>
-                        2GB <br />
-                        <small>Used</small>
-                      </h5>
-                    </Col>
-                    <Col className="mr-auto" lg="3">
-                      <h5>
-                        24,6$ <br />
-                        <small>Spent</small>
-                      </h5>
-                    </Col>
-                  </Row>
-                </div>
-              </CardFooter>
-            </Card>
+          <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Team Members</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <ul className="list-unstyled team-members">
-                  <li>
-                    <Row>
-                      <Col md="2" xs="2">
-                        <div className="avatar">
-                          <img
-                            alt="..."
-                            className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/faces/ayo-ogunseinde-2.jpg")}
-                          />
-                        </div>
-                      </Col>
-                      <Col md="7" xs="7">
-                        DJ Khaled <br />
-                        <span className="text-muted">
-                          <small>Offline</small>
-                        </span>
-                      </Col>
-                      <Col className="text-right" md="3" xs="3">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="success"
-                          outline
-                          size="sm"
-                        >
-                          <i className="fa fa-envelope" />
-                        </Button>
-                      </Col>
-                    </Row>
-                  </li>
-                  <li>
-                    <Row>
-                      <Col md="2" xs="2">
-                        <div className="avatar">
-                          <img
-                            alt="..."
-                            className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/faces/joe-gardner-2.jpg")}
-                          />
-                        </div>
-                      </Col>
-                      <Col md="7" xs="7">
-                        Creative Tim <br />
-                        <span className="text-success">
-                          <small>Available</small>
-                        </span>
-                      </Col>
-                      <Col className="text-right" md="3" xs="3">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="success"
-                          outline
-                          size="sm"
-                        >
-                          <i className="fa fa-envelope" />
-                        </Button>
-                      </Col>
-                    </Row>
-                  </li>
-                  <li>
-                    <Row>
-                      <Col md="2" xs="2">
-                        <div className="avatar">
-                          <img
-                            alt="..."
-                            className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/faces/clem-onojeghuo-2.jpg")}
-                          />
-                        </div>
-                      </Col>
-                      <Col className="col-ms-7" xs="7">
-                        Flume <br />
-                        <span className="text-danger">
-                          <small>Busy</small>
-                        </span>
-                      </Col>
-                      <Col className="text-right" md="3" xs="3">
-                        <Button
-                          className="btn-round btn-icon"
-                          color="success"
-                          outline
-                          size="sm"
-                        >
-                          <i className="fa fa-envelope" />
-                        </Button>
-                      </Col>
-                    </Row>
-                  </li>
-                </ul>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="8">
-            <Card>
-              <CardHeader>
-                <h5 className="title">Edit Profile</h5>
+              <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    {camelCaseWithSpaces("User Profile")}
+                  </CardTitle>
               </CardHeader>
               <CardBody>
                 <Form>
                   <Row>
-                    <Col className="pr-1" md="5">
+                    <Col className="pr-1" md="6">
                       <FormGroup>
-                        <label>Company (disabled)</label>
+                        <label>First Name</label>
                         <Input
-                          defaultValue="Creative Code Inc."
+                          defaultValue={dataState.firstname}
                           disabled
                           placeholder="Company"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="3">
+
+                    <Col  md="6">
                       <FormGroup>
-                        <label>Username</label>
+                        <label>Last Name</label>
                         <Input
-                          defaultValue="michael23"
+                         defaultValue={dataState.lastname}
                           placeholder="Username"
+                          disabled
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="4">
-                      <FormGroup>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <Input placeholder="Email" type="email" />
-                      </FormGroup>
-                    </Col>
+
                   </Row>
+
                   <Row>
-                    <Col className="pr-1" md="6">
+                    <Col md="6">
                       <FormGroup>
-                        <label>First Name</label>
+                        <label>Email</label>
                         <Input
-                          defaultValue="Chet"
+                          defaultValue={dataState.email}
+                          disabled
                           placeholder="Company"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="6">
+                    <Col md="6">
                       <FormGroup>
-                        <label>Last Name</label>
+                        <label>Contact No</label>
                         <Input
-                          defaultValue="Faker"
+                          defaultValue={dataState.contact_no}
+                          disabled
                           placeholder="Last Name"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
                   </Row>
+                
+                  
+                
+                </Form>
+              </CardBody>
+            </Card>
+
+            <Card>
+            <CardHeader>
+            <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    {camelCaseWithSpaces("Organization")}
+                  </CardTitle>
+              </CardHeader>
+              <CardBody>
                   <Row>
-                    <Col md="12">
+                    <Col md="6">
                       <FormGroup>
-                        <label>Address</label>
+                        <label>Tilte</label>
                         <Input
-                          defaultValue="Melbourne, Australia"
+                          defaultValue={dataState.organization_title}
+                          disabled
                           placeholder="Home Address"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
+                    <Col  md="6">
                       <FormGroup>
-                        <label>City</label>
+                        <label>Address</label>
                         <Input
-                          defaultValue="Melbourne"
+                          defaultValue={dataState.organization_address}
+                          disabled
                           placeholder="City"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="4">
-                      <FormGroup>
-                        <label>Country</label>
-                        <Input
-                          defaultValue="Australia"
-                          placeholder="Country"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <FormGroup>
-                        <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number" />
-                      </FormGroup>
-                    </Col>
                   </Row>
+                  </CardBody>
+            </Card>
+
+            <Card>
+              <CardHeader>
+              <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    {camelCaseWithSpaces("Role")}
+                  </CardTitle>
+              </CardHeader>
+              <CardBody>
+             
                   <Row>
-                    <Col md="12">
+                    <Col md="6">
                       <FormGroup>
-                        <label>About Me</label>
+                        <label>Role</label>
                         <Input
-                          className="textarea"
-                          type="textarea"
-                          cols="80"
-                          rows="4"
-                          defaultValue="Oh so, your weak rhyme You doubt I'll bother,
-                          reading into it"
+                          type="text"
+                          disabled
+                          defaultValue={dataState.role_name}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
-                </Form>
               </CardBody>
             </Card>
           </Col>
         </Row>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
+              Close
+            </Button>
+            </div>
       </div>
     </>
   );

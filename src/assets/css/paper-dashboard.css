@@ -5006,7 +5006,11 @@ License - nucleoapp.com/license/
       background-color: transparent;
       color: #403D39;
       border-color: #403D39;
-      box-shadow: none; }
+      box-shadow: none;
+     }
+     button.btn-icon.btn-simple:hover.btn.btn-secondary.btn-sm > img {
+      filter: invert(1);
+  }
   .btn.btn-link,
   .navbar .navbar-nav > a.btn.btn-link {
     color: #66615B; }
