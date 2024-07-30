@@ -32,7 +32,7 @@ const routes = [
   {
     path: "/user-profile",
     pathName: "/admin/user-profile",
-    name: "Inventory | Item",
+    name: "My Profile",
     component: <UserProfile />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
