@@ -251,10 +251,10 @@ const AssetRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Col sm="6">
+                    <Label >
                       Seller Title *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -266,10 +266,11 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Contact No *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -281,12 +282,14 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
+                    
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                   
+                  <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
                       Email Address *
                     </Label>
-                    <Col sm="4">
                       <FormGroup className={`has-label ${formData.seller_email}`}>
                         <Input
                           type="text"
@@ -314,10 +317,11 @@ const AssetRegister = () => {
                         ) : null}
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
                       Location *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -353,10 +357,11 @@ const AssetRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                     Category
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -378,10 +383,11 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
                       Sub Category
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -429,10 +435,11 @@ const AssetRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
                       ID
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -445,10 +452,11 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
                       Name *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -460,12 +468,14 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
+                    
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                  <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Description
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -476,10 +486,11 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                   
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                     Forecasted Availability*
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <ReactDatetime
                           inputProps={{
@@ -502,12 +513,14 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
+                    
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                  <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Condition *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -530,10 +543,10 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Quantity *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -545,12 +558,15 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
+                  
+                    
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Location *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -562,10 +578,11 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Estimated Value *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -681,10 +698,11 @@ const AssetRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Status *
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Select
                           className="react-select primary"

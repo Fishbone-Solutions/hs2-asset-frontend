@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import defaultLiveIconImage from "assets/img/live.png";
+import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 // reactstrap components
 import { Card, CardBody, Row, Col, Button,Input  } from "reactstrap";
 import Select from "react-select";
@@ -15,6 +17,8 @@ import { useEffect } from "react";
 
 
 function Inventory() {
+  const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
+  const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
   const [alert, setAlert] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
@@ -377,7 +381,12 @@ function Inventory() {
           </div>
         ),
         accessor: "statuscode",
-        width: '5%',
+        width: '3%',
+        Cell: ({ row }) => (
+          row.original.statuscode == 'Sold' ? <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  (row.original.statuscode == 'EOI Open') ? <span class='badge badge-success badge-pill'><img src={liveIconImage}  width={'15px'} alt="..." /> {row.original.statuscode}  </span> : (row.original.statuscode == 'New Entry') ? <span class='badge badge-info badge-pill'>{row.original.statuscode} </span> :  row.original.statuscode
+          
+        ),
+       
       },
       {
         Header: ({ column }) => (
@@ -393,7 +402,7 @@ function Inventory() {
         Header: "ACTIONS",
         accessor: "actions",
         sortable: false,
-        width: '12.5%',
+        width: '1%',
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
@@ -402,7 +411,7 @@ function Inventory() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -410,14 +419,14 @@ function Inventory() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
               color="secondary"
               size="sm"
             >
-              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
+              <img src={applicationIconImage}   width={'15px'} alt="..." />
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -425,7 +434,7 @@ function Inventory() {
               size="sm"
               onClick={() => handleDelete(row.original.asset_id)}
             >
-              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-times" style={{ fontSize: '0.9em' }} ></i>
             </Button>
           </div>
         ),

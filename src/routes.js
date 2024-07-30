@@ -2,6 +2,7 @@ import Dashboard from "views/Dashboard.js";
 import Login from "views/pages/Login.js";
 import AssetRegister from "views/pages/AssetRegister";
 import Inventory from "views/pages/Inventory.js";
+import UserProfile from "views/pages/UserProfile.js";
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
 import W2 from 'views/pages/W2';
@@ -28,6 +29,15 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
     hidden: "true"
   }, */
+  {
+    path: "/user-profile",
+    pathName: "/admin/user-profile",
+    name: "Inventory | Item",
+    component: <UserProfile />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+  },
   {
     path: "/exchangeregister/:id",
     pathName: "/admin/exchangeregister/:id?mode=view",
