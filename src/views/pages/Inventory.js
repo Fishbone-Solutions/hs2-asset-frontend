@@ -11,7 +11,7 @@ import BACKEND_ADDRESS from "../components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-
+import { useEffect } from "react";
 
 
 function Inventory() {
@@ -19,11 +19,13 @@ function Inventory() {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [clearTrigger, setClearTrigger] = useState(false);
+
   const[filterFormData, setFilterFormDate] = useState({
     
     id:"",
     name:"",
-    status:"",
+    available_from:"",
     statuscode:""
 
 
@@ -78,7 +80,31 @@ function Inventory() {
 
 
   const handleFilterFormDataSubmission = async (event) => {
+  const getValueOrDefault = (value) => value ? value : '-1';
+
+  
+    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}&fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}&fltr_name=${getValueOrDefault(filterFormData.name)}&fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
+
+    const requestOptions = {
+      method: 'GET', // or 'POST' depending on your API
+      headers: { 'Content-Type': 'application/json' ,
+        "token": "x8F!@p01,*MH",
+        "user_id": "tabish.hb"}
+
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+      const data = await response.json();
+      console.log(data.appRespData); // Process the response as needed
+      setDataState(data.appRespData)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  
      console.log(filterFormData);
+    
+
   };
 
   const cancelDelete = () => {
@@ -100,6 +126,32 @@ function Inventory() {
   const hideAlert = () => {
     setAlert(null);
   };
+
+  const fetchData = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+
+
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
+      const result = await response.json();
+      setDataState(result.appRespData);
+      console.log(result);
+    } catch (error) {
+      setErrorMessage("Unable to load data. Please refresh the page or load after time");
+      console.error(error);
+    }
+  };
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -243,7 +295,16 @@ function Inventory() {
       />
     );
   };
+  useEffect(() => {
+    if (clearTrigger) {
+      fetchData();
+      setClearTrigger(false); // Reset the trigger
+    }
+  }, [clearTrigger]);
 
+  const handleClearClick = () => {
+    setClearTrigger(true);
+  };
 
 
   const columns = React.useMemo(
@@ -411,14 +472,14 @@ function Inventory() {
         <label htmlFor="input1" style={{ marginBottom: '0.5rem', color: "#36454F" }}>
         ID
       </label>
-          <Input id="input1" type="text" style={{ padding: '0.5rem'  }} onChange={handleChange} />
+          <Input name="id" type="text" style={{ padding: '0.5rem'  }} onChange={handleChange} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
-          <Input id="input2" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
+          <Input name="name" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="input3" style={{ marginBottom: '0.5rem' }}>Status</label>
+          <label htmlFor="" style={{ marginBottom: '0.5rem' }}>Status</label>
           <Select
                         className="react-select primary"
                         classNamePrefix="react-select"
@@ -437,22 +498,19 @@ function Inventory() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
-          <Input id="input4" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
+          <Input name="available_from" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
         <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
-        <Button className="buttonClose" color="primary" style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
+        <Button className="buttonClose" color="primary" onClick={handleClearClick}style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
         <Button className="buttonClose" color="primary" onClick={handleFilterFormDataSubmission} style={{ padding: '0.5rem 1rem' }}  >Filter</Button>
       </div>
 
     </div>
 
   </Modal>
-  <Card>
 
-            
-    </Card>
       <div className="content">
         <Row>
           {alert}
