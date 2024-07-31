@@ -1,5 +1,6 @@
 import React from "react";
-
+import { useContext } from "react";
+import { GlobalContext } from "GlobalState";
 import BACKEND_ADDRESS from "../components/serverAddress";
 // reactstrap components
 import {
@@ -18,6 +19,7 @@ import {
 
 function UserProfile() {
   const [dataState, setDataState] = React.useState({});
+  const {username } = useContext(GlobalContext)
   const [errorMessage, setErrorMessage] = React.useState("");
   const camelCaseWithSpaces = (text) => {
     return text
@@ -30,7 +32,7 @@ function UserProfile() {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+      myHeaders.append("user_id", username);  // Add user_id to headers
 
 
 

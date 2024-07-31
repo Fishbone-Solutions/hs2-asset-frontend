@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useContext} from "react";
 import defaultLiveIconImage from "assets/img/live.png";
+import { GlobalContext } from '../../GlobalState';
+
 import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 // reactstrap components
 import { Card, CardBody, Row, Col, Button,Input  } from "reactstrap";
@@ -17,6 +19,9 @@ import { useEffect } from "react";
 
 
 function Inventory() {
+
+  const { username, setUsername } = useContext(GlobalContext);
+ console.log("username",username);
   const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
   const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
   const [alert, setAlert] = React.useState(null);
@@ -24,7 +29,6 @@ function Inventory() {
   const [dataState, setDataState] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clearTrigger, setClearTrigger] = useState(false);
-
   const[filterFormData, setFilterFormDate] = useState({
     
     id:"",
@@ -98,7 +102,7 @@ function Inventory() {
       method: 'GET', // or 'POST' depending on your API
       headers: { 'Content-Type': 'application/json' ,
         "token": "x8F!@p01,*MH",
-        "user_id": "tabish.hb"}
+        "user_id": username}
 
     };
 
@@ -140,7 +144,7 @@ function Inventory() {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+    myHeaders.append("user_id", username);  // Add user_id to headers
 
 
 
@@ -167,7 +171,7 @@ function Inventory() {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+      myHeaders.append("user_id", username);  // Add user_id to headers
 
 
 
@@ -198,7 +202,7 @@ function Inventory() {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", "tabish.hb");  // Add user_id to headers
+    myHeaders.append("user_id", username);  // Add user_id to headers
 
 
     const requestOptions = {

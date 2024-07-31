@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   Form,
@@ -23,7 +23,7 @@ import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import "./AssetRegister.css";
-
+import { GlobalContext } from "GlobalState";
 const camelCaseWithSpaces = (text) => {
   return text
     .split(' ')
@@ -39,6 +39,7 @@ const AssetRegister = () => {
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
+  const {username } =  useContext(GlobalContext);
   const [formData, setFormData] = useState({
     id: "",
     code: "",
@@ -92,7 +93,7 @@ const AssetRegister = () => {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
           myHeaders.append("token", "x8F!@p01,*MH");
-          myHeaders.append("user_id", "tabish.hb");
+          myHeaders.append("user_id", username);
 
 
           const requestOptions = {

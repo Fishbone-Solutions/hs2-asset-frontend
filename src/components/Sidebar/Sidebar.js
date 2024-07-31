@@ -1,10 +1,11 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Nav, Collapse } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/faces/ex_logo.jpg";
-
+import { GlobalContext } from "GlobalState";
 var ps;
 
 const getQueryParams = () => {
@@ -17,6 +18,7 @@ const getQueryParams = () => {
 function Sidebar(props) {
   const [openAvatar, setOpenAvatar] = React.useState(false);
   const [collapseStates, setCollapseStates] = React.useState({});
+  const { username } = useContext(GlobalContext);
   const sidebar = React.useRef();
 
   // Initialize collapse states based on routes
@@ -178,7 +180,7 @@ function Sidebar(props) {
               onClick={() => setOpenAvatar(!openAvatar)}
             >
               <span>
-                admin
+              {username}
                 <b className="caret" />
               </span>
             </a>

@@ -1,10 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useContext } from "react";
+import { GlobalContext } from "GlobalState";
 // reactstrap components
 import {
-  Badge,
-  Card,
-  CardBody,
+Card,
+CardBody,
 Form,
 FormGroup,
 Input,
@@ -21,6 +21,7 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 
 function EoIPages() {
   const [dataState,setDataState] = useState([])
+  const { username } = useContext(GlobalContext)
   const[errorMessage,setErrorMessage] = useState("")
   const [formData, setFormData] = useState({
     id: "",
@@ -48,7 +49,7 @@ function EoIPages() {
       const myHeaders = new Headers();
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", "tabish.hb");
+      myHeaders.append("user_id", username);
 
 
       const requestOptions = {

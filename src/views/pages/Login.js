@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 
 // reactstrap components
 import {
@@ -22,9 +22,11 @@ import login_lock_icon from "../../assets/img/login_lock_icon.png"
 import Footer from "components/Footer/Footer";
 import AuthNavbar from "components/Navbars/AuthNavbar";
 import ReactBSAlert from "react-bootstrap-sweetalert";
+import { GlobalContext } from '../../GlobalState';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const { username, setUsername } = useContext(GlobalContext);
+  const usernames = []
   const [password, setPassword] = useState('');
   const [error, setErrorMessage] = useState('');
   const [alert,setAlert] =useState("");
@@ -37,7 +39,7 @@ function Login() {
     }
   }
   const handleLogin = () => {
-    if (username === 'fish.admin' && password === 'admin') {
+    if (password === 'admin') {
       navigate('/admin/inventory');
 
     } else {

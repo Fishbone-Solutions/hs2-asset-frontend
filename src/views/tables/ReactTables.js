@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useContext } from "react";
 // reactstrap components
 import {
   Card,
@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { MdDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
-
+import { GlobalContext } from "GlobalState";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress"
@@ -18,6 +18,7 @@ import { FaEdit } from "react-icons/fa";
 
 function ReactTables() {
   const [dataTable, setDataTable] = React.useState([]);
+  const { username } = useContext(GlobalContext)
 
   const formatDate = (date) => {
     const formattedDate = new Date(date).toLocaleDateString('en-GB', {
@@ -33,7 +34,7 @@ function ReactTables() {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", "tabish.hb");
+    myHeaders.append("user_id", username);
 
     console.log(BACKEND_ADDRESS)
 
