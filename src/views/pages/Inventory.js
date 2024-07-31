@@ -39,9 +39,11 @@ function Inventory() {
   const navigate = useNavigate();
 
   const statusOptions = [
-    { value: "New Entry", label: "New Entry" },
-    { value: "Open for EOI", label: "Open for EOI" },
-    { value: "Unavailable-Sold", label: "Unavailable-Sold" },
+
+      { value: "InActive", label: "In Active" },
+      { value: "Live", label: "Live" },
+      { value: "Sold", label: "Sold" },
+
   ];
 
   const handleEdit = (assetId, mode) => {
@@ -87,7 +89,10 @@ function Inventory() {
   const getValueOrDefault = (value) => value ? value : '-1';
 
   
-    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}&fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}&fltr_name=${getValueOrDefault(filterFormData.asset_name)}&fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
+    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}
+    &fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}
+    &fltr_name=${getValueOrDefault(filterFormData.asset_name)}
+    &fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
 
     const requestOptions = {
       method: 'GET', // or 'POST' depending on your API
@@ -383,7 +388,12 @@ function Inventory() {
         accessor: "statuscode",
         width: '3%',
         Cell: ({ row }) => (
-          row.original.statuscode == 'Sold' ? <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  (row.original.statuscode == 'EOI Open') ? <span class='badge badge-success badge-pill'><img src={liveIconImage}  width={'15px'} alt="..." /> {row.original.statuscode}  </span> : (row.original.statuscode == 'New Entry') ? <span class='badge badge-info badge-pill'>{row.original.statuscode} </span> :  row.original.statuscode
+          row.original.statuscode == 'Sold' ? 
+          <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  
+          (row.original.statuscode == 'Live') ? <span class='badge badge-success badge-pill'><img src={liveIconImage}  width={'15px'} alt="..." /> 
+          {row.original.statuscode}  </span> : (row.original.statuscode == 'InActive') ?
+           <span class='badge badge-info badge-pill'>{row.original.statuscode}
+            </span> :  row.original.statuscode
           
         ),
        

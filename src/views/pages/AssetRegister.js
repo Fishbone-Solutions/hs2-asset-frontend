@@ -718,9 +718,9 @@ const AssetRegister = () => {
                             }))
                           }
                           options={[
-                            { value: "New Entry", label: "New Entry" },
-                            { value: "Open for EOI", label: "Open for EOI" },
-                            { value: "Unavailable-Sold", label: "Unavailable-Sold" },
+                            { value: "InActive", label: "In Active" },
+                            { value: "Live", label: "Live" },
+                            { value: "Sold", label: "Sold" },
                           ]}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}

@@ -12,9 +12,8 @@ Label,
 CardHeader,
 CardTitle,
 CardFooter,
-
-  Row,
-  Col,
+Row,
+Col,
 } from "reactstrap";
 import Select from "react-select";
 import ReactTable from "components/ReactTable/ReactTable.js";
@@ -179,6 +178,111 @@ function W8() {
          <div className="content">
         <Form >
           <Row>
+          <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    {camelCaseWithSpaces("Seller Information")}
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                    <Label >
+                      Seller Title *
+                    </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title"
+                          value={formData.seller_title}
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
+                      Contact No *
+                    </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_contactno"
+                          value={formData.seller_contactno}
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
+                    
+                  </Row>
+                  <Row>
+                   
+                  <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
+                      Email Address *
+                    </Label>
+                      <FormGroup className={`has-label ${formData.seller_email}`}>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!verifyEmail(value)) {
+                              setRegisterEmailState("has-danger");
+                            } else {
+                              setRegisterEmailState("has-success");
+                            }
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              seller_email: value,
+                            }));
+                          }}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                        {registerEmailState === "has-danger" ? (
+                          <label className="error">
+                            Please enter a valid email address.
+                          </label>
+                        ) : null}
+                      </FormGroup>
+                    </Col>
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
+                      Location *
+                    </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_location"
+                          value={formData.seller_location}
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                </CardFooter>
+              </Card>
+            </Col>
             {/* Asset Seller Detail*/}
             <Col md="12">
               <Card>
@@ -198,7 +302,7 @@ function W8() {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Label sm="12" style={{ color: "#36454F" }}>
                       Asset ID
                     </Label>
                     <Col sm="4">
@@ -212,7 +316,7 @@ function W8() {
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Label sm="12" style={{ color: "#36454F" }}>
                       Name
                     </Label>
                     <Col sm="4">
@@ -227,7 +331,7 @@ function W8() {
                     </Col>
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Label sm="12" style={{ color: "#36454F" }}>
                      Description
                     </Label>
                     <Col sm="4">
@@ -249,7 +353,7 @@ function W8() {
                          
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    <Label sm="12" style={{ color: "#36454F" }}>
 Status
                     </Label>
                     <Col sm="4">
