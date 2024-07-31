@@ -43,7 +43,7 @@ function UserProfile() {
       };
 
       try {
-        const response = await fetch(`${BACKEND_ADDRESS}/users/tabish.hb`, requestOptions);
+        const response = await fetch(`${BACKEND_ADDRESS}/users/${username}`, requestOptions);
         const result = await response.json();
         setDataState(result.appRespData[0]);
         console.log(dataState.firstname);
