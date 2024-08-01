@@ -3,7 +3,7 @@ import AssetRegister from "views/pages/AssetRegister";
 import Inventory from "views/pages/Inventory.js";
 import UserProfile from "views/pages/UserProfile.js";
 import EoIPages from "views/pages/EoIPages";
-
+import EoIPage from "views/pages/EoIPage";
 
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
@@ -22,15 +22,6 @@ import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
 const routes = [ 
-/*   {
-    path: "/asset/:code",
-    pathName: "/admin/asset",
-    name: "Asset Register",
-    component: <AssetRegisterView />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: "true"
-  }, */
   {
     path: "/user-profile",
     pathName: "/admin/user-profile",
@@ -83,6 +74,16 @@ const routes = [
     pathName: "/admin/eoi/:id?mode=view",
     name: "Inventory | Item",
     component: <EoIPages />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+    
+  },
+  {
+    path: "/eoi/view/:id",
+    pathName: "/admin/eoi/view/:id",
+    name: "Inventory | Item",
+    component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true

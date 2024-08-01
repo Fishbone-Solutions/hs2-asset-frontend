@@ -48,8 +48,6 @@ function EoIPages() {
 
   })
   const { id } = useParams();
-  const location = useLocation();
-
   const {username} = useContext(GlobalContext);
 
   const camelCaseWithSpaces = (text) => {
@@ -114,16 +112,6 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> User ID</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "email",
-        width: '2.8%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span> Interested Buyers </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
@@ -139,7 +127,7 @@ function EoIPages() {
           </div>
         ),
         accessor: "submission_date",
-        width: '2%',
+        width: '10%',
       },
       {
         Header: ({ column }) => (
@@ -296,7 +284,11 @@ function EoIPages() {
            
             <Col md="12">
               <Card>
-                <CardHeader>
+                <CardHeader   style={{
+                  paddingTop: 0,
+                  translate: '10px 20px', 
+
+                }}>
                   <CardTitle
                     tag="h6"
                     style={{
@@ -310,8 +302,11 @@ function EoIPages() {
                     
                   </CardTitle>
                 </CardHeader>
-                <CardBody>
-               
+                <CardBody
+                style={{
+                  paddingTop: 0
+                }}
+                >               
                 <ReactTable
                   data={dataState}
                   columns={columns}
