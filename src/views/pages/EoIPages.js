@@ -1,6 +1,5 @@
 import React from "react";
 import { useState,useContext } from "react";
-import { GlobalContext } from "GlobalState";
 // reactstrap components
 import {
 Card,
@@ -12,19 +11,16 @@ Label,
 CardHeader,
 CardTitle,
 CardFooter,
-
-  Row,
-  Col,
+Row,
+Col,
 } from "reactstrap";
-
 import ReactTable from "components/ReactTable/ReactTable.js";
-
+import { GlobalContext } from "GlobalState";
 function EoIPages() {
   const [dataState,setDataState] = useState([])
-  const { username } = useContext(GlobalContext)
   const[errorMessage,setErrorMessage] = useState("")
   const [formData, setFormData] = useState({
-    id: "",
+    asset_id: "",
     code: "",
     entrydate: "",
     categorycode1: "",
@@ -43,6 +39,19 @@ function EoIPages() {
     seller_location: "",
     statuscode: "",
   });
+
+  const [EoiData, setEoiData] = useState({
+
+  })
+
+  const {username} = useContext(GlobalContext);
+
+  const camelCaseWithSpaces = (text) => {
+    return text
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -89,90 +98,98 @@ function EoIPages() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "asset_id",
-        width: '2%',
+        accessor: "code",
+        width: '3%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span></span>
+            <span> User ID</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "entrydate",
-        width: '2%',
+        accessor: "email",
+        width: '2.8%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>NAME</span>
+            <span> Interested Buyers </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "asset_name",
+        accessor: "buyer_name",
         width: '10%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>DESCRIPTION</span>
+            <span>EoI Submission Date</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "description",
-        width: '16%',
+        accessor: "submission_date",
+        width: '2%',
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>LOCATION</span>
+            <span>Status</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "asset_location",
+        accessor: "eoi_status",
         width: '8%',
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>AVAILABILITY</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+        Header: "ACTIONS",
+        accessor: "actions",
+        sortable: false,
+        width: '12.5%',
+        Cell: ({ row }) => (
+          <div className="action-buttons">
+            <Button
+              className="btn-icon btn-simple"
+              color="info"
+              size="sm"
+              onClick={() => handleEdit(row.original.asset_id, 'view')}
+            >
+              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
+            </Button>
+            <Button
+              className="btn-icon btn-simple"
+              color="success"
+              size="sm"
+              onClick={() => handleEdit(row.original.asset_id, 'edit')}
+            >
+              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
+            </Button>
+            <Button
+              className="btn-icon btn-simple"
+              color="secondary"
+              size="sm"
+            >
+              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
+            </Button>
+            <Button
+              className="btn-icon btn-simple"
+              color="danger"
+              size="sm"
+              onClick={() => handleDelete(row.original.asset_id)}
+            >
+              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
+            </Button>
           </div>
         ),
-        accessor: "available_from",
-        width: '2%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>STATUS</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "statuscode",
-        width: '5%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>EOI</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "total_eoi",
-        width: '2%',
-      },
-   
-    ],
-    []
+      }
+    ]
   );
   return (
     <>
          <div className="content">
         <Form >
           <Row>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
+          <Col md="12">
               <Card>
                 <CardHeader>
                   <CardTitle
@@ -184,16 +201,15 @@ function EoIPages() {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    
-                    
+                    {camelCaseWithSpaces("Seller Information")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
-                      Asset ID
+                    <Col sm="6">
+                    <Label >
+                      Asset ID 
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -201,35 +217,47 @@ function EoIPages() {
                           value={formData.seller_title}
                           onChange={handleChange}
                           required
+                          disabled={true}
                         />
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
+                    
+                    <Col sm="6">
+                    <Label  style={{ color: "#36454F" }}>
                       Name
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
                           name="seller_contactno"
                           value={formData.seller_contactno}
+                          onChange={handleChange}
                           required
+                          disabled={true}
+
                         />
                       </FormGroup>
                     </Col>
+                    
                   </Row>
                   <Row>
-                    <Label sm="2" style={{ color: "#36454F" }}>
-                     Description
+                   
+                  <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
+                    Description
                     </Label>
-                    <Col sm="4">
-                      <FormGroup >
+                      <FormGroup className={`has-label ${formData.seller_email}`}>
                         <Input
                           type="text"
                           name="seller_email"
                           value={formData.seller_email}
                           onChange={(e) => {
-                          
+                            const value = e.target.value;
+                            if (!verifyEmail(value)) {
+                    //          setRegisterEmailState("has-danger");
+                            } else {
+             //                 setRegisterEmailState("has-success");
+                            }
                             setFormData((prevState) => ({
                               ...prevState,
                               seller_email: value,
@@ -237,14 +265,18 @@ function EoIPages() {
                           }}
                           required
                         />
-                       
-                         
+                      {/*   {registerEmailState === "has-danger" ? (
+                          <label className="error">
+                            Please enter a valid email address.
+                          </label>
+                        ) : null} */}
                       </FormGroup>
                     </Col>
-                    <Label sm="2" style={{ color: "#36454F" }}>
-Status
+                    
+                    <Col sm="6">
+                    <Label style={{ color: "#36454F" }}>
+                    Status
                     </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -261,6 +293,7 @@ Status
                 </CardFooter>
               </Card>
             </Col>
+       
            
             <Col md="12">
               <Card>

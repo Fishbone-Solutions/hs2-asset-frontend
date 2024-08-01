@@ -150,6 +150,7 @@ const AssetRegister = () => {
         headers: {
           "Content-Type": "application/json",
           token: "x8F!@p01,*MH",
+          "user_id":username
         },
         body: JSON.stringify(requestBody),
       });

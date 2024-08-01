@@ -54,6 +54,10 @@ function Inventory() {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
 
+  const handleEoI = (assetId) => {
+    navigate(`/admin/eoi/${assetId}`);
+  }
+
   const customStyles = {
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.5)', // 20% opacity black background
@@ -394,9 +398,9 @@ function Inventory() {
         Cell: ({ row }) => (
           row.original.statuscode == 'Sold' ? 
           <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  
-          (row.original.statuscode == 'Live') ? <span class='badge badge-success badge-pill'><img src={liveIconImage}  width={'15px'} alt="..." /> 
+          (row.original.statuscode == 'Live') ?<span class='badge badge-success badge-pill'> <img src={liveIconImage}  width={'15px'} alt="..." /> 
           {row.original.statuscode}  </span> : (row.original.statuscode == 'InActive') ?
-           <span class='badge badge-info badge-pill'>{row.original.statuscode}
+           <span class='badge badge-info badge-pill'> &nbsp; {row.original.statuscode}
             </span> :  row.original.statuscode
           
         ),
@@ -439,6 +443,8 @@ function Inventory() {
               className="btn-icon btn-simple"
               color="secondary"
               size="sm"
+              onClick={() => handleEoI(row.original.asset_id, row.original.asset_name,row.original.description,row.original.statuscode)}
+
             >
               <img src={applicationIconImage}   width={'15px'} alt="..." />
             </Button>

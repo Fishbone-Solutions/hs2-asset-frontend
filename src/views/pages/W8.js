@@ -15,9 +15,7 @@ CardFooter,
 Row,
 Col,
 } from "reactstrap";
-import Select from "react-select";
 import ReactTable from "components/ReactTable/ReactTable.js";
-
 function W8() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
@@ -41,6 +39,13 @@ function W8() {
     seller_location: "",
     statuscode: "",
   });
+
+  const camelCaseWithSpaces = (text) => {
+    return text
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -88,7 +93,7 @@ function W8() {
           </div>
         ),
         accessor: "asset_id",
-        width: '2.5%',
+        width: '3%',
       },
       {
         Header: ({ column }) => (
@@ -197,7 +202,7 @@ function W8() {
                   <Row>
                     <Col sm="6">
                     <Label >
-                      Seller Title *
+                      Asset ID *
                     </Label>
                       <FormGroup>
                         <Input
@@ -206,14 +211,13 @@ function W8() {
                           value={formData.seller_title}
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                     
                     <Col sm="6">
                     <Label  style={{ color: "#36454F" }}>
-                      Contact No *
+                      Name
                     </Label>
                       <FormGroup>
                         <Input
@@ -222,7 +226,6 @@ function W8() {
                           value={formData.seller_contactno}
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
@@ -232,7 +235,7 @@ function W8() {
                    
                   <Col sm="6">
                     <Label style={{ color: "#36454F" }}>
-                      Email Address *
+                    Description
                     </Label>
                       <FormGroup className={`has-label ${formData.seller_email}`}>
                         <Input
@@ -242,9 +245,9 @@ function W8() {
                           onChange={(e) => {
                             const value = e.target.value;
                             if (!verifyEmail(value)) {
-                              setRegisterEmailState("has-danger");
+                    //          setRegisterEmailState("has-danger");
                             } else {
-                              setRegisterEmailState("has-success");
+             //                 setRegisterEmailState("has-success");
                             }
                             setFormData((prevState) => ({
                               ...prevState,
@@ -252,111 +255,19 @@ function W8() {
                             }));
                           }}
                           required
-                          readOnly={isReadOnly}
                         />
-                        {registerEmailState === "has-danger" ? (
+                      {/*   {registerEmailState === "has-danger" ? (
                           <label className="error">
                             Please enter a valid email address.
                           </label>
-                        ) : null}
+                        ) : null} */}
                       </FormGroup>
                     </Col>
                     
                     <Col sm="6">
                     <Label style={{ color: "#36454F" }}>
-                      Location *
+                    Status
                     </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_location"
-                          value={formData.seller_location}
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                </CardFooter>
-              </Card>
-            </Col>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
-                    }}
-                  >
-                    
-                    
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Label sm="12" style={{ color: "#36454F" }}>
-                      Asset ID
-                    </Label>
-                    <Col sm="4">
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_title"
-                          value={formData.seller_title}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Label sm="12" style={{ color: "#36454F" }}>
-                      Name
-                    </Label>
-                    <Col sm="4">
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_contactno"
-                          value={formData.seller_contactno}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Label sm="12" style={{ color: "#36454F" }}>
-                     Description
-                    </Label>
-                    <Col sm="4">
-                      <FormGroup >
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                          onChange={(e) => {
-                          
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              seller_email: value,
-                            }));
-                          }}
-                          required
-                        />
-                       
-                         
-                      </FormGroup>
-                    </Col>
-                    <Label sm="12" style={{ color: "#36454F" }}>
-Status
-                    </Label>
-                    <Col sm="4">
                       <FormGroup>
                         <Input
                           type="text"
@@ -373,6 +284,7 @@ Status
                 </CardFooter>
               </Card>
             </Col>
+       
            
             <Col md="12">
               <Card>

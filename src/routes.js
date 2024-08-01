@@ -1,8 +1,10 @@
-import Dashboard from "views/Dashboard.js";
 import Login from "views/pages/Login.js";
 import AssetRegister from "views/pages/AssetRegister";
 import Inventory from "views/pages/Inventory.js";
 import UserProfile from "views/pages/UserProfile.js";
+import EoIPages from "views/pages/EoIPages";
+
+
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
 import W2 from 'views/pages/W2';
@@ -75,6 +77,16 @@ const routes = [
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
 
+  },
+  {
+    path: "/eoi/:id",
+    pathName: "/admin/eoi/:id?mode=view",
+    name: "Inventory | Item",
+    component: <EoIPages />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+    
   },
   {
     path: "/itemsrequests",
