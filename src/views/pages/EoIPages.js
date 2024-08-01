@@ -134,7 +134,7 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>EoI Submission Date</span>
+            <span>Submission Date</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -173,13 +173,6 @@ function EoIPages() {
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
               <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="secondary"
-              size="sm"
-            >
-              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -263,23 +256,17 @@ function EoIPages() {
                           value={formData.seller_email}
                           onChange={(e) => {
                             const value = e.target.value;
-                            if (!verifyEmail(value)) {
-                    //          setRegisterEmailState("has-danger");
-                            } else {
-             //                 setRegisterEmailState("has-success");
-                            }
+
                             setFormData((prevState) => ({
                               ...prevState,
                               seller_email: value,
                             }));
                           }}
                           required
+                          disabled={true}
+
                         />
-                      {/*   {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null} */}
+                     
                       </FormGroup>
                     </Col>
                     
@@ -294,6 +281,8 @@ function EoIPages() {
                           value={formData.seller_location}
                           onChange={handleChange}
                           required
+                          disabled={true}
+
                         />
                       </FormGroup>
                     </Col>
