@@ -143,7 +143,7 @@ function EoIPages() {
         Header: "ACTIONS",
         accessor: "actions",
         sortable: false,
-        width: '12.5%',
+        width: '1%',
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
@@ -152,7 +152,7 @@ function EoIPages() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -160,7 +160,7 @@ function EoIPages() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -168,11 +168,11 @@ function EoIPages() {
               size="sm"
               onClick={() => handleDelete(row.original.asset_id)}
             >
-              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
+              <i className="fa fa-times" style={{ fontSize: '0.9em' }} ></i>
             </Button>
           </div>
         ),
-      }
+      },
     ]
   );
   return (
