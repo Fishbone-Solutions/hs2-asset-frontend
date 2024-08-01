@@ -475,7 +475,7 @@ function Inventory() {
     <div>
    
        
-      <h4 style={{
+      <h5 style={{
         textAlign: 'left',
         margin: '0',
         padding: '0.5rem',
@@ -484,17 +484,16 @@ function Inventory() {
         width: '100%',
 
       }}>
-         <IoSearchSharp
-                    color="white"
-                    size="1.5em"
-                    style={{
-                      backgroundColor: "#52CBCE",
+     
+            
+      
+              <i className="fa fa-filter" style={{ fontSize:"0.9em",
+              backgroundColor: "#52CBCE",
                       border: "2px solid #52CBCE",
                       borderRadius: "15%",
-                    }}
-                  />
+                }}></i>
         FILTER
-      </h4>
+      </h5>
 
       <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
