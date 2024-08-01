@@ -204,8 +204,8 @@ function EoIPages() {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_title"
-                          value={formData.seller_title}
+                          name="code"
+                          value={formData.code}
                           onChange={handleChange}
                           required
                           disabled={true}
@@ -220,8 +220,8 @@ function EoIPages() {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_contactno"
-                          value={formData.seller_contactno}
+                          name="asset_name"
+                          value={formData.asset_name}
                           onChange={handleChange}
                           required
                           disabled={true}
@@ -240,15 +240,12 @@ function EoIPages() {
                       <FormGroup className={`has-label ${formData.seller_email}`}>
                         <Input
                           type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
+                          name="description"
+                          value={formData.description}
                           onChange={(e) => {
                             const value = e.target.value;
 
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              seller_email: value,
-                            }));
+                          
                           }}
                           required
                           disabled={true}
@@ -265,8 +262,8 @@ function EoIPages() {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_location"
-                          value={formData.seller_location}
+                          name="statuscode"
+                          value={formData.statuscode}
                           onChange={handleChange}
                           required
                           disabled={true}
