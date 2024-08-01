@@ -211,14 +211,14 @@ function EoIPages() {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Seller Information")}
+                    {camelCaseWithSpaces("Item Information")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
                     <Label >
-                      Asset ID 
+                       ID 
                     </Label>
                       <FormGroup>
                         <Input
