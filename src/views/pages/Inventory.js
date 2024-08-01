@@ -398,11 +398,15 @@ function Inventory() {
         Cell: ({ row }) => (
           row.original.statuscode == 'Sold' ? 
           <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  
-          (row.original.statuscode == 'Live') ?<span class='badge badge-success badge-pill'> <img src={liveIconImage}  width={'15px'} alt="..." /> 
-          {row.original.statuscode}  </span> : (row.original.statuscode == 'InActive') ?
-           <span class='badge badge-info badge-pill'> &nbsp; {row.original.statuscode}
-            </span> :  row.original.statuscode
-          
+          (row.original.statuscode == 'Live') ?<span class='badge badge-success badge-pill'> 
+            <img src={liveIconImage}  width={'15px'} alt="..." /> 
+            &nbsp; {row.original.statuscode}  
+          </span> : 
+          (row.original.statuscode == 'InActive') ?
+            <span class='badge badge-info badge-pill'> 
+              &nbsp; {row.original.statuscode} 
+            </span> : 
+            row.original.statuscode
         ),
        
       },
