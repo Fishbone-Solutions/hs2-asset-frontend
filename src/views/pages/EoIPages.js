@@ -3,6 +3,7 @@ import { useState,useContext } from "react";
 // reactstrap components
 import {
 Card,
+Button,
 CardBody,
 Form,
 FormGroup,
@@ -16,6 +17,9 @@ Col,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
+import { useParams,useLocation } from "react-router-dom";
+import BACKEND_ADDRESS from "views/components/serverAddress";
+
 function EoIPages() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
@@ -43,6 +47,8 @@ function EoIPages() {
   const [EoiData, setEoiData] = useState({
 
   })
+  const { id } = useParams();
+  const location = useLocation();
 
   const {username} = useContext(GlobalContext);
 
@@ -59,8 +65,6 @@ function EoIPages() {
       myHeaders.append("accept", "application/json");
       myHeaders.append("token", "x8F!@p01,*MH");
       myHeaders.append("user_id", username);
-
-
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
@@ -68,10 +72,16 @@ function EoIPages() {
       };
 
       try {
-        const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
+        const response = await fetch(`${BACKEND_ADDRESS}/assets/${id}`, requestOptions);
         const result = await response.json();
-        setDataState(result.appRespData);
+        setFormData(result.appRespData[0]);
         console.log(result);
+  
+        const responseTable = await fetch(`${BACKEND_ADDRESS}/assets/${id}/eoi/-1`, requestOptions);
+        const resultTable = await responseTable.json();
+       setDataState (resultTable.appRespData);
+        console.log(resultTable.appRespData);
+
       } catch (error) {
         setErrorMessage("Unable to load data. Please refresh the page or load after time");
         console.error(error);
