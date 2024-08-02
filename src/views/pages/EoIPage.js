@@ -88,7 +88,7 @@ const EoIPage = () => {
             };
   
             const response = await fetch(
-              `${BACKEND_ADDRESS}/assets/107/eoi/10`,
+              `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoi}`,
               requestOptions
             );
   
