@@ -362,7 +362,7 @@ const EoIPage = () => {
               WebkitTextTransform: "capitalize", // for Safari
             }}
           >
-            {camelCaseWithSpaces("Audit Trail - Tracking History")}
+            {camelCaseWithSpaces("Tracking History")}
           </CardTitle>
         </CardHeader>
         <CardBody>
