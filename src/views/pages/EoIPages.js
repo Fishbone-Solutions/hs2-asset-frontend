@@ -17,7 +17,7 @@ Col,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams,useLocation,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 
 function EoIPages() {
@@ -46,7 +46,9 @@ function EoIPages() {
 
   const [EoiData, setEoiData] = useState({
 
-  })
+  });
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const {username} = useContext(GlobalContext);
 
@@ -97,6 +99,17 @@ function EoIPages() {
       [name]: value,
     }));
   };
+
+  const handleEdit = (assetId, mode) => {
+    navigate(`/admin/eoi/details/${assetId}?mode=${mode}`);
+  };
+
+
+
+
+
+
+
   const columns = React.useMemo(
     () => [
       {
@@ -106,7 +119,7 @@ function EoIPages() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "code",
+        accessor: "id",
         width: '3%',
       },
       {

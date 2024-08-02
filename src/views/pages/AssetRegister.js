@@ -597,7 +597,6 @@ const AssetRegister = () => {
                       </FormGroup>
                     </Col>
                   </Row>
-                  <Row></Row>
                   <Row>
                     <Label sm="8" style={{ color: "#36454F" }}>
                       Other Details

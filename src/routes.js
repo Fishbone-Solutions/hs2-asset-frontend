@@ -52,28 +52,10 @@ const routes = [
 
   },
   {
-    path: "/inventory",
-    pathName: "/admin/inventory",
-    name: "Inventory ",
-    component: <Inventory></Inventory>,
-    layout: "/admin",
-    icon: "nc-icon nc-tile-56",
-
-  },
-  {
-    path: "/dashboard",
-    pathName: "/admin/dashboard",
-    name: "Bulk Import",
-    component: <W0 />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-
-  },
-  {
-    path: "/eoi/:id",
-    pathName: "/admin/eoi/:id?mode=view",
-    name: "Inventory | Item",
-    component: <EoIPages />,
+    path: "/eoi/details/:id",
+    pathName: "/admin/eoi/details/:id",
+    name: "All EOI | View EOI Detail",
+    component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true
@@ -89,6 +71,35 @@ const routes = [
     hidden: true
     
   },
+  {
+    path: "/inventory",
+    pathName: "/admin/inventory",
+    name: "Inventory ",
+    component: <Inventory></Inventory>,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+
+  },
+  {
+    path: "/eoi/:id",
+    pathName: "/admin/eois/:id?mode=view",
+    name: "Inventory | Item",
+    component: <EoIPages />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+    
+  },
+  {
+    path: "/dashboard",
+    pathName: "/admin/dashboard",
+    name: "Bulk Import",
+    component: <W0 />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+
+  },
+
   {
     path: "/itemsrequests",
     pathName: "/admin/w1",
