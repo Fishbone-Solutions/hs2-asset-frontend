@@ -19,10 +19,14 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
 import { useParams,useLocation,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
+import ReactBSAlert from "react-bootstrap-sweetalert";
+
 
 function EoIPages() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
+  const [alert, setAlert] = React.useState(null);
+
   const [formData, setFormData] = useState({
     asset_id: "",
     code: "",
@@ -44,9 +48,117 @@ function EoIPages() {
     statuscode: "",
   });
 
-  const [EoiData, setEoiData] = useState({
+  const handleDelete = (assetId,eoino) => {
 
-  });
+    console.log("hd delete",eoino);
+    setAlert(
+      <ReactBSAlert
+        warning
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Are you sure?"
+        onConfirm={() => successDelete(assetId,eoino)}
+        onCancel={cancelDelete}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        confirmBtnText="Yes"
+        cancelBtnText="Cancel"
+        showCancel
+        btnSize=""
+      >
+        You will not be able to recover this item.
+      </ReactBSAlert>
+    );
+  };
+
+  const successDelete = (assetId,eoino) => {
+    const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoino}/-1`;
+
+    console.log("sd delete",eoino);
+
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    myHeaders.append("user_id", username);  // Add user_id to headers
+
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(deleteEndpoint, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        if (result.appRequestStatus === "SUCCESS") {
+          console.log("Asset deleted successfully");
+
+          setAlert(
+            <ReactBSAlert
+              success
+              style={{ display: "block", marginTop: "-100px" }}
+              title="Deleted!"
+              onConfirm={hideAlert}
+              onCancel={hideAlert}
+              confirmBtnBsStyle="info"
+              btnSize=""
+            >
+             EoI {eoino} has been deleted successfully
+            </ReactBSAlert>
+          );
+
+          setDataState((prevState) => prevState.filter((row) => row.id !== eoino));
+          console.log("Updated Data", dataState);
+        } else {
+          setAlert(
+            <ReactBSAlert
+              danger
+              style={{ display: "block", marginTop: "-100px" }}
+              title="Deletion Failed"
+              onConfirm={hideAlert}
+              onCancel={hideAlert}
+              confirmBtnBsStyle="danger"
+              btnSize=""
+            >
+              Error deleting asset
+            </ReactBSAlert>
+          );
+          console.log("Error deleting asset");
+        }
+      })
+      .catch((error) => {
+        console.error("Network error or exception occurred:", error);
+      });
+  };
+
+  const hideAlert = () => {
+    setAlert(null);
+  };
+
+  const cancelDelete = () => {
+    setAlert(
+      <ReactBSAlert
+        danger
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Cancelled"
+        onConfirm={hideAlert}
+        onCancel={hideAlert}
+        confirmBtnBsStyle="info"
+        btnSize=""
+      >
+        No Changes made
+      </ReactBSAlert>
+    );
+  };
+
+
+
+
+
+
+
+
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -122,7 +234,7 @@ function EoIPages() {
           </div>
         ),
         accessor: "id",
-        width: '3%',
+        width: '1.5%',
       },
       {
         Header: ({ column }) => (
@@ -142,7 +254,7 @@ function EoIPages() {
           </div>
         ),
         accessor: "submission_date",
-        width: '10%',
+        width: '1.5%',
       },
       {
         Header: ({ column }) => (
@@ -154,16 +266,12 @@ function EoIPages() {
         accessor: "eoi_status",
         width: '8%',
       },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Status</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
+   /*    {
+       
         accessor: "asset_id",
         width: '0%',
-      },
+        hidden: true
+      }, */
       {
         Header: "ACTIONS",
         accessor: "actions",
@@ -191,7 +299,7 @@ function EoIPages() {
               className="btn-icon btn-simple"
               color="danger"
               size="sm"
-              onClick={() => handleDelete(row.original.asset_id)}
+              onClick={() => handleDelete(row.original.asset_id,row.original.id)}
             >
               <i className="fa fa-times" style={{ fontSize: '0.9em' }} ></i>
             </Button>
@@ -203,6 +311,7 @@ function EoIPages() {
   return (
     <>
          <div className="content">
+          {alert}
         <Form >
           <Row>
           <Col md="12">
@@ -308,7 +417,7 @@ function EoIPages() {
               <Card>
                 <CardHeader   style={{
                   paddingTop: 0,
-                  translate: '10px 20px', 
+                  translate: '4.8px 20px', 
 
                 }}>
                   <CardTitle
