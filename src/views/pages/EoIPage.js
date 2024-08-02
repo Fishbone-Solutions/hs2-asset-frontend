@@ -30,15 +30,26 @@ const camelCaseWithSpaces = (text) => {
   };
   
 
+
 const EoIPage = () => {
-    const { id } = useParams();
+    const { assetId } = useParams();
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const mode = query.get('mode');
+    const eoi = query.get('eoino')
     const [registerEmailState, setRegisterEmailState] = useState("");
     const [alert, setAlert] = useState(null);
     const navigate = useNavigate();
     const {username } =  useContext(GlobalContext);
+
+
+
+    const options=
+      [
+      { value: "IN_NEGOTIATION", label: "In Negotiation" },
+      { value: "PAYMENT_RECEIVED", label: "Payment Received" },
+      { value: "GOODS_SENT", label: "Goods Sent" },
+    ]
     const [formData, setFormData] = useState(
       {
         "id": "",
@@ -77,12 +88,13 @@ const EoIPage = () => {
             };
   
             const response = await fetch(
-              `${BACKEND_ADDRESS}/assets/${asset_id}/eoi/${id}`,
+              `${BACKEND_ADDRESS}/assets/107/eoi/10`,
               requestOptions
             );
   
             if (response.ok) {
               const result = await response.json();
+              console.log( "results",result.appRespData[0])
               setFormData(result.appRespData[0]);
             } else {
               console.error("Failed to fetch data");
@@ -94,7 +106,7 @@ const EoIPage = () => {
       };
   
       fetchData();
-    }, [id, mode]);
+    }, [assetId, mode]);
   
     const hideAlert = () => {
       setAlert(null);
@@ -115,7 +127,7 @@ const EoIPage = () => {
     };
   
     const handleSubmit = async () => {
-      const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? id : ""}`;
+      const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? assetId : ""}`;
       const requestBody = { ...formData };
   
       try {
@@ -234,7 +246,7 @@ const EoIPage = () => {
                 <Input
                   type="text"
                   name="id"
-                  value={formData.id}
+                  value={eoi}
                   onChange={handleChange}
                   required
                   readOnly={isReadOnly}
@@ -309,8 +321,8 @@ const EoIPage = () => {
               <FormGroup>
                 <Input
                   type="text"
-                  name="id"
-                  value={formData.id}
+                  name="approval_status"
+                  value={formData.approval_status}
                   onChange={handleChange}
                   required
                   readOnly={isReadOnly}
@@ -360,8 +372,8 @@ const EoIPage = () => {
                       <FormGroup>
                         <Input
                           type="textarea"
-                          name="additional_info"
-                          value={formData.additional_info}
+                          name="status_trail"
+                          value={formData.status_trail}
                           onChange={handleChange}
                           style={{ width: "100%", height: "100%" }}
                           readOnly={isReadOnly}
@@ -536,9 +548,9 @@ const EoIPage = () => {
                   className="react-select primary"
                   classNamePrefix="react-select"
                   name="eoi_status"
-                  /*           value={options.find(
-                              (option) => option.value === formData.statuscode
-                            )} */
+                           value={options.find(
+                              (option) => option.value === formData.eoi_status
+                            )}
                   onChange={(selectedOption) =>
                     setFormData((prevState) => ({
                       ...prevState,

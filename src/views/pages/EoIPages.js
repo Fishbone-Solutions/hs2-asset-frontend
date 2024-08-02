@@ -100,8 +100,10 @@ function EoIPages() {
     }));
   };
 
-  const handleEdit = (assetId, mode) => {
-    navigate(`/admin/eoi/details/${assetId}?mode=${mode}`);
+  const handleEdit = (assetId, mode,eoino) => {
+    console.log("mode from edit",mode)
+    navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
+
   };
 
 
@@ -125,7 +127,7 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> Interested Buyers </span>
+            <span> Interested Buyer </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -153,6 +155,16 @@ function EoIPages() {
         width: '8%',
       },
       {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Status</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "asset_id",
+        width: '0%',
+      },
+      {
         Header: "ACTIONS",
         accessor: "actions",
         sortable: false,
@@ -163,7 +175,7 @@ function EoIPages() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'view')}
+              onClick={() => handleEdit(row.original.asset_id, 'view',row.original.id)}
             >
               <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
@@ -218,7 +230,7 @@ function EoIPages() {
                         <Input
                           type="text"
                           name="code"
-                          value={formData.code}
+                          value={formData.asset_id}
                           onChange={handleChange}
                           required
                           disabled={true}

@@ -52,8 +52,8 @@ const routes = [
 
   },
   {
-    path: "/eoi/details/:id",
-    pathName: "/admin/eoi/details/:id",
+    path: "/eoi/details/:assetId",
+    pathName: "/admin/eoi/details/:assetId?mode=view?mode=",
     name: "All EOI | View EOI Detail",
     component: <EoIPage />,
     layout: "/admin",
