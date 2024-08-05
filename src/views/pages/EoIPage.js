@@ -157,7 +157,7 @@ const EoIPage = () => {
           EoI  submitted
         </ReactBSAlert>
       );
-      navigate("/admin/inventory");
+      navigate("/admin/eoi/107");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -187,11 +187,11 @@ const EoIPage = () => {
 
 
 
-
   const handleApprove = () => {
+
     setAlert(
       <ReactBSAlert
-        
+        input
         title="Approval"
         showCancel
         confirmBtnBsStyle="info"
@@ -226,6 +226,8 @@ const EoIPage = () => {
       </ReactBSAlert>
     );
   };
+  
+
 
   const submitApproval = async () => {
    
@@ -242,7 +244,7 @@ const EoIPage = () => {
           Approval request submitted
         </ReactBSAlert>
       );
-      navigate("/admin/inventory");
+    
   };
 
   return (
@@ -504,7 +506,7 @@ const EoIPage = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Buyer Address</Label>
                       <FormGroup>
                         <Input
@@ -516,7 +518,7 @@ const EoIPage = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label style={{ color: "#36454F" }}>
                         Item Delivery Location
                       </Label>
@@ -532,7 +534,7 @@ const EoIPage = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label style={{ color: "#36454F" }}>
                         Preferred Contact Timings
                       </Label>
@@ -570,7 +572,7 @@ const EoIPage = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Status *</Label>
+                      <Label style={{ color: "#36454F" }}>Availability *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
