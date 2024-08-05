@@ -43,11 +43,8 @@ const EoIPage = () => {
   const options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
-    { value: "PAYMENT-SENT", label: "Payment Sent" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
-    { value: "GOODS-RECEIVED", label: "Goods Received" },
-    { value: "UNAVAILABLE-SOLD", label: "Unavailable Sold" },
   ];
   const [formData, setFormData] = useState({
     id: "",
