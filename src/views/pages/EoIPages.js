@@ -17,7 +17,7 @@ Col,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
-import { useParams,useLocation,useNavigate } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import defaultLiveIconImage from "assets/img/live.png";

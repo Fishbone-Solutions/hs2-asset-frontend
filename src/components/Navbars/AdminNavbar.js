@@ -28,6 +28,10 @@ function AdminNavbar(props) {
   const currentRoute = routes.find((route) => location.pathname.includes(route.pathName));
 
   const { name, icon } = currentRoute || {};
+
+  console.log("location",location.pathname)
+  console.log("mode",mode)
+
   
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
@@ -65,11 +69,22 @@ function AdminNavbar(props) {
   };
 
   const renderTitle = () => {
-    if (mode === 'view') {
+    if (mode === 'view' && location.pathname.includes("assets") ) {
       return `Inventory | View Item `;
-    } else if (mode === 'edit') {
+    } 
+    else if ( location.pathname.includes("eoi") && mode === null) {
+      return `Inventory | EOI List `;
+    } 
+    else if ( location.pathname.includes("eoi") && mode==="view") {
+      return `Inventory | EOI List | View `;
+    } 
+    else if ( location.pathname.includes("eoi") && mode==="edit") {
+      return `Inventory | EOI List | Edit `;
+    } 
+    else if (mode === 'edit') {
       return `Inventory | Edit Item `;
-    } else {
+    } 
+    else {
       return name;
     }
   };
