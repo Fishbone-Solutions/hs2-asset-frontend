@@ -36,12 +36,14 @@ const AssetRegister = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const mode = query.get('mode');
+  const isAddMode = mode === 'add';
+
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
   const {username } =  useContext(GlobalContext);
   const [formData, setFormData] = useState({
-    id: "",
+    id: isAddMode ? 'Auto Generated' : '', // Initialize id based on mode
     code: "",
     entrydate: "",
     categorycode1: "",
@@ -134,6 +136,11 @@ const AssetRegister = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Only allow changes if not in add mode for id field
+    if (name === "id" && isAddMode) {
+      return; // Prevent changes to id if in add mode
+    }
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,

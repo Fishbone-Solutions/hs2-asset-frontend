@@ -244,12 +244,22 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> INTERESTED BUYER </span>
+            <span> CONTACT PERSON </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "buyer_name",
         width: '10%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span> ORGANISATION </span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "organization",
+        width: '6%',
       },
       {
         Header: ({ column }) => (

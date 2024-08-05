@@ -41,9 +41,13 @@ const EoIPage = () => {
   const { username } = useContext(GlobalContext);
 
   const options = [
-    { value: "IN_NEGOTIATION", label: "In Negotiation" },
-    { value: "PAYMENT_RECEIVED", label: "Payment Received" },
-    { value: "GOODS_SENT", label: "Goods Sent" },
+    { value: "EOI-SUBMITTED", label: "EOI Submitted" },
+    { value: "IN-NEGOTIATION", label: "In Negotiation" },
+    { value: "PAYMENT-SENT", label: "Payment Sent" },
+    { value: "PAYMENT-RECEIVED", label: "Payment Received" },
+    { value: "GOODS-SENT", label: "Goods Sent" },
+    { value: "GOODS-RECEIVED", label: "Goods Received" },
+    { value: "UNAVAILABLE-SOLD", label: "Unavailable Sold" },
   ];
   const [formData, setFormData] = useState({
     id: "",
@@ -264,6 +268,7 @@ const EoIPage = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
+                    {"EoI Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -281,18 +286,7 @@ const EoIPage = () => {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Interested Buyer</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="buyer_name" // Correct field name
-                          value={formData.buyer_name}
-                          onChange={handleChange}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
+                   
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Submission Date</Label>
                       <FormGroup>

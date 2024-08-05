@@ -427,7 +427,7 @@ function Inventory() {
             <img src={liveIconImage}  width={'15px'} alt="..." /> 
             &nbsp; {row.original.statuscode}  
           </span> : 
-          (row.original.statuscode == 'LISTING') ?
+          (row.original.statuscode == 'Listing') ?
             <span class='badge badge-info badge-pill'> 
               &nbsp; {row.original.statuscode} 
             </span> : 
