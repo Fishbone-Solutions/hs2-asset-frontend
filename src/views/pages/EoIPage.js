@@ -264,7 +264,6 @@ const EoIPage = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {/* Your Card Title */}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -282,9 +281,20 @@ const EoIPage = () => {
                         />
                       </FormGroup>
                     </Col>
-
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>EoI Date</Label>
+                      <Label style={{ color: "#36454F" }}>Interested Buyer</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="buyer_name" // Correct field name
+                          value={formData.buyer_name}
+                          onChange={handleChange}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Submission Date</Label>
                       <FormGroup>
       <ReactDatetime
         inputProps={{
@@ -310,18 +320,7 @@ const EoIPage = () => {
     </FormGroup>
                     </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Current Status</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="eoi_status" // Correct field name
-                          value={formData.eoi_status}
-                          onChange={handleChange}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
+                  
                   </Row>
                 </CardBody>
                 <CardFooter>
@@ -572,7 +571,7 @@ const EoIPage = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Availability *</Label>
+                      <Label style={{ color: "#36454F" }}> Status *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"

@@ -5,7 +5,7 @@ import { GlobalContext } from '../../GlobalState';
 
 import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 // reactstrap components
-import { Card, CardBody, Row, Col, Button,Input  } from "reactstrap";
+import { Card, CardBody, Row, Col, Button,Input,CardHeader,CardTitle,Label,FormGroup,  } from "reactstrap";
 import Select from "react-select";
 import { Form, NavLink } from "react-router-dom";
 import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
@@ -16,15 +16,17 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { useEffect } from "react";
-
+import ReactDatetime from "react-datetime";
+import moment from "moment";
+import "react-datetime/css/react-datetime.css";
 
 function Inventory() {
 
   const { username, setUsername } = useContext(GlobalContext);
  console.log("username",username);
+  const [alert, setAlert] = React.useState(null);
   const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
   const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
-  const [alert, setAlert] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -38,10 +40,19 @@ function Inventory() {
 
 
   });
+  const [availableFromStart, setAvailableFromStart] = useState(new Date());
+  const [availableFromEnd, setAvailableFromEnd] = useState(new Date());
+  const [entryDateStart, setEntryDateStart] = useState(new Date());
+  const [entryDateEnd, setEntryDateEnd] = useState(new Date());
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const navigate = useNavigate();
 
+
+  const options = [
+    { value: "New", label: "New" },
+    { value: "Old", label: "Old" },
+  ];
   const statusOptions = [
 
       { value: "LISTING", label: "LISTING" },
@@ -94,35 +105,49 @@ function Inventory() {
 
 
   const handleFilterFormDataSubmission = async (event) => {
-  const getValueOrDefault = (value) => value ? value : '-1';
-
+    event.preventDefault();
   
-    const url = `${BACKEND_ADDRESS}/assets/-1?fltr_id=${getValueOrDefault(filterFormData.id)}
-    &fltr_entry_date=${getValueOrDefault(filterFormData.available_from)}
-    &fltr_name=${getValueOrDefault(filterFormData.asset_name)}
-    &fltr_status=${getValueOrDefault(filterFormData.statuscode)}`;
-
+    const getValueOrDefault = (value) => (value ? value : '-1');
+  
+    // Construct the query parameters
+    const params = new URLSearchParams({
+      fltr_id: getValueOrDefault(filterFormData.id),
+      fltr_name: getValueOrDefault(filterFormData.asset_name),
+      fltr_status: getValueOrDefault(filterFormData.statuscode),
+      fltr_from_entry_date: getValueOrDefault(filterFormData.entry_date_from),
+      fltr_to_entry_date: getValueOrDefault(filterFormData.entry_date_to),
+      fltr_from_availability: getValueOrDefault(filterFormData.available_from),
+      fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+    });
+  
+    const url = `${BACKEND_ADDRESS}/assets/-1?${params.toString()}`;
+  
     const requestOptions = {
-      method: 'GET', // or 'POST' depending on your API
-      headers: { 'Content-Type': 'application/json' ,
-        "token": "x8F!@p01,*MH",
-        "user_id": username}
-
+      method: 'GET', // Assuming the API expects a GET request
+      headers: {
+        'Content-Type': 'application/json',
+        token: "x8F!@p01,*MH",
+        user_id: username,
+      },
     };
-
+  
     try {
       const response = await fetch(url, requestOptions);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       const data = await response.json();
-      console.log(data.appRespData); // Process the response as needed
-      setDataState(data.appRespData)
+      console.log('Fetched Data:', data.appRespData); // Debugging log
+      setDataState(data.appRespData); // Update your component state with fetched data
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   
-     console.log(filterFormData);
-    
-
+    console.log('Filter Form Data:', filterFormData); // Log the form data for debugging
   };
+  
 
   const cancelDelete = () => {
     setAlert(
@@ -475,8 +500,101 @@ function Inventory() {
     style={customStyles}
     contentLabel="Filter Modal"
   >
-
-    <div>
+  <div className="content">
+  <Row>
+            {/* Asset Seller Detail*/}
+            <Col md="12">
+              <Card>
+                <CardHeader style={{ backgroundColor:"red"}}>
+                  <CardTitle
+                    tag="h"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", 
+                    }}
+                  >
+                    {"Filter Information"}
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                    <Label >
+                    ID
+                    </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title"
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                    <Label >
+                    Name
+                    </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title"
+                          onChange={handleChange}
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12">
+                    <FormGroup>
+                        <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="statuscode"
+                        
+                          onChange={(selectedOption) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              statuscode: selectedOption.value,
+                            }))
+                          }
+                          options={[
+                            { value: "LISTING", label: "LISTING" },
+                            { value: "Live", label: "Live" },
+                            { value: "Sold", label: "Sold" },
+                          ]}
+                          placeholder="Select an option"
+                        />
+                      </FormGroup>
+                      </Col>
+                       <Col sm="6">
+      <Label style={{ color: "#36454F" }}>Entry From</Label>
+      <FormGroup>
+        <ReactDatetime
+          inputProps={{
+            className: "form-control",
+            placeholder: "DD/MM/YYYY",
+          }}
+          onChange={(momentDate) =>
+            setFormData((prevState) => ({
+              ...prevState,
+              available_from: momentDate.format("DD-MM-YYYY"),
+            }))
+          }
+          timeFormat={false}
+ 
+        />
+      </FormGroup>
+    </Col>
+                  </Row>
+                    </CardBody>
+                    </Card> 
+                    </Col>
+                    </Row>
+  </div>
+{/*     <div>
    
        
       <h5 style={{
@@ -498,7 +616,6 @@ function Inventory() {
                 }}></i>
         FILTER
       </h5>
-
       <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
         <label htmlFor="input1" style={{ marginBottom: '0.5rem', color: "#36454F" }}>
@@ -530,7 +647,20 @@ function Inventory() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
-          <Input name="available_from" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
+          <ReactDatetime
+                          inputProps={{
+                            className: "form-control",
+                            placeholder: "DD/MM/YYYY",
+                          }}
+                       
+                          onChange={(momentDate) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              available_from: momentDate.format("DD-MM-YYYY"),
+                            }))
+                          }
+                          timeFormat={false}
+                        />
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
@@ -539,8 +669,11 @@ function Inventory() {
         <Button className="buttonClose" color="primary" onClick={handleFilterFormDataSubmission} style={{ padding: '0.5rem 1rem' }}  >Filter</Button>
       </div>
 
-    </div>
 
+
+
+    </div>
+ */}
   </Modal>
 
       <div className="content">

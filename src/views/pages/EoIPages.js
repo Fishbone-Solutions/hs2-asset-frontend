@@ -276,13 +276,13 @@ function EoIPages() {
             'SOLD': { backgroundColor: '#dc3545', color: 'white' },
             'LIVE': { backgroundColor: '#28a745', color: 'white', icon: liveIconImage },
             'LISTING': { backgroundColor: '#17a2b8', color: 'white' },
-            'EOI_SUBMITTED': { backgroundColor: '#4049CC', color: 'white' },
-            'IN_NEGOTIATION': { backgroundColor: '#22B04C', color: 'white' },
-            'PAYMENT_SENT': { backgroundColor: '#02A8F3', color: 'white' },
-            'PAYMENT_RECEIVED': { backgroundColor: '#10F13F', color: 'white' },
-            'GOODS_SENT': { backgroundColor: '#58F6F5', color: 'black' },
-            'GOODS_RECEIVED': { backgroundColor: '#779519', color: 'white' },
-            'UNAVAILABLE_SOLD': { backgroundColor: '#FB301B', color: 'white' }
+            'EOI-SUBMITTED': { backgroundColor: '#02A8F3', color: 'white' },
+            'IN-NEGOTIATION': { backgroundColor: '#22B04C', color: 'white' },
+            'PAYMENT-SENT': { backgroundColor: '#8a0000', color: 'white' },
+            'PAYMENT-RECEIVED': { backgroundColor: '#ff2a00', color: 'white' },
+            'GOODS-SENT': { backgroundColor: '#ffba4d', color: 'white' },
+            'GOODS-RECEIVED': { backgroundColor: '#c66e00', color: 'white' },
+            'UNAVAILABLE-SOLD': { backgroundColor: '#FB301B', color: 'white' }
           };
       
           const style = statusStyles[statusCode] || { backgroundColor: 'grey', color: 'white' };
@@ -367,7 +367,7 @@ color="info"
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Item Information")}
+                    {camelCaseWithSpaces("Item Reference")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -432,7 +432,7 @@ color="info"
                     
                     <Col sm="6">
                     <Label style={{ color: "#36454F" }}>
-                    Status
+                    Availability
                     </Label>
                       <FormGroup>
                         <Input
