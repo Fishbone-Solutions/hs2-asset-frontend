@@ -1,0 +1,9 @@
+.table-responsive .ReactTable {
+    overflow-x: auto;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .table-responsive .ReactTable .rt-table {
+      min-width: 100%;
+    }
+  }

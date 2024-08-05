@@ -44,7 +44,7 @@ function Inventory() {
 
   const statusOptions = [
 
-      { value: "InActive", label: "In Active" },
+      { value: "LISTING", label: "LISTING" },
       { value: "Live", label: "Live" },
       { value: "Sold", label: "Sold" },
 
@@ -402,7 +402,7 @@ function Inventory() {
             <img src={liveIconImage}  width={'15px'} alt="..." /> 
             &nbsp; {row.original.statuscode}  
           </span> : 
-          (row.original.statuscode == 'InActive') ?
+          (row.original.statuscode == 'LISTING') ?
             <span class='badge badge-info badge-pill'> 
               &nbsp; {row.original.statuscode} 
             </span> : 

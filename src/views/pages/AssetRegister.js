@@ -719,7 +719,7 @@ const AssetRegister = () => {
                             }))
                           }
                           options={[
-                            { value: "InActive", label: "In Active" },
+                            { value: "LISTING", label: "LISTING" },
                             { value: "Live", label: "Live" },
                             { value: "Sold", label: "Sold" },
                           ]}

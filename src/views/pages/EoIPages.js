@@ -20,7 +20,9 @@ import { GlobalContext } from "GlobalState";
 import { useParams,useLocation,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
-
+import defaultLiveIconImage from "assets/img/live.png";
+import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
+import "./EoiPages.css"
 
 function EoIPages() {
   const [dataState,setDataState] = useState([])
@@ -163,6 +165,8 @@ function EoIPages() {
 
   const { id } = useParams();
   const {username} = useContext(GlobalContext);
+  const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
+  const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
 
   const camelCaseWithSpaces = (text) => {
     return text
@@ -234,12 +238,13 @@ function EoIPages() {
           </div>
         ),
         accessor: "id",
-        width: '1.5%',
+        width: '0.9%',
+
       },
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> Interested Buyer </span>
+            <span> INTERESTED BUYER </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -249,7 +254,7 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Submission Date</span>
+            <span>SUBMISSION  DATE </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
@@ -259,29 +264,65 @@ function EoIPages() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Status</span>
+            <span>STATUS </span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "eoi_status",
-        width: '8%',
-      },
-   /*    {
-       
-        accessor: "asset_id",
-        width: '0%',
-        hidden: true
-      }, */
+        width: '0.5%',
+        Cell: ({ row }) => {
+          const statusCode = row.original.eoi_status;
+          const statusStyles = {
+            'SOLD': { backgroundColor: '#dc3545', color: 'white' },
+            'LIVE': { backgroundColor: '#28a745', color: 'white', icon: liveIconImage },
+            'LISTING': { backgroundColor: '#17a2b8', color: 'white' },
+            'EOI_SUBMITTED': { backgroundColor: '#4049CC', color: 'white' },
+            'IN_NEGOTIATION': { backgroundColor: '#22B04C', color: 'white' },
+            'PAYMENT_SENT': { backgroundColor: '#02A8F3', color: 'white' },
+            'PAYMENT_RECEIVED': { backgroundColor: '#10F13F', color: 'white' },
+            'GOODS_SENT': { backgroundColor: '#58F6F5', color: 'black' },
+            'GOODS_RECEIVED': { backgroundColor: '#779519', color: 'white' },
+            'UNAVAILABLE_SOLD': { backgroundColor: '#FB301B', color: 'white' }
+          };
+      
+          const style = statusStyles[statusCode] || { backgroundColor: 'grey', color: 'white' };
+
+      
+          return (
+            <span style={{
+              ...style,
+              padding: '4px 8px',  // Updated padding here
+              fontSize: '90%',
+              fontWeight: 700,
+              lineHeight: 1,
+              textAlign: 'center',
+              whiteSpace: 'nowrap',
+              verticalAlign: 'baseline',
+              borderRadius: '10rem',
+              display: 'inline-block'
+            }}>
+              {style.icon && (
+                <>
+                  <img src={style.icon} width='15px' alt="..." style={{marginRight: '3px', verticalAlign: 'middle'}} />
+                </>
+              )}
+              {statusCode}
+            </span>
+          );
+        },
+      }
+,
       {
         Header: "ACTIONS",
         accessor: "actions",
         sortable: false,
-        width: '1%',
+        width: '0.7%',
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
-              className="btn-icon btn-simple"
-              color="info"
+
+className="btn-icon btn-simple"
+color="info"
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view',row.original.id)}
             >
@@ -291,7 +332,7 @@ function EoIPages() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'edit')}
+              onClick={() => handleEdit(row.original.asset_id, 'edit',row.original.id)}
             >
               <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
             </Button>
@@ -412,7 +453,10 @@ function EoIPages() {
               </Card>
             </Col>
        
-           
+</Row>
+</Form>
+
+<Row>
             <Col md="12">
               <Card>
                 <CardHeader   style={{
@@ -437,11 +481,13 @@ function EoIPages() {
                 style={{
                   paddingTop: 0
                 }}
-                >               
-                <ReactTable
+                >   
+
+                <ReactTable 
                   data={dataState}
                   columns={columns}
-                  className="-striped -highlight primary-pagination"
+                  className="-striped -highlight primary-pagination "
+
                 />
                 {errorMessage}
                 </CardBody>
@@ -450,8 +496,7 @@ function EoIPages() {
               </Card>
             </Col>
             </Row>
-            </Form>
-            </div>
+          </div>
     </>
   );
 }
