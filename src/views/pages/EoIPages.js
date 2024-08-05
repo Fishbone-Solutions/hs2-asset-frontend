@@ -448,7 +448,7 @@ color="info"
                         <Input
                           type="text"
                           name="statuscode"
-                          value={formData.statuscode}
+                          value={formData.available_from}
                           onChange={handleChange}
                           required
                           disabled={true}

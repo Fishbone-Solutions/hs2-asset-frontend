@@ -468,7 +468,7 @@ const EoIPage = () => {
 
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>
-                        Email Availability
+                        Email 
                       </Label>
                       <FormGroup className={`has-label ${formData.email}`}>
                         <Input
