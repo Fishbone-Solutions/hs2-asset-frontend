@@ -1,0 +1,7 @@
+.placer .rdtPicker {
+    transform: translateX(-130px) translateY(-120px) ;
+}
+
+.placer2 .rdtPicker {
+    transform: translateY(-120px) ;
+}

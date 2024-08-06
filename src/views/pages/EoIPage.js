@@ -158,7 +158,7 @@ const EoIPage = () => {
           EoI  submitted
         </ReactBSAlert>
       );
-      navigate("/admin/eoi/107");
+      navigate(`/admin/eoi/${assetId}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }

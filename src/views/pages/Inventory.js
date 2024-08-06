@@ -32,14 +32,15 @@ function Inventory() {
   const [clearTrigger, setClearTrigger] = useState(false);
   const[filterFormData, setFilterFormDate] = useState({
     
-    id: '',
-    asset_name: '',
-    statuscode: '',
-    entry_date_from: '',
-    entry_date_to: '',
-    available_from: '',
-    available_to: '',
-    eoi_no: '',
+
+      id: '',
+      asset_name: '',
+      entry_date_from: null,
+      entry_date_to: null,
+      available_from: null,
+      available_to: null,
+      statuscode: null,
+
 
   });
   const openModal = () => setModalIsOpen(true);
@@ -75,10 +76,11 @@ function Inventory() {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '40%',  // Increase the width
-      height: '74%', // Increase the height
+      width: '50%',  // Increase the width
+      height: '50%', // Increase the height
       padding: '0',  // Remove default padding
-      backgroundColor:"#FFFFFF"
+      backgroundColor:"#FFFFFF",
+      overflow:"hidden"
     },
   };
   
@@ -333,6 +335,7 @@ function Inventory() {
   }, [clearTrigger]);
 
   const handleClearClick = () => {
+    setFilterFormDate({});
     setClearTrigger(true);
   };
 
@@ -493,7 +496,9 @@ function Inventory() {
     style={customStyles}
     contentLabel="Filter Modal"
   >
-      <div className="content">
+<div className="content2" style={{ overflow: "hidden" }}>
+<div className="placer">
+
       <Form onSubmit={handleFilterFormDataSubmission}>
 
         <Row>
@@ -522,8 +527,10 @@ function Inventory() {
                 </h6>
               </CardHeader>
 
-              <CardBody>
-                  <Row>
+              <CardBody
+            
+              >
+                  <Row >
                     <Col sm="6">
                       <Label>ID</Label>
                       <FormGroup>
@@ -545,8 +552,12 @@ function Inventory() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="6">
+
+                    <Col sm="3">
+
                       <Label style={{ color: '#36454F' }}>Entry From</Label>
+                      <div className="placer2">
+
                       <FormGroup>
                         <ReactDatetime
                           inputProps={{
@@ -563,9 +574,12 @@ function Inventory() {
                           }
                           timeFormat={false}
                         />
+
                       </FormGroup>
+                      </div> 
+
                     </Col>
-                    <Col sm="6">
+                    <Col sm="3">
                       <Label style={{ color: '#36454F' }}>Entry To</Label>
                       <FormGroup>
                         <ReactDatetime
@@ -583,7 +597,7 @@ function Inventory() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="6">
+                    <Col sm="3">
                       <Label style={{ color: '#36454F' }}>Available From</Label>
                       <FormGroup>
                         <ReactDatetime
@@ -601,10 +615,12 @@ function Inventory() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="6">
+                    <Col sm="3">
                       <Label style={{ color: '#36454F' }}>Available To</Label>
                       <FormGroup>
                         <ReactDatetime
+
+                          
                           inputProps={{
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
@@ -617,38 +633,44 @@ function Inventory() {
                           }
                           timeFormat={false}
                         />
+
                       </FormGroup>
                     </Col>
 
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label>Status</Label>
                       <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="statuscode"
-                          onChange={(selectedOption) =>
-                            setFilterFormDate((prevState) => ({
-                              ...prevState,
-                              statuscode: selectedOption.value,
-                            }))
-                          }
-                          options={statusOptions}
-                          placeholder="Select an option"
-                        />
+                      <Select
+            className="react-select primary"
+            classNamePrefix="react-select"
+            name="statuscode"
+            menuPlacement="top" // This makes the menu open above the input
+            onChange={(selectedOption) =>
+              setFilterFormDate((prevState) => ({
+                ...prevState,
+                statuscode: selectedOption.value,
+              }))
+            }
+            options={statusOptions}
+            placeholder="Select an option"
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                minHeight: '40px', // Customize control height
+              }),
+              menu: (provided) => ({
+                ...provided,
+                zIndex: 9999, // Ensure the menu is on top of other elements
+              }),
+              valueContainer: (provided) => ({
+                ...provided,
+                padding: '0 8px', // Adjust padding
+              }),
+            }}
+          />
                       </FormGroup>
                     </Col>
-                    <Col sm="12">
-                      <Label>EoI No.</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="eoi_no"
-                          onChange={handleChange}
-                          
-                        />
-                      </FormGroup>
-                    </Col>
+                    
                   </Row>
                   <div
                     style={{
@@ -693,6 +715,7 @@ function Inventory() {
         </Form>
 
       </div>
+</div>
   </Modal>
 
       <div className="content">
