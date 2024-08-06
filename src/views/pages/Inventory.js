@@ -427,7 +427,12 @@ function Inventory() {
           row.original.statuscode == 'Sold' ? 
           <span class='badge badge-danger badge-pill'>{row.original.statuscode}</span> :  
           (row.original.statuscode == 'Live') ?<span class='badge badge-success badge-pill'> 
-            <img src={liveIconImage}  width={'15px'} alt="..." /> 
+            <img src={liveIconImage}  style={{
+               width: '15px',
+               height: '15px', // Add height if needed
+               boxShadow: '0 0 10px rgba(255, 0, 0, 0.5), 0 0 20px rgba(255, 0, 0, 0.3), 0 0 30px rgba(255, 0, 0, 0.2)', // Red gradient glow
+               borderRadius: '50%', // Optional: make it circular
+            }} width={'15px'} alt="..." /> 
             &nbsp; {row.original.statuscode}  
           </span> : 
           (row.original.statuscode == 'Listing') ?
@@ -580,7 +585,7 @@ function Inventory() {
                             setFilterFormDate((prevState) => ({
                               ...prevState,
                               entry_date_from: momentDate.format(
-                                'DD-MM-YYYY'
+                                'DD/MM/YYYY'
                               ),
                             }))
                           }
@@ -602,7 +607,7 @@ function Inventory() {
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
-                              entry_date_to: momentDate.format('DD-MM-YYYY'),
+                              entry_date_to: momentDate.format('DD/MM/YYYY'),
                             }))
                           }
                           dateFormat="DD-MM-YYYY" // Specify the date format
@@ -624,7 +629,7 @@ function Inventory() {
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
-                              available_from: momentDate.format('DD-MM-YYYY'),
+                              available_from: momentDate.format('DD/MM/YYYY'),
                             }))
                           }
                           timeFormat={false}
@@ -645,7 +650,7 @@ dateFormat="DD-MM-YYYY" // Specify the date format
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
-                              available_to: momentDate.format('DD-MM-YYYY'),
+                              available_to: momentDate.format('DD/MM/YYYY'),
                             }))
                           }
                           timeFormat={false}
