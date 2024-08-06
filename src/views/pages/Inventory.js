@@ -30,6 +30,13 @@ function Inventory() {
   const [dataState, setDataState] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clearTrigger, setClearTrigger] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+
+  const buttonStyles = {
+    backgroundColor: isHovered ? 'rgb(255,255,255)' : 'rgb(218, 218, 218)', // Change color on hover
+ 
+  };
   const[filterFormData, setFilterFormDate] = useState({
     
 
@@ -466,7 +473,10 @@ function Inventory() {
             </Button>
             <Button
               className="btn-icon btn-simple"
-              color="secondary"
+            color="secondary"
+            onMouseEnter={() => setIsHovered(true)}  // Set hover state to true
+            onMouseLeave={() => setIsHovered(false)} // Set hover state to false
+
               size="sm"
               onClick={() => handleEoI(row.original.asset_id, row.original.asset_name,row.original.description,row.original.statuscode)}
 
@@ -564,6 +574,8 @@ function Inventory() {
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
                           }}
+                          dateFormat="DD-MM-YYYY" // Specify the date format
+
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
@@ -593,6 +605,8 @@ function Inventory() {
                               entry_date_to: momentDate.format('DD-MM-YYYY'),
                             }))
                           }
+                          dateFormat="DD-MM-YYYY" // Specify the date format
+
                           timeFormat={false}
                         />
                       </FormGroup>
@@ -605,6 +619,8 @@ function Inventory() {
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
                           }}
+                          dateFormat="DD-MM-YYYY" // Specify the date format
+
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
@@ -620,7 +636,8 @@ function Inventory() {
                       <FormGroup>
                         <ReactDatetime
 
-                          
+dateFormat="DD-MM-YYYY" // Specify the date format
+
                           inputProps={{
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
@@ -640,6 +657,7 @@ function Inventory() {
                     <Col sm="6">
                       <Label>Status</Label>
                       <FormGroup>
+                        <div className="custom-select-container">
                       <Select
             className="react-select primary"
             classNamePrefix="react-select"
@@ -668,6 +686,8 @@ function Inventory() {
               }),
             }}
           />
+                                </div>
+
                       </FormGroup>
                     </Col>
                     

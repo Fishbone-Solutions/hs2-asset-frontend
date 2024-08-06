@@ -5,3 +5,18 @@
 .placer2 .rdtPicker {
     transform: translateY(-120px) ;
 }
+
+.custom-select-container .react-select__menu {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .custom-select-container .react-select__menu-list {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .custom-select-container .react-select__option {
+    padding: 8px 12px;
+  }
