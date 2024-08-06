@@ -76,10 +76,10 @@ function AdminNavbar(props) {
       return `Inventory | EOI List `;
     } 
     else if ( location.pathname.includes("eoi") && mode==="view") {
-      return `Inventory | EOI List | View `;
+      return `Inventory | EOI List | View  EoI `;
     } 
     else if ( location.pathname.includes("eoi") && mode==="edit") {
-      return `Inventory | EOI List | Edit `;
+      return `Inventory | EOI List | Edit EoI `;
     } 
     else if (mode === 'edit') {
       return `Inventory | Edit Item `;
