@@ -519,6 +519,8 @@ const AssetRegister = () => {
                           }
                           timeFormat={false}
                           readOnly={isReadOnly}
+                          dateFormat="DD-MM-YYYY"
+
                         />
                       </FormGroup>
                     </Col>
