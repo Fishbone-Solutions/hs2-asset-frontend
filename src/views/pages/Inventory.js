@@ -1,9 +1,9 @@
 import React from "react";
 import { useState,useContext} from "react";
 import defaultLiveIconImage from "assets/img/live.png";
+import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 import { GlobalContext } from '../../GlobalState';
 
-import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 // reactstrap components
 import { Card, CardBody, Row, Col, Button,Input,CardHeader,CardTitle,Label,FormGroup,  } from "reactstrap";
 import Select from "react-select";
@@ -18,12 +18,11 @@ import Modal from 'react-modal';
 import { useEffect } from "react";
 import ReactDatetime from "react-datetime";
 import moment from "moment";
-import "react-datetime/css/react-datetime.css";
+import "./Inventory.css";
 
 function Inventory() {
 
   const { username, setUsername } = useContext(GlobalContext);
- console.log("username",username);
   const [alert, setAlert] = React.useState(null);
   const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
   const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
@@ -33,33 +32,22 @@ function Inventory() {
   const [clearTrigger, setClearTrigger] = useState(false);
   const[filterFormData, setFilterFormDate] = useState({
     
-    id:"",
-    asset_name:"",
-    available_from:"",
-    statuscode:""
-
+    id: '',
+    asset_name: '',
+    statuscode: '',
+    entry_date_from: '',
+    entry_date_to: '',
+    available_from: '',
+    available_to: '',
+    eoi_no: '',
 
   });
-  const [availableFromStart, setAvailableFromStart] = useState(new Date());
-  const [availableFromEnd, setAvailableFromEnd] = useState(new Date());
-  const [entryDateStart, setEntryDateStart] = useState(new Date());
-  const [entryDateEnd, setEntryDateEnd] = useState(new Date());
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const navigate = useNavigate();
 
 
-  const options = [
-    { value: "New", label: "New" },
-    { value: "Old", label: "Old" },
-  ];
-  const statusOptions = [
 
-      { value: "LISTING", label: "LISTING" },
-      { value: "Live", label: "Live" },
-      { value: "Sold", label: "Sold" },
-
-  ];
 
   const handleEdit = (assetId, mode) => {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
@@ -88,7 +76,7 @@ function Inventory() {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       width: '40%',  // Increase the width
-      height: '50%', // Increase the height
+      height: '74%', // Increase the height
       padding: '0',  // Remove default padding
       backgroundColor:"#FFFFFF"
     },
@@ -348,6 +336,11 @@ function Inventory() {
     setClearTrigger(true);
   };
 
+  const statusOptions  =[
+    { value: "Listing", label: "Listing" },
+    { value: "Live", label: "Live" },
+    { value: "Sold", label: "Sold" },
+  ]
 
   const columns = React.useMemo(
     () => [
@@ -500,180 +493,206 @@ function Inventory() {
     style={customStyles}
     contentLabel="Filter Modal"
   >
-  <div className="content">
-  <Row>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader style={{ backgroundColor:"red"}}>
-                  <CardTitle
-                    tag="h"
+      <div className="content">
+      <Form onSubmit={handleFilterFormDataSubmission}>
+
+        <Row>
+
+          <Col md="12">
+            <Card>
+
+              <CardHeader style={{ background: '#52CBCE', height: '32px' }}>
+                <h6
+                  style={{
+                    color: 'white',
+                    fontSize: '1rem',
+                    transform: 'translateY(-10px)',
+                  }}
+                >
+                  <i
+                    className="fa fa-filter"
                     style={{
-                      color: "rgb(82,203,206)",
-                      
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      fontSize: '0.9em',
+                      backgroundColor: '#52CBCE',
+                      border: '2px solid #52CBCE',
+                      borderRadius: '15%',
                     }}
-                  >
-                    {"Filter Information"}
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
+                  ></i>
+                  Filter
+                </h6>
+              </CardHeader>
+
+              <CardBody>
                   <Row>
                     <Col sm="6">
-                    <Label >
-                    ID
-                    </Label>
+                      <Label>ID</Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_title"
+                          name="id"
                           onChange={handleChange}
-                          required
                         />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                    <Label >
-                    Name
-                    </Label>
+                      <Label>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_title"
+                          name="asset_name"
                           onChange={handleChange}
-                          required
+                          
                         />
                       </FormGroup>
                     </Col>
+                    <Col sm="6">
+                      <Label style={{ color: '#36454F' }}>Entry From</Label>
+                      <FormGroup>
+                        <ReactDatetime
+                          inputProps={{
+                            className: 'form-control',
+                            placeholder: 'DD/MM/YYYY',
+                          }}
+                          onChange={(momentDate) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              entry_date_from: momentDate.format(
+                                'DD-MM-YYYY'
+                              ),
+                            }))
+                          }
+                          timeFormat={false}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: '#36454F' }}>Entry To</Label>
+                      <FormGroup>
+                        <ReactDatetime
+                          inputProps={{
+                            className: 'form-control',
+                            placeholder: 'DD/MM/YYYY',
+                          }}
+                          onChange={(momentDate) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              entry_date_to: momentDate.format('DD-MM-YYYY'),
+                            }))
+                          }
+                          timeFormat={false}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: '#36454F' }}>Available From</Label>
+                      <FormGroup>
+                        <ReactDatetime
+                          inputProps={{
+                            className: 'form-control',
+                            placeholder: 'DD/MM/YYYY',
+                          }}
+                          onChange={(momentDate) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              available_from: momentDate.format('DD-MM-YYYY'),
+                            }))
+                          }
+                          timeFormat={false}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: '#36454F' }}>Available To</Label>
+                      <FormGroup>
+                        <ReactDatetime
+                          inputProps={{
+                            className: 'form-control',
+                            placeholder: 'DD/MM/YYYY',
+                          }}
+                          onChange={(momentDate) =>
+                            setFilterFormDate((prevState) => ({
+                              ...prevState,
+                              available_to: momentDate.format('DD-MM-YYYY'),
+                            }))
+                          }
+                          timeFormat={false}
+                        />
+                      </FormGroup>
+                    </Col>
+
                     <Col sm="12">
-                    <FormGroup>
+                      <Label>Status</Label>
+                      <FormGroup>
                         <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="statuscode"
-                        
                           onChange={(selectedOption) =>
                             setFilterFormDate((prevState) => ({
                               ...prevState,
                               statuscode: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "LISTING", label: "LISTING" },
-                            { value: "Live", label: "Live" },
-                            { value: "Sold", label: "Sold" },
-                          ]}
+                          options={statusOptions}
                           placeholder="Select an option"
                         />
                       </FormGroup>
-                      </Col>
-                       <Col sm="6">
-      <Label style={{ color: "#36454F" }}>Entry From</Label>
-      <FormGroup>
-        <ReactDatetime
-          inputProps={{
-            className: "form-control",
-            placeholder: "DD/MM/YYYY",
-          }}
-          onChange={(momentDate) =>
-            setFormData((prevState) => ({
-              ...prevState,
-              available_from: momentDate.format("DD-MM-YYYY"),
-            }))
-          }
-          timeFormat={false}
- 
-        />
-      </FormGroup>
-    </Col>
-                  </Row>
-                    </CardBody>
-                    </Card> 
                     </Col>
-                    </Row>
-  </div>
-{/*     <div>
-   
-       
-      <h5 style={{
-        textAlign: 'left',
-        margin: '0',
-        padding: '0.5rem',
-        backgroundColor: "#52CBCE",
-        color: "white",
-        width: '100%',
-
-      }}>
-     
-            
-      
-              <i className="fa fa-filter" style={{ fontSize:"0.9em",
-              backgroundColor: "#52CBCE",
-                      border: "2px solid #52CBCE",
-                      borderRadius: "15%",
-                }}></i>
-        FILTER
-      </h5>
-      <div style={{ padding: '1rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <label htmlFor="input1" style={{ marginBottom: '0.5rem', color: "#36454F" }}>
-        ID
-      </label>
-          <Input name="id" type="text" style={{ padding: '0.5rem'  }} onChange={handleChange} />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="input2" style={{ marginBottom: '0.5rem' }}>Name</label>
-          <Input name="asset_name" type="text" style={{ padding: '0.5rem' }} onChange={handleChange} />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="" style={{ marginBottom: '0.5rem' }}>Status</label>
-          <Select
-                        className="react-select primary"
-                        classNamePrefix="react-select"
-                        name="statuscode"
-                       
-                        onChange={(selectedOption) =>
-                          setFilterFormDate((prevState) => ({
-                            ...prevState,
-                            statuscode: selectedOption.value,
-                          }))
-                        }
-                        options={statusOptions}
-                        placeholder="Select an option"
-                        required
-                      />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label htmlFor="input4" style={{ marginBottom: '0.5rem' }}>Availability</label>
-          <ReactDatetime
-                          inputProps={{
-                            className: "form-control",
-                            placeholder: "DD/MM/YYYY",
-                          }}
-                       
-                          onChange={(momentDate) =>
-                            setFilterFormDate((prevState) => ({
-                              ...prevState,
-                              available_from: momentDate.format("DD-MM-YYYY"),
-                            }))
-                          }
-                          timeFormat={false}
+                    <Col sm="12">
+                      <Label>EoI No.</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="eoi_no"
+                          onChange={handleChange}
+                          
                         />
-        </div>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      padding: '1rem 2rem',
+                      borderTop: '1px solid #ddd',
+                    }}
+                  >
+                    <Button
+                      className="buttonClose"
+                      color="primary"
+                      onClick={closeModal}
+                      style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      className="buttonClose"
+                      color="primary"
+                      onClick={handleClearClick}
+                      type="clear"
+                      style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}
+                    >
+                      Clear
+                    </Button>
+                    <Button
+                      className="buttonClose"
+                      color="primary"
+                      type="submit"
+                      style={{ padding: '0.5rem 1rem' }}
+                    >
+                      Filter
+                    </Button>
+                  </div>
+              </CardBody>
+
+            </Card>
+          </Col>
+
+        </Row>
+        </Form>
+
       </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem 2rem', borderTop: '1px solid #ddd' }}>
-        <Button className="buttonClose" color="primary" onClick={closeModal} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Close</Button>
-        <Button className="buttonClose" color="primary" onClick={handleClearClick}style={{ marginRight: '0.5rem', padding: '0.5rem 1rem' }}>Clear</Button>
-        <Button className="buttonClose" color="primary" onClick={handleFilterFormDataSubmission} style={{ padding: '0.5rem 1rem' }}  >Filter</Button>
-      </div>
-
-
-
-
-    </div>
- */}
   </Modal>
 
       <div className="content">
