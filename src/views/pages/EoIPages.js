@@ -268,7 +268,7 @@ function EoIPages() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "submission_date",
+        accessor: "submission_date_formatted",
         width: '1.5%',
       },
       {

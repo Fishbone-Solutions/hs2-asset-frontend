@@ -50,7 +50,7 @@ const EoIPage = () => {
     id: "",
     code: "",
     asset_id: "",
-    submission_date: "",
+    submission_date_formatted: "",
     buyer_name: "",
     organization: "",
     contact_no: "",
@@ -296,14 +296,14 @@ const EoIPage = () => {
 
         }}
         value={
-          formData.submission_date
-            ? moment(formData.submission_date, "DD-MM-YYYY")
+          formData.submission_date_formatted
+            ? moment(formData.submission_date_formatted, "DD-MM-YYYY")
             : null
         }
         onChange={(momentDate) =>
           setFormData((prevState) => ({
             ...prevState,
-            submission_date: momentDate.format("DD-MM-YYYY"),
+            submission_date_formatted: momentDate.format("DD-MM-YYYY"),
           }))
         }
         timeFormat={false}

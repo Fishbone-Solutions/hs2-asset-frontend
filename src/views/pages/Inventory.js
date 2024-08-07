@@ -371,7 +371,7 @@ function Inventory() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "entrydate",
+        accessor: "entrydate_formatted",
         width: '2%',
       },
       {

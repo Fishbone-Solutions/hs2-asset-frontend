@@ -45,7 +45,7 @@ const AssetRegister = () => {
   const [formData, setFormData] = useState({
     id: isAddMode ? 'Auto Generated' : '', // Initialize id based on mode
     code: "",
-    entrydate: "",
+    entrydate_formatted: "",
     categorycode1: "",
     categorycode2: "",
     asset_name: "",
