@@ -155,7 +155,7 @@ const EoIPage = () => {
           confirmBtnBsStyle="info"
           btnSize=""
         >
-          EoI  submitted
+          EoI submitted
         </ReactBSAlert>
       );
       navigate(`/admin/eoi/${assetId}`);

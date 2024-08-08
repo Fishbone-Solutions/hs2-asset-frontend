@@ -28,7 +28,6 @@ function EoIPages() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
   const [alert, setAlert] = React.useState(null);
-
   const [formData, setFormData] = useState({
     asset_id: "",
     code: "",
@@ -51,8 +50,6 @@ function EoIPages() {
   });
 
   const handleDelete = (assetId,eoino) => {
-
-    console.log("hd delete",eoino);
     setAlert(
       <ReactBSAlert
         warning
@@ -74,9 +71,6 @@ function EoIPages() {
 
   const successDelete = (assetId,eoino) => {
     const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoino}/-1`;
-
-    console.log("sd delete",eoino);
-
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
@@ -95,7 +89,6 @@ function EoIPages() {
         console.log(result);
         if (result.appRequestStatus === "SUCCESS") {
           console.log("Asset deleted successfully");
-
           setAlert(
             <ReactBSAlert
               success
@@ -153,20 +146,11 @@ function EoIPages() {
       </ReactBSAlert>
     );
   };
-
-
-
-
-
-
-
-
+  
   const navigate = useNavigate();
-
   const { id } = useParams();
   const {username} = useContext(GlobalContext);
   const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
-  const [applicationIconImage, setApplicationIconImage] = React.useState(defaultApplicationIconImage);
 
   const camelCaseWithSpaces = (text) => {
     return text
@@ -330,11 +314,10 @@ function EoIPages() {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
-
-className="btn-icon btn-simple"
-color="info"
-              size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'view',row.original.id)}
+            className="btn-icon btn-simple"
+            color="info"
+            size="sm"
+            onClick={() => handleEdit(row.original.asset_id, 'view',row.original.id)}
             >
               <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
