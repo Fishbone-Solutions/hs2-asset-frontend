@@ -579,7 +579,7 @@ function Inventory() {
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
                           }}
-                          dateFormat="DD-MM-YYYY" // Specify the date format
+                          dateFormat="DD/MM/YYYY" // Specify the date format
 
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({

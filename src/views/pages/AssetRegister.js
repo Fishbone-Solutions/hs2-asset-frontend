@@ -508,18 +508,18 @@ const AssetRegister = () => {
                           }}
                           value={
                             formData.available_from
-                              ? moment(formData.available_from, "DD-MM-YYYY")
+                              ? moment(formData.available_from, "DD/MM/YYYY")
                               : null
                           }
                           onChange={(momentDate) =>
                             setFormData((prevState) => ({
                               ...prevState,
-                              available_from: momentDate.format("DD-MM-YYYY"),
+                              available_from: momentDate.format("DD/MM/YYYY"),
                             }))
                           }
                           timeFormat={false}
                           readOnly={isReadOnly}
-                          dateFormat="DD-MM-YYYY"
+                          dateFormat="DD/MM/YYYY"
 
                         />
                       </FormGroup>
