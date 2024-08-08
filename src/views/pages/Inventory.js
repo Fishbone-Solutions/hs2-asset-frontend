@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { useEffect } from "react";
 import ReactDatetime from "react-datetime";
-import moment from "moment";
 import "./Inventory.css";
 
 function Inventory() {
@@ -31,32 +30,20 @@ function Inventory() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clearTrigger, setClearTrigger] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-
-
-  const buttonStyles = {
-    backgroundColor: isHovered ? 'rgb(255,255,255)' : 'rgb(218, 218, 218)', // Change color on hover
- 
-  };
   const[filterFormData, setFilterFormDate] = useState({
-    
-
-      id: '',
-      asset_name: '',
-      entry_date_from: null,
-      entry_date_to: null,
-      available_from: null,
-      available_to: null,
-      statuscode: null,
-
+    id: '',
+    asset_name: '',
+    entry_date_from: null,
+    entry_date_to: null,
+    available_from: null,
+    available_to: null,
+    statuscode: null,
 
   });
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const navigate = useNavigate();
-
-
-
-
+  
   const handleEdit = (assetId, mode) => {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
@@ -103,7 +90,7 @@ function Inventory() {
 
   const handleFilterFormDataSubmission = async (event) => {
     event.preventDefault();
-  
+    
     const getValueOrDefault = (value) => (value ? value : '-1');
   
     // Construct the query parameters
@@ -229,8 +216,7 @@ function Inventory() {
     myHeaders.append("accept", "application/json");
     myHeaders.append("token", "x8F!@p01,*MH");
     myHeaders.append("user_id", username);  // Add user_id to headers
-
-
+    
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -483,7 +469,7 @@ function Inventory() {
             onMouseLeave={() => setIsHovered(false)} // Set hover state to false
 
               size="sm"
-              onClick={() => handleEoI(row.original.asset_id, row.original.asset_name,row.original.description,row.original.statuscode)}
+              onClick={() => handleEoI(row.original.asset_id)}
 
             >
               <img src={applicationIconImage}   width={'15px'} alt="..." />
@@ -624,7 +610,7 @@ function Inventory() {
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
                           }}
-                          dateFormat="DD-MM-YYYY" // Specify the date format
+                          dateFormat="DD/MM/YYYY" // Specify the date format
 
                           onChange={(momentDate) =>
                             setFilterFormDate((prevState) => ({
@@ -640,10 +626,8 @@ function Inventory() {
                       <Label style={{ color: '#36454F' }}>Available To</Label>
                       <FormGroup>
                         <ReactDatetime
-
-dateFormat="DD-MM-YYYY" // Specify the date format
-
-                          inputProps={{
+                        dateFormat="DD-MM-YYYY" 
+                         inputProps={{
                             className: 'form-control',
                             placeholder: 'DD/MM/YYYY',
                           }}
@@ -658,8 +642,7 @@ dateFormat="DD-MM-YYYY" // Specify the date format
 
                       </FormGroup>
                     </Col>
-
-                    <Col sm="6">
+                <Col sm="6">
                       <Label>Status</Label>
                       <FormGroup>
                         <div className="custom-select-container">

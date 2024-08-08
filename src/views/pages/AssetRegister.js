@@ -64,8 +64,9 @@ const AssetRegister = () => {
   });
 
   const options = [
-    { value: "New", label: "New" },
-    { value: "Old", label: "Old" },
+    { value: "Listing", label: "Listing" },
+                            { value: "Live", label: "Live" },
+                            { value: "Sold", label: "Sold" },
   ];
   const optionsCategory1 = [
     { value: "construction-office", label: "Construction Office" },

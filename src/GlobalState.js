@@ -1,9 +1,7 @@
 import React, { createContext, useState } from 'react';
 
-// Create a context
-const GlobalContext = createContext();
 
-// Create a provider component
+const GlobalContext = createContext();
 const GlobalProvider = ({ children }) => {
   const [username, setUsername] = useState('');
 
