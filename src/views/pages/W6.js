@@ -207,7 +207,7 @@ function W6() {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Exchange Register")}
+                  
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -317,7 +317,6 @@ function W6() {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    Expression of Interests
                     
                   </CardTitle>
                 </CardHeader>
