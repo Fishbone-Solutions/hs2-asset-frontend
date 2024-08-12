@@ -45,7 +45,7 @@ function Inventory() {
   const navigate = useNavigate();
   
   const handleEdit = (assetId, mode) => {
-    navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
+    navigate(`/admin/assetregister/${assetId}?mode=${mode}`);
   };
 
   const handleEoI = (assetId) => {
@@ -744,7 +744,7 @@ function Inventory() {
                       }}
                     />
                   </div>
-                  <NavLink to="/admin/exchangeregister?mode=add">
+                  <NavLink to="/admin/assetregister?mode=add">
                     <div>
                       <IoAddCircleOutline
                         color="white"

@@ -21,7 +21,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import ReactDatetime from "react-datetime";
 
-function W6() {
+function ExchangeRegister() {
   const [formData, setFormData] = useState({
     id: '',
     asset_name: '',
@@ -35,7 +35,10 @@ function W6() {
   const { id } = useParams();
   const {username} = useContext(GlobalContext);
 
+  const handleEdit = (assetId, mode) => {
+    navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
 
+  };
 
 
   React.useEffect(() => {
@@ -109,10 +112,10 @@ function W6() {
   };
 
 
-  const handleView = (asset_id) =>  {
+  const handleView = (asset_id,mode) =>  { 
     console.log("asset_idi",asset_id)
-    console.log(window.locationbar)
-    navigate(`/exchangeregistermatch/:id${asset_id}`);
+    navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
+    console.log("location odi "  ,location)
 
   } 
 
@@ -207,7 +210,7 @@ function W6() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleView(row.original.asset_id)}
+              onClick={() => handleView(row.original.asset_id,"exchange")}
             >
                <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
@@ -215,7 +218,7 @@ function W6() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'edit')}
+              onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
               <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
             </Button>
@@ -386,4 +389,4 @@ function W6() {
   );
 }
 
-export default W6;
+export default ExchangeRegister;

@@ -31,7 +31,7 @@ const camelCaseWithSpaces = (text) => {
     .join(' ');
 };
 
-const AssetRegister = () => {
+const ItemExchangeRegister = () => {
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -91,7 +91,7 @@ const AssetRegister = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (mode === "edit" || mode === "view" || mode === 'exchange') {
+      if (mode === "edit" || mode === "view") {
         try {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
@@ -691,60 +691,7 @@ const AssetRegister = () => {
                 </CardBody>
               </Card>
             </Col>
-            {/* Set Asset Status */}
-            {mode !== 'exchange' && (
-  <Col md="12">
-    <Card>
-      <CardHeader>
-        <CardTitle
-          tag="h6"
-          style={{
-            color: "rgb(82,203,206)",
-            fontWeight: "bold",
-            textTransform: "capitalize",
-            WebkitTextTransform: "capitalize", // for Safari
-          }}
-        >
-          {camelCaseWithSpaces("Item Status")}
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <Row>
-          <Col sm="6">
-            <Label style={{ color: "#36454F" }}>
-              Status *
-            </Label>
-            <FormGroup>
-              <Select
-                className="react-select primary"
-                classNamePrefix="react-select"
-                name="statuscode"
-                value={options.find(
-                  (option) => option.value === formData.statuscode
-                )}
-                onChange={(selectedOption) =>
-                  setFormData((prevState) => ({
-                    ...prevState,
-                    statuscode: selectedOption.value,
-                  }))
-                }
-                options={[
-                  { value: "Listing", label: "Listing" },
-                  { value: "Live", label: "Live" },
-                  { value: "Sold", label: "Sold" },
-                ]}
-                placeholder="Select an option"
-                isDisabled={isReadOnly}
-                required
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-      </CardBody>
-    </Card>
-  </Col>
-)}
-
+          
           </Row>
           {alert}
 
@@ -754,7 +701,7 @@ const AssetRegister = () => {
             </Button>
             {mode !== 'view' && (
               <Button color="primary" type="submit">
-                Save
+                Submit EoI
               </Button>
             )}
           </div>
@@ -764,4 +711,4 @@ const AssetRegister = () => {
   );
 };
 
-export default AssetRegister;
+export default ItemExchangeRegister;

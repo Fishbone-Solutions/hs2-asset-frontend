@@ -4,6 +4,12 @@ import Inventory from "views/pages/Inventory.js";
 import UserProfile from "views/pages/UserProfile.js";
 import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
+import ExchangeRegister from "views/pages/ExchangeRegister";
+
+
+
+
+
 
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
@@ -21,6 +27,7 @@ import W11 from 'views/pages/W11';
 import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
+import ItemExchangeRegister from "views/pages/ItemExchangeRegister";
 const routes = [ 
   {
     path: "/user-profile",
@@ -32,8 +39,8 @@ const routes = [
     hidden: true
   },
   {
-    path: "/exchangeregister/:id",
-    pathName: "/admin/exchangeregister/:id?mode=view",
+    path: "/assetregister/:id",
+    pathName: "/admin/assetregister/:id?mode=view",
     name: "Inventory | Item",
     component: <AssetRegister />,
     layout: "/admin",
@@ -41,19 +48,8 @@ const routes = [
     hidden: true
   },
   {
-    path: "/exchangeregister",
-    pathName: "/admin/exchangeregister",
-    name: "Add New Item",
-    component: <AssetRegister />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true
-
-
-  },
-  {
     path: "/eoi/details/:assetId",
-    pathName: "/admin/eoi/details/:assetId?mode=view?mode=",
+    pathName: "/admin/eoi/details/:assetId?mode=view",
     name: "All EOI | View EOI Detail",
     component: <EoIPage />,
     layout: "/admin",
@@ -81,6 +77,16 @@ const routes = [
 
   },
   {
+    path: "/exchange/register",
+    pathName: "/admin/exchange/register/:id?mode=view",
+    name: "Exchange Register ",
+    component: <ExchangeRegister></ExchangeRegister> ,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+
+  },
+
+  {
     path: "/eoi/:id",
     pathName: "/admin/eois/:id?mode=view",
     name: "Inventory | Item",
@@ -90,6 +96,7 @@ const routes = [
     hidden: true
     
   },
+
   {
     path: "/dashboard",
     pathName: "/admin/dashboard",
