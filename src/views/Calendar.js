@@ -15,7 +15,7 @@ import { Card, CardBody, Row, Col } from "reactstrap";
 import { events } from "variables/general.js";
 
 const localizer = momentLocalizer(moment);
-
+// some text
 function Calendar() {
   const [eventsState, setEventsState] = React.useState(events);
   const [alert, setAlert] = React.useState(null);
