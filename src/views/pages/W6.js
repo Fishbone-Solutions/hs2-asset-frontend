@@ -20,133 +20,15 @@ import { GlobalContext } from "GlobalState";
 import { useParams,useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
+import ReactDatetime from "react-datetime";
 import defaultLiveIconImage from "assets/img/live.png";
-import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 import "./EoiPages.css"
 
 function W6() {
   const [dataState,setDataState] = useState([])
   const[errorMessage,setErrorMessage] = useState("")
   const [alert, setAlert] = React.useState(null);
-  const [formData, setFormData] = useState({
-    asset_id: "",
-    code: "",
-    entrydate: "",
-    categorycode1: "",
-    categorycode2: "",
-    asset_name: "",
-    description: "",
-    asset_condition: "",
-    quantity: "",
-    asset_location: "",
-    value: "",
-    additional_info: "",
-    available_from: "",
-    seller_title: "",
-    seller_contactno: "",
-    seller_email: "",
-    seller_location: "",
-    statuscode: "",
-  });
-
-  const handleDelete = (assetId,eoino) => {
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => successDelete(assetId,eoino)}
-        onCancel={cancelDelete}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      >
-        You will not be able to recover this item.
-      </ReactBSAlert>
-    );
-  };
-
-  const successDelete = (assetId,eoino) => {
-    const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoino}/-1`;
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", username);  // Add user_id to headers
-
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(deleteEndpoint, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        if (result.appRequestStatus === "SUCCESS") {
-          console.log("Asset deleted successfully");
-          setAlert(
-            <ReactBSAlert
-              success
-              style={{ display: "block", marginTop: "-100px" }}
-              title="Deleted!"
-              onConfirm={hideAlert}
-              onCancel={hideAlert}
-              confirmBtnBsStyle="info"
-              btnSize=""
-            >
-             EoI {eoino} has been deleted successfully
-            </ReactBSAlert>
-          );
-
-          setDataState((prevState) => prevState.filter((row) => row.id !== eoino));
-          console.log("Updated Data", dataState);
-        } else {
-          setAlert(
-            <ReactBSAlert
-              danger
-              style={{ display: "block", marginTop: "-100px" }}
-              title="Deletion Failed"
-              onConfirm={hideAlert}
-              onCancel={hideAlert}
-              confirmBtnBsStyle="danger"
-              btnSize=""
-            >
-              Error deleting asset
-            </ReactBSAlert>
-          );
-          console.log("Error deleting asset");
-        }
-      })
-      .catch((error) => {
-        console.error("Network error or exception occurred:", error);
-      });
-  };
-
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
-  const cancelDelete = () => {
-    setAlert(
-      <ReactBSAlert
-        danger
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Cancelled"
-        onConfirm={hideAlert}
-        onCancel={hideAlert}
-        confirmBtnBsStyle="info"
-        btnSize=""
-      >
-        No Changes made
-      </ReactBSAlert>
-    );
-  };
-  
+  const [formData, setFormData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const {username} = useContext(GlobalContext);
@@ -174,7 +56,7 @@ function W6() {
       try {
         const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
         const result = await response.json();
-        setFormData(result.appRespData[0]);
+        setFormData(result.appRespData);
         console.log(result);
   
 
@@ -264,7 +146,7 @@ function W6() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "condition",
+        accessor: "asset_condition",
         width: '8%',
       },
       {
@@ -274,7 +156,7 @@ function W6() {
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
-        accessor: "location",
+        accessor: "asset_location",
         width: '8%',
       },
       {
@@ -290,7 +172,7 @@ function W6() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'view')}
             >
-              View <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
+               <i className="fa fa-eye" style={{ fontSize: '0.9em' }}></i>
             </Button>
             <Button
               className="btn-icon btn-simple"
@@ -298,7 +180,7 @@ function W6() {
               size="sm"
               onClick={() => handleEdit(row.original.asset_id, 'edit')}
             >
-            Submit  <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
+              <i className="fa fa-edit" style={{ fontSize: '0.9em' }}></i>
             </Button>
           </div>
         ),
@@ -324,39 +206,37 @@ function W6() {
                       WebkitTextTransform: "capitalize", 
                     }}
                   >
-                    {camelCaseWithSpaces("Item Reference")}
+                    {camelCaseWithSpaces("Exchange Register")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
                     <Label >
-                       ID 
+                    Category
                     </Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="code"
-                          value={formData.asset_id}
+                       //   value={formData}
                           onChange={handleChange}
                           required
-                          disabled={true}
                         />
                       </FormGroup>
                     </Col>
                     
                     <Col sm="6">
                     <Label  style={{ color: "#36454F" }}>
-                      Name
+                      Asset Name
                     </Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="asset_name"
-                          value={formData.asset_name}
+                     //     value={formData.asset_name}
                           onChange={handleChange}
                           required
-                          disabled={true}
 
                         />
                       </FormGroup>
@@ -367,20 +247,19 @@ function W6() {
                    
                   <Col sm="6">
                     <Label style={{ color: "#36454F" }}>
-                    Description
+                      Item Location
                     </Label>
-                      <FormGroup className={`has-label ${formData.seller_email}`}>
+                      <FormGroup >
                         <Input
                           type="text"
                           name="description"
-                          value={formData.description}
+                       //   value={formData.description}
                           onChange={(e) => {
                             const value = e.target.value;
 
                           
                           }}
                           required
-                          disabled={true}
 
                         />
                      
@@ -391,14 +270,21 @@ function W6() {
                     <Label style={{ color: "#36454F" }}>
                     Availability
                     </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="statuscode"
-                          value={formData.available_from}
-                          onChange={handleChange}
-                          required
-                          disabled={true}
+                    <FormGroup>
+                    <ReactDatetime
+                          inputProps={{
+                            className: "form-control",
+                            placeholder: "DD/MM/YYYY",
+                          }}
+                         
+                          onChange={(momentDate) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              available_from: momentDate.format("DD/MM/YYYY"),
+                            }))
+                          }
+                          timeFormat={false}
+                          dateFormat="DD/MM/YYYY"
 
                         />
                       </FormGroup>
@@ -441,7 +327,7 @@ function W6() {
                 >   
 
                 <ReactTable 
-                  data={dataState}
+                  data={formData}
                   columns={columns}
                   className="-striped -highlight primary-pagination "
 

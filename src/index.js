@@ -8,6 +8,7 @@ import "assets/scss/paper-dashboard.scss?v=1.3.1";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { GlobalProvider } from './GlobalState';
+import ErrorComponent from 'ErrorBoundary';
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
@@ -30,6 +31,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // Render the application using RouterProvider
 root.render(
   <GlobalProvider>
-    <RouterProvider router={router} />
+    <RouterProvider router={router} errorElement={ErrorComponent} />
   </GlobalProvider>
 );
