@@ -108,6 +108,17 @@ function W6() {
         accessor: "categorycode1",
         width: '2%',
       },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>SUB CATEGORY</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "categorycode2",
+        width: '2%',
+      },
+ 
  
       {
         Header: ({ column }) => (
@@ -132,32 +143,22 @@ function W6() {
       {
         Header: ({ column }) => (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>SELLER</span>
+            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
+          </div>
+        ),
+        accessor: "seller_title",
+        width: '8%',
+      },
+      {
+        Header: ({ column }) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>AVAILABILITY</span>
             <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
           </div>
         ),
         accessor: "available_from",
         width: '2%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>CONDITION</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "asset_condition",
-        width: '8%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>LOCATION</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "asset_location",
-        width: '8%',
       },
       {
         Header: "ACTIONS",
