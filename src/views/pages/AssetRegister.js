@@ -38,7 +38,6 @@ const AssetRegister = () => {
   const mode = query.get("mode");
   const isAddMode = mode === "add";
   const UPLOAD_TEXT = mode === "add" || mode === "edit" ? "Drag and drop files here to upload" : "";
-  console.log(UPLOAD_TEXT)
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
@@ -246,7 +245,7 @@ const AssetRegister = () => {
     );
   };
 
-  const isReadOnly = mode === "view";
+  const isReadOnly = mode === "view" || "exchange";
 
 
   return (
@@ -736,7 +735,7 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {mode !== "view" && (
+            {mode !== "view" || "exchange"  && (
               <Button color="primary" type="submit">
                 Save
               </Button>
