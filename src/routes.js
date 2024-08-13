@@ -87,8 +87,8 @@ const routes = [
     hidden: true,
   },
   {
-    path: "/exchangeregister",
-    pathName: "/admin/exchangeregister",
+    path: "/assetregister",
+    pathName: "/admin/assetregister",
     name: "Add New Item",
     component: <AssetRegister />,
     layout: "/admin",
