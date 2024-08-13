@@ -6,16 +6,10 @@ import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
 
-
-
-
-
-
 import W0 from "views/pages/W0";
 import W1 from 'views/pages/W1';
 import W2 from 'views/pages/W2';
 import W3 from 'views/pages/W3';
-// Import W4 to W14
 import W4 from 'views/pages/W4';
 import W5 from 'views/pages/W5';
 import W6 from 'views/pages/W6';
@@ -27,7 +21,6 @@ import W11 from 'views/pages/W11';
 import W12 from 'views/pages/W12';
 import W13 from 'views/pages/W13';
 import W14 from 'views/pages/W14';
-import ItemExchangeRegister from "views/pages/ItemExchangeRegister";
 const routes = [ 
   {
     path: "/user-profile",
