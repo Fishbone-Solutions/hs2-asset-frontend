@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ed804696.css",
-    "main.js": "/static/js/main.97221194.js",
+    "main.js": "/static/js/main.eae2aea0.js",
     "static/media/bg.png": "/static/media/bg.e0fc4c98c0c5decfaf55.png",
     "static/media/ayo-ogunseinde-2.jpg": "/static/media/ayo-ogunseinde-2.72cae9644a69b316a1a7.jpg",
     "static/media/Inter-italic.var.woff2?v=3.19": "/static/media/Inter-italic.var.30807be7abc48ba8c73c.woff2",
@@ -18,6 +18,6 @@
   },
   "entrypoints": [
     "static/css/main.ed804696.css",
-    "static/js/main.97221194.js"
+    "static/js/main.eae2aea0.js"
   ]
 }
