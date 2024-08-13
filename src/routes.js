@@ -40,6 +40,8 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
   },
+
+
   {
     path: "/eoi/details/:assetId",
     pathName: "/admin/eoi/details/:assetId?mode=view",
@@ -83,6 +85,17 @@ const routes = [
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
+  },
+  {
+    path: "/exchangeregister",
+    pathName: "/admin/exchangeregister",
+    name: "Add New Item",
+    component: <AssetRegister />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+
+
   },
 
   {
