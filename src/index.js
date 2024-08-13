@@ -15,10 +15,13 @@ const router = createBrowserRouter([
   {
     path: '/auth/*',
     element: <AuthLayout />,
+    errorElement:  <ErrorComponent/>
   },
   {
     path: '/admin/*',
     element: <AdminLayout />,
+    errorElement:  <ErrorComponent/>
+
   },
   {
     path: '*',
