@@ -1,3 +1,3 @@
-const BACKEND_ADDRESS = 'https://api.hs2.fishbonesolutions.co.uk'
- 
+const BACKEND_ADDRESS = "http://localhost:80";
+
 export default BACKEND_ADDRESS;

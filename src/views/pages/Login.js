@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 
 // reactstrap components
 import {
@@ -18,43 +18,43 @@ import {
   Row,
 } from "reactstrap";
 import { useNavigate, NavLink } from "react-router-dom";
-import login_lock_icon from "../../assets/img/login_lock_icon.png"
+import login_lock_icon from "../../assets/img/login_lock_icon.png";
 import Footer from "components/Footer/Footer";
 import AuthNavbar from "components/Navbars/AuthNavbar";
 import ReactBSAlert from "react-bootstrap-sweetalert";
-import { GlobalContext } from '../../GlobalState';
+import { GlobalContext } from "../../GlobalState";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
-  const usernames = []
-  const [password, setPassword] = useState('');
-  const [error, setErrorMessage] = useState('');
-  const [alert,setAlert] =useState("");
+  const usernames = [];
+  const [password, setPassword] = useState("");
+  const [error, setErrorMessage] = useState("");
+  const [alert, setAlert] = useState("");
   const navigate = useNavigate();
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       // Handle Enter key press event here
       handleLogin();
     }
-  }
+  };
   const handleLogin = () => {
-    if (password === 'admin') {
-      navigate('/admin/inventory');
-
+    if (password === "admin") {
+      navigate("/admin/inventory");
     } else {
       setAlert(
         <ReactBSAlert
-         danger
+          danger
           style={{ display: "block", marginTop: "-100px" }}
           title="Wrong Username or Password"
           onConfirm={() => hideAlert()}
           onCancel={() => hideAlert()}
           confirmBtnBsStyle="info"
           btnSize=""
-        />)
+        />,
+      );
     }
-  }
+  };
   const hideAlert = () => {
     setAlert(null);
   };
@@ -72,18 +72,45 @@ function Login() {
       <Container>
         {alert}
         <Row>
-
           <Col className="ml-auto mr-auto" lg="4" md="6">
-            <p style={{ textAlign: 'right', color: '#52CBCE', marginBottom: -10 }}>Connecting Buyers & Sellers</p>
-            <p style={{ textAlign: 'left', fontSize: '28.3px', color: 'white', marginTop: 0 }}>
-              <span style={{ color: '#52CBCE', fontWeight: 'bold' }}>HS2 </span> 
-              <span style={{ color: 'white', fontWeight: 'bold' }}>Exchange Platform</span>
+            <p
+              style={{
+                textAlign: "right",
+                color: "#52CBCE",
+                marginBottom: -10,
+              }}
+            >
+              Connecting Buyers & Sellers
+            </p>
+            <p
+              style={{
+                textAlign: "left",
+                fontSize: "28.3px",
+                color: "white",
+                marginTop: 0,
+              }}
+            >
+              <span style={{ color: "#52CBCE", fontWeight: "bold" }}>HS2 </span>
+              <span style={{ color: "white", fontWeight: "bold" }}>
+                Exchange Platform
+              </span>
             </p>
             <Form action="" className="form" method="">
               <Card className="card-login">
                 <CardHeader>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <img width={90} height={90} src={login_lock_icon} alt="Login Icon"/>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      width={90}
+                      height={90}
+                      src={login_lock_icon}
+                      alt="Login Icon"
+                    />
                   </div>
                 </CardHeader>
                 <CardBody>
@@ -93,9 +120,9 @@ function Login() {
                         <i className="nc-icon nc-single-02" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input 
-                      placeholder="Username" 
-                      type="text" 
+                    <Input
+                      placeholder="Username"
+                      type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
@@ -114,11 +141,11 @@ function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </InputGroup>
-                  {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+                  {error && (
+                    <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
+                  )}
                   <br />
-                  <FormGroup>
-                    {/* ... (form group content) */}
-                  </FormGroup>
+                  <FormGroup>{/* ... (form group content) */}</FormGroup>
                 </CardBody>
                 <CardFooter>
                   <Button
@@ -126,15 +153,11 @@ function Login() {
                     className="btn-round mb-3"
                     color="primary"
                     onClick={handleLogin}
-                    style={{backgroundColor:"rgb(82,203,206)"}}
+                    style={{ backgroundColor: "rgb(82,203,206)" }}
                   >
                     Login
                   </Button>
-                  <Button
-                    block
-                    className="btn-round mb-3"
-                    color="primary"
-                  >
+                  <Button block className="btn-round mb-3" color="primary">
                     Sign in with O365
                   </Button>
                 </CardFooter>

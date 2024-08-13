@@ -28,13 +28,15 @@ function AuthNavbar(props) {
   };
   return (
     <Navbar
-    className={classnames("navbar-absolute fixed-top", color)}
-    expand="lg"
+      className={classnames("navbar-absolute fixed-top", color)}
+      expand="lg"
     >
       <Container>
         <div className="navbar-wrapper">
-          <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-          </NavbarBrand>
+          <NavbarBrand
+            href="#pablo"
+            onClick={(e) => e.preventDefault()}
+          ></NavbarBrand>
         </div>
         <button
           aria-controls="navigation-index"
@@ -51,7 +53,6 @@ function AuthNavbar(props) {
         </button>
         <Collapse isOpen={collapseOpen} className="justify-content-end" navbar>
           <Nav navbar>
-       
             <NavItem>
               <NavLink to="/" className="nav-link">
                 <i className="nc-icon nc-book-bookmark" />

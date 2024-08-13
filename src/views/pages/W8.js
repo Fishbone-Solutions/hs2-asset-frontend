@@ -5,20 +5,20 @@ import {
   Badge,
   Card,
   CardBody,
-Form,
-FormGroup,
-Input,
-Label,
-CardHeader,
-CardTitle,
-CardFooter,
-Row,
-Col,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+  Row,
+  Col,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 function W8() {
-  const [dataState,setDataState] = useState([])
-  const[errorMessage,setErrorMessage] = useState("")
+  const [dataState, setDataState] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     code: "",
@@ -42,9 +42,9 @@ function W8() {
 
   const camelCaseWithSpaces = (text) => {
     return text
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
 
   React.useEffect(() => {
@@ -54,7 +54,6 @@ function W8() {
       myHeaders.append("token", "x8F!@p01,*MH");
       myHeaders.append("user_id", "tabish.hb");
 
-
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
@@ -62,19 +61,23 @@ function W8() {
       };
 
       try {
-        const response = await fetch(`${BACKEND_ADDRESS}/assets/-1`, requestOptions);
+        const response = await fetch(
+          `${BACKEND_ADDRESS}/assets/-1`,
+          requestOptions,
+        );
         const result = await response.json();
         setDataState(result.appRespData);
         console.log(result);
       } catch (error) {
-        setErrorMessage("Unable to load data. Please refresh the page or load after time");
+        setErrorMessage(
+          "Unable to load data. Please refresh the page or load after time",
+        );
         console.error(error);
       }
     };
 
     fetchData();
   }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -83,107 +86,111 @@ function W8() {
       [name]: value,
     }));
   };
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>EoI. No</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "asset_id",
-        width: '3%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> User ID</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "entrydate",
-        width: '2.8%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span> Interested Buyers </span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "asset_name",
-        width: '10%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>EoI Submission Date</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "description",
-        width: '16%',
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Status</span>
-            <span>{column.isSorted ? (column.isSortedDesc ? '▼' : '▲') : ''}</span>
-          </div>
-        ),
-        accessor: "asset_location",
-        width: '8%',
-      },
-      {
-        Header: "ACTIONS",
-        accessor: "actions",
-        sortable: false,
-        width: '12.5%',
-        Cell: ({ row }) => (
-          <div className="action-buttons">
-            <Button
-              className="btn-icon btn-simple"
-              color="info"
-              size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'view')}
-            >
-              <i className="fa fa-eye" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="success"
-              size="sm"
-              onClick={() => handleEdit(row.original.asset_id, 'edit')}
-            >
-              <i className="fa fa-edit" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="secondary"
-              size="sm"
-            >
-              <i className="fa fa-exchange" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-            <Button
-              className="btn-icon btn-simple"
-              color="danger"
-              size="sm"
-              onClick={() => handleDelete(row.original.asset_id)}
-            >
-              <i className="fa fa-trash" style={{ fontSize: '1.4em' }}></i>
-            </Button>
-          </div>
-        ),
-      }
-    ]
-  );
+  const columns = React.useMemo(() => [
+    {
+      Header: ({ column }) => (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>EoI. No</span>
+          <span>
+            {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+          </span>
+        </div>
+      ),
+      accessor: "asset_id",
+      width: "3%",
+    },
+    {
+      Header: ({ column }) => (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span> User ID</span>
+          <span>
+            {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+          </span>
+        </div>
+      ),
+      accessor: "entrydate",
+      width: "2.8%",
+    },
+    {
+      Header: ({ column }) => (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span> Interested Buyers </span>
+          <span>
+            {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+          </span>
+        </div>
+      ),
+      accessor: "asset_name",
+      width: "10%",
+    },
+    {
+      Header: ({ column }) => (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>EoI Submission Date</span>
+          <span>
+            {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+          </span>
+        </div>
+      ),
+      accessor: "description",
+      width: "16%",
+    },
+    {
+      Header: ({ column }) => (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>Status</span>
+          <span>
+            {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+          </span>
+        </div>
+      ),
+      accessor: "asset_location",
+      width: "8%",
+    },
+    {
+      Header: "ACTIONS",
+      accessor: "actions",
+      sortable: false,
+      width: "12.5%",
+      Cell: ({ row }) => (
+        <div className="action-buttons">
+          <Button
+            className="btn-icon btn-simple"
+            color="info"
+            size="sm"
+            onClick={() => handleEdit(row.original.asset_id, "view")}
+          >
+            <i className="fa fa-eye" style={{ fontSize: "1.4em" }}></i>
+          </Button>
+          <Button
+            className="btn-icon btn-simple"
+            color="success"
+            size="sm"
+            onClick={() => handleEdit(row.original.asset_id, "edit")}
+          >
+            <i className="fa fa-edit" style={{ fontSize: "1.4em" }}></i>
+          </Button>
+          <Button className="btn-icon btn-simple" color="secondary" size="sm">
+            <i className="fa fa-exchange" style={{ fontSize: "1.4em" }}></i>
+          </Button>
+          <Button
+            className="btn-icon btn-simple"
+            color="danger"
+            size="sm"
+            onClick={() => handleDelete(row.original.asset_id)}
+          >
+            <i className="fa fa-trash" style={{ fontSize: "1.4em" }}></i>
+          </Button>
+        </div>
+      ),
+    },
+  ]);
   return (
     <>
-         <div className="content">
-        <Form >
+      <div className="content">
+        <Form>
           <Row>
-          <Col md="12">
+            <Col md="12">
               <Card>
                 <CardHeader>
                   <CardTitle
@@ -192,7 +199,7 @@ function W8() {
                       color: "rgb(82,203,206)",
                       fontWeight: "bold",
                       textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      WebkitTextTransform: "capitalize",
                     }}
                   >
                     {camelCaseWithSpaces("Seller Information")}
@@ -201,9 +208,7 @@ function W8() {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                    <Label >
-                      Asset ID *
-                    </Label>
+                      <Label>Asset ID *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -214,11 +219,9 @@ function W8() {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Name
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -229,15 +232,13 @@ function W8() {
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                   
-                  <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                    Description
-                    </Label>
-                      <FormGroup className={`has-label ${formData.seller_email}`}>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Description</Label>
+                      <FormGroup
+                        className={`has-label ${formData.seller_email}`}
+                      >
                         <Input
                           type="text"
                           name="seller_email"
@@ -245,9 +246,9 @@ function W8() {
                           onChange={(e) => {
                             const value = e.target.value;
                             if (!verifyEmail(value)) {
-                    //          setRegisterEmailState("has-danger");
+                              //          setRegisterEmailState("has-danger");
                             } else {
-             //                 setRegisterEmailState("has-success");
+                              //                 setRegisterEmailState("has-success");
                             }
                             setFormData((prevState) => ({
                               ...prevState,
@@ -256,18 +257,16 @@ function W8() {
                           }}
                           required
                         />
-                      {/*   {registerEmailState === "has-danger" ? (
+                        {/*   {registerEmailState === "has-danger" ? (
                           <label className="error">
                             Please enter a valid email address.
                           </label>
                         ) : null} */}
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                    Status
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Status</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -280,12 +279,10 @@ function W8() {
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                </CardFooter>
+                <CardFooter></CardFooter>
               </Card>
             </Col>
-       
-           
+
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -295,29 +292,26 @@ function W8() {
                       color: "rgb(82,203,206)",
                       fontWeight: "bold",
                       textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      WebkitTextTransform: "capitalize",
                     }}
                   >
                     Expression of Interests
-                    
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-               
-                <ReactTable
-                  data={dataState}
-                  columns={columns}
-                  className="-striped -highlight primary-pagination"
-                />
-                {errorMessage}
+                  <ReactTable
+                    data={dataState}
+                    columns={columns}
+                    className="-striped -highlight primary-pagination"
+                  />
+                  {errorMessage}
                 </CardBody>
-                <CardFooter>
-                </CardFooter>
+                <CardFooter></CardFooter>
               </Card>
             </Col>
-            </Row>
-            </Form>
-            </div>
+          </Row>
+        </Form>
+      </div>
     </>
   );
 }

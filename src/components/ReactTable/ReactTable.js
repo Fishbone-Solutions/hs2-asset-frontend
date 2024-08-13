@@ -76,16 +76,16 @@ function Table({ columns, data }) {
         });
       },
     }),
-    []
+    [],
   );
 
-  const defaultColumn = React.useMemo(       
+  const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
       width: 100,
     }),
-    []
+    [],
   );
 
   const {
@@ -107,20 +107,18 @@ function Table({ columns, data }) {
       data,
       defaultColumn, // Be sure to pass the defaultColumn option
       filterTypes,
-     
     },
     useFilters, // useFilters!
     useSortBy,
     usePagination,
-    useResizeColumns // Add useResizeColumns hook
+    useResizeColumns, // Add useResizeColumns hook
   );
 
-  let pageSelectData = Array.apply(
-    null,
-    Array(pageOptions.length)
-  ).map(function () {});
+  let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
+    function () {},
+  );
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
-  
+
   return (
     <>
       <br></br>
@@ -133,7 +131,11 @@ function Table({ columns, data }) {
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     {...column.getHeaderProps()}
-                    style={{ width: column.width, backgroundColor:"#57524D", color:"white" }}
+                    style={{
+                      width: column.width,
+                      backgroundColor: "#57524D",
+                      color: "white",
+                    }}
                     className={classnames("rt-th rt-resizable-header", {
                       "-cursor-pointer": headerGroup.headers.length - 1 !== key,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,
@@ -148,8 +150,8 @@ function Table({ columns, data }) {
                       {headerGroup.headers.length - 1 === key
                         ? null
                         : column.canFilter
-                        ? column.render("Filter")
-                        : null}
+                          ? column.render("Filter")
+                          : null}
                     </div>
                   </th>
                 ))}
@@ -165,7 +167,7 @@ function Table({ columns, data }) {
                   className={classnames(
                     "rt-tr",
                     { "-odd": i % 2 === 0 },
-                    { "-even": i % 2 === 1 }
+                    { "-even": i % 2 === 1 },
                   )}
                 >
                   {row.cells.map((cell, cellIndex) => {
@@ -197,49 +199,49 @@ function Table({ columns, data }) {
               </button>
             </div>
             <div className="-center">
-  <Container>
-    <Row className="justify-content-center mt-2">
-      <Col md="4" sm="6" xs="12">
-        <Select
-          className="react-select primary"
-          classNamePrefix="react-select"
-          name="pageSelect"
-          value={pageSelect}
-          onChange={(value) => {
-            gotoPage(value.value);
-            handlePageSelect(value);
-          }}
-          options={pageSelectData.map((prop, key) => {
-            return {
-              value: key,
-              label: "Page " + (key + 1),
-            };
-          })}
-          placeholder="Choose Page"
-        />
-      </Col>
-      <Col md="4" sm="6" xs="12">
-        <Select
-          className="react-select primary"
-          classNamePrefix="react-select"
-          name="numberOfRows"
-          value={numberOfRows}
-          onChange={(value) => {
-            setPageSize(value.value);
-            setNumberOfRows(value);
-          }}
-          options={numberOfRowsData.map((prop) => {
-            return {
-              value: prop,
-              label: prop + " rows",
-            };
-          })}
-          placeholder="Choose Rows"
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
+              <Container>
+                <Row className="justify-content-center mt-2">
+                  <Col md="4" sm="6" xs="12">
+                    <Select
+                      className="react-select primary"
+                      classNamePrefix="react-select"
+                      name="pageSelect"
+                      value={pageSelect}
+                      onChange={(value) => {
+                        gotoPage(value.value);
+                        handlePageSelect(value);
+                      }}
+                      options={pageSelectData.map((prop, key) => {
+                        return {
+                          value: key,
+                          label: "Page " + (key + 1),
+                        };
+                      })}
+                      placeholder="Choose Page"
+                    />
+                  </Col>
+                  <Col md="4" sm="6" xs="12">
+                    <Select
+                      className="react-select primary"
+                      classNamePrefix="react-select"
+                      name="numberOfRows"
+                      value={numberOfRows}
+                      onChange={(value) => {
+                        setPageSize(value.value);
+                        setNumberOfRows(value);
+                      }}
+                      options={numberOfRowsData.map((prop) => {
+                        return {
+                          value: prop,
+                          label: prop + " rows",
+                        };
+                      })}
+                      placeholder="Choose Rows"
+                    />
+                  </Col>
+                </Row>
+              </Container>
+            </div>
 
             <div className="-next">
               <button

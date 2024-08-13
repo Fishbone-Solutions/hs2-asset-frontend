@@ -22,9 +22,7 @@ function W4() {
         </div>
         <Row>
           <Col md="12">
-            <Card className="card-timeline card-plain">
-              
-            </Card>
+            <Card className="card-timeline card-plain"></Card>
           </Col>
         </Row>
       </div>

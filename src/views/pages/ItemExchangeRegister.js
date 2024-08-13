@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   Form,
@@ -21,29 +21,29 @@ import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
 const camelCaseWithSpaces = (text) => {
   return text
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 };
 
 const ItemExchangeRegister = () => {
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const mode = query.get('mode');
-  const isAddMode = mode === 'add';
+  const mode = query.get("mode");
+  const isAddMode = mode === "add";
 
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
-  const {username } =  useContext(GlobalContext);
+  const { username } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
-    id: isAddMode ? 'Auto Generated' : '', // Initialize id based on mode
+    id: isAddMode ? "Auto Generated" : "", // Initialize id based on mode
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -70,13 +70,22 @@ const ItemExchangeRegister = () => {
   ];
   const optionsCategory1 = [
     { value: "construction-office", label: "Construction Office" },
-    { value: "storage-logistics-facilities", label: "Storage/Logistics Facilities" },
+    {
+      value: "storage-logistics-facilities",
+      label: "Storage/Logistics Facilities",
+    },
     { value: "processing-facilities", label: "Processing Facilities" },
     { value: "fixed-services", label: "Fixed Services" },
     { value: "temporary-services", label: "Temporary Services" },
     { value: "security", label: "Security" },
-    { value: "compound-security-safety-infrastructure", label: "Compound Security/Safety Infrastructure" },
-    { value: "site-roads-and-infrastructure", label: "Site Roads and Infrastructure" },
+    {
+      value: "compound-security-safety-infrastructure",
+      label: "Compound Security/Safety Infrastructure",
+    },
+    {
+      value: "site-roads-and-infrastructure",
+      label: "Site Roads and Infrastructure",
+    },
     { value: "temporary-siding", label: "Temporary Siding" },
     { value: "consolidation-yards", label: "Consolidation Yards" },
     { value: "concrete-production", label: "Concrete Production" },
@@ -85,8 +94,11 @@ const ItemExchangeRegister = () => {
     { value: "static-plant", label: "Static Plant" },
     { value: "piling", label: "Piling" },
     { value: "pipework", label: "Pipework" },
-    { value: "public-highway-traffic-management", label: "Public Highway Traffic Management" },
-    { value: "other-assets", label: "Other Assets" }
+    {
+      value: "public-highway-traffic-management",
+      label: "Public Highway Traffic Management",
+    },
+    { value: "other-assets", label: "Other Assets" },
   ];
 
   useEffect(() => {
@@ -98,7 +110,6 @@ const ItemExchangeRegister = () => {
           myHeaders.append("token", "x8F!@p01,*MH");
           myHeaders.append("user_id", username);
 
-
           const requestOptions = {
             method: "GET",
             headers: myHeaders,
@@ -107,7 +118,7 @@ const ItemExchangeRegister = () => {
 
           const response = await fetch(
             `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions
+            requestOptions,
           );
 
           if (response.ok) {
@@ -158,7 +169,7 @@ const ItemExchangeRegister = () => {
         headers: {
           "Content-Type": "application/json",
           token: "x8F!@p01,*MH",
-          "user_id":username
+          user_id: username,
         },
         body: JSON.stringify(requestBody),
       });
@@ -174,9 +185,9 @@ const ItemExchangeRegister = () => {
           btnSize=""
         >
           Asset Listing submitted
-        </ReactBSAlert>
+        </ReactBSAlert>,
       );
-      navigate('/admin/inventory');
+      navigate("/admin/inventory");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -214,7 +225,7 @@ const ItemExchangeRegister = () => {
             btnSize=""
           >
             Please fill in all required fields.
-          </ReactBSAlert>
+          </ReactBSAlert>,
         );
         return;
       }
@@ -232,11 +243,11 @@ const ItemExchangeRegister = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      />
+      />,
     );
   };
 
-  const isReadOnly = mode === 'view';
+  const isReadOnly = mode === "view";
 
   return (
     <>
@@ -253,7 +264,7 @@ const ItemExchangeRegister = () => {
                       color: "rgb(82,203,206)",
                       fontWeight: "bold",
                       textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      WebkitTextTransform: "capitalize",
                     }}
                   >
                     {camelCaseWithSpaces("Seller Information")}
@@ -262,9 +273,7 @@ const ItemExchangeRegister = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                    <Label >
-                      Seller Title *
-                    </Label>
+                      <Label>Seller Title *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -276,11 +285,9 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Contact No *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Contact No *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -292,15 +299,15 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                   
-                  <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      Email Address *
-                    </Label>
-                      <FormGroup className={`has-label ${formData.seller_email}`}>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>
+                        Email Address *
+                      </Label>
+                      <FormGroup
+                        className={`has-label ${formData.seller_email}`}
+                      >
                         <Input
                           type="text"
                           name="seller_email"
@@ -327,11 +334,9 @@ const ItemExchangeRegister = () => {
                         ) : null}
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      Location *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Location *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -345,8 +350,7 @@ const ItemExchangeRegister = () => {
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                </CardFooter>
+                <CardFooter></CardFooter>
               </Card>
             </Col>
             {/* Category Detail*/}
@@ -359,7 +363,7 @@ const ItemExchangeRegister = () => {
                       color: "rgb(82,203,206)",
                       fontWeight: "bold",
                       textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      WebkitTextTransform: "capitalize",
                     }}
                   >
                     {camelCaseWithSpaces("Category")}
@@ -367,18 +371,15 @@ const ItemExchangeRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Category
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Category</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
                           value={optionsCategory1.find(
-                            (option) => option.value === formData.categorycode1
+                            (option) => option.value === formData.categorycode1,
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -393,11 +394,9 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      Sub Category
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Sub Category</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -445,11 +444,8 @@ const ItemExchangeRegister = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      ID
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>ID</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -462,11 +458,9 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      Name *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Name *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -478,14 +472,10 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                    
-                  <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Description
-                    </Label>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Description</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -496,11 +486,11 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                   
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Forecasted Availability*
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>
+                        Forecasted Availability*
+                      </Label>
                       <FormGroup>
                         <ReactDatetime
                           inputProps={{
@@ -521,18 +511,13 @@ const ItemExchangeRegister = () => {
                           timeFormat={false}
                           readOnly={isReadOnly}
                           dateFormat="DD/MM/YYYY"
-
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                    
-                  <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Condition *
-                    </Label>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Condition *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -540,7 +525,7 @@ const ItemExchangeRegister = () => {
                           name="asset_condition"
                           value={options.find(
                             (option) =>
-                              option.value === formData.asset_condition
+                              option.value === formData.asset_condition,
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -556,9 +541,7 @@ const ItemExchangeRegister = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Quantity *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Quantity *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -570,15 +553,10 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                  
-                    
                   </Row>
                   <Row>
-                    
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Location *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Location *</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -590,11 +568,11 @@ const ItemExchangeRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                      Estimated Value *
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>
+                        Estimated Value *
+                      </Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -684,22 +662,28 @@ const ItemExchangeRegister = () => {
                     maxFileSize={1000000}
                     className="custom-file-upload"
                     emptyTemplate={
-                      <p className="m-0">Drag and drop files to here to upload.</p>
+                      <p className="m-0">
+                        Drag and drop files to here to upload.
+                      </p>
                     }
                     disabled={isReadOnly}
                   />
                 </CardBody>
               </Card>
             </Col>
-          
           </Row>
           {alert}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
+            <Button
+              className="buttonClose"
+              color="primary"
+              onClick={() => window.history.back()}
+              style={{ visibility: "visible", opacity: 1 }}
+            >
               Close
             </Button>
-            {mode !== 'view' && (
+            {mode !== "view" && (
               <Button color="primary" type="submit">
                 Submit EoI
               </Button>

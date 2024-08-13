@@ -7,21 +7,21 @@ import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
 
 import W0 from "views/pages/W0";
-import W1 from 'views/pages/W1';
-import W2 from 'views/pages/W2';
-import W3 from 'views/pages/W3';
-import W4 from 'views/pages/W4';
-import W5 from 'views/pages/W5';
-import W6 from 'views/pages/W6';
-import W7 from 'views/pages/W7';
-import W8 from 'views/pages/W8';
-import W9 from 'views/pages/W9';
-import W10 from 'views/pages/W10';
-import W11 from 'views/pages/W11';
-import W12 from 'views/pages/W12';
-import W13 from 'views/pages/W13';
-import W14 from 'views/pages/W14';
-const routes = [ 
+import W1 from "views/pages/W1";
+import W2 from "views/pages/W2";
+import W3 from "views/pages/W3";
+import W4 from "views/pages/W4";
+import W5 from "views/pages/W5";
+import W6 from "views/pages/W6";
+import W7 from "views/pages/W7";
+import W8 from "views/pages/W8";
+import W9 from "views/pages/W9";
+import W10 from "views/pages/W10";
+import W11 from "views/pages/W11";
+import W12 from "views/pages/W12";
+import W13 from "views/pages/W13";
+import W14 from "views/pages/W14";
+const routes = [
   {
     path: "/user-profile",
     pathName: "/admin/user-profile",
@@ -29,7 +29,7 @@ const routes = [
     component: <UserProfile />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
+    hidden: true,
   },
   {
     path: "/assetregister/:id",
@@ -38,7 +38,7 @@ const routes = [
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
+    hidden: true,
   },
   {
     path: "/eoi/details/:assetId",
@@ -47,8 +47,7 @@ const routes = [
     component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
   {
     path: "/eoi/view/:id",
@@ -57,8 +56,7 @@ const routes = [
     component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
   {
     path: "/inventory",
@@ -67,16 +65,14 @@ const routes = [
     component: <Inventory></Inventory>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
-
   },
   {
     path: "/exchange/register",
     pathName: "/admin/exchange/register/:id?mode=view",
     name: "Exchange Register ",
-    component: <ExchangeRegister></ExchangeRegister> ,
+    component: <ExchangeRegister></ExchangeRegister>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
-
   },
 
   {
@@ -86,8 +82,7 @@ const routes = [
     component: <EoIPages />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
 
   {
@@ -97,7 +92,6 @@ const routes = [
     component: <W0 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
 
   {
@@ -107,7 +101,6 @@ const routes = [
     component: <W1 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
   {
     path: "/approvalsrequests",
@@ -116,7 +109,6 @@ const routes = [
     component: <W2 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
 
   {
@@ -126,7 +118,6 @@ const routes = [
     component: <W4 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
   {
     collapse: true,
@@ -242,8 +233,6 @@ const routes = [
         component: <W14></W14>,
         layout: "/admin",
       },
-      
-     
     ],
   },
   {

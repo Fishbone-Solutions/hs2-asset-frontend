@@ -25,7 +25,7 @@ function SweetAlert() {
         onCancel={() => hideAlert()}
         confirmBtnBsStyle="info"
         btnSize=""
-      />
+      />,
     );
   };
   const titleAndTextAlert = () => {
@@ -39,7 +39,7 @@ function SweetAlert() {
         btnSize=""
       >
         It's pretty, isn't it?
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const successAlert = () => {
@@ -54,7 +54,7 @@ function SweetAlert() {
         btnSize=""
       >
         You clicked the button!
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const htmlAlert = () => {
@@ -68,8 +68,9 @@ function SweetAlert() {
         btnSize=""
       >
         You can use <b>bold</b> text,{" "}
-        <a href="assetmanagement.fishbonesolutions.co.uk/">links</a> and other HTML tags
-      </ReactBSAlert>
+        <a href="assetmanagement.fishbonesolutions.co.uk/">links</a> and other
+        HTML tags
+      </ReactBSAlert>,
     );
   };
   const warningWithConfirmMessage = () => {
@@ -88,7 +89,7 @@ function SweetAlert() {
         btnSize=""
       >
         You will not be able to recover this imaginary file!
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const warningWithConfirmAndCancelMessage = () => {
@@ -107,7 +108,7 @@ function SweetAlert() {
         btnSize=""
       >
         You will not be able to recover this imaginary file!
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const autoCloseAlert = () => {
@@ -119,7 +120,7 @@ function SweetAlert() {
         showConfirm={false}
       >
         I will close in 2 seconds.
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
     setTimeout(hideAlert, 2000);
   };
@@ -135,7 +136,7 @@ function SweetAlert() {
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         btnSize=""
-      />
+      />,
     );
   };
   const inputConfirmAlert = (e) => {
@@ -151,7 +152,7 @@ function SweetAlert() {
             You entered: <b>{e}</b>
           </p>
         }
-      />
+      />,
     );
   };
   const successDelete = () => {
@@ -166,7 +167,7 @@ function SweetAlert() {
         btnSize=""
       >
         Your imaginary file has been deleted.
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const cancelDetele = () => {
@@ -181,7 +182,7 @@ function SweetAlert() {
         btnSize=""
       >
         Your imaginary file is safe :)
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
   const hideAlert = () => {

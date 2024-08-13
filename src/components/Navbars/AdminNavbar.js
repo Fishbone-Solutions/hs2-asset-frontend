@@ -22,17 +22,18 @@ function AdminNavbar(props) {
   const [color, setColor] = React.useState("#52CBCE");
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const mode = query.get('mode');
-  const id = query.get('id');
+  const mode = query.get("mode");
+  const id = query.get("id");
 
-  const currentRoute = routes.find((route) => location.pathname.includes(route.pathName));
+  const currentRoute = routes.find((route) =>
+    location.pathname.includes(route.pathName),
+  );
 
   const { name, icon } = currentRoute || {};
 
-  console.log("location",location.pathname)
-  console.log("mode",mode)
+  console.log("location", location.pathname);
+  console.log("mode", mode);
 
-  
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
   });
@@ -69,22 +70,17 @@ function AdminNavbar(props) {
   };
 
   const renderTitle = () => {
-    if (mode === 'view' && location.pathname.includes("assets") ) {
+    if (mode === "view" && location.pathname.includes("assets")) {
       return `Inventory | View Item `;
-    } 
-    else if ( location.pathname.includes("eoi") && mode === null) {
+    } else if (location.pathname.includes("eoi") && mode === null) {
       return `Inventory | EOI List `;
-    } 
-    else if ( location.pathname.includes("eoi") && mode==="view") {
+    } else if (location.pathname.includes("eoi") && mode === "view") {
       return `Inventory | EOI List | View  EoI `;
-    } 
-    else if ( location.pathname.includes("eoi") && mode==="edit") {
+    } else if (location.pathname.includes("eoi") && mode === "edit") {
       return `Inventory | EOI List | Edit EoI `;
-    } 
-    else if (mode === 'edit') {
+    } else if (mode === "edit") {
       return `Inventory | Edit Item `;
-    } 
-    else {
+    } else {
       return name;
     }
   };
@@ -92,9 +88,9 @@ function AdminNavbar(props) {
   return (
     <>
       <Navbar
-        className={classnames("navbar-absolute fixed-top", '#52CBCE')}
+        className={classnames("navbar-absolute fixed-top", "#52CBCE")}
         expand="lg"
-        style={{backgroundColor:"#52CBCE"}}
+        style={{ backgroundColor: "#52CBCE" }}
       >
         <Container fluid>
           <div className="navbar-wrapper">
@@ -104,10 +100,13 @@ function AdminNavbar(props) {
                 color="primary"
                 id="minimizeSidebar"
                 onClick={props.handleMiniClick}
-                style={{ backgroundColor: 'grey'}}
+                style={{ backgroundColor: "grey" }}
               >
                 <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
-                <i className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular" style={{ color: 'white'}} />
+                <i
+                  className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"
+                  style={{ color: "white" }}
+                />
               </Button>
             </div>
             <div
@@ -126,13 +125,17 @@ function AdminNavbar(props) {
               </button>
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-              <span className="d-none d-md-block" style={{ color: 'white' }}>
+              <span className="d-none d-md-block" style={{ color: "white" }}>
                 {icon && <i className={icon}></i>}
-                <span style={{ color: 'white', fontWeight: 'bold' }}>{renderTitle()}</span>
+                <span style={{ color: "white", fontWeight: "bold" }}>
+                  {renderTitle()}
+                </span>
               </span>
               <span className="d-block d-md-none">
                 {icon && <i className={icon}></i>}
-                <span style={{ color: 'white', fontWeight: 'bold' }}>{renderTitle()}</span>
+                <span style={{ color: "white", fontWeight: "bold" }}>
+                  {renderTitle()}
+                </span>
               </span>
             </NavbarBrand>
           </div>
@@ -154,8 +157,7 @@ function AdminNavbar(props) {
             navbar
             isOpen={collapseOpen}
           >
-            <Form>
-            </Form>
+            <Form></Form>
             <Nav navbar>
               <UncontrolledDropdown className="btn-rotate" nav>
                 <DropdownToggle
