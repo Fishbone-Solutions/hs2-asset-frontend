@@ -10,7 +10,7 @@ import defaultAvatar from "assets/img/placeholder.jpg";
 function ImageUpload(props) {
   const [fileState, setFileState] = React.useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(
-    props.avatar ? defaultAvatar : defaultImage
+    props.avatar ? defaultAvatar : defaultImage,
   );
   const fileInput = React.useRef();
   const handleImageChange = (e) => {

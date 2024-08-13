@@ -23,7 +23,6 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import ReactBSAlert from "react-bootstrap-sweetalert";
 import ReactDatetime from "react-datetime";
 import defaultLiveIconImage from "assets/img/live.png";
 import "./EoiPages.css";
@@ -31,10 +30,15 @@ import "./FloatingLabel.css";
 import DateRangePicker from "views/components/DateRangePicker";
 
 function W6() {
-  const [dataState, setDataState] = useState([]);
+  const [formData, setFormData] = useState({
+    id: "",
+    asset_name: "",
+    available_from: "",
+    available_to: "",
+  });
+  const [filterFormData, setFilterFormDate] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [alert, setAlert] = React.useState(null);
-  const [formData, setFormData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
@@ -70,11 +74,11 @@ function W6() {
 
       try {
         const response = await fetch(
-          `${BACKEND_ADDRESS}/assets/-1`,
-          requestOptions
+          `${BACKEND_ADDRESS}/register?fltr_id=-1&fltr_name=-1&fltr_from_availability=-1&fltr_to_availability=-1`,
+          requestOptions,
         );
         const result = await response.json();
-        setFormData(result.appRespData);
+        setFilterFormDate(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
@@ -87,12 +91,50 @@ function W6() {
     fetchData();
   }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    event.preventDefault();
+
+    const getValueOrDefault = (value) => (value ? value : "-1");
+
+    // Construct the query parameters
+    const params = new URLSearchParams({
+      fltr_id: getValueOrDefault(filterFormData.id),
+      fltr_name: getValueOrDefault(filterFormData.asset_name),
+      fltr_from_availability: getValueOrDefault(filterFormData.available_from),
+      fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+    });
+
+    const url = `${BACKEND_ADDRESS}/assets/-1?${params.toString()}`;
+
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: "x8F!@p01,*MH",
+        user_id: username,
+      },
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Fetched Data:", data.appRespData); // Debugging log
+      setFilterFormDate(data.appRespData); // Update your component state with fetched data
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleView = (asset_id) => {
+    console.log("asset_idi", asset_id);
+    console.log(window.locationbar);
+    navigate(`/exchangeregistermatch/:id${asset_id}`);
   };
 
   const columns = React.useMemo(
@@ -193,7 +235,7 @@ function W6() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleEdit(row.original.asset_id, "view")}
+              onClick={() => handleView(row.original.asset_id)}
             >
               <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -209,7 +251,7 @@ function W6() {
         ),
       },
     ],
-    []
+    [],
   );
   return (
     <>
@@ -317,9 +359,7 @@ function W6() {
                     textTransform: "capitalize",
                     WebkitTextTransform: "capitalize",
                   }}
-                >
-                  Expression of Interests
-                </CardTitle>
+                ></CardTitle>
               </CardHeader>
               <CardBody
                 style={{
@@ -327,7 +367,7 @@ function W6() {
                 }}
               >
                 <ReactTable
-                  data={formData}
+                  data={filterFormData}
                   columns={columns}
                   className="-striped -highlight primary-pagination "
                 />

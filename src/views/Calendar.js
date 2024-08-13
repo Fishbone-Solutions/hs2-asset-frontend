@@ -33,7 +33,7 @@ function Calendar() {
         onCancel={() => hideAlert()}
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
-      />
+      />,
     );
   };
   const addNewEvent = (e, slotInfo) => {

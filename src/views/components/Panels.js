@@ -118,7 +118,7 @@ function Panels() {
                     <CardHeader role="tab">
                       <a
                         aria-expanded={openedCollapses.includes(
-                          "collapseThree"
+                          "collapseThree",
                         )}
                         href="#pablo"
                         data-parent="#accordion"

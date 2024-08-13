@@ -58,7 +58,7 @@ function Inventory() {
   const navigate = useNavigate();
 
   const handleEdit = (assetId, mode) => {
-    navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
+    navigate(`/admin/assetregister/${assetId}?mode=${mode}`);
   };
 
   const handleEoI = (assetId) => {
@@ -154,7 +154,7 @@ function Inventory() {
         btnSize=""
       >
         No Changes made
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -255,7 +255,7 @@ function Inventory() {
               btnSize=""
             >
               Asset ID {assetId} has been deleted successfully
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
 
           setDataState((prevState) =>
@@ -274,7 +274,7 @@ function Inventory() {
               btnSize=""
             >
               Error deleting asset
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
           console.log("Error deleting asset");
         }
@@ -300,7 +300,7 @@ function Inventory() {
         btnSize=""
       >
         You will not be able to recover this item.
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -316,7 +316,7 @@ function Inventory() {
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         btnSize=""
-      />
+      />,
     );
   };
 
@@ -333,7 +333,7 @@ function Inventory() {
             You entered: <b>{e}</b>
           </p>
         }
-      />
+      />,
     );
   };
   useEffect(() => {
@@ -572,7 +572,7 @@ function Inventory() {
         ),
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -826,7 +826,7 @@ function Inventory() {
                       }}
                     />
                   </div>
-                  <NavLink to="/admin/exchangeregister?mode=add">
+                  <NavLink to="/admin/assetregister?mode=add">
                     <div>
                       <IoAddCircleOutline
                         color="white"

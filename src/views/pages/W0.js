@@ -23,8 +23,7 @@ function W0() {
         <Row>
           <Col md="12">
             <Card className="card-timeline card-plain">
-              <CardBody>
-              </CardBody>
+              <CardBody></CardBody>
             </Card>
           </Col>
         </Row>

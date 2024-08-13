@@ -1,73 +1,64 @@
 import React from "react";
 import { useContext } from "react";
 // reactstrap components
-import {
-  Card,
-  CardBody,
-  Row,
-  Col,
-} from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import { MdDelete } from "react-icons/md";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { GlobalContext } from "GlobalState";
 // core components
 import ReactTable from "components/ReactTable/ReactTable.js";
-import BACKEND_ADDRESS from "../components/serverAddress"
+import BACKEND_ADDRESS from "../components/serverAddress";
 import { FaEye } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 
 function ReactTables() {
   const [dataTable, setDataTable] = React.useState([]);
-  const { username } = useContext(GlobalContext)
+  const { username } = useContext(GlobalContext);
 
   const formatDate = (date) => {
-    const formattedDate = new Date(date).toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
+    const formattedDate = new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
     return formattedDate;
   };
 
- React.useEffect(() => {
-  const fetchData = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", username);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const myHeaders = new Headers();
+      myHeaders.append("accept", "application/json");
+      myHeaders.append("token", "x8F!@p01,*MH");
+      myHeaders.append("user_id", username);
 
-    console.log(BACKEND_ADDRESS)
+      console.log(BACKEND_ADDRESS);
 
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow"
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      fetch(`${BACKEND_ADDRESS}/inventory`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => setDataState(result))
+        .catch((error) => console.error(error));
     };
-    
-    fetch(`${BACKEND_ADDRESS}/inventory`, requestOptions)
 
-      .then((response) => response.json())
-      .then((result) => setDataState(result))
-      .catch((error) => console.error(error));
-  };
+    fetchData();
+  }, []);
 
-  fetchData();
-}, []);
-
-const handleAction3= () => {
-
-}
+  const handleAction3 = () => {};
 
   const [dataState, setDataState] = React.useState(
     dataTable.map((prop, key) => {
       return {
         id: key,
       };
-    })
+    }),
   );
   return (
     <>
- 
       <div className="content">
         <Row>
           <Col md="12">
@@ -91,11 +82,10 @@ const handleAction3= () => {
                     {
                       Header: "Location",
                       accessor: "location",
-                    }, 
+                    },
                     {
-
                       Header: "Available From",
-                      accessor:"available_from",
+                      accessor: "available_from",
                       Cell: ({ value }) => <span>{formatDate(value)}</span>,
                     },
                     {
@@ -107,7 +97,7 @@ const handleAction3= () => {
                       accessor: "total_eoi",
                       sortable: false,
                       filterable: false,
-                    },                   
+                    },
                     {
                       Header: "Actions",
                       accessor: "actions",
@@ -115,12 +105,57 @@ const handleAction3= () => {
                       filterable: false,
                       Cell: () => (
                         <div>
-
-                        <button style={{ fontSize: '16px', backgroundColor:"transparent", border: 'none', outline: 'none'  , color: 'green'}} className="-btn" onClick={() => handleAction1()}><FaEye></FaEye></button>
-                        <button style={{ fontSize: '16px',backgroundColor:"transparent", border: 'none', outline: 'none', color:"purple" }} onClick={() => handleAction2()}><GrDocumentUpdate></GrDocumentUpdate></button>
-                        <button style={{ fontSize: '16px',  backgroundColor:"transparent", border: 'none', outline: 'none', color:"blue" }}  className="-btn" onClick={() => handleAction1()}><FaEdit /></button>
-                        <button style={{  fontSize: '16px',  backgroundColor: 'transparent',  border: 'none',  outline: 'none', color: 'red', }} onClick={() => handleAction3()}><MdDelete /></button>
-                      </div>
+                          <button
+                            style={{
+                              fontSize: "16px",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              outline: "none",
+                              color: "green",
+                            }}
+                            className="-btn"
+                            onClick={() => handleAction1()}
+                          >
+                            <FaEye></FaEye>
+                          </button>
+                          <button
+                            style={{
+                              fontSize: "16px",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              outline: "none",
+                              color: "purple",
+                            }}
+                            onClick={() => handleAction2()}
+                          >
+                            <GrDocumentUpdate></GrDocumentUpdate>
+                          </button>
+                          <button
+                            style={{
+                              fontSize: "16px",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              outline: "none",
+                              color: "blue",
+                            }}
+                            className="-btn"
+                            onClick={() => handleAction1()}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            style={{
+                              fontSize: "16px",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              outline: "none",
+                              color: "red",
+                            }}
+                            onClick={() => handleAction3()}
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
                       ),
                     },
                   ]}

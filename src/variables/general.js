@@ -3,8 +3,8 @@
 // #############################
 
 const dataForReactTable = {
-  headerRow: [  "ID", "Name", "Description", "Status"  ],
-  footerRow: [  "ID", "Name", "Description", "Status" ],
+  headerRow: ["ID", "Name", "Description", "Status"],
+  footerRow: ["ID", "Name", "Description", "Status"],
   dataRows: [
     ["Tiger Nixon", "System Architect", "Edinburgh", "61"],
     ["Garrett Winters", "Accountant", "Tokyo", "63"],

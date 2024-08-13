@@ -1,69 +1,75 @@
-.login-page{
-
-  .card-login{
+.login-page {
+  .card-login {
     border-radius: $border-radius-large;
     padding-bottom: $padding-base-horizontal;
 
-    .btn-wd{
+    .btn-wd {
       min-width: 180px;
     }
 
-    .logo-container{
+    .logo-container {
       width: 65px;
       margin: 0 auto;
       margin-bottom: 55px;
 
-      img{
+      img {
         width: 100%;
       }
     }
 
-    .input-group:last-child{
+    .input-group:last-child {
       margin-bottom: 40px;
     }
 
-    &.card-plain{
-      @include input-coloured-bg($opacity-5, $white-color, $white-color, $transparent-bg, $opacity-1, $opacity-2);
+    &.card-plain {
+      @include input-coloured-bg(
+        $opacity-5,
+        $white-color,
+        $white-color,
+        $transparent-bg,
+        $opacity-1,
+        $opacity-2
+      );
 
       .input-group-addon,
       .form-group.no-border .input-group-addon,
-      .input-group.no-border .input-group-addon{
+      .input-group.no-border .input-group-addon {
         color: $opacity-8;
       }
     }
   }
 
-  .link{
+  .link {
     font-size: 10px;
     color: $white-color;
     text-decoration: none;
   }
 }
 
-.full-page{
+.full-page {
   align-items: center;
   min-height: 100vh;
   padding: 100px 0 120px;
-  & > .footer{
+  & > .footer {
     position: relative;
     z-index: 4;
   }
 
-  &.section-image{
+  &.section-image {
     // position: initial;
   }
 
-  .footer{
+  .footer {
     position: absolute;
     width: 100%;
     bottom: 0;
 
-    .container{
+    .container {
       color: $white-color;
     }
   }
 
-  .full-page-background{
+  .full-page-background {
     position: absolute;
     z-index: 1;
     height: 100%;
@@ -75,7 +81,7 @@
     background-position: center center;
   }
 
-  &:after{
+  &:after {
     position: absolute;
     z-index: 1;
     width: 100%;
@@ -87,37 +93,37 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
 
-  .pricing-page{
-    .description{
+  .pricing-page {
+    .description {
       margin-bottom: 65px;
     }
   }
 
-  .register-page{
+  .register-page {
     & > .container {
       margin-top: 5vh;
     }
-    .info-horizontal{
+    .info-horizontal {
       padding: 0px 0px 20px;
     }
 
-    .info-horizontal{
+    .info-horizontal {
       text-align: left !important;
 
-      .icon{
+      .icon {
         margin-top: 0;
 
-        >i{
+        > i {
           font-size: 2em;
         }
 
-        &.icon-circle{
+        &.icon-circle {
           width: 65px;
           height: 65px;
           max-width: 65px;
           margin-top: 8px;
 
-          i{
+          i {
             display: table;
             margin: 0 auto;
             line-height: 3.5;
@@ -125,10 +131,9 @@
           }
         }
       }
-      .description{
+      .description {
         overflow: hidden;
       }
-
     }
   }
 }
@@ -141,7 +146,7 @@
       .nav-item .nav-link {
         text-transform: capitalize;
         color: $white-color !important;
-        i{
+        i {
           margin-right: 4px;
         }
       }
@@ -164,7 +169,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 991px) {
   .register-page,
   .login-page,
   .lock-page {

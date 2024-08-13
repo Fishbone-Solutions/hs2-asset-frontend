@@ -4,24 +4,24 @@ import Inventory from "views/pages/Inventory.js";
 import UserProfile from "views/pages/UserProfile.js";
 import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
+import ExchangeRegister from "views/pages/ExchangeRegister";
 
 import W0 from "views/pages/W0";
-import W1 from 'views/pages/W1';
-import W2 from 'views/pages/W2';
-import W3 from 'views/pages/W3';
-// Import W4 to W14
-import W4 from 'views/pages/W4';
-import W5 from 'views/pages/W5';
-import W6 from 'views/pages/W6';
-import W7 from 'views/pages/W7';
-import W8 from 'views/pages/W8';
-import W9 from 'views/pages/W9';
-import W10 from 'views/pages/W10';
-import W11 from 'views/pages/W11';
-import W12 from 'views/pages/W12';
-import W13 from 'views/pages/W13';
-import W14 from 'views/pages/W14';
-const routes = [ 
+import W1 from "views/pages/W1";
+import W2 from "views/pages/W2";
+import W3 from "views/pages/W3";
+import W4 from "views/pages/W4";
+import W5 from "views/pages/W5";
+import W6 from "views/pages/W6";
+import W7 from "views/pages/W7";
+import W8 from "views/pages/W8";
+import W9 from "views/pages/W9";
+import W10 from "views/pages/W10";
+import W11 from "views/pages/W11";
+import W12 from "views/pages/W12";
+import W13 from "views/pages/W13";
+import W14 from "views/pages/W14";
+const routes = [
   {
     path: "/user-profile",
     pathName: "/admin/user-profile",
@@ -29,37 +29,27 @@ const routes = [
     component: <UserProfile />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
+    hidden: true,
   },
   {
-    path: "/exchangeregister/:id",
-    pathName: "/admin/exchangeregister/:id?mode=view",
+    path: "/assetregister/:id",
+    pathName: "/admin/assetregister/:id",
     name: "Inventory | Item",
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
+    hidden: true,
   },
-  {
-    path: "/exchangeregister",
-    pathName: "/admin/exchangeregister",
-    name: "Add New Item",
-    component: <AssetRegister />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true
 
 
-  },
   {
     path: "/eoi/details/:assetId",
-    pathName: "/admin/eoi/details/:assetId?mode=view?mode=",
+    pathName: "/admin/eoi/details/:assetId?mode=view",
     name: "All EOI | View EOI Detail",
     component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
   {
     path: "/eoi/view/:id",
@@ -68,8 +58,7 @@ const routes = [
     component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
   {
     path: "/inventory",
@@ -78,8 +67,16 @@ const routes = [
     component: <Inventory></Inventory>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
-
   },
+  {
+    path: "/exchange/register",
+    pathName: "/admin/exchange/register/:id?mode=view",
+    name: "Exchange Register ",
+    component: <ExchangeRegister></ExchangeRegister>,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+  },
+
   {
     path: "/eoi/:id",
     pathName: "/admin/eois/:id?mode=view",
@@ -87,9 +84,20 @@ const routes = [
     component: <EoIPages />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-    
+    hidden: true,
   },
+  {
+    path: "/assetregister",
+    pathName: "/admin/assetregister",
+    name: "Add New Item",
+    component: <AssetRegister />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true
+
+
+  },
+
   {
     path: "/dashboard",
     pathName: "/admin/dashboard",
@@ -97,7 +105,6 @@ const routes = [
     component: <W0 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
 
   {
@@ -107,7 +114,6 @@ const routes = [
     component: <W1 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
   {
     path: "/approvalsrequests",
@@ -116,7 +122,6 @@ const routes = [
     component: <W2 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
 
   {
@@ -126,7 +131,6 @@ const routes = [
     component: <W4 />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-
   },
   {
     collapse: true,
@@ -242,8 +246,6 @@ const routes = [
         component: <W14></W14>,
         layout: "/admin",
       },
-      
-     
     ],
   },
   {

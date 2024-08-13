@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ed804696.css",
+    "main.js": "/static/js/main.eae2aea0.js",
+    "static/media/bg.png": "/static/media/bg.e0fc4c98c0c5decfaf55.png",
+    "static/media/ayo-ogunseinde-2.jpg": "/static/media/ayo-ogunseinde-2.72cae9644a69b316a1a7.jpg",
+    "static/media/Inter-italic.var.woff2?v=3.19": "/static/media/Inter-italic.var.30807be7abc48ba8c73c.woff2",
+    "static/media/Inter-roman.var.woff2?v=3.19": "/static/media/Inter-roman.var.ba4caefcdf5b36b438db.woff2",
+    "static/media/nucleo-icons.eot": "/static/media/nucleo-icons.bd42d77b9672555647d1.eot",
+    "static/media/nucleo-icons.ttf": "/static/media/nucleo-icons.4466aeec3386b965a232.ttf",
+    "static/media/nucleo-icons.woff": "/static/media/nucleo-icons.8e954b749f951b654fc6.woff",
+    "static/media/live.png": "/static/media/live.59425dc0ae037650042b.png",
+    "static/media/ex_logo.jpg": "/static/media/ex_logo.2abdd9298778c2c7654f.jpg",
+    "static/media/nucleo-icons.woff2": "/static/media/nucleo-icons.ec16bc4cc4526801004d.woff2",
+    "static/media/login_lock_icon.png": "/static/media/login_lock_icon.848d8bf466ca2031a564.png",
+    "index.html": "/index.html",
+    "static/media/layer-group-solid.svg": "/static/media/layer-group-solid.1364412c28b8f551cbf7dd55b7fecd57.svg"
+  },
+  "entrypoints": [
+    "static/css/main.ed804696.css",
+    "static/js/main.eae2aea0.js"
+  ]
+}

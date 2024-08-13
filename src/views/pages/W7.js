@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   Form,
@@ -21,29 +21,29 @@ import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
 const camelCaseWithSpaces = (text) => {
   return text
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 };
 
 const W7 = () => {
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const mode = query.get('mode');
-  const isAddMode = mode === 'add';
+  const mode = query.get("mode");
+  const isAddMode = mode === "add";
 
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
-  const {username } =  useContext(GlobalContext);
+  const { username } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
-    id: isAddMode ? 'Auto Generated' : '', // Initialize id based on mode
+    id: isAddMode ? "Auto Generated" : "", // Initialize id based on mode
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -70,13 +70,22 @@ const W7 = () => {
   ];
   const optionsCategory1 = [
     { value: "construction-office", label: "Construction Office" },
-    { value: "storage-logistics-facilities", label: "Storage/Logistics Facilities" },
+    {
+      value: "storage-logistics-facilities",
+      label: "Storage/Logistics Facilities",
+    },
     { value: "processing-facilities", label: "Processing Facilities" },
     { value: "fixed-services", label: "Fixed Services" },
     { value: "temporary-services", label: "Temporary Services" },
     { value: "security", label: "Security" },
-    { value: "compound-security-safety-infrastructure", label: "Compound Security/Safety Infrastructure" },
-    { value: "site-roads-and-infrastructure", label: "Site Roads and Infrastructure" },
+    {
+      value: "compound-security-safety-infrastructure",
+      label: "Compound Security/Safety Infrastructure",
+    },
+    {
+      value: "site-roads-and-infrastructure",
+      label: "Site Roads and Infrastructure",
+    },
     { value: "temporary-siding", label: "Temporary Siding" },
     { value: "consolidation-yards", label: "Consolidation Yards" },
     { value: "concrete-production", label: "Concrete Production" },
@@ -85,8 +94,11 @@ const W7 = () => {
     { value: "static-plant", label: "Static Plant" },
     { value: "piling", label: "Piling" },
     { value: "pipework", label: "Pipework" },
-    { value: "public-highway-traffic-management", label: "Public Highway Traffic Management" },
-    { value: "other-assets", label: "Other Assets" }
+    {
+      value: "public-highway-traffic-management",
+      label: "Public Highway Traffic Management",
+    },
+    { value: "other-assets", label: "Other Assets" },
   ];
 
   useEffect(() => {
@@ -98,7 +110,6 @@ const W7 = () => {
           myHeaders.append("token", "x8F!@p01,*MH");
           myHeaders.append("user_id", username);
 
-
           const requestOptions = {
             method: "GET",
             headers: myHeaders,
@@ -107,7 +118,7 @@ const W7 = () => {
 
           const response = await fetch(
             `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions
+            requestOptions,
           );
 
           if (response.ok) {
@@ -158,7 +169,7 @@ const W7 = () => {
         headers: {
           "Content-Type": "application/json",
           token: "x8F!@p01,*MH",
-          "user_id":username
+          user_id: username,
         },
         body: JSON.stringify(requestBody),
       });
@@ -174,9 +185,9 @@ const W7 = () => {
           btnSize=""
         >
           Asset Listing submitted
-        </ReactBSAlert>
+        </ReactBSAlert>,
       );
-      navigate('/admin/inventory');
+      navigate("/admin/inventory");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -214,7 +225,7 @@ const W7 = () => {
             btnSize=""
           >
             Please fill in all required fields.
-          </ReactBSAlert>
+          </ReactBSAlert>,
         );
         return;
       }
@@ -232,11 +243,11 @@ const W7 = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      />
+      />,
     );
   };
 
-  const isReadOnly = mode === 'view';
+  const isReadOnly = mode === "view";
 
   return (
     <>
@@ -253,7 +264,7 @@ const W7 = () => {
                       color: "rgb(82,203,206)",
                       fontWeight: "bold",
                       textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", 
+                      WebkitTextTransform: "capitalize",
                     }}
                   >
                     {camelCaseWithSpaces("Asset Reference")}
@@ -262,9 +273,7 @@ const W7 = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                    <Label >
-                    Asset ID 
-                    </Label>
+                      <Label>Asset ID</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -276,49 +285,36 @@ const W7 = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Name
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="seller_contactno"
-                       
                           onChange={handleChange}
                           required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                   
-                  <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                    Description
-                    </Label>
-                      <FormGroup >
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Description</Label>
+                      <FormGroup>
                         <Input
                           type="text"
                           name="seller_email"
                           value={formData.seller_email}
-                      
-                     
                         />
-                        
                       </FormGroup>
                     </Col>
-                    
-                    <Col sm="6">
 
-                    </Col>
+                    <Col sm="6"></Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                </CardFooter>
+                <CardFooter></CardFooter>
               </Card>
             </Col>
 
@@ -335,52 +331,43 @@ const W7 = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Buyer Details For Expression Of Interest")}
+                    {camelCaseWithSpaces(
+                      "Buyer Details For Expression Of Interest",
+                    )}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                      Name
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="H"
-                       
                           onChange={handleChange}
                           required
-                          
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
-                    
+
                     <Col sm="6">
-                    <Label style={{ color: "#36454F" }}>
-                    Company
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Company</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="Company"
-            //              value={formData.asset_name}
+                          //              value={formData.asset_name}
                           onChange={handleChange}
                           required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                    
-                  <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Contact No 
-                    </Label>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -390,12 +377,12 @@ const W7 = () => {
                         />
                       </FormGroup>
                     </Col>
-                   
+
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Email
-                    </Label>
-                    <FormGroup className={`has-label ${formData.seller_email}`}>
+                      <Label style={{ color: "#36454F" }}>Email</Label>
+                      <FormGroup
+                        className={`has-label ${formData.seller_email}`}
+                      >
                         <Input
                           type="text"
                           name="seller_email"
@@ -422,30 +409,10 @@ const W7 = () => {
                         ) : null}
                       </FormGroup>
                     </Col>
-                    
                   </Row>
                   <Row>
-                    
-                  <Col sm="12">
-                    <Label  style={{ color: "#36454F" }}>
-                    Buyer Address
-                    </Label>
-                      <FormGroup>
-                      <Input
-                          type="text"
-                          name="quantity"
-                          value={formData.quantity}
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
                     <Col sm="12">
-                    <Label  style={{ color: "#36454F" }}>
-                    Item Delivery
-                    Location
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -457,15 +424,27 @@ const W7 = () => {
                         />
                       </FormGroup>
                     </Col>
-                  
-                    
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>
+                        Item Delivery Location
+                      </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="quantity"
+                          value={formData.quantity}
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
-                    
                     <Col sm="6">
-                    <Label  style={{ color: "#36454F" }}>
-                    Preferred  Contact Timings
-                    </Label>
+                      <Label style={{ color: "#36454F" }}>
+                        Preferred Contact Timings
+                      </Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -477,24 +456,23 @@ const W7 = () => {
                         />
                       </FormGroup>
                     </Col>
-                    
-                
-                  
                   </Row>
                 </CardBody>
               </Card>
             </Col>
-    
-
-         
           </Row>
           {alert}
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button className="buttonClose" color="primary" onClick={() => window.history.back()} style={{ visibility: 'visible', opacity: 1 }}>
+            <Button
+              className="buttonClose"
+              color="primary"
+              onClick={() => window.history.back()}
+              style={{ visibility: "visible", opacity: 1 }}
+            >
               Close
             </Button>
-            {mode !== 'view' && (
+            {mode !== "view" && (
               <Button color="primary" type="submit">
                 Submit EoI
               </Button>
@@ -506,4 +484,4 @@ const W7 = () => {
   );
 };
 
-export default  W7;
+export default W7;

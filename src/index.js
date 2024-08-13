@@ -1,27 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import AdminLayout from 'layouts/Admin.js'; // Adjust the import based on your file structure
-import AuthLayout from 'layouts/Auth.js'; // Adjust the import based on your file structure
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import AdminLayout from "layouts/Admin.js"; // Adjust the import based on your file structure
+import AuthLayout from "layouts/Auth.js"; // Adjust the import based on your file structure
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.3.1";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { GlobalProvider } from './GlobalState';
-import ErrorComponent from 'ErrorBoundary';
+import { GlobalProvider } from "./GlobalState";
+import ErrorComponent from "ErrorBoundary";
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
   {
-    path: '/auth/*',
+    path: "/auth/*",
     element: <AuthLayout />,
+    errorElement: <ErrorComponent />,
   },
   {
-    path: '/admin/*',
+    path: "/admin/*",
     element: <AdminLayout />,
+    errorElement: <ErrorComponent />,
   },
   {
-    path: '*',
+    path: "*",
     element: <Navigate to="/auth/login" replace />,
   },
 ]);
@@ -32,5 +38,5 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <GlobalProvider>
     <RouterProvider router={router} errorElement={ErrorComponent} />
-  </GlobalProvider>
+  </GlobalProvider>,
 );

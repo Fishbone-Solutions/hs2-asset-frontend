@@ -5,7 +5,7 @@ import defaultImage from "assets/img/default-avatar.png";
 function PictureUpload(props) {
   const [fileState, setFileState] = React.useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(
-    props.avatar ? defaultAvatar : defaultImage
+    props.avatar ? defaultAvatar : defaultImage,
   );
   const handleImageChange = (e) => {
     e.preventDefault();

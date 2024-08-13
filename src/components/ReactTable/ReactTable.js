@@ -76,7 +76,7 @@ function Table({ columns, data }) {
         });
       },
     }),
-    []
+    [],
   );
 
   const defaultColumn = React.useMemo(
@@ -85,7 +85,7 @@ function Table({ columns, data }) {
       Filter: DefaultColumnFilter,
       width: 100,
     }),
-    []
+    [],
   );
 
   const {
@@ -111,7 +111,7 @@ function Table({ columns, data }) {
     useFilters, // useFilters!
     useSortBy,
     usePagination,
-    useResizeColumns // Add useResizeColumns hook
+    useResizeColumns, // Add useResizeColumns hook
   );
 
   let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
@@ -150,8 +150,8 @@ function Table({ columns, data }) {
                       {headerGroup.headers.length - 1 === key
                         ? null
                         : column.canFilter
-                        ? column.render("Filter")
-                        : null}
+                          ? column.render("Filter")
+                          : null}
                     </div>
                   </th>
                 ))}

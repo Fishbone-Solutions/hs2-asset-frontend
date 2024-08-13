@@ -11,7 +11,7 @@ var ps;
 const getQueryParams = () => {
   const params = new URLSearchParams(window.location.search);
   return {
-    mode: params.get('mode'),
+    mode: params.get("mode"),
   };
 };
 
@@ -153,15 +153,30 @@ function Sidebar(props) {
       data-active-color={props.activeColor}
     >
       <div className="logo">
-        <div className="photo" style={{ display: 'flex', alignItems: 'center' }}>
+        <div
+          className="photo"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <img
             src={logo}
             alt="react-logo"
             width={35}
             height={35}
-            style={{ transform: 'translate(10px, 0px)', backgroundColor:"white" }}
+            style={{
+              transform: "translate(10px, 0px)",
+              backgroundColor: "white",
+            }}
           />
-          <a className="simple-text logo-normal" style={{ fontSize: '1.2em', fontWeight:"bold", textDecoration: 'none', color: 'white', transform: 'translate(20px, 0px)' }}>
+          <a
+            className="simple-text logo-normal"
+            style={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
+              textDecoration: "none",
+              color: "white",
+              transform: "translate(20px, 0px)",
+            }}
+          >
             HS2 EXCHANGE
           </a>
         </div>
@@ -180,7 +195,7 @@ function Sidebar(props) {
               onClick={() => setOpenAvatar(!openAvatar)}
             >
               <span>
-              {username}
+                {username}
                 <b className="caret" />
               </span>
             </a>
@@ -209,9 +224,9 @@ function Sidebar(props) {
           </div>
         </div>
         <Nav>{createLinks(props.routes)}</Nav>
-        {mode === 'add' && <div>Add New Asset</div>}
-        {mode === 'view' && <div>View Asset</div>}
-        {mode === 'edit' && <div>Edit Asset</div>}
+        {mode === "add" && <div>Add New Asset</div>}
+        {mode === "view" && <div>View Asset</div>}
+        {mode === "edit" && <div>Edit Asset</div>}
       </div>
     </div>
   );
