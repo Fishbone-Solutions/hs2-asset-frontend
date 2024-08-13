@@ -37,7 +37,6 @@ const AssetRegister = () => {
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
-
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
@@ -94,8 +93,7 @@ const AssetRegister = () => {
     { value: "static-plant", label: "Static Plant" },
     { value: "piling", label: "Piling" },
     { value: "pipework", label: "Pipework" },
-    {
-      value: "public-highway-traffic-management",
+    {  value: "public-highway-traffic-management",
       label: "Public Highway Traffic Management",
     },
     { value: "other-assets", label: "Other Assets" },
@@ -109,7 +107,6 @@ const AssetRegister = () => {
           myHeaders.append("accept", "application/json");
           myHeaders.append("token", "x8F!@p01,*MH");
           myHeaders.append("user_id", username);
-
           const requestOptions = {
             method: "GET",
             headers: myHeaders,

@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: "/assetregister/:id",
-    pathName: "/admin/assetregister/:id?mode=view",
+    pathName: "/admin/assetregister/:id",
     name: "Inventory | Item",
     component: <AssetRegister />,
     layout: "/admin",
