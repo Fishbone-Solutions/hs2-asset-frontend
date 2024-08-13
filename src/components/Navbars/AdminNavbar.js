@@ -70,20 +70,33 @@ function AdminNavbar(props) {
   };
 
   const renderTitle = () => {
-    if (mode === "view" && location.pathname.includes("assets")) {
-      return `Inventory | View Item `;
-    } else if (location.pathname.includes("eoi") && mode === null) {
-      return `Inventory | EOI List `;
-    } else if (location.pathname.includes("eoi") && mode === "view") {
-      return `Inventory | EOI List | View  EoI `;
-    } else if (location.pathname.includes("eoi") && mode === "edit") {
-      return `Inventory | EOI List | Edit EoI `;
-    } else if (mode === "edit") {
-      return `Inventory | Edit Item `;
-    } else {
-      return name;
-    }
+    const titleLookup = {
+      view: {
+        assets: "Inventory | View Item ",
+        eoi: "Inventory | EOI List | View EoI ",
+      },
+      edit: {
+        eoi: "Inventory | EOI List | Edit EoI ",
+        default: "Inventory | Edit Item ",
+      },
+      null: {
+        eoi: "Inventory | EOI List ",
+      },
+    };
+  
+    const pathKey = location.pathname.includes("assets")
+      ? "assets"
+      : location.pathname.includes("eoi")
+      ? "eoi"
+      : "default";
+  
+    return (
+      (titleLookup[mode] && titleLookup[mode][pathKey]) ||
+      titleLookup.edit.default ||
+      name
+    );
   };
+  
 
   return (
     <>

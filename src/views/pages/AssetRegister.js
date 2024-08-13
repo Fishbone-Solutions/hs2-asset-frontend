@@ -245,7 +245,11 @@ const AssetRegister = () => {
     );
   };
 
-  const isReadOnly = mode === "view" || "exchange";
+
+
+  const isReadOnly = mode === "view" || mode === "exchange";
+
+
 
 
   return (
