@@ -37,6 +37,8 @@ const AssetRegister = () => {
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
+  const UPLOAD_TEXT = mode === "add" || mode === "edit" ? "Drag and drop files here to upload" : "";
+  console.log(UPLOAD_TEXT)
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
@@ -245,6 +247,7 @@ const AssetRegister = () => {
   };
 
   const isReadOnly = mode === "view";
+
 
   return (
     <>
@@ -626,7 +629,9 @@ const AssetRegister = () => {
                     accept="image/*"
                     maxFileSize={1000000}
                     emptyTemplate={
-                      <p className="m-0">Drag and drop files here to upload.</p>
+                      <p className="m-0">
+                       {UPLOAD_TEXT}
+                      </p>
                     }
                     disabled={isReadOnly}
                     className="custom-file-upload"
@@ -660,7 +665,7 @@ const AssetRegister = () => {
                     className="custom-file-upload"
                     emptyTemplate={
                       <p className="m-0">
-                        Drag and drop files to here to upload.
+                        {UPLOAD_TEXT}
                       </p>
                     }
                     disabled={isReadOnly}
