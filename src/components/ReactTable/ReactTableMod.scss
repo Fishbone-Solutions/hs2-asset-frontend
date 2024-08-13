@@ -58,7 +58,7 @@
 }
 
 .-striped .rt-thead .rt-th {
-  background-color: #5E5954; /* Grey color for headers */
+  background-color: #5e5954; /* Grey color for headers */
   color: #000; /* Black text color for headers */
   padding: 8px; /* Reduced padding */
   border: 1px solid black; /* Border for header cells */
@@ -100,4 +100,20 @@
 .action-buttons .btn-icon i {
   margin: 0;
   padding: 0;
+}
+.react-select .react-select__control {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+th {
+  font-size: 12px;
+}
+td {
+  font-size: 13px !important;
+  padding: 6px !important;
+}
+.no-data {
+  text-align: center;
+  padding: 10px;
+  color: #999; /* or any color you prefer */
 }

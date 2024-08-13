@@ -1,0 +1,11 @@
+.form-floating > .form-control {
+  padding: 0.5rem 0.7rem !important;
+}
+.form-floating > .form-control,
+.form-floating > .form-select {
+  height: calc(2.2rem + 2px) !important;
+  line-height: 0.3;
+}
+.form-floating > label {
+  padding: 0.5rem 0.7rem !important;
+}

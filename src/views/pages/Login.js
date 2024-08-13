@@ -10,7 +10,6 @@ import {
   FormGroup,
   Form,
   Input,
-  InputGroupAddon,
   InputGroupText,
   InputGroup,
   Container,
@@ -88,11 +87,9 @@ function Login() {
                 </CardHeader>
                 <CardBody>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="nc-icon nc-single-02" />
                       </InputGroupText>
-                    </InputGroupAddon>
                     <Input 
                       placeholder="Username" 
                       type="text" 
@@ -101,11 +98,9 @@ function Login() {
                     />
                   </InputGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="nc-icon nc-key-25" />
                       </InputGroupText>
-                    </InputGroupAddon>
                     <Input
                       placeholder="Password"
                       type="password"
@@ -125,6 +120,7 @@ function Login() {
                     block
                     className="btn-round mb-3"
                     color="primary"
+                    type="submit"
                     onClick={handleLogin}
                     style={{backgroundColor:"rgb(82,203,206)"}}
                   >
