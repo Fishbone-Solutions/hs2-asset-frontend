@@ -41,7 +41,6 @@ const routes = [
     hidden: true,
   },
 
-
   {
     path: "/eoi/details/:assetId",
     pathName: "/admin/eoi/details/:assetId?mode=view",
@@ -93,9 +92,7 @@ const routes = [
     component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
-    hidden: true
-
-
+    hidden: true,
   },
 
   {

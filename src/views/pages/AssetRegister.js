@@ -37,7 +37,10 @@ const AssetRegister = () => {
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
-  const UPLOAD_TEXT = mode === "add" || mode === "edit" ? "Drag and drop files here to upload" : "";
+  const UPLOAD_TEXT =
+    mode === "add" || mode === "edit"
+      ? "Drag and drop files here to upload"
+      : "";
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
@@ -94,7 +97,8 @@ const AssetRegister = () => {
     { value: "static-plant", label: "Static Plant" },
     { value: "piling", label: "Piling" },
     { value: "pipework", label: "Pipework" },
-    {  value: "public-highway-traffic-management",
+    {
+      value: "public-highway-traffic-management",
       label: "Public Highway Traffic Management",
     },
     { value: "other-assets", label: "Other Assets" },
@@ -245,12 +249,7 @@ const AssetRegister = () => {
     );
   };
 
-
-
   const isReadOnly = mode === "view" || mode === "exchange";
-
-
-
 
   return (
     <>
@@ -631,11 +630,7 @@ const AssetRegister = () => {
                     multiple
                     accept="image/*"
                     maxFileSize={1000000}
-                    emptyTemplate={
-                      <p className="m-0">
-                       {UPLOAD_TEXT}
-                      </p>
-                    }
+                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
                     disabled={isReadOnly}
                     className="custom-file-upload"
                   />
@@ -666,11 +661,7 @@ const AssetRegister = () => {
                     accept="image/*"
                     maxFileSize={1000000}
                     className="custom-file-upload"
-                    emptyTemplate={
-                      <p className="m-0">
-                        {UPLOAD_TEXT}
-                      </p>
-                    }
+                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
                     disabled={isReadOnly}
                   />
                 </CardBody>
@@ -739,11 +730,12 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {mode !== "view" || "exchange"  && (
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            )}
+            {mode !== "view" ||
+              ("exchange" && (
+                <Button color="primary" type="submit">
+                  Save
+                </Button>
+              ))}
           </div>
         </Form>
       </div>

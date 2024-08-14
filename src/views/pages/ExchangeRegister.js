@@ -25,7 +25,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import DateRangePicker from "views/components/DateRangePicker";
 
-
 function ExchangeRegister() {
   const [formData, setFormData] = useState({
     id: "",
@@ -249,7 +248,7 @@ function ExchangeRegister() {
         {alert}
         <Form>
           <Row>
-          <Col md="12 mb-4" id="customAccordionInputSize">
+            <Col md="12 mb-4" id="customAccordionInputSize">
               <Accordion open={open} toggle={toggle}>
                 <AccordionItem>
                   <AccordionHeader targetId="1">Search</AccordionHeader>
@@ -363,7 +362,7 @@ function ExchangeRegister() {
                 />
                 {errorMessage}
               </CardBody>
-              <CardFooter/>
+              <CardFooter />
             </Card>
           </Col>
         </Row>

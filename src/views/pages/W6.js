@@ -52,8 +52,6 @@ function W6() {
   const [liveIconImage, setliveIconImage] =
     React.useState(defaultLiveIconImage);
 
-
-
   React.useEffect(() => {
     const fetchData = async () => {
       const myHeaders = new Headers();
@@ -76,7 +74,7 @@ function W6() {
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time"
+          "Unable to load data. Please refresh the page or load after time",
         );
         console.error(error);
       }

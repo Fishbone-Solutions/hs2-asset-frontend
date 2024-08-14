@@ -114,20 +114,20 @@ function Login() {
                 </CardHeader>
                 <CardBody>
                   <InputGroup>
-                      <InputGroupText>
-                        <i className="nc-icon nc-single-02" />
-                      </InputGroupText>
-                    <Input 
-                      placeholder="Username" 
-                      type="text" 
+                    <InputGroupText>
+                      <i className="nc-icon nc-single-02" />
+                    </InputGroupText>
+                    <Input
+                      placeholder="Username"
+                      type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </InputGroup>
                   <InputGroup>
-                      <InputGroupText>
-                        <i className="nc-icon nc-key-25" />
-                      </InputGroupText>
+                    <InputGroupText>
+                      <i className="nc-icon nc-key-25" />
+                    </InputGroupText>
                     <Input
                       placeholder="Password"
                       type="password"
