@@ -23,7 +23,6 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import ReactDatetime from "react-datetime";
 import defaultLiveIconImage from "assets/img/live.png";
 import "./EoiPages.css";
 import "./FloatingLabel.css";
@@ -53,12 +52,7 @@ function W6() {
   const [liveIconImage, setliveIconImage] =
     React.useState(defaultLiveIconImage);
 
-  const camelCaseWithSpaces = (text) => {
-    return text
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-  };
+
 
   React.useEffect(() => {
     const fetchData = async () => {
