@@ -20,3 +20,7 @@
 .custom-select-container .react-select__option {
   padding: 8px 12px;
 }
+
+.liveIcon {
+  padding: 1px 4px !important;
+}
