@@ -154,7 +154,7 @@ function Inventory() {
         btnSize=""
       >
         No Changes made
-      </ReactBSAlert>,
+      </ReactBSAlert>
     );
   };
 
@@ -255,7 +255,7 @@ function Inventory() {
               btnSize=""
             >
               Asset ID {assetId} has been deleted successfully
-            </ReactBSAlert>,
+            </ReactBSAlert>
           );
 
           setDataState((prevState) =>
@@ -274,7 +274,7 @@ function Inventory() {
               btnSize=""
             >
               Error deleting asset
-            </ReactBSAlert>,
+            </ReactBSAlert>
           );
           console.log("Error deleting asset");
         }
@@ -300,7 +300,7 @@ function Inventory() {
         btnSize=""
       >
         You will not be able to recover this item.
-      </ReactBSAlert>,
+      </ReactBSAlert>
     );
   };
 
@@ -316,7 +316,7 @@ function Inventory() {
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         btnSize=""
-      />,
+      />
     );
   };
 
@@ -333,7 +333,7 @@ function Inventory() {
             You entered: <b>{e}</b>
           </p>
         }
-      />,
+      />
     );
   };
   useEffect(() => {
@@ -499,7 +499,11 @@ function Inventory() {
           row.original.statuscode == "Sold" ? (
             <span class="badge badge-danger">{row.original.statuscode}</span>
           ) : row.original.statuscode == "Live" ? (
-            <LiveSvgComponent />
+            // <LiveSvgComponent />
+            <span class="badge badge-danger liveIcon">
+              <span className="mt-1">{row.original.statuscode} </span>{" "}
+              <LiveSvgComponent />
+            </span>
           ) : row.original.statuscode == "Listing" ? (
             <span class="badge badge-info">{row.original.statuscode}</span>
           ) : (
@@ -572,7 +576,7 @@ function Inventory() {
         ),
       },
     ],
-    [],
+    []
   );
 
   return (
