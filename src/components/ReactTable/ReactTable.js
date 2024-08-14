@@ -230,7 +230,7 @@ function Table({ columns, data }) {
                   </Col>
                   <Col md="4" sm="6" xs="12">
                     <Select
-                      className="react-select primary"
+                      className="react-select primary pageRow"
                       classNamePrefix="react-select"
                       name="numberOfRows"
                       value={numberOfRows}
