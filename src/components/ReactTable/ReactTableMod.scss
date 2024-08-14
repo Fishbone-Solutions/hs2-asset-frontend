@@ -117,3 +117,12 @@ td {
   padding: 10px;
   color: #999; /* or any color you prefer */
 }
+.pageSelect
+  .react-select__value-container.react-select__value-container--has-value {
+  padding: 0px 8px !important;
+}
+
+.pageRow
+  .react-select__value-container.react-select__value-container--has-value {
+  padding: 0px 8px !important;
+}

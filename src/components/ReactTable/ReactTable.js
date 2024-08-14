@@ -76,7 +76,7 @@ function Table({ columns, data }) {
         });
       },
     }),
-    [],
+    []
   );
 
   const defaultColumn = React.useMemo(
@@ -85,7 +85,7 @@ function Table({ columns, data }) {
       Filter: DefaultColumnFilter,
       width: 100,
     }),
-    [],
+    []
   );
 
   const {
@@ -111,7 +111,7 @@ function Table({ columns, data }) {
     useFilters, // useFilters!
     useSortBy,
     usePagination,
-    useResizeColumns, // Add useResizeColumns hook
+    useResizeColumns // Add useResizeColumns hook
   );
 
   let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
@@ -194,7 +194,7 @@ function Table({ columns, data }) {
             )}
           </tbody>
         </table>
-        <div className="pagination-top">
+        <div className="pagination-top mt-2">
           <div className="-pagination">
             <div className="-previous">
               <button
@@ -208,10 +208,10 @@ function Table({ columns, data }) {
             </div>
             <div className="-center">
               <Container>
-                <Row className="justify-content-center mt-1">
+                <Row className="justify-content-center">
                   <Col md="4" sm="6" xs="12">
                     <Select
-                      className="react-select primary"
+                      className="react-select primary pageSelect"
                       classNamePrefix="react-select"
                       name="pageSelect"
                       value={pageSelect}
@@ -230,7 +230,7 @@ function Table({ columns, data }) {
                   </Col>
                   <Col md="4" sm="6" xs="12">
                     <Select
-                      className="react-select primary"
+                      className="react-select primary pageRow"
                       classNamePrefix="react-select"
                       name="numberOfRows"
                       value={numberOfRows}
