@@ -5,7 +5,7 @@ import UserProfile from "views/pages/UserProfile.js";
 import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
-
+import SubmissionEoI from "views/pages/SubmissionEoI";
 import W0 from "views/pages/W0";
 import W1 from "views/pages/W1";
 import W2 from "views/pages/W2";
@@ -93,6 +93,15 @@ const routes = [
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
+  },
+  {
+    path: "/exchange/eoisubmssion/:id",
+    pathName: "/admin/exchange/eoisubmssion/:id",
+    name: "EoI Submission ",
+    component: <SubmissionEoI></SubmissionEoI>,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+    hidden: true
   },
 
   {

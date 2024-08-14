@@ -47,8 +47,9 @@ function ExchangeRegister() {
       setOpen(id);
     }
   };
-  const handleEdit = (assetId, mode) => {
-    navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
+  const handleSubmissionEoi = (assetId) => {
+    navigate(`/admin/exchange/eoisubmssion/${assetId}`);
+  
   };
 
   React.useEffect(() => {
@@ -232,7 +233,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleEdit(row.original.asset_id, "view")}
+              onClick={() => handleSubmissionEoi(row.original.asset_id, "eoi_submission")}
             >
               <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
             </Button>
