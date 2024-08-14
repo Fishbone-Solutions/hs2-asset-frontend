@@ -83,20 +83,19 @@ function AdminNavbar(props) {
         eoi: "Inventory | EOI List ",
       },
     };
-  
+
     const pathKey = location.pathname.includes("assets")
       ? "assets"
       : location.pathname.includes("eoi")
-      ? "eoi"
-      : "default";
-  
+        ? "eoi"
+        : "default";
+
     return (
       (titleLookup[mode] && titleLookup[mode][pathKey]) ||
       titleLookup.edit.default ||
       name
     );
   };
-  
 
   return (
     <>

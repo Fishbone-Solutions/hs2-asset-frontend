@@ -76,7 +76,7 @@ function Table({ columns, data }) {
         });
       },
     }),
-    []
+    [],
   );
 
   const defaultColumn = React.useMemo(
@@ -85,7 +85,7 @@ function Table({ columns, data }) {
       Filter: DefaultColumnFilter,
       width: 100,
     }),
-    []
+    [],
   );
 
   const {
@@ -111,11 +111,11 @@ function Table({ columns, data }) {
     useFilters, // useFilters!
     useSortBy,
     usePagination,
-    useResizeColumns // Add useResizeColumns hook
+    useResizeColumns, // Add useResizeColumns hook
   );
 
   let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
-    function () {}
+    function () {},
   );
   let numberOfRowsData = [5, 10, 20, 25, 50, 100];
 
@@ -174,7 +174,7 @@ function Table({ columns, data }) {
                     className={classnames(
                       "rt-tr",
                       { "-odd": i % 2 === 0 },
-                      { "-even": i % 2 === 1 }
+                      { "-even": i % 2 === 1 },
                     )}
                   >
                     {row.cells.map((cell, cellIndex) => {

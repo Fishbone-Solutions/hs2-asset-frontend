@@ -14,12 +14,16 @@ import {
   CardFooter,
   Row,
   Col,
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  AccordionItem,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import ReactDatetime from "react-datetime";
+import DateRangePicker from "views/components/DateRangePicker";
 
 function ExchangeRegister() {
   const [formData, setFormData] = useState({
@@ -34,7 +38,15 @@ function ExchangeRegister() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
+  const [open, setOpen] = useState();
 
+  const toggle = (id) => {
+    if (open === id) {
+      setOpen();
+    } else {
+      setOpen(id);
+    }
+  };
   const handleEdit = (assetId, mode) => {
     navigate(`/admin/exchangeregister/${assetId}?mode=${mode}`);
   };
@@ -236,91 +248,85 @@ function ExchangeRegister() {
         {alert}
         <Form>
           <Row>
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize",
-                    }}
-                  ></CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Category</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="id"
-                          value={formData.id}
-                          required
-                          onChange={(event) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              id: event.target.value, // Update 'id' based on the text input's value
-                            }))
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+            <Col md="12 mb-4" id="customAccordionInputSize">
+              <Accordion open={open} toggle={toggle}>
+                <AccordionItem>
+                  <AccordionHeader targetId="1">Search</AccordionHeader>
+                  <AccordionBody accordionId="1">
+                    <Row>
+                      <Col sm="6">
+                        <FormGroup floating>
+                          <Input
+                            id="id"
+                            name="id"
+                            placeholder="ID"
+                            type="number"
+                          />
+                          <Label for="id">ID</Label>
+                        </FormGroup>
+                      </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Asset Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="asset_name"
-                          value={formData.asset_name}
-                          onChange={handleChange}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Item Location</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="description"
-                          //   value={formData.description}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                          }}
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
+                      <Col sm="6">
+                        <FormGroup floating>
+                          <Input
+                            id="assetName"
+                            name="name"
+                            placeholder="name"
+                            type="text"
+                          />
+                          <Label for="assetName">Name</Label>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm="6">
+                        <FormGroup floating>
+                          <Input
+                            id="category"
+                            name="category"
+                            placeholder="category"
+                            type="text"
+                          />
+                          <Label for="category">Category</Label>
+                        </FormGroup>
+                      </Col>
+                      <Col sm="6">
+                        <FormGroup floating>
+                          <Input
+                            id="subCategory"
+                            name="subCategory"
+                            placeholder="subcategory"
+                            type="text"
+                          />
+                          <Label for="subCategory">Sub-Category</Label>
+                        </FormGroup>
+                      </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Availability</Label>
-                      <FormGroup>
-                        <ReactDatetime
-                          inputProps={{
-                            className: "form-control",
-                            placeholder: "DD/MM/YYYY",
-                          }}
-                          onChange={(momentDate) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              available_from: momentDate.format("DD/MM/YYYY"),
-                            }))
-                          }
-                          timeFormat={false}
-                          dateFormat="DD/MM/YYYY"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter></CardFooter>
-              </Card>
+                      <Col sm="6">
+                        <FormGroup>
+                          <DateRangePicker />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <div
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <Button
+                        className="buttonClose"
+                        color="primary"
+                        onClick={() => window.history.back()}
+                        style={{ visibility: "visible", opacity: 1 }}
+                      >
+                        Clear
+                      </Button>
+
+                      <Button color="primary" type="submit">
+                        Save
+                      </Button>
+                    </div>
+                  </AccordionBody>
+                </AccordionItem>
+              </Accordion>
             </Col>
           </Row>
         </Form>
@@ -356,7 +362,7 @@ function ExchangeRegister() {
                 />
                 {errorMessage}
               </CardBody>
-              <CardFooter/>
+              <CardFooter />
             </Card>
           </Col>
         </Row>

@@ -380,7 +380,7 @@ const SubmissionEoI = () => {
 
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Email</Label>
-                     <FormGroup
+                      <FormGroup
                         className={`has-label ${formData.seller_email}`}
                       >
                         <Input

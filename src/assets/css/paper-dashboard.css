@@ -22920,10 +22920,10 @@ fieldset[disabled] .ReactTable.danger-pagination .-pagination .-btn.active {
   font-size: 12px; /* Adjust the font size as needed */
   padding: 4px 8px; /* Adjust the padding as needed */
 }
-.form-label{
-  color: #e3e3e37a!important;
+.form-label {
+  color: #e3e3e37a !important;
 }
 
-.form-control:disabled{
-  background-color: #e3e3e37a!important;
+.form-control:disabled {
+  background-color: #e3e3e37a !important;
 }
