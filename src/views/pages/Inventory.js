@@ -490,7 +490,8 @@ function Inventory() {
               size="sm"
               onClick={() => handleEoI(row.original.asset_id)}
             >
-              <img src={applicationIconImage} width={"15px"} alt="..." />
+              <i class="fa fa-list"></i>
+              {/* <img src={applicationIconImage} width={"15px"} alt="..." /> */}
             </Button>
             <Button
               className="btn-icon btn-simple"

@@ -6,7 +6,8 @@ import {
   useResizeColumns,
 } from "react-table";
 import classnames from "classnames";
-import { Button } from "reactstrap";
+import { Button, Container, Col, Row } from "reactstrap";
+import Select from "react-select";
 import "./ReactTableMod.scss";
 
 function Table({ columns, data }) {
@@ -152,63 +153,66 @@ function Table({ columns, data }) {
         </table>
         <div className="pagination-top mt-2">
           <div className="-pagination d-flex align-items-center justify-content-between">
-            <Button
-              type="button"
-              onClick={previousPage}
-              disabled={!canPreviousPage}
-              className="-btn"
-            >
-              Previous
-            </Button>
-
-            {/* Page Selector */}
-            <div className="d-flex align-items-center">
-              <span className="mr-2 ml-2">Page</span>
-              <select
-                value={pageIndex}
-                onChange={(e) => gotoPage(Number(e.target.value))}
-                className="form-control mx-2"
-                style={{ width: "auto", display: "inline-block" }}
+            <div className="-previous">
+              <button
+                type="button"
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
+                className="-btn"
               >
-                {pageOptions.map((option, i) => (
-                  <option key={option} value={i}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
-              <span className="ml-2">of {pageOptions.length}</span>
+                Previous
+              </button>
+            </div>
+            <div className="-center">
+              <Container>
+                <Row className="justify-content-center">
+                  <Col md="4" sm="6" xs="12">
+                    <Select
+                      className="react-select primary pageSelect"
+                      classNamePrefix="react-select"
+                      name="pageSelect"
+                      value={pageSelect}
+                      onChange={(value) => {
+                        gotoPage(value.value);
+                        handlePageSelect(value);
+                      }}
+                      options={pageSelectData.map((prop, key) => {
+                        return {
+                          value: key,
+                          label: "Page " + (key + 1),
+                        };
+                      })}
+                      placeholder="Choose Page"
+                    />
+                  </Col>
+                  <Col md="4" sm="6" xs="12">
+                    <Select
+                      className="react-select primary pageRow"
+                      classNamePrefix="react-select"
+                      name="numberOfRows"
+                      value={numberOfRows}
+                      onChange={(value) => {
+                        setPageSize(value.value);
+                        setNumberOfRows(value);
+                      }}
+                      options={rowsOptions}
+                      placeholder="Choose Rows"
+                    />
+                  </Col>
+                </Row>
+              </Container>
             </div>
 
-            {/* Rows per page selector */}
-            <div className="ml-3 mr-2">
-              <select
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                  setNumberOfRows({
-                    value: Number(e.target.value),
-                    label: `${Number(e.target.value)} rows`,
-                  });
-                }}
-                className="form-control"
-                style={{ width: "auto", display: "inline-block" }}
+            <div className="-next">
+              <button
+                type="button"
+                onClick={() => nextPage()}
+                disabled={!canNextPage}
+                className="-btn"
               >
-                {rowsOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                Next
+              </button>
             </div>
-
-            <Button
-              type="button"
-              onClick={nextPage}
-              disabled={!canNextPage}
-              className="-btn"
-            >
-              Next
-            </Button>
           </div>
         </div>
       </div>
