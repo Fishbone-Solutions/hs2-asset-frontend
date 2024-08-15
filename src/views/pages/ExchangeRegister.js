@@ -24,6 +24,7 @@ import { GlobalContext } from "GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import DateRangePicker from "views/components/DateRangePicker";
+import defaultLiveIconImage from "assets/img/live.png";
 
 function ExchangeRegister() {
   const [formData, setFormData] = useState({
@@ -39,7 +40,6 @@ function ExchangeRegister() {
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
   const [open, setOpen] = useState();
-
   const toggle = (id) => {
     if (open === id) {
       setOpen();
@@ -47,10 +47,8 @@ function ExchangeRegister() {
       setOpen(id);
     }
   };
-  const handleSubmissionEoi = (assetId) => {
-    navigate(`/admin/exchange/eoisubmssion/${assetId}`);
-  
-  };
+  const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -67,14 +65,14 @@ function ExchangeRegister() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/register?fltr_id=-1&fltr_name=-1&fltr_from_availability=-1&fltr_to_availability=-1`,
-          requestOptions,
+          requestOptions
         );
         const result = await response.json();
         setFilterFormDate(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
+          "Unable to load data. Please refresh the page or load after time"
         );
         console.error(error);
       }
@@ -110,6 +108,7 @@ function ExchangeRegister() {
 
     try {
       const response = await fetch(url, requestOptions);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -123,9 +122,17 @@ function ExchangeRegister() {
   };
 
   const handleView = (asset_id, mode) => {
-    console.log("asset_idi", asset_id);
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
-    console.log("location odi ", location);
+  }
+
+  const handleSubmissionEoi = (assetId,mode) => {
+    navigate(`/admin/exchange/eoisubmission/${assetId}?mode=${mode}`);
+  
+  };
+
+
+  const handleDate = (startDate, endDate) => {
+    console.log(startDate, endDate);
   };
   const columns = React.useMemo(
     () => [
@@ -163,7 +170,7 @@ function ExchangeRegister() {
           </div>
         ),
         accessor: "categorycode2",
-        width: "2%",
+        width: "8%",
       },
 
       {
@@ -225,7 +232,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleView(row.original.asset_id, "exchange")}
+              onClick={() => handleView(row.original.asset_id,"view")}
             >
               <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -233,7 +240,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleSubmissionEoi(row.original.asset_id, "eoi_submission")}
+              onClick={() => handleSubmissionEoi(row.original.asset_id, "edit")}
             >
               <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -241,7 +248,7 @@ function ExchangeRegister() {
         ),
       },
     ],
-    [],
+    []
   );
   return (
     <>
@@ -305,7 +312,10 @@ function ExchangeRegister() {
 
                       <Col sm="6">
                         <FormGroup>
-                          <DateRangePicker />
+                          <DateRangePicker
+                            label="Availability Range"
+                            onChange={handleDate}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -363,7 +373,7 @@ function ExchangeRegister() {
                 />
                 {errorMessage}
               </CardBody>
-              <CardFooter />
+              <CardFooter></CardFooter>
             </Card>
           </Col>
         </Row>

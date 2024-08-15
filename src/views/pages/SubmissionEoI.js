@@ -14,12 +14,8 @@ import {
   CardTitle,
   CardFooter,
 } from "reactstrap";
-import Select from "react-select";
-import ReactDatetime from "react-datetime";
-import moment from "moment";
 import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
-import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
@@ -32,12 +28,13 @@ const camelCaseWithSpaces = (text) => {
 };
 
 const SubmissionEoI = () => {
+
+  console.log("submission eoi")
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
-
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();

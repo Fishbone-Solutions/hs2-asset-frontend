@@ -63,22 +63,33 @@ const routes = [
     path: "/inventory",
     pathName: "/admin/inventory",
     name: "Inventory ",
-    component: <Inventory></Inventory>,
+    component: <Inventory/>,
+    icon: "nc-icon nc-tile-56",
+    layout: "/admin",
+
+  },
+  {
+    path: "/exchange/register",
+    pathName: "/admin/exchange/register/:id",
+    name: "Exchange Register ",
+    component: <ExchangeRegister/>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
   },
   {
-    path: "/exchange/register",
-    pathName: "/admin/exchange/register/:id?mode=view",
-    name: "Exchange Register ",
-    component: <ExchangeRegister></ExchangeRegister>,
+    path: "/exchange/eoisubmission/:id",
+    pathName: "/admin/exchange/eoisubmission/:id",
+    name: "EoI Submission ",
+    component: <SubmissionEoI/>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
+    hidden: true,
+
   },
 
   {
     path: "/eoi/:id",
-    pathName: "/admin/eois/:id?mode=view",
+    pathName: "/admin/eois/:id",
     name: "Inventory | Item",
     component: <EoIPages />,
     layout: "/admin",
@@ -93,15 +104,6 @@ const routes = [
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
-  },
-  {
-    path: "/exchange/eoisubmssion/:id",
-    pathName: "/admin/exchange/eoisubmssion/:id",
-    name: "EoI Submission ",
-    component: <SubmissionEoI></SubmissionEoI>,
-    layout: "/admin",
-    icon: "nc-icon nc-tile-56",
-    hidden: true
   },
 
   {
