@@ -6,6 +6,7 @@ import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
 import SubmissionEoI from "views/pages/SubmissionEoI";
+import RequestEquipment from "views/pages/RequestEquipment"
 import W0 from "views/pages/W0";
 import W1 from "views/pages/W1";
 import W2 from "views/pages/W2";
@@ -70,11 +71,20 @@ const routes = [
   },
   {
     path: "/exchange/register",
-    pathName: "/admin/exchange/register/:id",
+    pathName: "/admin/exchange/register",
     name: "Exchange Register ",
     component: <ExchangeRegister/>,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
+  },
+  {
+    path: "/exchange/requestequipment",
+    pathName: "/admin/exchange/requestequipment",
+    name: "RequestEquipment",
+    component: <RequestEquipment/>,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+    hidden:true
   },
   {
     path: "/exchange/eoisubmission/:id",

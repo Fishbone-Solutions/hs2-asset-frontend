@@ -341,7 +341,17 @@ function ExchangeRegister() {
             </Col>
           </Row>
         </Form>
-
+<Row>
+<Col md="12" className="text-end">
+        <Button
+          color="primary"
+          type="submit"
+          onClick={() => navigate("/admin/exchange/requestequipment")}
+        >
+          Request Equipment
+        </Button>
+      </Col>
+</Row>
         <Row>
           <Col md="12">
             <Card>
