@@ -523,17 +523,12 @@ function Inventory() {
                 <Col md="12">
                   <Card>
                     <CardHeader
-                      style={{ background: "#52CBCE", height: "32px" }}
+                      className="d-flex justify-content-between align-items-center bg-info p-2"
+                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
                     >
-                      <h6
-                        style={{
-                          color: "white",
-                          fontSize: "1rem",
-                          transform: "translateY(-10px)",
-                        }}
-                      >
+                      <h6 className="text-white m-0 d-flex align-items-center">
                         <i
-                          className="fa fa-filter"
+                          className="fa fa-filter me-2 p-1"
                           style={{
                             fontSize: "0.9em",
                             backgroundColor: "#52CBCE",
@@ -543,8 +538,17 @@ function Inventory() {
                         ></i>
                         Filter
                       </h6>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        aria-label="Close"
+                      >
+                        <i
+                          className="fa fa-times text-white"
+                          style={{ fontSize: "1em" }}
+                        ></i>
+                      </button>
                     </CardHeader>
-
                     <CardBody>
                       <Row>
                         <Col sm="6">
@@ -602,43 +606,23 @@ function Inventory() {
                           />
                         </Col>
                       </Row>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Button
-                          className="buttonClose"
-                          color="primary"
+                      <div className="d-flex justify-content-end gap-1">
+                        {/* <button
+                          className="btn btn-primary"
                           onClick={closeModal}
-                          style={{
-                            marginRight: "0.5rem",
-                            padding: "0.5rem 1rem",
-                          }}
                         >
                           Close
-                        </Button>
-                        <Button
-                          className="buttonClose"
-                          color="primary"
+                        </button> */}
+                        <button
+                          className="btn btn-primary"
                           onClick={handleClearClick}
                           type="clear"
-                          style={{
-                            marginRight: "0.5rem",
-                            padding: "0.5rem 1rem",
-                          }}
                         >
                           Clear
-                        </Button>
-                        <Button
-                          className="buttonClose"
-                          color="primary"
-                          type="submit"
-                          style={{ padding: "0.5rem 1rem" }}
-                        >
+                        </button>
+                        <button className="btn btn-success" type="submit">
                           Filter
-                        </Button>
+                        </button>
                       </div>
                     </CardBody>
                   </Card>
