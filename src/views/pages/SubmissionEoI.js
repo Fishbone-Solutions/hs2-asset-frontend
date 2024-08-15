@@ -171,6 +171,9 @@ const [EoiFormData,setEoiFormData ] = useState({
   const handleChange = (event) => {
     const { name, value } = event.target;
     const timestamp = new Date().toISOString(); // Get the current timestamp
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
+    
     // Only allow changes if not in add mode for id field
     if (name === "id" && isAddMode) {
       return; // Prevent changes to id if in add mode
@@ -182,6 +185,7 @@ const [EoiFormData,setEoiFormData ] = useState({
       eoi_status: "EOI_SUBMITTED", // Automatically set the EOI status
       approval_status: "PENDING",  // Automatically set the approval status
       status_trail: `EOI_SUBMITTED:${timestamp}`, // Update status trail with current timestamp
+      submission_date: formattedDate
     }));
   };
 
