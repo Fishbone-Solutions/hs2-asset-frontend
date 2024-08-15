@@ -126,3 +126,8 @@ td {
   .react-select__value-container.react-select__value-container--has-value {
   padding: 0px 8px !important;
 }
+
+select.form-control {
+  height: calc(0.9em + 0.75rem + 2px) !important;
+  padding: 4px 12px !important;
+}

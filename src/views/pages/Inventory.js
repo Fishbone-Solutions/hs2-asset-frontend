@@ -379,188 +379,91 @@ function Inventory() {
     }));
   };
 
+  const handleSelectChange = (selectedOption) => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      statuscode: selectedOption.value,
+    }));
+  };
+
+  // Columns definition with isSortable field
   const columns = React.useMemo(
     () => [
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>ID</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "ID",
         accessor: "asset_id",
         width: "2%",
+        isSortable: true,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>ENTRY</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Entry",
         accessor: "entrydate_formatted",
         width: "2%",
+        isSortable: true,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>NAME</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Name",
         accessor: "asset_name",
         width: "10%",
+        isSortable: true,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>DESCRIPTION</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Description",
         accessor: "description",
         width: "16%",
+        isSortable: false,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>LOCATION</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Location",
         accessor: "asset_location",
         width: "8%",
+        isSortable: true,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>AVAILABILITY</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Availability",
         accessor: "available_from",
         width: "1%",
+        isSortable: false,
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>STATUS</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
-              ) : (
-                <i class="fa fa-sort"></i>
-              )}
-            </span>
-          </div>
-        ),
+        Header: "Status",
         accessor: "statuscode",
         width: "1%",
-        Cell: ({ row }) =>
-          row.original.statuscode == "Sold" ? (
-            <span class="badge badge-danger">{row.original.statuscode}</span>
-          ) : row.original.statuscode == "Live" ? (
-            // <LiveSvgComponent />
-            <span class="badge badge-danger liveIcon">
-              <span className="mt-1">{row.original.statuscode} </span>{" "}
-              <LiveSvgComponent />
-            </span>
-          ) : row.original.statuscode == "Listing" ? (
-            <span class="badge badge-info">{row.original.statuscode}</span>
-          ) : (
-            row.original.statuscode
-          ),
-      },
-      {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>EOI</span>
-            <span>
-              {column.isSorted ? (
-                column.isSortedDesc ? (
-                  <i class="fa fa-sort-down"></i>
-                ) : (
-                  <i class="fa fa-sort-up"></i>
-                )
+        isSortable: true,
+        Cell: ({ row }) => {
+          const status = row.original.statuscode;
+          const badgeClass = {
+            Sold: "badge-danger",
+            Live: "badge-danger liveIcon",
+            Listing: "badge-info",
+          }[status];
+
+          return (
+            <span className={`badge ${badgeClass}`}>
+              {status === "Live" ? (
+                <>
+                  <span className="mt-1">{status}</span>
+                  <LiveSvgComponent />
+                </>
               ) : (
-                <i class="fa fa-sort"></i>
+                status
               )}
             </span>
-          </div>
-        ),
-        isSorted: true,
-        accessor: "total_eoi",
-        width: "1%",
+          );
+        },
       },
       {
-        Header: "ACTIONS",
+        Header: "EOI",
+        accessor: "total_eoi",
+        width: "1%",
+        isSortable: false,
+      },
+      {
+        Header: "Actions",
         accessor: "actions",
         sortable: false,
         width: "1%",
+        isSortable: false,
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Button
@@ -694,12 +597,7 @@ function Inventory() {
                           <FloatingLabelDropdown
                             label="Choose an option"
                             options={statusOptions}
-                            onChange={(selectedOption) =>
-                              setFilterFormDate((prevState) => ({
-                                ...prevState,
-                                statuscode: selectedOption.value,
-                              }))
-                            }
+                            onChange={handleSelectChange}
                           />
                         </Col>
                       </Row>
