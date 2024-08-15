@@ -40,7 +40,7 @@ const SubmissionEoI = () => {
   const navigate = useNavigate();
   const { username } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
-    id: isAddMode ? "Auto Generated" : "", // Initialize id based on mode
+    id: "",
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -59,6 +59,21 @@ const SubmissionEoI = () => {
     seller_location: "",
     statuscode: "",
   });
+
+const [EoiFormData,setEoiFormData ] = useState({  
+  code:"",
+  submission_date: "",
+  buyer_name: "",
+  organization: "",
+  contact_no: "",
+  email: "",
+  address: "",
+  delivery_location: "",
+  eoi_status:"",
+  approval_status:"",
+  status_trail:""
+ })
+
 
   const options = [
     { value: "Listing", label: "Listing" },
@@ -124,9 +139,19 @@ const SubmissionEoI = () => {
           } else {
             console.error("Failed to fetch data");
           }
-        } catch (error) {
+        } 
+
+  
+
+
+        
+        
+        catch (error) {
           console.error("Error:", error);
         }
+
+      
+        
       }
     };
 
@@ -145,20 +170,25 @@ const SubmissionEoI = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    const timestamp = new Date().toISOString(); // Get the current timestamp
     // Only allow changes if not in add mode for id field
     if (name === "id" && isAddMode) {
       return; // Prevent changes to id if in add mode
     }
 
-    setFormData((prevState) => ({
+    setEoiFormData((prevState) => ({
       ...prevState,
       [name]: value,
+      eoi_status: "EOI_SUBMITTED", // Automatically set the EOI status
+      approval_status: "PENDING",  // Automatically set the approval status
+      status_trail: `EOI_SUBMITTED:${timestamp}`, // Update status trail with current timestamp
     }));
   };
 
-  const handleSubmit = async () => {
-    const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? id : ""}`;
-    const requestBody = { ...formData };
+  
+    const handleSubmit = async () => {
+    const url = `${BACKEND_ADDRESS}/assets/${id}/eoi/`;
+    const requestBody = { ...EoiFormData };
 
     try {
       const response = await fetch(url, {
@@ -181,10 +211,10 @@ const SubmissionEoI = () => {
           confirmBtnBsStyle="info"
           btnSize=""
         >
-          Asset Listing submitted
+          EoI submitted
         </ReactBSAlert>,
       );
-      navigate("/admin/inventory");
+      navigate("/admin/exchange/register");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -192,25 +222,19 @@ const SubmissionEoI = () => {
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
-
     const requiredFields = [
-      "seller_title",
-      "seller_contactno",
-      "seller_email",
-      "seller_location",
-      "categorycode1",
-      "categorycode2",
-      "asset_name",
-      "available_from",
-      "asset_condition",
-      "quantity",
-      "asset_location",
-      "value",
-      "statuscode",
+      "buyer_name",
+      "organization",
+      "contact_no",
+      "email",
+      "address",
+      "delivery_location",
+      "status_trail"
     ];
+    
 
     for (let field of requiredFields) {
-      if (!formData[field]) {
+      if (!EoiFormData[field]) {
         setAlert(
           <ReactBSAlert
             warning
@@ -274,11 +298,11 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_title"
-                          value={formData.seller_title}
+                          name="id"
+                          value={id}
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
+                          readOnly={true}
                         />
                       </FormGroup>
                     </Col>
@@ -288,10 +312,11 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_contactno"
+                          name="asset_name"
+                          value={formData.asset_name}
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
+                          readOnly={true}
                         />
                       </FormGroup>
                     </Col>
@@ -302,8 +327,9 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
+                          name="description"
+                          value={formData.description}
+                          readOnly={true}
                         />
                       </FormGroup>
                     </Col>
@@ -315,7 +341,6 @@ const SubmissionEoI = () => {
               </Card>
             </Col>
 
-            {/* Item Information*/}
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -340,10 +365,10 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="H"
+                          name="buyer_name"
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
+                          value={EoiFormData.buyer_name}
                         />
                       </FormGroup>
                     </Col>
@@ -353,11 +378,10 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="Company"
-                          //              value={formData.asset_name}
+                          name="organization"
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
+                          value={EoiFormData.organization}
                         />
                       </FormGroup>
                     </Col>
@@ -368,9 +392,9 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="description"
+                          name="contact_no"
+                          value={EoiFormData.contact_no}
                           onChange={handleChange}
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
@@ -378,12 +402,12 @@ const SubmissionEoI = () => {
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Email</Label>
                       <FormGroup
-                        className={`has-label ${formData.seller_email}`}
+                        className={`has-label ${EoiFormData.email}`}
                       >
                         <Input
                           type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
+                          name="email"
+                          value={EoiFormData.email}
                           onChange={(e) => {
                             const value = e.target.value;
                             if (!verifyEmail(value)) {
@@ -391,13 +415,12 @@ const SubmissionEoI = () => {
                             } else {
                               setRegisterEmailState("has-success");
                             }
-                            setFormData((prevState) => ({
+                            setEoiFormData((prevState) => ({
                               ...prevState,
-                              seller_email: value,
+                              email: value,
                             }));
                           }}
                           required
-                          readOnly={isReadOnly}
                         />
                         {registerEmailState === "has-danger" ? (
                           <label className="error">
@@ -408,31 +431,30 @@ const SubmissionEoI = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Buyer Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="quantity"
-                          value={formData.quantity}
+                          name="address"
                           onChange={handleChange}
                           required
-                          readOnly={isReadOnly}
+                          value={EoiFormData.address}
                         />
                       </FormGroup>
                     </Col>
-                    <Col sm="12">
+                    <Col sm="6">
                       <Label style={{ color: "#36454F" }}>
                         Item Delivery Location
                       </Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="quantity"
-                          value={formData.quantity}
+                          name="delivery_location"
                           onChange={handleChange}
                           required
                           readOnly={isReadOnly}
+                          value={EoiFormData.delivery_location}
                         />
                       </FormGroup>
                     </Col>
@@ -445,8 +467,8 @@ const SubmissionEoI = () => {
                       <FormGroup>
                         <Input
                           type="text"
-                          name="asset_location"
-                          value={formData.asset_location}
+                          name="contact_time_preference"
+                          value={EoiFormData.contact_time_preference}
                           onChange={handleChange}
                           required
                           readOnly={isReadOnly}
