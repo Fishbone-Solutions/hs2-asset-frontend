@@ -17,9 +17,9 @@ import {
 import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import BACKEND_ADDRESS from "views/components/serverAddress";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
+import ReactDatetime from "react-datetime";
+
 const camelCaseWithSpaces = (text) => {
   return text
     .split(" ")
@@ -263,13 +263,13 @@ const RequestEquipment = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {camelCaseWithSpaces("Asset Reference")}
+                    {camelCaseWithSpaces("Buyer Details")}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Asset ID</Label>
+                      <Label>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -283,7 +283,7 @@ const RequestEquipment = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
+                      <Label style={{ color: "#36454F" }}>Company</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -297,7 +297,7 @@ const RequestEquipment = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Description</Label>
+                      <Label style={{ color: "#36454F" }}>Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -306,15 +306,55 @@ const RequestEquipment = () => {
                         />
                       </FormGroup>
                     </Col>
-
-                    <Col sm="6"></Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Email Address</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Item Delivery
+                      Location</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Preferred
+                      Contact Timings</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </CardBody>
                 <CardFooter></CardFooter>
               </Card>
             </Col>
 
-            {/* Item Information*/}
+            {/* Requested Equipment Details */}
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -328,14 +368,15 @@ const RequestEquipment = () => {
                     }}
                   >
                     {camelCaseWithSpaces(
-                      "Buyer Details For Expression Of Interest",
+                      "Requested Equipment Details",
                     )}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
+                      <Label style={{ color: "#36454F" }}>Equipment
+                      Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -348,7 +389,7 @@ const RequestEquipment = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
+                      <Label style={{ color: "#36454F" }}>Quantity</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -363,91 +404,48 @@ const RequestEquipment = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
+                      <Label style={{ color: "#36454F" }}>Required By</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="description"
-                          onChange={handleChange}
-                          readOnly={isReadOnly}
+                      <ReactDatetime
+                          inputProps={{
+                            className: "form-control",
+                            placeholder: "DD/MM/YYYY",
+                            readOnly: true, // Keep this as read-only for styling purposes
+                            disabled: true, // Disable the input entirely
+                          }}
+                          value={
+                            formData.submission_date_formatted
+                              ? moment(
+                                  formData.submission_date_formatted,
+                                  "DD/MM/YYYY",
+                                )
+                              : null
+                          }
+                          onChange={(momentDate) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              submission_date_formatted:
+                                momentDate.format("DD/MM/YYYY"),
+                            }))
+                          }
+                          timeFormat={false}
+                          readOnly // This readOnly is for the input field generated by the component
+                          dateFormat="DD/MM/YYYY" // Specify the date format
                         />
                       </FormGroup>
                     </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email</Label>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Please let us know in the box below what is it that you are looking for</Label>
                       <FormGroup
                         className={`has-label ${formData.seller_email}`}
                       >
                         <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (!verifyEmail(value)) {
-                              setRegisterEmailState("has-danger");
-                            } else {
-                              setRegisterEmailState("has-success");
-                            }
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              seller_email: value,
-                            }));
-                          }}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                        {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null}
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="quantity"
-                          value={formData.quantity}
+                          type="textarea"
+                          name="additional_info"
+                          value={formData.additional_info}
                           onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="quantity"
-                          value={formData.quantity}
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Preferred Contact Timings
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="asset_location"
-                          value={formData.asset_location}
-                          onChange={handleChange}
-                          required
+                          style={{ width: "100%", height: "100%" }}
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -470,7 +468,7 @@ const RequestEquipment = () => {
             </Button>
             {mode !== "view" && (
               <Button color="primary" type="submit">
-                Submit EoI
+                Submit
               </Button>
             )}
           </div>
