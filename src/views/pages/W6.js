@@ -67,14 +67,14 @@ function W6() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/register?fltr_id=-1&fltr_name=-1&fltr_from_availability=-1&fltr_to_availability=-1`,
-          requestOptions,
+          requestOptions
         );
         const result = await response.json();
         setFilterFormDate(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
+          "Unable to load data. Please refresh the page or load after time"
         );
         console.error(error);
       }
@@ -129,6 +129,9 @@ function W6() {
     navigate(`/exchangeregistermatch/:id${asset_id}`);
   };
 
+  const handleDate = (startDate, endDate) => {
+    console.log(startDate, endDate);
+  };
   const columns = React.useMemo(
     () => [
       {
@@ -243,7 +246,7 @@ function W6() {
         ),
       },
     ],
-    [],
+    []
   );
   return (
     <>
@@ -307,7 +310,10 @@ function W6() {
 
                       <Col sm="6">
                         <FormGroup>
-                          <DateRangePicker />
+                          <DateRangePicker
+                            label="Availability Range"
+                            onChange={handleDate}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>

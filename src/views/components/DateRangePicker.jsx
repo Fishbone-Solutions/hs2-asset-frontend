@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormGroup, Label } from "reactstrap";
+import moment from "moment";
 
-const DateRangePicker = () => {
+const DateRangePicker = ({ label, onChange }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,10 @@ const DateRangePicker = () => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    onChange(
+      moment(start).format("DD/MM/YYYY"),
+      moment(end).format("DD/MM/YYYY")
+    );
   };
 
   const handleClickOutside = (event) => {
@@ -31,7 +36,7 @@ const DateRangePicker = () => {
         <label
           className={`floating-label ${startDate || endDate ? "active" : ""}`}
         >
-          Availability
+          {label}
         </label>
         <DatePicker
           className="datepicker-input"
@@ -40,7 +45,7 @@ const DateRangePicker = () => {
           startDate={startDate}
           endDate={endDate}
           selectsRange
-          placeholderText="Availability"
+          placeholderText={label}
         />
       </div>
     </div>

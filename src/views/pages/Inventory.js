@@ -4,6 +4,8 @@ import defaultLiveIconImage from "assets/img/live_1.png";
 import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";
 import LiveSvgComponent from "../../components/svg/LiveSvg";
 import { GlobalContext } from "../../GlobalState";
+import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
+import DateRangePicker from "views/components/DateRangePicker";
 
 // reactstrap components
 import {
@@ -30,6 +32,7 @@ import Modal from "react-modal";
 import { useEffect } from "react";
 import ReactDatetime from "react-datetime";
 import "./Inventory.css";
+import "./FloatingLabel.css";
 
 function Inventory() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -37,7 +40,7 @@ function Inventory() {
   const [liveIconImage, setliveIconImage] =
     React.useState(defaultLiveIconImage);
   const [applicationIconImage, setApplicationIconImage] = React.useState(
-    defaultApplicationIconImage,
+    defaultApplicationIconImage
   );
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
@@ -162,6 +165,10 @@ function Inventory() {
     setAlert(null);
   };
 
+  const handleSelect = (data) => {
+    console.log(data);
+  };
+
   const fetchData = async () => {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
@@ -177,14 +184,14 @@ function Inventory() {
     try {
       const response = await fetch(
         `${BACKEND_ADDRESS}/assets/-1`,
-        requestOptions,
+        requestOptions
       );
       const result = await response.json();
       setDataState(result.appRespData);
       console.log(result);
     } catch (error) {
       setErrorMessage(
-        "Unable to load data. Please refresh the page or load after time",
+        "Unable to load data. Please refresh the page or load after time"
       );
       console.error(error);
     }
@@ -206,14 +213,14 @@ function Inventory() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/assets/-1`,
-          requestOptions,
+          requestOptions
         );
         const result = await response.json();
         setDataState(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
+          "Unable to load data. Please refresh the page or load after time"
         );
         console.error(error);
       }
@@ -259,7 +266,7 @@ function Inventory() {
           );
 
           setDataState((prevState) =>
-            prevState.filter((row) => row.asset_id !== assetId),
+            prevState.filter((row) => row.asset_id !== assetId)
           );
           console.log("Updated Data", dataState);
         } else {
@@ -353,6 +360,24 @@ function Inventory() {
     { value: "Live", label: "Live" },
     { value: "Sold", label: "Sold" },
   ];
+
+  const handleEntryDate = (startDate, endDate) => {
+    console.log(startDate, endDate);
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      entry_date_from: startDate,
+      entry_date_to: endDate,
+    }));
+  };
+
+  const handleAvailableDate = (startDate, endDate) => {
+    console.log(startDate, endDate);
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      available_from: startDate,
+      available_to: endDate,
+    }));
+  };
 
   const columns = React.useMemo(
     () => [
@@ -619,145 +644,96 @@ function Inventory() {
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label>ID</Label>
-                          <FormGroup>
+                          <FormGroup floating>
                             <Input
                               type="text"
                               name="id"
+                              id="id"
+                              placeholder="id"
                               onChange={handleChange}
                             />
+
+                            <Label for="id">ID</Label>
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Name</Label>
-                          <FormGroup>
+                          <FormGroup floating>
                             <Input
+                              id="name"
                               type="text"
                               name="asset_name"
+                              placeholder="name"
                               onChange={handleChange}
                             />
+
+                            <Label for="name">Name</Label>
                           </FormGroup>
                         </Col>
 
-                        <Col sm="3">
-                          <Label style={{ color: "#36454F" }}>Entry From</Label>
+                        <Col sm="6">
                           <div className="placer2">
                             <FormGroup>
-                              <ReactDatetime
-                                inputProps={{
-                                  className: "form-control",
-                                  placeholder: "DD/MM/YYYY",
-                                }}
-                                dateFormat="DD/MM/YYYY" // Specify the date format
-                                onChange={(momentDate) =>
-                                  setFilterFormDate((prevState) => ({
-                                    ...prevState,
-                                    entry_date_from:
-                                      momentDate.format("DD/MM/YYYY"),
-                                  }))
-                                }
-                                timeFormat={false}
+                              <DateRangePicker
+                                label="Entry Range"
+                                onChange={handleEntryDate}
                               />
                             </FormGroup>
                           </div>
                         </Col>
-                        <Col sm="3">
-                          <Label style={{ color: "#36454F" }}>Entry To</Label>
-                          <FormGroup>
-                            <ReactDatetime
-                              inputProps={{
-                                className: "form-control",
-                                placeholder: "DD/MM/YYYY",
-                              }}
-                              onChange={(momentDate) =>
-                                setFilterFormDate((prevState) => ({
-                                  ...prevState,
-                                  entry_date_to:
-                                    momentDate.format("DD/MM/YYYY"),
-                                }))
-                              }
-                              dateFormat="DD-MM-YYYY" // Specify the date format
-                              timeFormat={false}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="3">
-                          <Label style={{ color: "#36454F" }}>
-                            Available From
-                          </Label>
-                          <FormGroup>
-                            <ReactDatetime
-                              inputProps={{
-                                className: "form-control",
-                                placeholder: "DD/MM/YYYY",
-                              }}
-                              dateFormat="DD/MM/YYYY" // Specify the date format
-                              onChange={(momentDate) =>
-                                setFilterFormDate((prevState) => ({
-                                  ...prevState,
-                                  available_from:
-                                    momentDate.format("DD/MM/YYYY"),
-                                }))
-                              }
-                              timeFormat={false}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="3">
-                          <Label style={{ color: "#36454F" }}>
-                            Available To
-                          </Label>
-                          <FormGroup>
-                            <ReactDatetime
-                              dateFormat="DD-MM-YYYY"
-                              inputProps={{
-                                className: "form-control",
-                                placeholder: "DD/MM/YYYY",
-                              }}
-                              onChange={(momentDate) =>
-                                setFilterFormDate((prevState) => ({
-                                  ...prevState,
-                                  available_to: momentDate.format("DD/MM/YYYY"),
-                                }))
-                              }
-                              timeFormat={false}
-                            />
-                          </FormGroup>
-                        </Col>
+
                         <Col sm="6">
-                          <Label>Status</Label>
                           <FormGroup>
-                            <div className="custom-select-container">
-                              <Select
-                                className="react-select primary"
-                                classNamePrefix="react-select"
-                                name="statuscode"
-                                menuPlacement="top" // This makes the menu open above the input
-                                onChange={(selectedOption) =>
-                                  setFilterFormDate((prevState) => ({
-                                    ...prevState,
-                                    statuscode: selectedOption.value,
-                                  }))
-                                }
-                                options={statusOptions}
-                                placeholder="Select an option"
-                                styles={{
-                                  control: (provided) => ({
-                                    ...provided,
-                                    minHeight: "40px", // Customize control height
-                                  }),
-                                  menu: (provided) => ({
-                                    ...provided,
-                                    zIndex: 9999, // Ensure the menu is on top of other elements
-                                  }),
-                                  valueContainer: (provided) => ({
-                                    ...provided,
-                                    padding: "0 8px", // Adjust padding
-                                  }),
-                                }}
-                              />
-                            </div>
+                            <DateRangePicker
+                              label="Available Range"
+                              onChange={handleAvailableDate}
+                            />
                           </FormGroup>
+                        </Col>
+
+                        <Col sm="6">
+                          <FloatingLabelDropdown
+                            label="Choose an option"
+                            options={statusOptions}
+                            onChange={(selectedOption) =>
+                              setFilterFormDate((prevState) => ({
+                                ...prevState,
+                                statuscode: selectedOption.value,
+                              }))
+                            }
+                          />
+
+                          {/* <FormGroup floating>
+                            <Label for="react-select-18-input">Status</Label>
+                            <Select
+                              id="selectStatus"
+                              className="react-select primary"
+                              classNamePrefix="react-select"
+                              name="statuscode"
+                              menuPlacement="top" // This makes the menu open above the input
+                              onChange={(selectedOption) =>
+                                setFilterFormDate((prevState) => ({
+                                  ...prevState,
+                                  statuscode: selectedOption.value,
+                                }))
+                              }
+                              options={statusOptions}
+                              // placeholder="Select an option"
+                              styles={{
+                                control: (provided) => ({
+                                  ...provided,
+                                  minHeight: "40px", // Customize control height
+                                }),
+                                menu: (provided) => ({
+                                  ...provided,
+                                  zIndex: 9999, // Ensure the menu is on top of other elements
+                                }),
+                                valueContainer: (provided) => ({
+                                  ...provided,
+                                  padding: "0 8px", // Adjust padding
+                                }),
+                              }}
+                            />
+                          </FormGroup> */}
                         </Col>
                       </Row>
                       <div

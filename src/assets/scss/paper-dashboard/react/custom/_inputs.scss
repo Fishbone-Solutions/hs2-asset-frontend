@@ -34,7 +34,7 @@ fieldset[disabled] .form-control {
   font-weight: 600;
   background: #fff;
   opacity: 1;
-  top: -3.5px;
+  top: -1px;
   width: auto;
   left: 9px;
   padding: 0px !important;
@@ -72,7 +72,7 @@ floating label for date range picker
 }
 
 .floating-label.active {
-  top: -0.6rem;
+  top: -0.6rem !important;
   left: 0rem;
   background-color: transparent;
   opacity: 1;
@@ -109,4 +109,20 @@ floating label for date range picker
   color: #66615b; /* Change this to your desired color */
   opacity: 1; /* Ensure the color is applied correctly */
   font-size: 14px;
+}
+
+/**
+Modal Date popup overflow 
+*/
+.content2 {
+  overflow: unset !important;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open {
+  overflow: unset !important;
+  height: unset !important;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open .card {
+  margin-bottom: 0px !important;
 }
