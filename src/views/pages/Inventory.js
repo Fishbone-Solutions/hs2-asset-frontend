@@ -701,47 +701,12 @@ function Inventory() {
                               }))
                             }
                           />
-
-                          {/* <FormGroup floating>
-                            <Label for="react-select-18-input">Status</Label>
-                            <Select
-                              id="selectStatus"
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="statuscode"
-                              menuPlacement="top" // This makes the menu open above the input
-                              onChange={(selectedOption) =>
-                                setFilterFormDate((prevState) => ({
-                                  ...prevState,
-                                  statuscode: selectedOption.value,
-                                }))
-                              }
-                              options={statusOptions}
-                              // placeholder="Select an option"
-                              styles={{
-                                control: (provided) => ({
-                                  ...provided,
-                                  minHeight: "40px", // Customize control height
-                                }),
-                                menu: (provided) => ({
-                                  ...provided,
-                                  zIndex: 9999, // Ensure the menu is on top of other elements
-                                }),
-                                valueContainer: (provided) => ({
-                                  ...provided,
-                                  padding: "0 8px", // Adjust padding
-                                }),
-                              }}
-                            />
-                          </FormGroup> */}
                         </Col>
                       </Row>
                       <div
                         style={{
                           display: "flex",
                           justifyContent: "flex-end",
-                          padding: "1rem 2rem",
-                          borderTop: "1px solid #ddd",
                         }}
                       >
                         <Button
