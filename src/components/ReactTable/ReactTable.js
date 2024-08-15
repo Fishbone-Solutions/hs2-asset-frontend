@@ -1,55 +1,15 @@
-/*eslint-disable*/
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   useTable,
-  useFilters,
   useSortBy,
   usePagination,
   useResizeColumns,
 } from "react-table";
 import classnames from "classnames";
-// A great library for fuzzy filtering/sorting items
-import { matchSorter } from "match-sorter";
-// react plugin used to create DropdownMenu for selecting items
+import { Button, Container, Col, Row } from "reactstrap";
 import Select from "react-select";
 import "./ReactTableMod.scss";
-// reactstrap components
-import { Container, Row, Col, FormGroup } from "reactstrap";
 
-function DefaultColumnFilter({ column }) {
-  const { filterValue, preFilteredRows, setFilter } = column;
-  const count = preFilteredRows.length;
-
-  // Define the columns where you want to enable the filter
-  const enableFilterOnColumns = [];
-
-  if (!enableFilterOnColumns.includes(column.id)) {
-    return null; // Do not render the filter for this column
-  }
-
-  return (
-    <FormGroup>
-      <input
-        placeholder={`Search ${count} records...`}
-        type="text"
-        value={filterValue || ""}
-        onChange={(e) => {
-          setFilter(e.target.value || undefined);
-        }}
-        className="form-control"
-      />
-    </FormGroup>
-  );
-}
-
-function fuzzyTextFilterFn(rows, id, filterValue) {
-  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
-}
-
-// Let the table remove the filter if the string is empty
-fuzzyTextFilterFn.autoRemove = (val) => !val;
-
-// Our table component
 function Table({ columns, data }) {
   const [numberOfRows, setNumberOfRows] = React.useState({
     value: 10,
@@ -59,33 +19,12 @@ function Table({ columns, data }) {
     value: 0,
     label: "Page 1",
   });
-  const filterTypes = React.useMemo(
-    () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-      fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
-      // "startWith"
-      text: (rows, id, filterValue) => {
-        return rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        });
-      },
-    }),
-    [],
-  );
 
-  const defaultColumn = React.useMemo(
+  const defaultColumn = useMemo(
     () => ({
-      // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
       width: 100,
     }),
-    [],
+    []
   );
 
   const {
@@ -93,35 +32,44 @@ function Table({ columns, data }) {
     getTableBodyProps,
     headerGroups,
     page,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    state: { pageIndex, pageSize },
     prepareRow,
     nextPage,
-    pageOptions,
     previousPage,
     canPreviousPage,
     canNextPage,
     setPageSize,
-    gotoPage,
   } = useTable(
     {
       columns,
       data,
-      defaultColumn, // Be sure to pass the defaultColumn option
-      filterTypes,
+      defaultColumn,
+      initialState: { pageIndex: 0 },
     },
-    useFilters, // useFilters!
     useSortBy,
     usePagination,
-    useResizeColumns, // Add useResizeColumns hook
+    useResizeColumns
+  );
+
+  const rowsOptions = useMemo(
+    () =>
+      [5, 10, 20, 25, 50, 100].map((num) => ({
+        value: num,
+        label: `${num} rows`,
+      })),
+    []
   );
 
   let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
-    function () {},
+    function () {}
   );
-  let numberOfRowsData = [5, 10, 20, 25, 50, 100];
 
   return (
     <>
-      <br></br>
+      <br />
       <div className="-striped -highlight primary-pagination">
         <table className="table-responsive" {...getTableProps()}>
           <thead>
@@ -129,29 +77,41 @@ function Table({ columns, data }) {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column, key) => (
                   <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    {...column.getHeaderProps()}
+                    {...column.getHeaderProps(
+                      column.isSortable ? column.getSortByToggleProps() : {}
+                    )}
                     style={{
                       width: column.width,
                       backgroundColor: "#57524D",
                       color: "white",
                     }}
                     className={classnames("rt-th rt-resizable-header", {
-                      "-cursor-pointer": headerGroup.headers.length - 1 !== key,
+                      "-cursor-pointer": column.isSortable,
                       "-sort-asc": column.isSorted && !column.isSortedDesc,
                       "-sort-desc": column.isSorted && column.isSortedDesc,
                     })}
                   >
-                    <div className="rt-resizable-header-content">
+                    <div className="rt-resizable-header-content d-flex align-items-center">
                       {column.render("Header")}
-                    </div>
-                    {/* Render the column's filter UI */}
-                    <div>
-                      {headerGroup.headers.length - 1 === key
-                        ? null
-                        : column.canFilter
-                          ? column.render("Filter")
-                          : null}
+                      {column.isSortable && (
+                        <span className="ml-2">
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <i
+                                className="fa fa-sort-down"
+                                aria-hidden="true"
+                              ></i>
+                            ) : (
+                              <i
+                                className="fa fa-sort-up"
+                                aria-hidden="true"
+                              ></i>
+                            )
+                          ) : (
+                            <i className="fa fa-sort" aria-hidden="true"></i>
+                          )}
+                        </span>
+                      )}
                     </div>
                   </th>
                 ))}
@@ -171,23 +131,20 @@ function Table({ columns, data }) {
                 return (
                   <tr
                     {...row.getRowProps()}
-                    className={classnames(
-                      "rt-tr",
-                      { "-odd": i % 2 === 0 },
-                      { "-even": i % 2 === 1 },
-                    )}
-                  >
-                    {row.cells.map((cell, cellIndex) => {
-                      return (
-                        <td
-                          {...cell.getCellProps()}
-                          style={{ width: cell.column.width }}
-                          className={classnames("rt-td")}
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      );
+                    className={classnames("rt-tr", {
+                      "-odd": i % 2 === 0,
+                      "-even": i % 2 === 1,
                     })}
+                  >
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{ width: cell.column.width }}
+                        className="rt-td"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
                   </tr>
                 );
               })
@@ -195,7 +152,7 @@ function Table({ columns, data }) {
           </tbody>
         </table>
         <div className="pagination-top mt-2">
-          <div className="-pagination">
+          <div className="-pagination d-flex align-items-center justify-content-between">
             <div className="-previous">
               <button
                 type="button"
@@ -238,12 +195,7 @@ function Table({ columns, data }) {
                         setPageSize(value.value);
                         setNumberOfRows(value);
                       }}
-                      options={numberOfRowsData.map((prop) => {
-                        return {
-                          value: prop,
-                          label: prop + " rows",
-                        };
-                      })}
+                      options={rowsOptions}
                       placeholder="Choose Rows"
                     />
                   </Col>
@@ -267,19 +219,5 @@ function Table({ columns, data }) {
     </>
   );
 }
-
-// Define a custom filter filter function!
-function filterGreaterThan(rows, id, filterValue) {
-  return rows.filter((row) => {
-    const rowValue = row.values[id];
-    return rowValue >= filterValue;
-  });
-}
-
-// This is an autoRemove method on the filter function that
-// when given the new filter value and returns true, the filter
-// will be automatically removed. Normally this is just an undefined
-// check, but here, we want to remove the filter if it's not a number
-filterGreaterThan.autoRemove = (val) => typeof val !== "number";
 
 export default Table;
