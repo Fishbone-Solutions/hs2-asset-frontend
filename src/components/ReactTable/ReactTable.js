@@ -69,7 +69,6 @@ function Table({ columns, data }) {
 
   return (
     <>
-      <br />
       <div className="-striped -highlight primary-pagination">
         <table className="table-responsive" {...getTableProps()}>
           <thead>

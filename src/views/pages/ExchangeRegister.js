@@ -293,12 +293,12 @@ function ExchangeRegister() {
           <Col md="12">
             <Card>
               <CardBody className="pt-4">
-                <Container className="custom-fuild" fluid>
+                <Container className="custom-fuild mb-1" fluid>
                   <Row className="align-items-center">
                     <Col xs={12} md={12}>
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
-                        <div className="input-group flex-grow-1 mt-2 me-2">
+                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2">
                           <input
                             type="text"
                             className="form-control custom-placeholder"
@@ -319,7 +319,12 @@ function ExchangeRegister() {
                           style={{ cursor: "pointer" }}
                           className="icon-style mr-2"
                         >
-                          <SvgSearchPlus color="white" size="2.4em" />
+                          <SvgSearchPlus
+                            width="34"
+                            height="34"
+                            color="white"
+                            size="2.4em"
+                          />
                         </div>
 
                         {/* Add Icon */}
@@ -362,31 +367,22 @@ function ExchangeRegister() {
               <Row>
                 <Col md="12">
                   <Card>
-                    <CardHeader
-                      className="d-flex justify-content-between align-items-center bg-info p-2"
-                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
-                    >
+                    <CardHeader className="d-flex justify-content-between align-items-center p-2 card-header-custom">
                       <h6 className="text-white m-0 d-flex align-items-center">
-                        <i
-                          className="fa fa-filter me-2 p-1"
-                          style={{
-                            fontSize: "0.9em",
-                            backgroundColor: "#52CBCE",
-                            border: "2px solid #52CBCE",
-                            borderRadius: "15%",
-                          }}
-                        ></i>
-                        Filter
+                        <SvgSearchPlus
+                          width="20"
+                          height="20"
+                          className="me-2"
+                        />
+                        Advanced Search
                       </h6>
                       <button
                         type="button"
                         onClick={closeModal}
                         aria-label="Close"
+                        className="btn-close close-icon"
                       >
-                        <i
-                          className="fa fa-times text-white"
-                          style={{ fontSize: "1em" }}
-                        ></i>
+                        <i className="fa fa-times text-white"></i>
                       </button>
                     </CardHeader>
                     <CardBody>
@@ -443,13 +439,16 @@ function ExchangeRegister() {
 
                       <div className="d-flex justify-content-end gap-1">
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-primary px-2 py-2"
                           onClick={handleClearClick}
                           type="clear"
                         >
                           Clear
                         </button>
-                        <button className="btn btn-success" type="submit">
+                        <button
+                          className="btn btn-success px-2 py-2"
+                          type="submit"
+                        >
                           Filter
                         </button>
                       </div>

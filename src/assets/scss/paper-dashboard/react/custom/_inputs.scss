@@ -130,6 +130,7 @@ Modal Date popup overflow
   background-color: #52cbce;
   border: 2px solid #52cbce;
   border-radius: 15%;
+  margin-top: -3px;
 }
 
 /**
@@ -145,7 +146,8 @@ svg hover
 }
 .customSearchInputGroup {
   background-color: rgb(255, 255, 255) !important;
-  border: 1px solid #e3e3e3 !important;
+  border: 2px solid #dddddd !important;
+  border-left: 0px !important;
   border-radius: 0px 5px 5px 0px !important;
   padding: 0px 13px 0px 6px !important;
 }
@@ -156,4 +158,30 @@ svg hover
 
 .custom-placeholder::placeholder {
   color: #ced4da; /* Replace with your desired color */
+}
+
+/**
+Modal css
+*/
+
+/* styles.css */
+.card-header-custom {
+  background-color: #52cbce !important;
+  border-radius: 10px 10px 0px 0px !important;
+}
+
+.filter-icon {
+  font-size: 0.9em;
+  background-color: #52cbce;
+  border: 2px solid #52cbce;
+  border-radius: 15%;
+  padding: 2px; /* To match p-1 from Bootstrap */
+}
+.btn-close {
+  margin-top: -9px;
+}
+
+.custom-input-search > input {
+  border: 2px solid #dddddd !important;
+  border-right: 0px !important;
 }

@@ -3,26 +3,19 @@ import React from "react";
 const SvgFilePlus = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    version="1.1"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    width="512"
-    height="512"
-    x="0"
-    y="0"
-    viewBox="0 0 24 24"
-    style={{ enableBackground: "new 0 0 512 512", padding: "8px" }}
-    xmlSpace="preserve"
+    viewBox="0 0 32 32"
+    width="30"
+    height="30"
     className="icon-hover"
   >
     <g>
       <path
-        fill="#51bcda"
-        fillRule="evenodd"
-        d="M6 1a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V7.828a3 3 0 0 0-.879-2.12l-3.828-3.83A3 3 0 0 0 14.172 1zm12.586 6L15 3.414V6.167c0 .46.373.833.833.833H16zM13 12a1 1 0 1 0-2 0v2H9a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2z"
-        clipRule="evenodd"
-        opacity="1"
-        data-original="#160b34"
-        className=""
+        d="M8 2C6.355 2 5 3.355 5 5v22c0 1.645 1.355 3 3 3h16c1.645 0 3-1.355 3-3V8a1 1 0 0 0-.293-.707l-5-5A1 1 0 0 0 21 2zm0 2h11v3c0 1.645 1.355 3 3 3h3v17c0 .571-.429 1-1 1H8c-.571 0-1-.429-1-1V5c0-.571.429-1 1-1zm13 .414L24.586 8H22c-.571 0-1-.429-1-1z"
+        fill="#44C47D"
+      ></path>
+      <path
+        d="M16 12.025a1 1 0 0 0-1 1v3h-3a1 1 0 0 0-1 1 1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1 1 1 0 0 0 1-1v-3h3a1 1 0 0 0 1-1 1 1 0 0 0-1-1h-3v-3a1 1 0 0 0-1-1z"
+        fill="#44C47D"
       ></path>
     </g>
   </svg>
