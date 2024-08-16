@@ -19,6 +19,7 @@ import {
   CardTitle,
   Label,
   FormGroup,
+  Modal,
 } from "reactstrap";
 import Select from "react-select";
 import { Form, NavLink } from "react-router-dom";
@@ -28,7 +29,6 @@ import ReactTable from "components/ReactTable/ReactTable.js";
 import BACKEND_ADDRESS from "../components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
 import { useEffect } from "react";
 import ReactDatetime from "react-datetime";
 import "./Inventory.css";
@@ -66,31 +66,6 @@ function Inventory() {
 
   const handleEoI = (assetId) => {
     navigate(`/admin/eoi/${assetId}`);
-  };
-
-  const customStyles = {
-    overlay: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // 20% opacity black background
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: "1000",
-    },
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      width: "50%", // Increase the width
-      height: "50%", // Increase the height
-      padding: "0", // Remove default padding
-      backgroundColor: "#FFFFFF",
-      overflow: "hidden",
-    },
   };
 
   const handleChange = (event) => {
@@ -510,10 +485,58 @@ function Inventory() {
 
   return (
     <>
+      <div className="content">
+        <Row>
+          {alert}
+          <Col md="12">
+            <Card>
+              <CardBody>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div
+                    onClick={openModal}
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                  >
+                    <IoSearchSharp
+                      color="white"
+                      size="2.4em"
+                      style={{
+                        backgroundColor: "#52CBCE",
+                        border: "2px solid #52CBCE",
+                        borderRadius: "15%",
+                      }}
+                    />
+                  </div>
+                  <NavLink to="/admin/assetregister?mode=add">
+                    <div>
+                      <IoAddCircleOutline
+                        color="white"
+                        size="2.4em"
+                        style={{
+                          backgroundColor: "#52CBCE",
+                          border: "2px solid #52CBCE",
+                          borderRadius: "15%",
+                        }}
+                        onClick={searchMode}
+                      />
+                    </div>
+                  </NavLink>
+                </div>
+
+                <ReactTable
+                  data={dataState}
+                  columns={columns}
+                  className="-striped -highlight primary-pagination"
+                />
+                {errorMessage}
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
         contentLabel="Filter Modal"
       >
         <div className="content2" style={{ overflow: "hidden" }}>
@@ -600,19 +623,13 @@ function Inventory() {
 
                         <Col sm="6">
                           <FloatingLabelDropdown
-                            label="Choose an option"
+                            label="Status"
                             options={statusOptions}
                             onChange={handleSelectChange}
                           />
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-end gap-1">
-                        {/* <button
-                          className="btn btn-primary"
-                          onClick={closeModal}
-                        >
-                          Close
-                        </button> */}
                         <button
                           className="btn btn-primary"
                           onClick={handleClearClick}
@@ -632,55 +649,6 @@ function Inventory() {
           </div>
         </div>
       </Modal>
-
-      <div className="content">
-        <Row>
-          {alert}
-          <Col md="12">
-            <Card>
-              <CardBody>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <div
-                    onClick={openModal}
-                    style={{ marginRight: "10px", cursor: "pointer" }}
-                  >
-                    <IoSearchSharp
-                      color="white"
-                      size="2.4em"
-                      style={{
-                        backgroundColor: "#52CBCE",
-                        border: "2px solid #52CBCE",
-                        borderRadius: "15%",
-                      }}
-                    />
-                  </div>
-                  <NavLink to="/admin/assetregister?mode=add">
-                    <div>
-                      <IoAddCircleOutline
-                        color="white"
-                        size="2.4em"
-                        style={{
-                          backgroundColor: "#52CBCE",
-                          border: "2px solid #52CBCE",
-                          borderRadius: "15%",
-                        }}
-                        onClick={searchMode}
-                      />
-                    </div>
-                  </NavLink>
-                </div>
-
-                <ReactTable
-                  data={dataState}
-                  columns={columns}
-                  className="-striped -highlight primary-pagination"
-                />
-                {errorMessage}
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
     </>
   );
 }

@@ -3,7 +3,7 @@ import { FormGroup, Label } from "reactstrap";
 import Select from "react-select";
 import "../pages/FloatingLabel.css";
 
-const MyFloatingLabelSelect = ({ options, onChange }) => {
+const MyFloatingLabelSelect = ({ label, options, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -20,7 +20,7 @@ const MyFloatingLabelSelect = ({ options, onChange }) => {
           isFocused || selectedValue ? "floating-label-focused" : ""
         }`}
       >
-        Status
+        {label}
       </Label>
       <Select
         id="selectStatus"

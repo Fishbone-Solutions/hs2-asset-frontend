@@ -18,6 +18,9 @@ import {
   AccordionBody,
   AccordionHeader,
   AccordionItem,
+  NavLink,
+  Modal,
+  Container,
 } from "reactstrap";
 import ReactTable from "components/ReactTable/ReactTable.js";
 import { GlobalContext } from "GlobalState";
@@ -25,6 +28,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import DateRangePicker from "views/components/DateRangePicker";
 import defaultLiveIconImage from "assets/img/live.png";
+
+import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
+import {
+  IoSearchSharp,
+  IoAddCircleOutline,
+  IoMegaphoneOutline,
+} from "react-icons/io5";
 
 function ExchangeRegister() {
   const [formData, setFormData] = useState({
@@ -35,6 +45,8 @@ function ExchangeRegister() {
   });
   const [filterFormData, setFilterFormDate] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [alert, setAlert] = React.useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -47,8 +59,11 @@ function ExchangeRegister() {
       setOpen(id);
     }
   };
-  const [liveIconImage, setliveIconImage] = React.useState(defaultLiveIconImage);
 
+  const handleClearClick = () => {};
+
+  const [liveIconImage, setliveIconImage] =
+    React.useState(defaultLiveIconImage);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -123,17 +138,32 @@ function ExchangeRegister() {
 
   const handleView = (asset_id, mode) => {
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
-  }
-
-  const handleSubmissionEoi = (assetId,mode) => {
-    navigate(`/admin/exchange/eoisubmission/${assetId}?mode=${mode}`);
-  
   };
 
+  const handleSubmissionEoi = (assetId, mode) => {
+    navigate(`/admin/exchange/eoisubmission/${assetId}?mode=${mode}`);
+  };
 
   const handleDate = (startDate, endDate) => {
     console.log(startDate, endDate);
   };
+
+  const handleCategoryChange = (category) => {
+    console.log(category);
+  };
+
+  const handleSubCategoryChange = (subCategory) => {
+    console.log(subCategory);
+  };
+
+  const statusOptions = [
+    { value: "category", label: "category" },
+    { value: "category-1", label: "Category-1" },
+  ];
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+
   const columns = React.useMemo(
     () => [
       {
@@ -232,7 +262,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleView(row.original.asset_id,"view")}
+              onClick={() => handleView(row.original.asset_id, "view")}
             >
               <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -254,128 +284,50 @@ function ExchangeRegister() {
     <>
       <div className="content">
         {alert}
-        <Form>
-          <Row>
-            <Col md="12 mb-4" id="customAccordionInputSize">
-              <Accordion open={open} toggle={toggle}>
-                <AccordionItem>
-                  <AccordionHeader targetId="1">Search</AccordionHeader>
-                  <AccordionBody accordionId="1">
-                    <Row>
-                      <Col sm="6">
-                        <FormGroup floating>
-                          <Input
-                            id="id"
-                            name="id"
-                            placeholder="ID"
-                            type="number"
-                          />
-                          <Label for="id">ID</Label>
-                        </FormGroup>
-                      </Col>
 
-                      <Col sm="6">
-                        <FormGroup floating>
-                          <Input
-                            id="assetName"
-                            name="name"
-                            placeholder="name"
-                            type="text"
-                          />
-                          <Label for="assetName">Name</Label>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm="6">
-                        <FormGroup floating>
-                          <Input
-                            id="category"
-                            name="category"
-                            placeholder="category"
-                            type="text"
-                          />
-                          <Label for="category">Category</Label>
-                        </FormGroup>
-                      </Col>
-                      <Col sm="6">
-                        <FormGroup floating>
-                          <Input
-                            id="subCategory"
-                            name="subCategory"
-                            placeholder="subcategory"
-                            type="text"
-                          />
-                          <Label for="subCategory">Sub-Category</Label>
-                        </FormGroup>
-                      </Col>
-
-                      <Col sm="6">
-                        <FormGroup>
-                          <DateRangePicker
-                            label="Availability Range"
-                            onChange={handleDate}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <div
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <Button
-                        className="buttonClose"
-                        color="primary"
-                        onClick={() => window.history.back()}
-                        style={{ visibility: "visible", opacity: 1 }}
-                      >
-                        Clear
-                      </Button>
-
-                      <Button color="primary" type="submit">
-                        Save
-                      </Button>
-                    </div>
-                  </AccordionBody>
-                </AccordionItem>
-              </Accordion>
-            </Col>
-          </Row>
-        </Form>
-<Row>
-<Col md="12" className="text-end">
-        <Button
-          color="primary"
-          type="submit"
-          onClick={() => navigate("/admin/exchange/requestequipment")}
-        >
-          Request Equipment
-        </Button>
-      </Col>
-</Row>
         <Row>
           <Col md="12">
             <Card>
-              <CardHeader
-                style={{
-                  paddingTop: 0,
-                  translate: "4.8px 20px",
-                }}
-              >
-                <CardTitle
-                  tag="h6"
-                  style={{
-                    color: "rgb(82,203,206)",
-                    fontWeight: "bold",
-                    textTransform: "capitalize",
-                    WebkitTextTransform: "capitalize",
-                  }}
-                ></CardTitle>
-              </CardHeader>
-              <CardBody
-                style={{
-                  paddingTop: 0,
-                }}
-              >
+              <CardBody className="pt-4">
+                <Container fluid>
+                  <Row className="align-items-center">
+                    <Col xs={12} md={12}>
+                      <div className="d-flex justify-content-end align-items-center">
+                        {/* Search Input */}
+                        <div className="me-2 flex-grow-1 mt-1">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Type name of item you are looking for or use Advanced search"
+                          />
+                        </div>
+
+                        {/* Search Icon */}
+                        <div
+                          onClick={openModal}
+                          className="me-2"
+                          style={{ cursor: "pointer" }}
+                          className="icon-style mr-2"
+                        >
+                          <IoSearchSharp color="white" size="2.4em" />
+                        </div>
+
+                        {/* Add Icon */}
+                        <button
+                          onClick={() =>
+                            navigate("/admin/exchange/requestequipment")
+                          }
+                          className="p-0 icon-style"
+                        >
+                          <div>
+                            <i class="fa fa-megaphone"></i>
+                            <IoMegaphoneOutline color="white" size="2.4em" />
+                          </div>
+                        </button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Container>
                 <ReactTable
                   data={filterFormData}
                   columns={columns}
@@ -388,6 +340,117 @@ function ExchangeRegister() {
           </Col>
         </Row>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Filter Modal"
+      >
+        <div className="content2">
+          <div className="placer">
+            <Form onSubmit={handleChange}>
+              <Row>
+                <Col md="12">
+                  <Card>
+                    <CardHeader
+                      className="d-flex justify-content-between align-items-center bg-info p-2"
+                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
+                    >
+                      <h6 className="text-white m-0 d-flex align-items-center">
+                        <i
+                          className="fa fa-filter me-2 p-1"
+                          style={{
+                            fontSize: "0.9em",
+                            backgroundColor: "#52CBCE",
+                            border: "2px solid #52CBCE",
+                            borderRadius: "15%",
+                          }}
+                        ></i>
+                        Filter
+                      </h6>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        aria-label="Close"
+                      >
+                        <i
+                          className="fa fa-times text-white"
+                          style={{ fontSize: "1em" }}
+                        ></i>
+                      </button>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <FormGroup floating>
+                            <Input
+                              id="id"
+                              name="id"
+                              placeholder="ID"
+                              type="number"
+                            />
+                            <Label for="id">ID</Label>
+                          </FormGroup>
+                        </Col>
+
+                        <Col sm="6">
+                          <FormGroup floating>
+                            <Input
+                              id="assetName"
+                              name="name"
+                              placeholder="name"
+                              type="text"
+                            />
+                            <Label for="assetName">Name</Label>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <FloatingLabelDropdown
+                            label="Category"
+                            options={statusOptions}
+                            onChange={handleCategoryChange}
+                          />
+                        </Col>
+                        <Col sm="6">
+                          <FloatingLabelDropdown
+                            label="Sub-Category"
+                            options={statusOptions}
+                            onChange={handleSubCategoryChange}
+                          />
+                        </Col>
+
+                        <Col sm="6">
+                          <FormGroup>
+                            <DateRangePicker
+                              label="Availability Range"
+                              onChange={handleDate}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+
+                      <div className="d-flex justify-content-end gap-1">
+                        <button
+                          className="btn btn-primary"
+                          onClick={handleClearClick}
+                          type="clear"
+                        >
+                          Clear
+                        </button>
+                        <button className="btn btn-success" type="submit">
+                          Filter
+                        </button>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }

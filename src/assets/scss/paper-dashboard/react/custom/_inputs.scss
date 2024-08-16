@@ -118,16 +118,16 @@ Modal Date popup overflow
   overflow: unset !important;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open {
-  overflow: unset !important;
-  height: unset !important;
-  width: 40% !important;
-}
-
-.ReactModal__Content.ReactModal__Content--after-open .card {
+.modal-content .card {
   margin-bottom: 0px !important;
 }
 
 .react-select .react-select__menu {
   height: max-content !important;
+}
+
+.icon-style {
+  background-color: #52cbce;
+  border: 2px solid #52cbce;
+  border-radius: 15%;
 }
