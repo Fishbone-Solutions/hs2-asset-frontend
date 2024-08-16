@@ -33,6 +33,7 @@ import { useEffect } from "react";
 import ReactDatetime from "react-datetime";
 import "./Inventory.css";
 import "./FloatingLabel.css";
+import { IoListSharp } from "react-icons/io5";
 
 function Inventory() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -408,7 +409,7 @@ function Inventory() {
         Cell: ({ row }) => {
           const status = row.original.statuscode;
           const badgeClass = {
-            Sold: "badge-danger",
+            Sold: "badge-success ",
             Live: "badge-danger liveIcon",
             Listing: "badge-info",
           }[status];
@@ -465,7 +466,8 @@ function Inventory() {
               size="sm"
               onClick={() => handleEoI(row.original.asset_id)}
             >
-              <i class="fa fa-list"></i>
+              <IoListSharp />
+              {/* <i class="fa fa-list"></i> */}
               {/* <img src={applicationIconImage} width={"15px"} alt="..." /> */}
             </Button>
             <Button

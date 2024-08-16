@@ -29,12 +29,16 @@ import BACKEND_ADDRESS from "views/components/serverAddress";
 import DateRangePicker from "views/components/DateRangePicker";
 import defaultLiveIconImage from "assets/img/live.png";
 
+import SvgFilePlus from "../../components/svg/FilePlus";
+
 import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
 import {
   IoSearchSharp,
   IoAddCircleOutline,
   IoMegaphoneOutline,
+  IoFileTrayStackedSharp,
 } from "react-icons/io5";
+import SvgSearchPlus from "../../components/svg/SearchPlus";
 
 function ExchangeRegister() {
   const [formData, setFormData] = useState({
@@ -272,7 +276,7 @@ function ExchangeRegister() {
               size="sm"
               onClick={() => handleSubmissionEoi(row.original.asset_id, "edit")}
             >
-              <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
+              <SvgFilePlus />
             </Button>
           </div>
         ),
@@ -289,17 +293,23 @@ function ExchangeRegister() {
           <Col md="12">
             <Card>
               <CardBody className="pt-4">
-                <Container fluid>
+                <Container className="custom-fuild" fluid>
                   <Row className="align-items-center">
                     <Col xs={12} md={12}>
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
-                        <div className="me-2 flex-grow-1 mt-1">
+                        <div className="input-group flex-grow-1 mt-2 me-2">
                           <input
                             type="text"
-                            className="form-control"
+                            className="form-control custom-placeholder"
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />
+                          <button
+                            className="customSearchInputGroup"
+                            type="button"
+                          >
+                            <i className="fa fa-search"></i>
+                          </button>
                         </div>
 
                         {/* Search Icon */}
@@ -309,7 +319,7 @@ function ExchangeRegister() {
                           style={{ cursor: "pointer" }}
                           className="icon-style mr-2"
                         >
-                          <IoSearchSharp color="white" size="2.4em" />
+                          <SvgSearchPlus color="white" size="2.4em" />
                         </div>
 
                         {/* Add Icon */}
