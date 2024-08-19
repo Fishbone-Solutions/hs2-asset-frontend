@@ -266,7 +266,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleView(row.original.asset_id, "view")}
+              onClick={() => handleView(row.original.asset_id, "exchange")}
             >
               <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -315,9 +315,8 @@ function ExchangeRegister() {
                         {/* Search Icon */}
                         <div
                           onClick={openModal}
-                          className="me-2"
+                          className=" icon-style mr-2 me-2"
                           style={{ cursor: "pointer" }}
-                          className="icon-style mr-2"
                         >
                           <SvgSearchPlus
                             width="34"
