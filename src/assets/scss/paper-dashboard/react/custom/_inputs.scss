@@ -67,7 +67,6 @@ floating label for date range picker
   pointer-events: none;
   transition: all 0.2s ease;
   background: white;
-  padding: 0 0.25rem;
   color: #999;
 }
 
@@ -106,7 +105,7 @@ floating label for date range picker
 }
 
 .datepicker-input::placeholder {
-  color: #66615b; /* Change this to your desired color */
+  color: #a79cb7; /* Change this to your desired color */
   opacity: 1; /* Ensure the color is applied correctly */
   font-size: 14px;
 }
@@ -183,5 +182,20 @@ Modal css
 
 .custom-input-search > input {
   border: 2px solid #dddddd !important;
-  border-right: 0px !important;
+}
+.custom-input-search > span {
+  background-color: #52cbce;
+}
+.custom-input-search {
+  padding-left: 0px !important;
+}
+h6 {
+  text-transform: math-auto !important;
+}
+
+/**
+global overwrite the css of label color inside the card
+*/
+.card label {
+  font-size: 14px !important;
 }

@@ -493,7 +493,7 @@ function Inventory() {
           <Col md="12">
             <Card>
               <CardBody>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div className="float-end d-inline-flex p-2 justify-content-end">
                   <div
                     onClick={openModal}
                     style={{ marginRight: "10px", cursor: "pointer" }}
@@ -527,7 +527,7 @@ function Inventory() {
                 <ReactTable
                   data={dataState}
                   columns={columns}
-                  className="-striped -highlight primary-pagination"
+                  className="-striped -highlight primary-pagination mt-2"
                 />
                 {errorMessage}
               </CardBody>
@@ -548,7 +548,7 @@ function Inventory() {
                 <Col md="12">
                   <Card>
                     <CardHeader
-                      className="d-flex justify-content-between align-items-center bg-info p-2"
+                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
                       style={{ height: "32px", backgroundColor: "#52CBCE" }}
                     >
                       <h6 className="text-white m-0 d-flex align-items-center">

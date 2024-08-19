@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FormGroup, Label } from "reactstrap";
 import moment from "moment";
 
-const DateRangePicker = ({ label, onChange }) => {
+const DateRangePicker = ({ inputName, label, onChange }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +40,7 @@ const DateRangePicker = ({ label, onChange }) => {
         </label>
         <DatePicker
           className="datepicker-input"
+          name={inputName}
           selected={startDate}
           onChange={handleChange}
           startDate={startDate}
