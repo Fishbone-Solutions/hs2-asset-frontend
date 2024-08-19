@@ -301,9 +301,8 @@ function W6() {
                         {/* Search Icon */}
                         <div
                           onClick={openModal}
-                          className="me-2"
+                          className="me-2 icon-style mr-2"
                           style={{ cursor: "pointer" }}
-                          className="icon-style mr-2"
                         >
                           <IoSearchSharp color="white" size="2.4em" />
                         </div>

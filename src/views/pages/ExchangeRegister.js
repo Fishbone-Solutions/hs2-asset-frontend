@@ -57,7 +57,15 @@ function ExchangeRegister() {
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
 
-  const handleClearClick = () => {};
+  const handleClearClick = () => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: "",
+      asset_name: "",
+      available_from: "",
+      available_to: "",
+    }));
+  };
 
   React.useEffect(() => {
     fetchData();
@@ -79,6 +87,8 @@ function ExchangeRegister() {
       fltr_name: getValueOrDefault(filterFormData.asset_name),
       fltr_from_availability: getValueOrDefault(filterFormData.available_from),
       fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+      fltr_category1: getValueOrDefault(filterFormData.fltr_category1),
+      fltr_category2: getValueOrDefault(filterFormData.fltr_category2),
     });
 
     try {
@@ -435,7 +445,7 @@ function ExchangeRegister() {
                         <button
                           className="btn btn-primary px-2 py-2"
                           onClick={handleClearClick}
-                          type="clear"
+                          type="button"
                         >
                           Clear
                         </button>
