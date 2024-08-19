@@ -100,7 +100,16 @@ function ExchangeRegister() {
     fetchData();
   }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
-  const handleChange = async (event) => {
+
+  const handleChange =  (event) => {
+    const { name, value } = event.target;
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     const { name, value } = event.target;
     event.preventDefault();
 
@@ -112,9 +121,13 @@ function ExchangeRegister() {
       fltr_name: getValueOrDefault(filterFormData.asset_name),
       fltr_from_availability: getValueOrDefault(filterFormData.available_from),
       fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+      fltr_category1: getValueOrDefault(filterFormData.fltr_category1),
+      fltr_category2: getValueOrDefault(filterFormData.fltr_category2),
     });
 
-    const url = `${BACKEND_ADDRESS}/assets/-1?${params.toString()}`;
+    const url = `${BACKEND_ADDRESS}/register?${params.toString()}`;
+
+   console.log("url",url);
 
     const requestOptions = {
       method: "GET",
@@ -149,7 +162,7 @@ function ExchangeRegister() {
   };
 
   const handleDate = (startDate, endDate) => {
-    console.log(startDate, endDate);
+    setFormData()
   };
 
   const handleCategoryChange = (category) => {
@@ -266,7 +279,7 @@ function ExchangeRegister() {
               className="btn-icon btn-simple"
               color="info"
               size="sm"
-              onClick={() => handleView(row.original.asset_id, "exchange")}
+              onClick={() => handleView(row.original.asset_id, "view")}
             >
               <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
             </Button>
@@ -315,8 +328,8 @@ function ExchangeRegister() {
                         {/* Search Icon */}
                         <div
                           onClick={openModal}
-                          className=" icon-style mr-2 me-2"
                           style={{ cursor: "pointer" }}
+                          className="icon-style mr-2 me-2"
                         >
                           <SvgSearchPlus
                             width="34"
@@ -362,7 +375,7 @@ function ExchangeRegister() {
       >
         <div className="content2">
           <div className="placer">
-            <Form onSubmit={handleChange}>
+            <Form onSubmit={handleSubmit}>
               <Row>
                 <Col md="12">
                   <Card>
@@ -393,6 +406,8 @@ function ExchangeRegister() {
                               name="id"
                               placeholder="ID"
                               type="number"
+                              onChange={handleChange}
+                              value={filterFormData.id}
                             />
                             <Label for="id">ID</Label>
                           </FormGroup>
