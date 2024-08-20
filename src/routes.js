@@ -54,7 +54,7 @@ const routes = [
   {
     path: "/eoi/view/:id",
     pathName: "/admin/eoi/view/:id",
-    name: "Inventory | Item",
+    name: "EoI",
     component: <EoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",

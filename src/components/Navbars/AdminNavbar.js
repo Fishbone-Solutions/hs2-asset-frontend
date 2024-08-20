@@ -69,33 +69,33 @@ function AdminNavbar(props) {
     setCollapseOpen(!collapseOpen);
   };
 
-  const renderTitle = () => {
-    const titleLookup = {
-      view: {
-        assets: "Inventory | View Item ",
-        eoi: "Inventory | EOI List | View EoI ",
-      },
-      edit: {
-        eoi: "Inventory | EOI List | Edit EoI ",
-        default: "Inventory | Edit Item ",
-      },
-      null: {
-        eoi: "Inventory | EOI List ",
-      },
-    };
+  const pathKeyToTitleMap = [
+    { pattern: /^\/admin\/inventory$/, title: 'Inventory' },
+    { pattern: /^\/admin\/assetregister\/\d+\?mode=view$/, title: 'Inventory | View Item' },
+    { pattern: /^\/admin\/assetregister\/\d+\?mode=edit$/, title: 'Inventory | Edit Item' },
+    { pattern: /^\/admin\/assetregister+\?mode=add$/, title: 'Inventory | Add Item' },
+    { pattern: /^\/admin\/eoi\/\d+$/, title: 'Inventory | All EOI' },
+    { pattern: /^\/admin\/eoi\/details\/\d+\?mode=view&eoino=\d+$/, title: 'Inventory | All EOI | View' },
+    { pattern: /^\/admin\/eoi\/details\/\d+\?mode=edit&eoino=\d+$/, title: 'Inventory | All EOI | Edit' },
+    { pattern: /^\/admin\/exchange\/register$/, title: 'Exchange Register' },
+    { pattern: /^\/admin\/assetregister\/105\?mode=exchange$/, title: 'Exchange Register | View Item' },
+    { pattern: /^\/admin\/exchange\/eoisubmission\/105\?mode=edit$/, title: 'Exchange Register | Submit EOI' },
+    { pattern: /^\/admin\/exchange\/requestequipment$/, title: 'Exchange Register | Broadcast Item Request' }
+];
 
-    const pathKey = location.pathname.includes("assets")
-      ? "assets"
-      : location.pathname.includes("eoi")
-        ? "eoi"
-        : "default";
+const renderTitle = () => {
+    const pathKey = location.pathname + location.search;
+    
+    for (const entry of pathKeyToTitleMap) {
+        if (entry.pattern.test(pathKey)) {
+            return entry.title;
+        }
+    }
+    
+    return ''; // Provide a default title if no pattern matches
+};
 
-    return (
-      (titleLookup[mode] && titleLookup[mode][pathKey]) ||
-      titleLookup.edit.default ||
-      name
-    );
-  };
+
 
   return (
     <>
