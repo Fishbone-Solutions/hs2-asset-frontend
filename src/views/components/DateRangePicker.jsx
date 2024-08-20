@@ -53,6 +53,7 @@ const DateRangePicker = ({
         <DatePicker
           className="datepicker-input"
           name={inputName}
+          dateFormat="d/MM/YYYY"
           selected={startDate}
           onChange={handleChange}
           startDate={mode === "range" ? startDate : null}
