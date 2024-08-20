@@ -138,14 +138,15 @@ const renderTitle = () => {
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
               <span className="d-none d-md-block" style={{ color: "white" }}>
-                {icon && <i className={icon}></i>}
-                <span style={{ color: "white", fontWeight: "bold" }}>
-                  {renderTitle()}
-                </span>
+              {icon && <i className={icon}></i>}
+<span style={{ color: "white", fontWeight: "bold", marginLeft: "8px" }}>
+  {renderTitle()}
+</span>
+
               </span>
               <span className="d-block d-md-none">
                 {icon && <i className={icon}></i>}
-                <span style={{ color: "white", fontWeight: "bold" }}>
+                <span style={{ color: "white", fontWeight: "bold" ,marginLeft: "8px"}}>
                   {renderTitle()}
                 </span>
               </span>
