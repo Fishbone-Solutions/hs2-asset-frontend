@@ -75,36 +75,25 @@ const AssetRegister = () => {
     { value: "Expired", label: "Expired" },
 ];
   const optionsCategory1 = [
-    { value: "construction-office", label: "Construction Office" },
-    {
-      value: "storage-logistics-facilities",
-      label: "Storage/Logistics Facilities",
-    },
-    { value: "processing-facilities", label: "Processing Facilities" },
-    { value: "fixed-services", label: "Fixed Services" },
-    { value: "temporary-services", label: "Temporary Services" },
-    { value: "security", label: "Security" },
-    {
-      value: "compound-security-safety-infrastructure",
-      label: "Compound Security/Safety Infrastructure",
-    },
-    {
-      value: "site-roads-and-infrastructure",
-      label: "Site Roads and Infrastructure",
-    },
-    { value: "temporary-siding", label: "Temporary Siding" },
-    { value: "consolidation-yards", label: "Consolidation Yards" },
-    { value: "concrete-production", label: "Concrete Production" },
-    { value: "diversions", label: "Diversions" },
-    { value: "earthworks", label: "Earthworks" },
-    { value: "static-plant", label: "Static Plant" },
-    { value: "piling", label: "Piling" },
-    { value: "pipework", label: "Pipework" },
-    {
-      value: "public-highway-traffic-management",
-      label: "Public Highway Traffic Management",
-    },
-    { value: "other-assets", label: "Other Assets" },
+    { value: "Construction Office", label: "Construction Office" },
+    { value: "Storage/Logistics Facilities",  label: "Storage/Logistics Facilities",},
+    { value: "Processing Facilities", label: "Processing Facilities" },
+    { value: "Fixed Services", label: "Fixed Services" },
+    { value: "Temporary Services", label: "Temporary Services" },
+    { value: "Security", label: "Security" },
+    { value: "Compound Security/Safety Infrastructure",    label: "Compound Security/Safety Infrastructure", },
+    { value: "Site Roads and Infrastructure",label: "Site Roads and Infrastructure",},
+    { value: "Temporary Siding", label: "Temporary Siding" },
+    { value: "Consolidation Yards", label: "Consolidation Yards" },
+    { value: "Concrete Production", label: "Concrete Production" },
+    { value: "Diversions", label: "Diversions" },
+    { value: "Earthworks", label: "Earthworks" },
+    { value: "Static Plant", label: "Static Plant" },
+    { value: "Piling", label: "Piling" },
+    { value: "Pipework", label: "Pipework" },
+    { value: "Public Highway Traffic Management", label: "Public Highway Traffic Management" },
+    { value: "Other Assets", label: "Other Assets" }
+    
   ];
 
   useEffect(() => {
@@ -417,9 +406,10 @@ const AssetRegister = () => {
                               categorycode2: selectedOption.value,
                             }))
                           }
+                          
                           options={[
-                            { value: "Option 1", label: "Option 1" },
-                            { value: "Option 2", label: "Option 2" },
+                            { value: "Generic", label: "Generic" },
+                            { value: "Other", label: "Option" },
                           ]}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
