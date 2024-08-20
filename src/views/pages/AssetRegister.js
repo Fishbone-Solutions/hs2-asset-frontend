@@ -37,6 +37,7 @@ const AssetRegister = () => {
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
+  console.log("mode asset",mode)
   const UPLOAD_TEXT =
     mode === "add" || mode === "edit"
       ? "Drag and drop files here to upload"
@@ -732,12 +733,12 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {mode !== "view" ||
-              ("exchange" && (
-                <Button color="primary" type="submit">
-                  Save
-                </Button>
-              ))}
+            {(mode !== "view" && (mode === "add" || mode === "edit")) && (
+  <Button color="primary" type="submit">
+    Save
+  </Button>
+)}
+              
           </div>
         </Form>
       </div>
