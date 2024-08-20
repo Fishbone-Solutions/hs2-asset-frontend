@@ -3,7 +3,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
-const DateRangePicker = ({ inputName, label, onChange, mode = "range" }) => {
+const DateRangePicker = ({
+  inputName,
+  label,
+  labelType = "floating",
+  onChange,
+  mode = "range",
+}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +44,7 @@ const DateRangePicker = ({ inputName, label, onChange, mode = "range" }) => {
     <div className="floating-label-container">
       <div className="floating-label-group">
         <label
-          className={`floating-label ${
+          className={`${labelType === "floating" ? "floating-label" : ""} ${
             startDate || (mode === "range" && endDate) ? "active" : ""
           }`}
         >

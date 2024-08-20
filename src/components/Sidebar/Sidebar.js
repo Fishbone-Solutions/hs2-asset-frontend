@@ -6,6 +6,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/faces/ex_logo.jpg";
 import { GlobalContext } from "GlobalState";
+import BACKEND_ADDRESS from "views/components/serverAddress";
 var ps;
 
 const getQueryParams = () => {
@@ -19,6 +20,7 @@ function Sidebar(props) {
   const [openAvatar, setOpenAvatar] = React.useState(false);
   const [collapseStates, setCollapseStates] = React.useState({});
   const { username } = useContext(GlobalContext);
+  const [dataState, setDataState] = React.useState({});
   const sidebar = React.useRef();
 
   // Initialize collapse states based on routes
@@ -142,7 +144,33 @@ function Sidebar(props) {
 
   React.useEffect(() => {
     setCollapseStates(getCollapseStates(props.routes));
+    fetchData();
   }, [props.routes]);
+
+  const fetchData = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    myHeaders.append("user_id", username); // Add user_id to headers
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${BACKEND_ADDRESS}/users/${username}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setDataState(result.appRespData[0]);
+      console.log("companyName", dataState, result.appRespData[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const { mode } = getQueryParams();
 
@@ -194,8 +222,14 @@ function Sidebar(props) {
               aria-expanded={openAvatar}
               onClick={() => setOpenAvatar(!openAvatar)}
             >
-              <span>
-                {username}
+              <span className="profile-view">
+                <span className="user-name">{dataState.firstname}</span>
+                <br />
+                {dataState && dataState.organization_title && (
+                  <span className="company-name">
+                    {dataState.organization_title.split(" ")[0]}
+                  </span>
+                )}
                 <b className="caret" />
               </span>
             </a>

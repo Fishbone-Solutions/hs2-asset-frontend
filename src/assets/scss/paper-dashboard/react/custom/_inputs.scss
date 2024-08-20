@@ -1,5 +1,12 @@
+/**
+top bar toggle icon 
+*/
+button#minimizeSidebar:hover > i {
+  color: #fff !important;
+}
+
 .form-control {
-  height: calc(1.7em + 0.75rem + 2px);
+  height: calc(1.6em + 0.75rem + 2px);
 }
 // Input files - hide actual input - requires specific markup in the sample.
 .form-group input[type="file"] {
@@ -181,7 +188,7 @@ Modal css
 }
 
 .custom-input-search > input {
-  border: 2px solid #dddddd !important;
+  border: 2px solid #dddddd;
 }
 .custom-input-search > span {
   background-color: #52cbce;
@@ -192,10 +199,23 @@ Modal css
 h6 {
   text-transform: math-auto !important;
 }
+.active-close-btn {
+  border: 2px solid #dddddd !important;
+  border-right: 0px !important;
+}
 
 /**
 global overwrite the css of label color inside the card
 */
 .card label {
   font-size: 14px !important;
+}
+
+/**
+search clear btn 
+*/
+.close-search-btn {
+  background-color: transparent !important;
+  border: 2px solid #ced4da;
+  border-left: 0px;
 }

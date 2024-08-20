@@ -337,7 +337,7 @@ function Inventory() {
     { value: "Used-Not-Working", label: "Used - Not Working" },
     { value: "Refurbished", label: "Refurbished" },
     { value: "Expired", label: "Expired" },
-];
+  ];
 
   const handleEntryDate = (startDate, endDate) => {
     console.log(startDate, endDate);
@@ -420,7 +420,7 @@ function Inventory() {
             <span className={`badge ${badgeClass}`}>
               {status === "Live" ? (
                 <>
-                  <span className="mt-1">{status}</span>
+                  <span className="mt-1">{status} </span>
                   <LiveSvgComponent />
                 </>
               ) : (
@@ -619,7 +619,7 @@ function Inventory() {
                         <Col sm="6">
                           <FormGroup>
                             <DateRangePicker
-                              label="Available Range"
+                              label="Availablility Range"
                               onChange={handleAvailableDate}
                             />
                           </FormGroup>

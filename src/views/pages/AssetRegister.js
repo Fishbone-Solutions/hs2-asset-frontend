@@ -24,6 +24,7 @@ import BACKEND_ADDRESS from "views/components/serverAddress";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
+import DateRangePicker from "views/components/DateRangePicker";
 const camelCaseWithSpaces = (text) => {
   return text
     .split(" ")
@@ -37,7 +38,7 @@ const AssetRegister = () => {
   const query = new URLSearchParams(location.search);
   const mode = query.get("mode");
   const isAddMode = mode === "add";
-  console.log("mode asset",mode)
+  console.log("mode asset", mode);
   const UPLOAD_TEXT =
     mode === "add" || mode === "edit"
       ? "Drag and drop files here to upload"
@@ -73,16 +74,25 @@ const AssetRegister = () => {
     { value: "Used-Not-Working", label: "Used - Not Working" },
     { value: "Refurbished", label: "Refurbished" },
     { value: "Expired", label: "Expired" },
-];
+  ];
   const optionsCategory1 = [
     { value: "Construction Office", label: "Construction Office" },
-    { value: "Storage/Logistics Facilities",  label: "Storage/Logistics Facilities",},
+    {
+      value: "Storage/Logistics Facilities",
+      label: "Storage/Logistics Facilities",
+    },
     { value: "Processing Facilities", label: "Processing Facilities" },
     { value: "Fixed Services", label: "Fixed Services" },
     { value: "Temporary Services", label: "Temporary Services" },
     { value: "Security", label: "Security" },
-    { value: "Compound Security/Safety Infrastructure",    label: "Compound Security/Safety Infrastructure", },
-    { value: "Site Roads and Infrastructure",label: "Site Roads and Infrastructure",},
+    {
+      value: "Compound Security/Safety Infrastructure",
+      label: "Compound Security/Safety Infrastructure",
+    },
+    {
+      value: "Site Roads and Infrastructure",
+      label: "Site Roads and Infrastructure",
+    },
     { value: "Temporary Siding", label: "Temporary Siding" },
     { value: "Consolidation Yards", label: "Consolidation Yards" },
     { value: "Concrete Production", label: "Concrete Production" },
@@ -91,9 +101,11 @@ const AssetRegister = () => {
     { value: "Static Plant", label: "Static Plant" },
     { value: "Piling", label: "Piling" },
     { value: "Pipework", label: "Pipework" },
-    { value: "Public Highway Traffic Management", label: "Public Highway Traffic Management" },
-    { value: "Other Assets", label: "Other Assets" }
-    
+    {
+      value: "Public Highway Traffic Management",
+      label: "Public Highway Traffic Management",
+    },
+    { value: "Other Assets", label: "Other Assets" },
   ];
 
   useEffect(() => {
@@ -112,7 +124,7 @@ const AssetRegister = () => {
 
           const response = await fetch(
             `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions,
+            requestOptions
           );
 
           if (response.ok) {
@@ -153,6 +165,8 @@ const AssetRegister = () => {
     }));
   };
 
+  const handleDate = () => {};
+
   const handleSubmit = async () => {
     const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? id : ""}`;
     const requestBody = { ...formData };
@@ -179,7 +193,7 @@ const AssetRegister = () => {
           btnSize=""
         >
           Asset Listing submitted
-        </ReactBSAlert>,
+        </ReactBSAlert>
       );
       navigate("/admin/inventory");
     } catch (error) {
@@ -219,7 +233,7 @@ const AssetRegister = () => {
             btnSize=""
           >
             Please fill in all required fields.
-          </ReactBSAlert>,
+          </ReactBSAlert>
         );
         return;
       }
@@ -237,7 +251,7 @@ const AssetRegister = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      />,
+      />
     );
   };
 
@@ -373,7 +387,7 @@ const AssetRegister = () => {
                           classNamePrefix="react-select"
                           name="categorycode1"
                           value={optionsCategory1.find(
-                            (option) => option.value === formData.categorycode1,
+                            (option) => option.value === formData.categorycode1
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -406,7 +420,6 @@ const AssetRegister = () => {
                               categorycode2: selectedOption.value,
                             }))
                           }
-                          
                           options={[
                             { value: "Generic", label: "Generic" },
                             { value: "Other", label: "Other" },
@@ -483,29 +496,13 @@ const AssetRegister = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Forecasted Availability*
-                      </Label>
                       <FormGroup>
-                        <ReactDatetime
-                          inputProps={{
-                            className: "form-control",
-                            placeholder: "DD/MM/YYYY",
-                          }}
-                          value={
-                            formData.available_from
-                              ? moment(formData.available_from, "DD/MM/YYYY")
-                              : null
-                          }
-                          onChange={(momentDate) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              available_from: momentDate.format("DD/MM/YYYY"),
-                            }))
-                          }
-                          timeFormat={false}
-                          readOnly={isReadOnly}
-                          dateFormat="DD/MM/YYYY"
+                        <DateRangePicker
+                          label="Forecasted Availability*"
+                          inputName="availablility_range"
+                          onChange={handleDate}
+                          labelType="NonFloating"
+                          mode="single"
                         />
                       </FormGroup>
                     </Col>
@@ -520,7 +517,7 @@ const AssetRegister = () => {
                           name="asset_condition"
                           value={options.find(
                             (option) =>
-                              option.value === formData.asset_condition,
+                              option.value === formData.asset_condition
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -687,7 +684,7 @@ const AssetRegister = () => {
                             classNamePrefix="react-select"
                             name="statuscode"
                             value={options.find(
-                              (option) => option.value === formData.statuscode,
+                              (option) => option.value === formData.statuscode
                             )}
                             onChange={(selectedOption) =>
                               setFormData((prevState) => ({
@@ -723,12 +720,11 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {(mode !== "view" && (mode === "add" || mode === "edit")) && (
-  <Button color="primary" type="submit">
-    Save
-  </Button>
-)}
-              
+            {mode !== "view" && (mode === "add" || mode === "edit") && (
+              <Button color="primary" type="submit">
+                Save
+              </Button>
+            )}
           </div>
         </Form>
       </div>

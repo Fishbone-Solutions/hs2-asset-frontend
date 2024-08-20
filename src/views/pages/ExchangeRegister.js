@@ -34,6 +34,7 @@ import SvgFilePlus from "../../components/svg/FilePlus";
 import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
 import {
   IoSearchSharp,
+  IoCloseSharp,
   IoAddCircleOutline,
   IoMegaphoneOutline,
   IoFileTrayStackedSharp,
@@ -50,6 +51,7 @@ function ExchangeRegister() {
   const [dataState, setDataState] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [rangeDates, setRangeDates] = useState({ startDate: "", endDate: "" });
+  const [inputValue, setInputValue] = useState("");
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [alert, setAlert] = React.useState(null);
@@ -161,11 +163,16 @@ function ExchangeRegister() {
   const openModal = () => {
     setModalIsOpen(true);
     setFilterFormDate({ ...filterFormData, asset_name: "" });
+    clearInput();
   };
 
   const handleInputChange = (e) => {
-    // Update the state with the new input value
-    setFilterFormDate({ ...filterFormData, asset_name: e.target.value });
+    setInputValue(e.target.value);
+  };
+
+  const clearInput = () => {
+    setFilterFormDate({ ...filterFormData, asset_name: "" });
+    setInputValue("");
   };
 
   const closeModal = () => setModalIsOpen(false);
@@ -173,89 +180,46 @@ function ExchangeRegister() {
   const columns = React.useMemo(
     () => [
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>ID</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "ID",
+        isSortable: true,
         accessor: "asset_id",
         width: "2%",
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>CATEGORY</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "CATEGORY",
+        isSortable: true,
         accessor: "categorycode1",
-        width: "2%",
+        width: "8%",
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>SUB CATEGORY</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "SUB CATEGORY",
+        isSortable: true,
         accessor: "categorycode2",
         width: "8%",
       },
 
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>NAME</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "NAME",
+        isSortable: true,
         accessor: "asset_name",
         width: "10%",
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>DESCRIPTION</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "DESCRIPTION",
         accessor: "description",
         width: "16%",
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>SELLER</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "SELLER",
+        isSortable: true,
         accessor: "seller_title",
         width: "8%",
       },
       {
-        Header: ({ column }) => (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>AVAILABILITY</span>
-            <span>
-              {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-            </span>
-          </div>
-        ),
+        Header: "AVAILABILITY",
+        isSortable: true,
         accessor: "available_from",
-        width: "2%",
+        width: "1%",
       },
       {
         Header: "ACTIONS",
@@ -300,7 +264,7 @@ function ExchangeRegister() {
                     <Col xs={12} md={12}>
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
-                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-6">
+                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-5">
                           <span className="input-group-text" id="basic-addon1">
                             <IoSearchSharp color="white" />
                           </span>
@@ -308,10 +272,20 @@ function ExchangeRegister() {
                             type="text"
                             id="quickSearch"
                             onKeyPress={handleNameSearch}
-                            handleInputChange={handleInputChange}
-                            className="form-control custom-placeholder"
+                            onChange={handleInputChange}
+                            value={inputValue}
+                            className={`form-control custom-placeholder ${inputValue ? "active-close-btn" : ""}`}
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />
+                          {inputValue && (
+                            <span
+                              className="input-group-text close-search-btn"
+                              onClick={clearInput}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <IoCloseSharp color="red" />
+                            </span>
+                          )}
                         </div>
 
                         {/* Search Icon */}

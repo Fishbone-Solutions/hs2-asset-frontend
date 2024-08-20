@@ -637,3 +637,18 @@
     border-right: 1px solid #ddd;
   }
 }
+
+.profile-view {
+  margin-top: -7px;
+}
+
+.profile-view > .company-name {
+  font-size: "smaller";
+  color: "#fff";
+}
+.profile-view > .user-name {
+  color: #52cbce;
+}
+.profile-view > .caret {
+  top: 17px !important;
+}

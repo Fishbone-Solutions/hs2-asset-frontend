@@ -26,7 +26,7 @@ function AdminNavbar(props) {
   const id = query.get("id");
 
   const currentRoute = routes.find((route) =>
-    location.pathname.includes(route.pathName),
+    location.pathname.includes(route.pathName)
   );
 
   const { name, icon } = currentRoute || {};
@@ -70,32 +70,54 @@ function AdminNavbar(props) {
   };
 
   const pathKeyToTitleMap = [
-    { pattern: /^\/admin\/inventory$/, title: 'Inventory' },
-    { pattern: /^\/admin\/assetregister\/\d+\?mode=view$/, title: 'Inventory | View Item' },
-    { pattern: /^\/admin\/assetregister\/\d+\?mode=edit$/, title: 'Inventory | Edit Item' },
-    { pattern: /^\/admin\/assetregister+\?mode=add$/, title: 'Inventory | Add Item' },
-    { pattern: /^\/admin\/eoi\/\d+$/, title: 'Inventory | All EOI' },
-    { pattern: /^\/admin\/eoi\/details\/\d+\?mode=view&eoino=\d+$/, title: 'Inventory | All EOI | View' },
-    { pattern: /^\/admin\/eoi\/details\/\d+\?mode=edit&eoino=\d+$/, title: 'Inventory | All EOI | Edit' },
-    { pattern: /^\/admin\/exchange\/register$/, title: 'Exchange Register' },
-    { pattern: /^\/admin\/assetregister\/105\?mode=exchange$/, title: 'Exchange Register | View Item' },
-    { pattern: /^\/admin\/exchange\/eoisubmission\/105\?mode=edit$/, title: 'Exchange Register | Submit EOI' },
-    { pattern: /^\/admin\/exchange\/requestequipment$/, title: 'Exchange Register | Broadcast Item Request' }
-];
+    { pattern: /^\/admin\/inventory$/, title: "Inventory" },
+    {
+      pattern: /^\/admin\/assetregister\/\d+\?mode=view$/,
+      title: "Inventory | View Item",
+    },
+    {
+      pattern: /^\/admin\/assetregister\/\d+\?mode=edit$/,
+      title: "Inventory | Edit Item",
+    },
+    {
+      pattern: /^\/admin\/assetregister+\?mode=add$/,
+      title: "Inventory | Add Item",
+    },
+    { pattern: /^\/admin\/eoi\/\d+$/, title: "Inventory | All EOI" },
+    {
+      pattern: /^\/admin\/eoi\/details\/\d+\?mode=view&eoino=\d+$/,
+      title: "Inventory | All EOI | View",
+    },
+    {
+      pattern: /^\/admin\/eoi\/details\/\d+\?mode=edit&eoino=\d+$/,
+      title: "Inventory | All EOI | Edit",
+    },
+    { pattern: /^\/admin\/exchange\/register$/, title: "Exchange Register" },
+    {
+      pattern: /^\/admin\/assetregister\/105\?mode=exchange$/,
+      title: "Exchange Register | View Item",
+    },
+    {
+      pattern: /^\/admin\/exchange\/eoisubmission\/105\?mode=edit$/,
+      title: "Exchange Register | Submit EOI",
+    },
+    {
+      pattern: /^\/admin\/exchange\/requestequipment$/,
+      title: "Exchange Register | Broadcast Item Request",
+    },
+  ];
 
-const renderTitle = () => {
+  const renderTitle = () => {
     const pathKey = location.pathname + location.search;
-    
+
     for (const entry of pathKeyToTitleMap) {
-        if (entry.pattern.test(pathKey)) {
-            return entry.title;
-        }
+      if (entry.pattern.test(pathKey)) {
+        return entry.title;
+      }
     }
-    
-    return ''; // Provide a default title if no pattern matches
-};
 
-
+    return ""; // Provide a default title if no pattern matches
+  };
 
   return (
     <>
@@ -104,7 +126,7 @@ const renderTitle = () => {
         expand="lg"
         style={{ backgroundColor: "#52CBCE" }}
       >
-        <Container fluid>
+        <Container className="custom-fuild" fluid>
           <div className="navbar-wrapper">
             <div className="navbar-minimize">
               <Button
@@ -114,10 +136,13 @@ const renderTitle = () => {
                 onClick={props.handleMiniClick}
                 style={{ backgroundColor: "grey" }}
               >
-                <i className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini" />
+                <i
+                  className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"
+                  style={{ color: "#57524D" }}
+                />
                 <i
                   className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"
-                  style={{ color: "white" }}
+                  style={{ color: "#57524D" }}
                 />
               </Button>
             </div>
@@ -138,15 +163,26 @@ const renderTitle = () => {
             </div>
             <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
               <span className="d-none d-md-block" style={{ color: "white" }}>
-              {icon && <i className={icon}></i>}
-<span style={{ color: "white", fontWeight: "bold", marginLeft: "8px" }}>
-  {renderTitle()}
-</span>
-
+                {icon && <i className={icon}></i>}
+                <span
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    marginLeft: "8px",
+                  }}
+                >
+                  {renderTitle()}
+                </span>
               </span>
               <span className="d-block d-md-none">
                 {icon && <i className={icon}></i>}
-                <span style={{ color: "white", fontWeight: "bold" ,marginLeft: "8px"}}>
+                <span
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    marginLeft: "8px",
+                  }}
+                >
                   {renderTitle()}
                 </span>
               </span>
