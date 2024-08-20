@@ -2,7 +2,10 @@
 top bar toggle icon 
 */
 button#minimizeSidebar:hover > i {
-  color: #fff !important;
+  color: #57524d !important;
+}
+button#minimizeSidebar {
+  background-color: #34b5b8 !important;
 }
 
 .form-control {
@@ -218,4 +221,8 @@ search clear btn
   background-color: transparent !important;
   border: 2px solid #ced4da;
   border-left: 0px;
+}
+
+#basic-addon1 {
+  padding: 0.175rem 0.4rem !important;
 }

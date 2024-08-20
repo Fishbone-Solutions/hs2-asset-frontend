@@ -206,7 +206,6 @@ function Inventory() {
   }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
   const successDelete = (assetId) => {
-    console.log(assetId);
     const deleteEndpoint = `${BACKEND_ADDRESS}/assets/${assetId}/-1`;
 
     const myHeaders = new Headers();
@@ -380,6 +379,18 @@ function Inventory() {
         isSortable: true,
       },
       {
+        Header: "Category",
+        accessor: "categorycode1",
+        width: "8%",
+        isSortable: true,
+      },
+      {
+        Header: "Sub Category",
+        accessor: "categorycode2",
+        width: "8%",
+        isSortable: true,
+      },
+      {
         Header: "Name",
         accessor: "asset_name",
         width: "10%",
@@ -390,12 +401,6 @@ function Inventory() {
         accessor: "description",
         width: "16%",
         isSortable: false,
-      },
-      {
-        Header: "Location",
-        accessor: "asset_location",
-        width: "8%",
-        isSortable: true,
       },
       {
         Header: "Availability",

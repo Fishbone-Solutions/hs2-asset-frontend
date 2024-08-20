@@ -40,6 +40,7 @@ import {
   IoFileTrayStackedSharp,
 } from "react-icons/io5";
 import SvgSearchPlus from "../../components/svg/SearchPlus";
+import RefreshComponetIcon from "components/svg/RefreshComponet";
 
 function ExchangeRegister() {
   const [filterFormData, setFilterFormDate] = useState({
@@ -59,6 +60,8 @@ function ExchangeRegister() {
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
 
+  const [refreshData, setRefreshData] = useState(0);
+
   const handleClearClick = () => {
     setFilterFormDate((prevState) => ({
       ...prevState,
@@ -71,7 +74,7 @@ function ExchangeRegister() {
 
   React.useEffect(() => {
     fetchData();
-  }, [filterFormData]); // Empty dependency array to ensure this effect runs only once when the component mounts
+  }, [filterFormData, refreshData]); // Empty dependency array to ensure this effect runs only once when the component mounts
 
   const fetchData = async () => {
     const myHeaders = new Headers();
@@ -175,6 +178,12 @@ function ExchangeRegister() {
     setInputValue("");
   };
 
+  const handleRefreshComponet = () => {
+    const refreshUpdateData = refreshData + 1;
+    setRefreshData(refreshUpdateData);
+    clearInput();
+  };
+
   const closeModal = () => setModalIsOpen(false);
 
   const columns = React.useMemo(
@@ -266,7 +275,7 @@ function ExchangeRegister() {
                         {/* Search Input */}
                         <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-5">
                           <span className="input-group-text" id="basic-addon1">
-                            <IoSearchSharp color="white" />
+                            <IoSearchSharp size="1.5em" color="white" />
                           </span>
                           <input
                             type="text"
@@ -291,6 +300,18 @@ function ExchangeRegister() {
                         {/* Search Icon */}
 
                         <div className="ms-auto d-inline-flex">
+                          <div
+                            onClick={handleRefreshComponet}
+                            className="me-2 icon-style"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <RefreshComponetIcon
+                              width="30"
+                              height="30"
+                              color="white"
+                              size="2.4em"
+                            />
+                          </div>
                           <div
                             onClick={openModal}
                             className="me-2 icon-style"
@@ -347,8 +368,8 @@ function ExchangeRegister() {
                     <CardHeader className="d-flex justify-content-between align-items-center p-2 card-header-custom">
                       <h6 className="text-white m-0 d-flex align-items-center">
                         <SvgSearchPlus
-                          width="20"
-                          height="20"
+                          width="25"
+                          height="25"
                           className="me-2"
                         />
                         Advanced Search

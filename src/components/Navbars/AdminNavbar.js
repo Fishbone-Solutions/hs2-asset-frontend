@@ -138,11 +138,11 @@ function AdminNavbar(props) {
               >
                 <i
                   className="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"
-                  style={{ color: "#57524D" }}
+                  style={{ color: "#fff" }}
                 />
                 <i
                   className="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"
-                  style={{ color: "#57524D" }}
+                  style={{ color: "#fff" }}
                 />
               </Button>
             </div>
