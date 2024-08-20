@@ -33,6 +33,7 @@ import SvgFilePlus from "../../components/svg/FilePlus";
 
 import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
 import {
+  IoSearchSharp,
   IoMegaphoneOutline,
 } from "react-icons/io5";
 import SvgSearchPlus from "../../components/svg/SearchPlus";
@@ -157,12 +158,47 @@ function W10() {
 set
   };
 
+  const handleNameSearch = (e) => {
+    if (e.key === "Enter") {
+      setFilterFormDate({ asset_name: e.target.value });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    // Update the state with the new input value
+    setFilterFormDate({ ...filterFormData, asset_name: e.target.value });
+  };
+
+
+  const handleAdvancedFilter = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: formData.get("id"),
+      asset_name: formData.get("name"),
+      available_from: rangeDates.startDate,
+      available_to: rangeDates.endDate,
+    }));
+  };
   const handleCategoryChange = (category) => {
     console.log(category);
   };
 
   const handleSubCategoryChange = (subCategory) => {
     console.log(subCategory);
+  };
+
+  const handleClearClick = () => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: "",
+      asset_name: "",
+      available_from: "",
+      available_to: "",
+    }));
   };
 
   const statusOptions = [
@@ -302,6 +338,7 @@ set
   );
   return (
     <>
+     <>
       <div className="content">
         {alert}
 
@@ -314,46 +351,48 @@ set
                     <Col xs={12} md={12}>
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
-                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2">
+                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-6">
+                          <span className="input-group-text" id="basic-addon1">
+                            <IoSearchSharp color="white" />
+                          </span>
                           <input
                             type="text"
+                            id="quickSearch"
+                            onKeyPress={handleNameSearch}
+                            handleInputChange={handleInputChange}
                             className="form-control custom-placeholder"
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />
-                          <button
-                            className="customSearchInputGroup"
-                            type="button"
-                          >
-                            <i className="fa fa-search"></i>
-                          </button>
                         </div>
 
                         {/* Search Icon */}
-                        <div
-                          onClick={openModal}
-                          style={{ cursor: "pointer" }}
-                          className="icon-style mr-2 me-2"
-                        >
-                          <SvgSearchPlus
-                            width="34"
-                            height="34"
-                            color="white"
-                            size="2.4em"
-                          />
-                        </div>
 
-                        {/* Add Icon */}
-                        <button
-                          onClick={() =>
-                            navigate("/admin/exchange/requestequipment")
-                          }
-                          className="p-0 icon-style"
-                        >
-                          <div>
-                            <i class="fa fa-megaphone"></i>
-                            <IoMegaphoneOutline color="white" size="2.4em" />
+                        <div className="ms-auto d-inline-flex">
+                          <div
+                            onClick={openModal}
+                            className="me-2 icon-style"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <SvgSearchPlus
+                              width="30"
+                              height="30"
+                              color="white"
+                              size="2.4em"
+                            />
                           </div>
-                        </button>
+
+                          {/* Add Icon */}
+                          <button
+                            onClick={() =>
+                              navigate("/admin/exchange/requestequipment")
+                            }
+                            className="p-0 icon-style"
+                          >
+                            <div>
+                              <IoMegaphoneOutline color="white" size="2.2em" />
+                            </div>
+                          </button>
+                        </div>
                       </div>
                     </Col>
                   </Row>
@@ -378,7 +417,7 @@ set
       >
         <div className="content2">
           <div className="placer">
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleAdvancedFilter}>
               <Row>
                 <Col md="12">
                   <Card>
@@ -409,8 +448,6 @@ set
                               name="id"
                               placeholder="ID"
                               type="number"
-                              onChange={handleChange}
-                              value={filterFormData.id}
                             />
                             <Label for="id">ID</Label>
                           </FormGroup>
@@ -419,12 +456,10 @@ set
                         <Col sm="6">
                           <FormGroup floating>
                             <Input
-                              id="asset_name"
-                              name="asset_name"
+                              id="assetName"
+                              name="name"
                               placeholder="name"
                               type="text"
-                              onChange={handleChange}
-                              value={filterFormData.asset_name}
                             />
                             <Label for="assetName">Name</Label>
                           </FormGroup>
@@ -441,7 +476,7 @@ set
                         <Col sm="6">
                           <FloatingLabelDropdown
                             label="Sub-Category"
-                            options={optionsCategory1}
+                            options={statusOptions}
                             onChange={handleSubCategoryChange}
                           />
                         </Col>
@@ -450,7 +485,9 @@ set
                           <FormGroup>
                             <DateRangePicker
                               label="Availability Range"
-                              onChange={handleDate}
+                              inputName="availablility_range"
+                              mode="single"
+                              onChange={(start, end) => console.log("Selected date:", start, end)}
                             />
                           </FormGroup>
                         </Col>
@@ -459,8 +496,8 @@ set
                       <div className="d-flex justify-content-end gap-1">
                         <button
                           className="btn btn-primary px-2 py-2"
-//onClick={handleClearClick}
-                          type="clear"
+                          onClick={handleClearClick}
+                          type="button"
                         >
                           Clear
                         </button>
@@ -479,6 +516,7 @@ set
           </div>
         </div>
       </Modal>
+    </>
     </>
   );
 }
