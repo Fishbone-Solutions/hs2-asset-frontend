@@ -468,7 +468,7 @@ const RequestEquipment = () => {
             </Button>
             {mode !== "view" && (
               <Button color="primary" type="submit">
-                Submit
+                Broadcast Request
               </Button>
             )}
           </div>
