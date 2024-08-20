@@ -189,49 +189,49 @@ function ExchangeRegister() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "ID",
+        Header: "Id",
         isSortable: true,
         accessor: "asset_id",
         width: "2%",
       },
       {
-        Header: "CATEGORY",
+        Header: "Category",
         isSortable: true,
         accessor: "categorycode1",
         width: "8%",
       },
       {
-        Header: "SUB CATEGORY",
+        Header: "Sub Category",
         isSortable: true,
         accessor: "categorycode2",
         width: "8%",
       },
 
       {
-        Header: "NAME",
+        Header: "Name",
         isSortable: true,
         accessor: "asset_name",
         width: "10%",
       },
       {
-        Header: "DESCRIPTION",
+        Header: "Description",
         accessor: "description",
         width: "16%",
       },
       {
-        Header: "SELLER",
+        Header: "Seller",
         isSortable: true,
         accessor: "seller_title",
         width: "8%",
       },
       {
-        Header: "AVAILABILITY",
+        Header: "Availability",
         isSortable: true,
         accessor: "available_from",
         width: "1%",
       },
       {
-        Header: "ACTIONS",
+        Header: "Actions",
         accessor: "actions",
         sortable: false,
         width: "1%",
