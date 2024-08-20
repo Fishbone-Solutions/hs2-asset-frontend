@@ -497,7 +497,7 @@ const [EoiFormData,setEoiFormData ] = useState({
             </Button>
             {mode !== "view" && (
               <Button color="primary" type="submit">
-                Broadcast Request
+Submit EoI
               </Button>
             )}
           </div>
