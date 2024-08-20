@@ -189,7 +189,7 @@ function ExchangeRegister() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Id",
+        Header: "ID",
         isSortable: true,
         accessor: "asset_id",
         width: "2%",
