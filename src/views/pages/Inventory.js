@@ -635,13 +635,16 @@ function Inventory() {
                       </Row>
                       <div className="d-flex justify-content-end gap-1">
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-primary px-2 py-2"
                           onClick={handleClearClick}
                           type="clear"
                         >
                           Clear
                         </button>
-                        <button className="btn btn-success" type="submit">
+                        <button
+                          className="btn btn-success px-2 py-2"
+                          type="submit"
+                        >
                           Filter
                         </button>
                       </div>
