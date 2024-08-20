@@ -332,10 +332,12 @@ function Inventory() {
   };
 
   const statusOptions = [
-    { value: "Listing", label: "Listing" },
-    { value: "Live", label: "Live" },
-    { value: "Sold", label: "Sold" },
-  ];
+    { value: "New", label: "New" },
+    { value: "Used-Working", label: "Used - Working" },
+    { value: "Used-Not-Working", label: "Used - Not Working" },
+    { value: "Refurbished", label: "Refurbished" },
+    { value: "Expired", label: "Expired" },
+];
 
   const handleEntryDate = (startDate, endDate) => {
     console.log(startDate, endDate);
