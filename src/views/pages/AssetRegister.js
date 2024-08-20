@@ -409,7 +409,7 @@ const AssetRegister = () => {
                           
                           options={[
                             { value: "Generic", label: "Generic" },
-                            { value: "Other", label: "Option" },
+                            { value: "Other", label: "Other" },
                           ]}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
