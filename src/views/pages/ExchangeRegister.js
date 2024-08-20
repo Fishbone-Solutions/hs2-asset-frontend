@@ -33,91 +33,55 @@ import SvgFilePlus from "../../components/svg/FilePlus";
 
 import FloatingLabelDropdown from "../components/FloatingLabelDropdown";
 import {
+  IoSearchSharp,
+  IoAddCircleOutline,
   IoMegaphoneOutline,
+  IoFileTrayStackedSharp,
 } from "react-icons/io5";
 import SvgSearchPlus from "../../components/svg/SearchPlus";
 
 function ExchangeRegister() {
-  const [formData, setFormData] = useState([]);
-  const [filterFormData, setFilterFormDate] = useState([]);
+  const [filterFormData, setFilterFormDate] = useState({
+    id: "",
+    asset_name: "",
+    available_from: "",
+    available_to: "",
+  });
+  const [dataState, setDataState] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [rangeDates, setRangeDates] = useState({ startDate: "", endDate: "" });
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [alert, setAlert] = React.useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
   const { username } = useContext(GlobalContext);
-  const [open, setOpen] = useState();
-  const toggle = (id) => {
-    if (open === id) {
-      setOpen();
-    } else {
-      setOpen(id);
-    }
-  };
 
   const handleClearClick = () => {
-    setFilterFormDate({
+    setFilterFormDate((prevState) => ({
+      ...prevState,
       id: "",
       asset_name: "",
       available_from: "",
       available_to: "",
-      fltr_category1: "",
-      fltr_category2: "",
-    });
-
-  };
-
-  const [liveIconImage, setliveIconImage] =
-    React.useState(defaultLiveIconImage);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", username);
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
-      try {
-        const response = await fetch(
-          `${BACKEND_ADDRESS}/register?fltr_id=-1&fltr_name=-1&fltr_category1=-1&fltr_category2=-1&fltr_from_availability=-1&fltr_to_availability=-1}`,
-          requestOptions
-        );
-        const result = await response.json();
-        setFormData(result.appRespData);
-        console.log(result);
-      } catch (error) {
-        setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time"
-        );
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
-
-
-  const handleChange =  (event) => {
-    const { name, value } = event.target;
-    setFilterFormDate((prevState) => ({
-      ...prevState,
-      [name]: value,
     }));
   };
 
-  const handleSubmit = async (event) => {
-    const { name, value } = event.target;
-    event.preventDefault();
+  React.useEffect(() => {
+    fetchData();
+  }, [filterFormData]); // Empty dependency array to ensure this effect runs only once when the component mounts
 
-    const getValueOrDefault = (value) => (value ? value : "-1");
+  const fetchData = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("token", "x8F!@p01,*MH");
+    myHeaders.append("user_id", username);
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
 
-    // Construct the query parameters
     const params = new URLSearchParams({
       fltr_id: getValueOrDefault(filterFormData.id),
       fltr_name: getValueOrDefault(filterFormData.asset_name),
@@ -127,32 +91,36 @@ function ExchangeRegister() {
       fltr_category2: getValueOrDefault(filterFormData.fltr_category2),
     });
 
-    const url = `${BACKEND_ADDRESS}/register?${params.toString()}`;
-
-   console.log("url",url);
-
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        token: "x8F!@p01,*MH",
-        user_id: username,
-      },
-    };
-
     try {
-      const response = await fetch(url, requestOptions);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Fetched Data:", data.appRespData); // Debugging log
-      setFormData(data.appRespData); // Update your component state with fetched data
+      const response = await fetch(
+        `${BACKEND_ADDRESS}/register?${params.toString()}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setDataState(result.appRespData);
+      console.log(result);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      setErrorMessage(
+        "Unable to load data. Please refresh the page or load after time"
+      );
+      console.error(error);
     }
+  };
+
+  const getValueOrDefault = (value) => (value ? value : "-1");
+
+  const handleAdvancedFilter = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: formData.get("id"),
+      asset_name: formData.get("name"),
+      available_from: rangeDates.startDate,
+      available_to: rangeDates.endDate,
+    }));
   };
 
   const handleView = (asset_id, mode) => {
@@ -164,7 +132,11 @@ function ExchangeRegister() {
   };
 
   const handleDate = (startDate, endDate) => {
-set
+    setRangeDates((prevState) => ({
+      ...prevState,
+      startDate: startDate,
+      endDate: endDate,
+    }));
   };
 
   const handleCategoryChange = (category) => {
@@ -176,47 +148,26 @@ set
   };
 
   const statusOptions = [
-      { value: "New", label: "New" },
-      { value: "Used-Working", label: "Used - Working" },
-      { value: "Used-Not-Working", label: "Used - Not Working" },
-      { value: "Refurbished", label: "Refurbished" },
-      { value: "Expired", label: "Expired" },
+    { value: "category", label: "category" },
+    { value: "category-1", label: "Category-1" },
   ];
-  
-    const optionsCategory1 = [
-      { value: "construction-office", label: "Construction Office" },
-      {
-        value: "storage-logistics-facilities",
-        label: "Storage/Logistics Facilities",
-      },
-      { value: "processing-facilities", label: "Processing Facilities" },
-      { value: "fixed-services", label: "Fixed Services" },
-      { value: "temporary-services", label: "Temporary Services" },
-      { value: "security", label: "Security" },
-      {
-        value: "compound-security-safety-infrastructure",
-        label: "Compound Security/Safety Infrastructure",
-      },
-      {
-        value: "site-roads-and-infrastructure",
-        label: "Site Roads and Infrastructure",
-      },
-      { value: "temporary-siding", label: "Temporary Siding" },
-      { value: "consolidation-yards", label: "Consolidation Yards" },
-      { value: "concrete-production", label: "Concrete Production" },
-      { value: "diversions", label: "Diversions" },
-      { value: "earthworks", label: "Earthworks" },
-      { value: "static-plant", label: "Static Plant" },
-      { value: "piling", label: "Piling" },
-      { value: "pipework", label: "Pipework" },
-      {
-        value: "public-highway-traffic-management",
-        label: "Public Highway Traffic Management",
-      },
-      { value: "other-assets", label: "Other Assets" },
-    ];
 
-  const openModal = () => setModalIsOpen(true);
+  const handleNameSearch = (e) => {
+    if (e.key === "Enter") {
+      setFilterFormDate({ asset_name: e.target.value });
+    }
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+    setFilterFormDate({ ...filterFormData, asset_name: "" });
+  };
+
+  const handleInputChange = (e) => {
+    // Update the state with the new input value
+    setFilterFormDate({ ...filterFormData, asset_name: e.target.value });
+  };
+
   const closeModal = () => setModalIsOpen(false);
 
   const columns = React.useMemo(
@@ -349,52 +300,54 @@ set
                     <Col xs={12} md={12}>
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
-                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2">
+                        <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-6">
+                          <span className="input-group-text" id="basic-addon1">
+                            <IoSearchSharp color="white" />
+                          </span>
                           <input
                             type="text"
+                            id="quickSearch"
+                            onKeyPress={handleNameSearch}
+                            handleInputChange={handleInputChange}
                             className="form-control custom-placeholder"
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />
-                          <button
-                            className="customSearchInputGroup"
-                            type="button"
-                          >
-                            <i className="fa fa-search"></i>
-                          </button>
                         </div>
 
                         {/* Search Icon */}
-                        <div
-                          onClick={openModal}
-                          style={{ cursor: "pointer" }}
-                          className="icon-style mr-2 me-2"
-                        >
-                          <SvgSearchPlus
-                            width="34"
-                            height="34"
-                            color="white"
-                            size="2.4em"
-                          />
-                        </div>
 
-                        {/* Add Icon */}
-                        <button
-                          onClick={() =>
-                            navigate("/admin/exchange/requestequipment")
-                          }
-                          className="p-0 icon-style"
-                        >
-                          <div>
-                            <i class="fa fa-megaphone"></i>
-                            <IoMegaphoneOutline color="white" size="2.4em" />
+                        <div className="ms-auto d-inline-flex">
+                          <div
+                            onClick={openModal}
+                            className="me-2 icon-style"
+                            style={{ cursor: "pointer" }}
+                          >
+                            <SvgSearchPlus
+                              width="30"
+                              height="30"
+                              color="white"
+                              size="2.4em"
+                            />
                           </div>
-                        </button>
+
+                          {/* Add Icon */}
+                          <button
+                            onClick={() =>
+                              navigate("/admin/exchange/requestequipment")
+                            }
+                            className="p-0 icon-style"
+                          >
+                            <div>
+                              <IoMegaphoneOutline color="white" size="2.2em" />
+                            </div>
+                          </button>
+                        </div>
                       </div>
                     </Col>
                   </Row>
                 </Container>
                 <ReactTable
-                  data={formData}
+                  data={dataState}
                   columns={columns}
                   className="-striped -highlight primary-pagination "
                 />
@@ -413,7 +366,7 @@ set
       >
         <div className="content2">
           <div className="placer">
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleAdvancedFilter}>
               <Row>
                 <Col md="12">
                   <Card>
@@ -444,8 +397,6 @@ set
                               name="id"
                               placeholder="ID"
                               type="number"
-                              onChange={handleChange}
-                              value={filterFormData.id}
                             />
                             <Label for="id">ID</Label>
                           </FormGroup>
@@ -454,12 +405,10 @@ set
                         <Col sm="6">
                           <FormGroup floating>
                             <Input
-                              id="asset_name"
-                              name="asset_name"
+                              id="assetName"
+                              name="name"
                               placeholder="name"
                               type="text"
-                              onChange={handleChange}
-                              value={filterFormData.asset_name}
                             />
                             <Label for="assetName">Name</Label>
                           </FormGroup>
@@ -476,7 +425,7 @@ set
                         <Col sm="6">
                           <FloatingLabelDropdown
                             label="Sub-Category"
-                            options={optionsCategory1}
+                            options={statusOptions}
                             onChange={handleSubCategoryChange}
                           />
                         </Col>
@@ -485,6 +434,7 @@ set
                           <FormGroup>
                             <DateRangePicker
                               label="Availability Range"
+                              inputName="availablility_range"
                               onChange={handleDate}
                             />
                           </FormGroup>
@@ -495,7 +445,7 @@ set
                         <button
                           className="btn btn-primary px-2 py-2"
                           onClick={handleClearClick}
-                          type="clear"
+                          type="button"
                         >
                           Clear
                         </button>
