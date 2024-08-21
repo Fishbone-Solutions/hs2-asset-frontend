@@ -68,6 +68,24 @@ const AssetRegister = () => {
     statuscode: "",
   });
 
+  const requiredFields = [
+    "seller_title",
+    "seller_contactno",
+    "seller_email",
+    "seller_location",
+    "categorycode1",
+    "categorycode2",
+    "asset_name",
+  // "availablility_range",
+    "asset_condition",
+   "quantity",
+   "seller_location",
+  "value",
+    "statuscode"
+
+
+
+   ];
   const Conditionoptions = [
       { value: "New", label: "New" },
       { value: "Used-Working", label: "Used - Working" },
@@ -210,21 +228,7 @@ const AssetRegister = () => {
   const handleFormSubmission = async (event) => {
     event.preventDefault();
 
-    const requiredFields = [
-      "seller_title",
-      "seller_contactno",
-      "seller_email",
-      "seller_location",
-      "categorycode1",
-      "categorycode2",
-      "asset_name",
-      "available_from",
-      "asset_condition",
-      "quantity",
-      "asset_location",
-      "value",
-      "statuscode",
-    ];
+
 
     for (let field of requiredFields) {
       if (!formData[field]) {
@@ -505,7 +509,7 @@ const AssetRegister = () => {
                       <FormGroup>
                         <DateRangePicker
                           label="Forecasted Availability*"
-                          inputName="availablility_range"
+                          name="availablility_range"
                           onChange={handleDate}
                           labelType="NonFloating"
                           mode="single"
