@@ -206,7 +206,9 @@ h6 {
   border: 2px solid #dddddd !important;
   border-right: 0px !important;
 }
-
+input#quickSearch::placeholder {
+  font-size: x-small !important;
+}
 /**
 global overwrite the css of label color inside the card
 */
