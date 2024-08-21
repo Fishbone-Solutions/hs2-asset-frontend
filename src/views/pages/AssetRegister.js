@@ -68,11 +68,19 @@ const AssetRegister = () => {
     statuscode: "",
   });
 
+  const Conditionoptions = [
+      { value: "New", label: "New" },
+      { value: "Used-Working", label: "Used - Working" },
+      { value: "Used-Not-Working", label: "Used - Not Working" },
+      { value: "Refurbished", label: "Refurbished" },
+      { value: "Expired", label: "Expired" },
+  ];
   const options = [
     { value: "Live", label: "Live" },
     { value: "Listing", label: "Listing" },
     { value: "Sold", label: "Sold" },
   ];
+
   const optionsCategory1 = [
     { value: "Construction Office", label: "Construction Office" },
     {
@@ -513,7 +521,7 @@ const AssetRegister = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
-                          value={options.find(
+                          value={Conditionoptions.find(
                             (option) =>
                               option.value === formData.asset_condition
                           )}
@@ -523,7 +531,7 @@ const AssetRegister = () => {
                               asset_condition: selectedOption.value,
                             }))
                           }
-                          options={options}
+                          options={Conditionoptions}
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
                           required
