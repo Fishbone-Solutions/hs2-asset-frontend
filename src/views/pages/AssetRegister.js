@@ -69,11 +69,9 @@ const AssetRegister = () => {
   });
 
   const options = [
-    { value: "New", label: "New" },
-    { value: "Used-Working", label: "Used - Working" },
-    { value: "Used-Not-Working", label: "Used - Not Working" },
-    { value: "Refurbished", label: "Refurbished" },
-    { value: "Expired", label: "Expired" },
+    { value: "Live", label: "Live" },
+    { value: "Listing", label: "Listing" },
+    { value: "Sold", label: "Sold" },
   ];
   const optionsCategory1 = [
     { value: "Construction Office", label: "Construction Office" },
@@ -693,8 +691,8 @@ const AssetRegister = () => {
                               }))
                             }
                             options={[
-                              { value: "Listing", label: "Listing" },
                               { value: "Live", label: "Live" },
+                              { value: "Listing", label: "Listing" },
                               { value: "Sold", label: "Sold" },
                             ]}
                             placeholder="Select an option"
