@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "assets/css/date-picker.css";
 import moment from "moment";
 
 const DateRangePicker = ({
@@ -61,6 +62,9 @@ const DateRangePicker = ({
           selectsRange={mode === "range"}
           placeholderText={label}
           onSelect={() => setIsOpen(false)} // Close the date picker after selection
+          dropdownMode="select"
+          showMonthDropdown
+          showYearDropdown
         />
       </div>
     </div>
