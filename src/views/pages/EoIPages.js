@@ -65,7 +65,7 @@ function EoIPages() {
         btnSize=""
       >
         You will not be able to recover this item.
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -99,11 +99,11 @@ function EoIPages() {
               btnSize=""
             >
               EoI {eoino} has been deleted successfully
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
 
           setDataState((prevState) =>
-            prevState.filter((row) => row.id !== eoino)
+            prevState.filter((row) => row.id !== eoino),
           );
           console.log("Updated Data", dataState);
         } else {
@@ -118,7 +118,7 @@ function EoIPages() {
               btnSize=""
             >
               Error deleting asset
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
           console.log("Error deleting asset");
         }
@@ -144,7 +144,7 @@ function EoIPages() {
         btnSize=""
       >
         No Changes made
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -176,7 +176,7 @@ function EoIPages() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/assets/${id}`,
-          requestOptions
+          requestOptions,
         );
         const result = await response.json();
         setFormData(result.appRespData[0]);
@@ -184,14 +184,14 @@ function EoIPages() {
 
         const responseTable = await fetch(
           `${BACKEND_ADDRESS}/assets/${id}/eoi/-1`,
-          requestOptions
+          requestOptions,
         );
         const resultTable = await responseTable.json();
         setDataState(resultTable.appRespData);
         console.log(resultTable.appRespData);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time"
+          "Unable to load data. Please refresh the page or load after time",
         );
         console.error(error);
       }

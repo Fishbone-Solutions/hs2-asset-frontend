@@ -43,12 +43,7 @@ import SvgSearchPlus from "../../components/svg/SearchPlus";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
 
 function ExchangeRegister() {
-  const [filterFormData, setFilterFormDate] = useState({
-    id: "",
-    asset_name: "",
-    available_from: "",
-    available_to: "",
-  });
+  const [filterFormData, setFilterFormDate] = useState({});
   const [dataState, setDataState] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [rangeDates, setRangeDates] = useState({ startDate: "", endDate: "" });
@@ -74,7 +69,7 @@ function ExchangeRegister() {
 
   React.useEffect(() => {
     fetchData();
-  }, [filterFormData, refreshData]); // Empty dependency array to ensure this effect runs only once when the component mounts
+  }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
   const fetchData = async () => {
     const myHeaders = new Headers();
@@ -99,14 +94,14 @@ function ExchangeRegister() {
     try {
       const response = await fetch(
         `${BACKEND_ADDRESS}/register?${params.toString()}`,
-        requestOptions
+        requestOptions,
       );
       const result = await response.json();
       setDataState(result.appRespData);
-      console.log(result);
+      console.log("data code", result);
     } catch (error) {
       setErrorMessage(
-        "Unable to load data. Please refresh the page or load after time"
+        "Unable to load data. Please refresh the page or load after time",
       );
       console.error(error);
     }
@@ -257,7 +252,7 @@ function ExchangeRegister() {
         ),
       },
     ],
-    []
+    [],
   );
   return (
     <>

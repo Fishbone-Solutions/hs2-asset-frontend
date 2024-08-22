@@ -24,7 +24,8 @@ import BACKEND_ADDRESS from "views/components/serverAddress";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
-import DateRangePicker from "views/components/DateRangePicker";
+import "react-datetime/css/react-datetime.css";
+
 const camelCaseWithSpaces = (text) => {
   return text
     .split(" ")
@@ -76,22 +77,19 @@ const AssetRegister = () => {
     "categorycode1",
     "categorycode2",
     "asset_name",
-  // "availablility_range",
+    // "availablility_range",
     "asset_condition",
-   "quantity",
-   "seller_location",
-  "value",
-    "statuscode"
-
-
-
-   ];
+    "quantity",
+    "seller_location",
+    "value",
+    "statuscode",
+  ];
   const Conditionoptions = [
-      { value: "New", label: "New" },
-      { value: "Used-Working", label: "Used - Working" },
-      { value: "Used-Not-Working", label: "Used - Not Working" },
-      { value: "Refurbished", label: "Refurbished" },
-      { value: "Expired", label: "Expired" },
+    { value: "New", label: "New" },
+    { value: "Used-Working", label: "Used - Working" },
+    { value: "Used-Not-Working", label: "Used - Not Working" },
+    { value: "Refurbished", label: "Refurbished" },
+    { value: "Expired", label: "Expired" },
   ];
   const options = [
     { value: "Live", label: "Live" },
@@ -148,7 +146,7 @@ const AssetRegister = () => {
 
           const response = await fetch(
             `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions
+            requestOptions,
           );
 
           if (response.ok) {
@@ -217,7 +215,7 @@ const AssetRegister = () => {
           btnSize=""
         >
           Asset Listing submitted
-        </ReactBSAlert>
+        </ReactBSAlert>,
       );
       navigate("/admin/inventory");
     } catch (error) {
@@ -227,8 +225,6 @@ const AssetRegister = () => {
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
-
-
 
     for (let field of requiredFields) {
       if (!formData[field]) {
@@ -243,7 +239,7 @@ const AssetRegister = () => {
             btnSize=""
           >
             Please fill in all required fields.
-          </ReactBSAlert>
+          </ReactBSAlert>,
         );
         return;
       }
@@ -261,7 +257,7 @@ const AssetRegister = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      />
+      />,
     );
   };
 
@@ -397,7 +393,7 @@ const AssetRegister = () => {
                           classNamePrefix="react-select"
                           name="categorycode1"
                           value={optionsCategory1.find(
-                            (option) => option.value === formData.categorycode1
+                            (option) => option.value === formData.categorycode1,
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -507,12 +503,25 @@ const AssetRegister = () => {
 
                     <Col sm="6">
                       <FormGroup>
-                        <DateRangePicker
-                          label="Forecasted Availability*"
-                          name="availablility_range"
-                          onChange={handleDate}
-                          labelType="NonFloating"
-                          mode="single"
+                        <ReactDatetime
+                          inputProps={{
+                            className: "form-control",
+                            placeholder: "DD/MM/YYYY",
+                          }}
+                          value={
+                            formData.available_from
+                              ? moment(formData.available_from, "DD/MM/YYYY")
+                              : null
+                          }
+                          onChange={(momentDate) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              available_from: momentDate.format("DD/MM/YYYY"),
+                            }))
+                          }
+                          timeFormat={false}
+                          readOnly={isReadOnly}
+                          dateFormat="DD/MM/YYYY"
                         />
                       </FormGroup>
                     </Col>
@@ -527,7 +536,7 @@ const AssetRegister = () => {
                           name="asset_condition"
                           value={Conditionoptions.find(
                             (option) =>
-                              option.value === formData.asset_condition
+                              option.value === formData.asset_condition,
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
@@ -694,7 +703,7 @@ const AssetRegister = () => {
                             classNamePrefix="react-select"
                             name="statuscode"
                             value={options.find(
-                              (option) => option.value === formData.statuscode
+                              (option) => option.value === formData.statuscode,
                             )}
                             onChange={(selectedOption) =>
                               setFormData((prevState) => ({

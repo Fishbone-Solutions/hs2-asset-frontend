@@ -24,7 +24,7 @@ function Table({ columns, data }) {
     () => ({
       width: 100,
     }),
-    []
+    [],
   );
 
   const {
@@ -51,7 +51,7 @@ function Table({ columns, data }) {
     },
     useSortBy,
     usePagination,
-    useResizeColumns
+    useResizeColumns,
   );
 
   const rowsOptions = useMemo(
@@ -60,11 +60,11 @@ function Table({ columns, data }) {
         value: num,
         label: `${num} rows`,
       })),
-    []
+    [],
   );
 
   let pageSelectData = Array.apply(null, Array(pageOptions.length)).map(
-    function () {}
+    function () {},
   );
 
   return (
@@ -77,7 +77,7 @@ function Table({ columns, data }) {
                 {headerGroup.headers.map((column, key) => (
                   <th
                     {...column.getHeaderProps(
-                      column.isSortable ? column.getSortByToggleProps() : {}
+                      column.isSortable ? column.getSortByToggleProps() : {},
                     )}
                     style={{
                       width: column.width,

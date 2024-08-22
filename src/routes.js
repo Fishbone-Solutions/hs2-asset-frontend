@@ -6,7 +6,7 @@ import EoIPages from "views/pages/EoIPages";
 import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
 import SubmissionEoI from "views/pages/SubmissionEoI";
-import RequestEquipment from "views/pages/RequestEquipment"
+import RequestEquipment from "views/pages/RequestEquipment";
 import W0 from "views/pages/W0";
 import W1 from "views/pages/W1";
 import W2 from "views/pages/W2";
@@ -64,16 +64,15 @@ const routes = [
     path: "/inventory",
     pathName: "/admin/inventory",
     name: "Inventory ",
-    component: <Inventory/>,
+    component: <Inventory />,
     icon: "nc-icon nc-tile-56",
     layout: "/admin",
-
   },
   {
     path: "/exchange/register",
     pathName: "/admin/exchange/register",
     name: "Exchange Register ",
-    component: <ExchangeRegister/>,
+    component: <ExchangeRegister />,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
   },
@@ -81,20 +80,19 @@ const routes = [
     path: "/exchange/requestequipment",
     pathName: "/admin/exchange/requestequipment",
     name: "RequestEquipment",
-    component: <RequestEquipment/>,
+    component: <RequestEquipment />,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
-    hidden:true
+    hidden: true,
   },
   {
     path: "/exchange/eoisubmission/:id",
     pathName: "/admin/exchange/eoisubmission/:id",
     name: "EoI Submission ",
-    component: <SubmissionEoI/>,
+    component: <SubmissionEoI />,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
     hidden: true,
-
   },
 
   {

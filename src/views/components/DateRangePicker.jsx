@@ -22,7 +22,7 @@ const DateRangePicker = ({
       setEndDate(end);
       onChange(
         moment(start).format("DD/MM/YYYY"),
-        end ? moment(end).format("DD/MM/YYYY") : null
+        end ? moment(end).format("DD/MM/YYYY") : null,
       );
     } else {
       setStartDate(dates);

@@ -26,7 +26,7 @@ function AdminNavbar(props) {
   const id = query.get("id");
 
   const currentRoute = routes.find((route) =>
-    location.pathname.includes(route.pathName)
+    location.pathname.includes(route.pathName),
   );
 
   const { name, icon } = currentRoute || {};
