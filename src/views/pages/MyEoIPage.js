@@ -253,13 +253,13 @@ function MyEoIPage() {
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
-            SOLD: { backgroundColor: "#dc3545", color: "white" },
-            LIVE: {
+            "SOLD": { backgroundColor: "#dc3545", color: "white" },
+            "LIVE": {
               backgroundColor: "#28a745",
               color: "white",
               icon: liveIconImage,
             },
-            LISTING: { backgroundColor: "#17a2b8", color: "white" },
+            "LISTING": { backgroundColor: "#17a2b8", color: "white" },
             "EOI-SUBMITTED": { backgroundColor: "#02A8F3", color: "white" },
             "IN-NEGOTIATION": { backgroundColor: "#22B04C", color: "white" },
             "PAYMENT-SENT": { backgroundColor: "#8a0000", color: "white" },
