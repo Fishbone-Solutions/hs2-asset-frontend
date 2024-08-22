@@ -15,7 +15,6 @@ import {
   CardFooter,
 } from "reactstrap";
 import Select from "react-select";
-import ReactDatetime from "react-datetime";
 import moment from "moment";
 import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
@@ -25,6 +24,8 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
 import { GlobalContext } from "GlobalState";
 import "react-datetime/css/react-datetime.css";
+import "react-datetime/css/react-datetime.css";
+import ReactDatetime from "react-datetime";
 
 const camelCaseWithSpaces = (text) => {
   return text
@@ -500,8 +501,10 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-
                     <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>
+                        Forecasted Availability*
+                      </Label>
                       <FormGroup>
                         <ReactDatetime
                           inputProps={{
