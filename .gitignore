@@ -22,4 +22,5 @@ yarn-debug.log*
 yarn-error.log*
 
 original_code.zip
+src/views/components/serverAddress.js
 src/components/Navbars/Untitled-1.rb
