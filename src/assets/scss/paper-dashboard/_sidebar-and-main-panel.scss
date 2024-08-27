@@ -149,7 +149,7 @@
         opacity: 1;
       }
 
-      &.active > a[data-toggle="collapse"] > {
+      &.active > a[data-toggle="collapse"] {
         background-color: transparent;
         box-shadow: $box-shadow;
       }
