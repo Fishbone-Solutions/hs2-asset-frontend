@@ -12,6 +12,7 @@ import {
   Container,
 } from "reactstrap";
 
+
 function AuthNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [color, setColor] = React.useState("navbar-transparent");
@@ -54,13 +55,13 @@ function AuthNavbar(props) {
         <Collapse isOpen={collapseOpen} className="justify-content-end" navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink to="/" className="nav-link">
+              <NavLink to="/auth/register" className="nav-link">
                 <i className="nc-icon nc-book-bookmark" />
                 Register
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="nav-link">
+              <NavLink to="/login" className="nav-link">
                 <i className="nc-icon nc-tap-01" />
                 Login
               </NavLink>

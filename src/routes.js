@@ -7,6 +7,7 @@ import EoIPage from "views/pages/EoIPage";
 import ExchangeRegister from "views/pages/ExchangeRegister";
 import SubmissionEoI from "views/pages/SubmissionEoI";
 import RequestEquipment from "views/pages/RequestEquipment";
+import Register from "views/pages/Register.js";
 import W0 from "views/pages/W0";
 import W1 from "views/pages/W1";
 import W2 from "views/pages/W2";
@@ -279,6 +280,12 @@ const routes = [
     component: <Login />,
     layout: "/auth",
   },
+  {
+    path: "/register",
+    component: <Register />,
+    layout: "/auth",
+  },
+  
 ];
 
 export default routes;
