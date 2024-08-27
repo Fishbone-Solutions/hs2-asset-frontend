@@ -22,6 +22,7 @@ import W11 from "views/pages/W11";
 import W12 from "views/pages/W12";
 import W13 from "views/pages/W13";
 import W14 from "views/pages/W14";
+import MyEoIPage from "views/pages/MyEoIPage";
 const routes = [
   {
     path: "/user-profile",
@@ -109,6 +110,15 @@ const routes = [
     pathName: "/admin/assetregister",
     name: "Add New Item",
     component: <AssetRegister />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true,
+  },
+  {
+    path: "/myeoi",
+    pathName: "/admin/myeoi",
+    name: "My EoI",
+    component: <MyEoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,

@@ -83,9 +83,10 @@ function MyEoIPage() {
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
   };
 
-  const handleSubmissionEoi = (assetId, mode) => {
-    navigate(`/admin/exchange/eoisubmission/${assetId}?mode=${mode}`);
-  };
+    const handleSubmissionEoi = (assetId, mode, eoino) => {
+      console.log("mode from edit", mode);
+      navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
+    };
 
   const handleDate = (startDate, endDate) => {
     set;
@@ -199,13 +200,13 @@ function MyEoIPage() {
             </span>
           </div>
         ),
-        accessor: "",
+        accessor: "asset_id",
         width: "2%",
       },
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span> SUBMISSION DATE</span>
+            <span> Submission Date</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
@@ -217,7 +218,7 @@ function MyEoIPage() {
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>ITEM</span>
+            <span>Item</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
@@ -230,26 +231,26 @@ function MyEoIPage() {
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>SELLER</span>
+            <span>Seller</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
           </div>
         ),
         accessor: "seller_title",
-        width: "10%",
+        width: "4%",
       },
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>STATUS</span>
+            <span>Status</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
           </div>
         ),
         accessor: "eoi_status",
-        width: "16%",
+        width: "0.4%",
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
@@ -305,7 +306,7 @@ function MyEoIPage() {
         },
       },
       {
-        Header: "ACTIONS",
+        Header: "Actions",
         accessor: "actions",
         sortable: false,
         width: "1%",
@@ -323,7 +324,7 @@ function MyEoIPage() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleSubmissionEoi(row.original.asset_id, "edit")}
+              onClick={() => handleSubmissionEoi(row.original.asset_id, "exchange_edit", row.original.id )}
             >
               <SvgFilePlus />
             </Button>

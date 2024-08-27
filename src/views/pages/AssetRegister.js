@@ -98,6 +98,11 @@ const AssetRegister = () => {
     { value: "Sold", label: "Sold" },
   ];
 
+ const  optionsMyEoIEdit = [
+    { value: "Payment Sent", label: "Payment Sent" },
+    { value: "Goods Received ", label: "Goods Received " }
+  ]
+
   const optionsCategory1 = [
     { value: "Construction Office", label: "Construction Office" },
     {
@@ -133,7 +138,7 @@ const AssetRegister = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (mode === "edit" || mode === "view" || mode === "exchange") {
+      if (mode === "edit" || mode === "view" || mode === "exchange" || mode === "exchange_edit") {
         try {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
@@ -680,7 +685,7 @@ const AssetRegister = () => {
               </Card>
             </Col>
             {/* Set Asset Status */}
-            {mode !== "exchange" && (
+            { (mode !== "exchange"  && mode !== "exchange_edit" )  &&  (
               <Col md="12">
                 <Card>
                   <CardHeader>
@@ -730,6 +735,7 @@ const AssetRegister = () => {
                 </Card>
               </Col>
             )}
+         
           </Row>
           {alert}
 
@@ -742,7 +748,7 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {mode !== "view" && (mode === "add" || mode === "edit") && (
+            {mode !== "view" && (mode === "add" || mode === "edit" || mode === "exchange_edit") && (
               <Button color="primary" type="submit">
                 Save
               </Button>
