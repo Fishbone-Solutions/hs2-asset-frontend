@@ -94,7 +94,7 @@ function AdminNavbar(props) {
     },
     { pattern: /^\/admin\/exchange\/register$/, title: "Exchange Register" },
     {
-      pattern: /^\/admin\/assetregister\/105\?mode=exchange$/,
+      pattern: /^\/admin\/assetregister\/\d+\?mode=exchange$/,
       title: "Exchange Register | View Item",
     },
     {
@@ -104,6 +104,18 @@ function AdminNavbar(props) {
     {
       pattern: /^\/admin\/exchange\/requestequipment$/,
       title: "Exchange Register | Broadcast Item Request",
+    },
+    {
+      pattern: /^\/admin\/myeoi$/,
+      title: "My EoI ",
+    },
+    {
+      pattern: /^\/admin\/myeoi\/105\?mode=exchange$/,
+      title: "Exchange Register | View Item",
+    },
+    {
+      pattern: /^\/admin\/eoi\/details\/\d+\?mode=exchange_edit&eoino=\d+$/,
+      title: "MyEoI | Edit",
     },
   ];
 
