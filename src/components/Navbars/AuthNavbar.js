@@ -12,7 +12,6 @@ import {
   Container,
 } from "reactstrap";
 
-
 function AuthNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [color, setColor] = React.useState("navbar-transparent");

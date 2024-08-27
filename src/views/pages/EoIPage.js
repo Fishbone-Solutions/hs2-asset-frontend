@@ -39,9 +39,9 @@ const EoIPage = () => {
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
   const { username } = useContext(GlobalContext);
- 
-  var options = []
-  if (mode ==="edit") {
+
+  var options = [];
+  if (mode === "edit") {
     options = [
       { value: "EOI-SUBMITTED", label: "EOI Submitted" },
       { value: "IN-NEGOTIATION", label: "In Negotiation" },
@@ -75,7 +75,7 @@ const EoIPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (mode === "edit" || mode === "view" || mode === "exchange_edit" ) {
+      if (mode === "edit" || mode === "view" || mode === "exchange_edit") {
         try {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
@@ -167,13 +167,10 @@ const EoIPage = () => {
           EoI submitted
         </ReactBSAlert>,
       );
-      if (mode == 'edit'){
+      if (mode == "edit") {
         navigate(`/admin/eoi/${assetId}`);
-
-      }
-      else if (mode == "exchange_edit"){
+      } else if (mode == "exchange_edit") {
         navigate(`/admin/myeoi`);
-
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -566,7 +563,7 @@ const EoIPage = () => {
                     {"EoI Status"}
                   </CardTitle>
                 </CardHeader>
-                
+
                 <CardBody>
                   <Row>
                     <Col sm="6">
@@ -582,7 +579,9 @@ const EoIPage = () => {
                           onChange={handleSelectChange}
                           options={options}
                           placeholder="Select an option"
-                          isDisabled={ (mode !== "edit"  && mode !== "exchange_edit" )} // Enable only in edit mode
+                          isDisabled={
+                            mode !== "edit" && mode !== "exchange_edit"
+                          } // Enable only in edit mode
                           required
                         />
                       </FormGroup>
@@ -604,11 +603,11 @@ const EoIPage = () => {
                 REQUEST APPROVAL
               </Button>
             )}
-       { (mode === "edit" || mode === "exchange_edit") && (
-    <Button color="primary" type="submit">
-        SAVE
-    </Button>
-)}
+            {(mode === "edit" || mode === "exchange_edit") && (
+              <Button color="primary" type="submit">
+                SAVE
+              </Button>
+            )}
             <Button
               className="buttonClose"
               color="primary"

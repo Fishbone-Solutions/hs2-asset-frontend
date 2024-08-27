@@ -83,10 +83,10 @@ function MyEoIPage() {
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
   };
 
-    const handleSubmissionEoi = (assetId, mode, eoino) => {
-      console.log("mode from edit", mode);
-      navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
-    };
+  const handleSubmissionEoi = (assetId, mode, eoino) => {
+    console.log("mode from edit", mode);
+    navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
+  };
 
   const handleDate = (startDate, endDate) => {
     set;
@@ -254,13 +254,13 @@ function MyEoIPage() {
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
-            "SOLD": { backgroundColor: "#dc3545", color: "white" },
-            "LIVE": {
+            SOLD: { backgroundColor: "#dc3545", color: "white" },
+            LIVE: {
               backgroundColor: "#28a745",
               color: "white",
               icon: liveIconImage,
             },
-            "LISTING": { backgroundColor: "#17a2b8", color: "white" },
+            LISTING: { backgroundColor: "#17a2b8", color: "white" },
             "EOI-SUBMITTED": { backgroundColor: "#02A8F3", color: "white" },
             "IN-NEGOTIATION": { backgroundColor: "#22B04C", color: "white" },
             "PAYMENT-SENT": { backgroundColor: "#8a0000", color: "white" },
@@ -324,7 +324,13 @@ function MyEoIPage() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleSubmissionEoi(row.original.asset_id, "exchange_edit", row.original.id )}
+              onClick={() =>
+                handleSubmissionEoi(
+                  row.original.asset_id,
+                  "exchange_edit",
+                  row.original.id,
+                )
+              }
             >
               <SvgFilePlus />
             </Button>

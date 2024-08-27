@@ -285,7 +285,6 @@ const routes = [
     component: <Register />,
     layout: "/auth",
   },
-  
 ];
 
 export default routes;
