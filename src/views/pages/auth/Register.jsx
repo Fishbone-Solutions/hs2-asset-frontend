@@ -11,16 +11,65 @@ import {
   Label,
   FormGroup,
   Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
   InputGroup,
+  InputGroupText,
+  Input,
   Container,
   Row,
   Col,
 } from "reactstrap";
+import login_lock_icon from "../../assets/img/login_lock_icon.png";
+import Footer from "components/Footer/Footer";
+import AuthNavbar from "components/Navbars/AuthNavbar";
+import { useState } from "react";
+
 
 function Register() {
+
+const handleLogin = () => {
+
+}
+
+const handleChange = (event) => {
+  const { name, value } = event.target;
+  // Only allow changes if not in add mode for id field
+  if (name === "id" && isAddMode) {
+    return; // Prevent changes to id if in add mode
+  }
+
+  setFormData((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+};
+const [formData, setFormData] = useState({
+  first_name: "",
+  last_name: "",
+  email: "",
+  categorycode2: "",
+  asset_name: "",
+  description: "",
+  asset_condition: "",
+  quantity: "",
+  asset_location: "",
+  value: "",
+  additional_info: "",
+  available_from: "",
+  seller_title: "",
+  seller_contactno: "",
+  email: "",
+  seller_location: "",
+  statuscode: "",
+});
+const [registerEmailState, setRegisterEmailState] = useState("");
+
+const verifyEmail = (value) => {
+  var emailRex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRex.test(value);
+};
+
+
   React.useEffect(() => {
     document.body.classList.toggle("register-page");
     return function cleanup() {
@@ -28,123 +77,182 @@ function Register() {
     };
   });
   return (
-    <div className="register-page">
-      <Container>
-        <Row>
-          <Col className="ml-auto" lg="5" md="5">
-            <div className="info-area info-horizontal mt-5">
-              <div className="icon icon-primary">
-                <i className="nc-icon nc-tv-2" />
-              </div>
-              <div className="description">
-                <h5 className="info-title">Marketing</h5>
-                <p className="description">
-                  We've created the marketing campaign of the website. It was a
-                  very interesting collaboration.
-                </p>
-              </div>
-            </div>
-            <div className="info-area info-horizontal">
-              <div className="icon icon-primary">
-                <i className="nc-icon nc-html5" />
-              </div>
-              <div className="description">
-                <h5 className="info-title">Fully Coded in HTML5</h5>
-                <p className="description">
-                  We've developed the website with HTML5 and CSS3. The client
-                  has access to the code using GitHub.
-                </p>
-              </div>
-            </div>
-            <div className="info-area info-horizontal">
-              <div className="icon icon-info">
-                <i className="nc-icon nc-atom" />
-              </div>
-              <div className="description">
-                <h5 className="info-title">Built Audience</h5>
-                <p className="description">
-                  There is also a Fully Customizable CMS Admin Dashboard for
-                  this product.
-                </p>
-              </div>
-            </div>
-          </Col>
-          <Col className="mr-auto" lg="4" md="6">
-            <Card className="card-signup text-center">
+    <div className="login-page">
+    <AuthNavbar></AuthNavbar>
+    <Container>
+      {alert}
+      <Row>
+        <Col className="ml-auto mr-auto" lg="4" md="6">
+          <p
+            style={{
+              textAlign: "right",
+              color: "#52CBCE",
+              marginBottom: -10,
+            }}
+          >
+            Connecting Buyers & Sellers
+          </p>
+          <p
+            style={{
+              textAlign: "left",
+              fontSize: "28.3px",
+              color: "white",
+              marginTop: 0,
+            }}
+          >
+            <span style={{ color: "#52CBCE", fontWeight: "bold" }}>HS2 </span>
+            <span style={{ color: "white", fontWeight: "bold" }}>
+              Exchange Platform
+            </span>
+          </p>
+          <Form action="" className="form" method="">
+            <Card className="card-login">
               <CardHeader>
-                <CardTitle tag="h4">Register</CardTitle>
-                <div className="social">
-                  <Button className="btn-icon btn-round" color="twitter">
-                    <i className="fa fa-twitter" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="dribbble">
-                    <i className="fa fa-dribbble" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="facebook">
-                    <i className="fa fa-facebook-f" />
-                  </Button>
-                  <p className="card-description">or be classical</p>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+
+                  }}
+                >
+                  <p style={{fontWeight: "bold", fontSize:"20px"}}>                  Create Account                  </p>
                 </div>
               </CardHeader>
               <CardBody>
-                <Form action="" className="form" method="">
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-single-02" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="First Name..." type="text" />
-                  </InputGroup>
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-circle-10" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Last Name..." type="text" />
-                  </InputGroup>
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-email-85" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Email..." type="email" />
-                  </InputGroup>
-                  <FormGroup check className="text-left">
-                    <Label check>
-                      <Input defaultChecked type="checkbox" />
-                      <span className="form-check-sign" />I agree to the{" "}
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        terms and conditions
-                      </a>
-                      .
-                    </Label>
-                  </FormGroup>
-                </Form>
+              <CardBody>
+                  <Row>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>First Name</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="first_name"
+                          value={formData.first_name}
+                          onChange={handleChange}
+                          required
+
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Last Name</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="last_name"
+                          value={formData.last_name}
+                          onChange={handleChange}
+                          required
+
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>
+                        Email Address *
+                      </Label>
+                      <FormGroup
+                        className={`has-label ${formData.email}`}
+                      >
+                        <Input
+                          type="text"
+                          name="email"
+                          value={formData.email}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (!verifyEmail(value)) {
+                              setRegisterEmailState("has-danger");
+                            } else {
+                              setRegisterEmailState("has-success");
+                            }
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              email: value,
+                            }));
+                          }}
+                          required
+
+                        />
+                        {registerEmailState === "has-danger" ? (
+                          <label className="error">
+                            Please enter a valid email address.
+                          </label>
+                        ) : null}
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Preferred User ID</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="preferred_user_id"
+                          value={formData.preferred_user_id}
+                          onChange={handleChange}
+                          required
+
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Password</Label>
+                      <FormGroup>
+                        <Input
+                          type="password"
+                          name="password"
+                          value={formData.password}
+                          onChange={handleChange}
+                          required
+
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="12">
+                      <Label style={{ color: "#36454F" }}>Retype Password</Label>
+                      <FormGroup>
+                        <Input
+                          type="password"
+                          name="re_password"
+                          onChange={handleChange}
+                          required
+
+                        />
+                      </FormGroup>
+                    </Col>
+
+                  </Row>
+              
+                </CardBody>
               </CardBody>
               <CardFooter>
                 <Button
-                  className="btn-round"
-                  color="info"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
+                  block
+                  className="btn-round mb-3"
+                  color="primary"
+                  type="submit"
+                  onClick={handleLogin}
+                  style={{ backgroundColor: "rgb(82,203,206)" }}
                 >
-                  Get Started
+                 Sign Up
                 </Button>
               </CardFooter>
             </Card>
-          </Col>
-        </Row>
-      </Container>
-      <div
-        className="full-page-background"
-        style={{
-          backgroundImage: `url(${require("assets/img/bg/jan-sendereks.jpg")})`,
-        }}
-      />
-    </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
+    <Footer></Footer>
+    <div
+      className="full-page-background"
+      style={{
+        backgroundImage: `url(${require("assets/img/bg/bg.png")})`,
+      }}
+    />
+  </div>
   );
 }
 
