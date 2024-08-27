@@ -18,7 +18,6 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import login_lock_icon from "../../assets/img/login_lock_icon.png";
 import Footer from "components/Footer/Footer";
 import AuthNavbar from "components/Navbars/AuthNavbar";
 import { useState } from "react";
@@ -57,7 +56,6 @@ const [formData, setFormData] = useState({
   available_from: "",
   seller_title: "",
   seller_contactno: "",
-  email: "",
   seller_location: "",
   statuscode: "",
 });
@@ -248,9 +246,7 @@ const verifyEmail = (value) => {
     <Footer></Footer>
     <div
       className="full-page-background"
-      style={{
-        backgroundImage: `url(${require("assets/img/bg/bg.png")})`,
-      }}
+    
     />
   </div>
   );

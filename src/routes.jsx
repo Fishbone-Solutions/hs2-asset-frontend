@@ -27,11 +27,14 @@ import W11 from "./views/pages/wireframe/W11.jsx";
 import W12 from "./views/pages/wireframe/W12.jsx";
 import W13 from "./views/pages/wireframe/W13.jsx";
 import W14 from "./views/pages/wireframe/W14.jsx";
+
 import { HiViewGridAdd } from "react-icons/hi";
 import { FaCubesStacked, FaHand, FaCartFlatbedSuitcase } from "react-icons/fa6";
 import { HiRectangleStack } from "react-icons/hi2";
 import { BsMegaphoneFill } from "react-icons/bs";
 import { GiWireframeGlobe } from "react-icons/gi";
+
+import Register from "./views/pages/auth/Register";
 
 const routes = [
   {
@@ -297,6 +300,11 @@ const routes = [
   {
     path: "/login",
     component: <Login />,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    component: <Register />,
     layout: "/auth",
   },
 ];

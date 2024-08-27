@@ -1,10 +1,9 @@
 import React from "react";
 import classnames from "classnames";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PiBookBookmarkFill } from "react-icons/pi";
 import { PiHandTapFill } from "react-icons/pi";
-
-
+import {NavLink} from "reactstrap";
 
 // reactstrap components
 import {
@@ -58,10 +57,10 @@ function AuthNavbar(props) {
         <Collapse isOpen={collapseOpen} className="justify-content-end" navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink to="/" className="nav-link">
+              <Link to="/auth/register" className="nav-link">
                 <PiBookBookmarkFill size="2em" />
                 Register
-              </NavLink>
+              </Link>
             </NavItem>
             <NavItem>
               <NavLink to="/" className="nav-link">

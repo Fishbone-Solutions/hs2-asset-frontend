@@ -169,9 +169,7 @@ function Login() {
       <Footer></Footer>
       <div
         className="full-page-background"
-        style={{
-          // backgroundImage: url("assets/img/bg/bg.png"),
-        }}
+     
       />
     </div>
   );
