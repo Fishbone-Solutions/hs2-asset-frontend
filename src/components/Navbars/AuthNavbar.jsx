@@ -63,10 +63,10 @@ function AuthNavbar(props) {
               </Link>
             </NavItem>
             <NavItem>
-              <NavLink to="/" className="nav-link">
+              <Link to="/auth/login" className="nav-link">
                 <PiHandTapFill size="2em" />
                 Login
-              </NavLink>
+              </Link>
             </NavItem>
           </Nav>
         </Collapse>

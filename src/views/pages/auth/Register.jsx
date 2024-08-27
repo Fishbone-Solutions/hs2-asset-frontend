@@ -45,19 +45,8 @@ const [formData, setFormData] = useState({
   first_name: "",
   last_name: "",
   email: "",
-  categorycode2: "",
-  asset_name: "",
-  description: "",
-  asset_condition: "",
-  quantity: "",
-  asset_location: "",
-  value: "",
-  additional_info: "",
-  available_from: "",
-  seller_title: "",
-  seller_contactno: "",
-  seller_location: "",
-  statuscode: "",
+  password:"",
+  preferred_user_id: "",
 });
 const [registerEmailState, setRegisterEmailState] = useState("");
 
