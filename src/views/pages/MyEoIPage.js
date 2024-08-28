@@ -331,8 +331,7 @@ function MyEoIPage() {
                   row.original.id,
                 )
               }
-            >
-              <SvgFilePlus />
+            >              <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
             </Button>
           </div>
         ),
