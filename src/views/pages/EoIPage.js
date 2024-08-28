@@ -51,8 +51,8 @@ const EoIPage = () => {
   }
   if (mode === "exchange_edit") {
     options = [
-      { value: "PAYMENT-RECEIVED", label: "Payment Received" },
-      { value: "GOODS-SENT", label: "Goods Sent" },
+      { value: "PAYMENT-SENT", label: "Payment Sent" },
+      { value: "GOODS-RECEIVED", label: "Goods Received" },
     ];
   }
   const [formData, setFormData] = useState({
