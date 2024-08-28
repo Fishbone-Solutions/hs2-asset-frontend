@@ -12,6 +12,9 @@ import EoIPage from "./views/pages/EoIPage.jsx";
 import ExchangeRegister from "./views/pages/ExchangeRegister.jsx";
 import SubmissionEoI from "./views/pages/SubmissionEoI.jsx";
 import RequestEquipment from "./views/pages/RequestEquipment.jsx";
+import MyEoI from "./views/pages/myeoi/Index";
+
+
 import W0 from "./views/pages/wireframe/W0.jsx";
 import W1 from "./views/pages/wireframe/W1.jsx";
 import W2 from "./views/pages/wireframe/W2.jsx";
@@ -175,9 +178,9 @@ const routes = [
 
   {
     path: "/myeoi",
-    pathName: "/admin/dashboard",
+    pathName: "/admin/myeoi",
     name: "My EoI's",
-    component: <W4 />,
+    component: <MyEoI />,
     layout: "/admin",
     icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
   },

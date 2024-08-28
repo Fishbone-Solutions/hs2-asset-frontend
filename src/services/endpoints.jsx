@@ -4,4 +4,8 @@ export const endpoints = {
   getInventoryById: (id) => `/assets/${id}`,
   updateInventory: (id) => `/assets/upd/${id}`,
   deleteInventory: (id) => `/assets/del/${id}`,
+  
+  myeoi: (username,)=> `/users/${username}/eoi`,
+  getEoiById:(id) => ``
+ 
 };
