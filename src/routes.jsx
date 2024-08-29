@@ -5,9 +5,13 @@ import InventoryCreate from "./views/pages/inventory/Create.jsx";
 import InventoryShow from "./views/pages/inventory/Show.jsx";
 import InventoryEdit from "./views/pages/inventory/Edit.jsx";
 
+//inventory eoi
+import InventoryEoi from "./views/pages/inventory/eoi/Index";
+import InventoryEoiDetails from "./views/pages/inventory/eoi/Show";
+import InventoryEoiEdit from "./views/pages/inventory/eoi/Edit";
+
 import AssetRegister from "views/pages/AssetRegister";
 import UserProfile from "./views/pages/UserProfile.jsx";
-import EoIPages from "./views/pages/EoIPages.jsx";
 import EoIPage from "./views/pages/EoIPage.jsx";
 import ExchangeRegister from "./views/pages/ExchangeRegister.jsx";
 import SubmissionEoI from "./views/pages/SubmissionEoI.jsx";
@@ -35,7 +39,7 @@ import { BsMegaphoneFill } from "react-icons/bs";
 import { GiWireframeGlobe } from "react-icons/gi";
 
 import Register from "./views/pages/auth/Register";
-
+import MyEoIPage from "views/pages/MyEoIPage";
 const routes = [
   {
     path: "/user-profile",
@@ -82,6 +86,35 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
   },
+
+  {
+    path: "/eois/inventory/:id",
+    pathName: "/admin/eois/inventory/:id",
+    name: "Inventory | Item",
+    component: <InventoryEoi />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true,
+  },
+  {
+    path: "/inventory/:inventoryId/eois/show/:eoiId",
+    pathName: "/admin/inventory/:inventoryId/eois/show/:eoiId",
+    name: "Inventory | EOI | Details",
+    component: <InventoryEoiDetails />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true,
+  },
+  {
+    path: "/inventory/:inventoryId/eois/edit/:eoiId",
+    pathName: "/admin/inventory/:inventoryId/eois/edit/:eoiId",
+    name: "Inventory | EOI | Edit",
+    component: <InventoryEoiEdit />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    hidden: true,
+  },
+
   {
     path: "/eoi/details/:assetId",
     pathName: "/admin/eoi/details/:assetId?mode=view",
@@ -100,7 +133,6 @@ const routes = [
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
   },
-
   {
     path: "/exchange/register",
     pathName: "/admin/exchange/register",
@@ -129,19 +161,19 @@ const routes = [
   },
 
   {
-    path: "/eoi/:id",
-    pathName: "/admin/eois/:id",
-    name: "Inventory | Item",
-    component: <EoIPages />,
+    path: "/assetregister",
+    pathName: "/admin/assetregister",
+    name: "Add New Item",
+    component: <AssetRegister />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,
   },
   {
-    path: "/assetregister",
-    pathName: "/admin/assetregister",
-    name: "Add New Item",
-    component: <AssetRegister />,
+    path: "/myeoi",
+    pathName: "/admin/myeoi",
+    name: "My EoI",
+    component: <MyEoIPage />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
     hidden: true,

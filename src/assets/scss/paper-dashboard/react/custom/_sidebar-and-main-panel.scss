@@ -652,3 +652,20 @@
 .profile-view > .caret {
   top: 17px !important;
 }
+
+th {
+  font-size: 11px !important;
+}
+td {
+  font-size: 12px !important;
+  padding: 6px !important;
+}
+
+//select
+.react-select__input-container {
+  position: absolute;
+  top: 0px;
+}
+.react-select__single-value.css-1dimb5e-singleValue {
+  margin-top: 4px;
+}

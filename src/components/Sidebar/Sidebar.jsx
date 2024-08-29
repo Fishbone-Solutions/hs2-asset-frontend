@@ -162,7 +162,7 @@ function Sidebar(props) {
     try {
       const response = await fetch(
         `${BACKEND_ADDRESS}/users/${username}`,
-        requestOptions
+        requestOptions,
       );
       const result = await response.json();
       setDataState(result.appRespData[0]);

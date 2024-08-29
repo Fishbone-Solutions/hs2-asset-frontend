@@ -58,10 +58,13 @@ const Table = ({ columns, data, isLoading }) => {
     []
   );
 
-  const pageSelectData = Array.from({ length: pageOptions.length }, (_, key) => ({
-    value: key,
-    label: `Page ${key + 1}`,
-  }));
+  const pageSelectData = Array.from(
+    { length: pageOptions.length },
+    (_, key) => ({
+      value: key,
+      label: `Page ${key + 1}`,
+    })
+  );
 
   return (
     <div className="-striped -highlight primary-pagination">
@@ -92,7 +95,10 @@ const Table = ({ columns, data, isLoading }) => {
                       <span className="ml-2">
                         {column.isSorted ? (
                           column.isSortedDesc ? (
-                            <i className="fa fa-sort-down" aria-hidden="true"></i>
+                            <i
+                              className="fa fa-sort-down"
+                              aria-hidden="true"
+                            ></i>
                           ) : (
                             <i className="fa fa-sort-up" aria-hidden="true"></i>
                           )

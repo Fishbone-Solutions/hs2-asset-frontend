@@ -15,7 +15,6 @@ import {
   CardFooter,
 } from "reactstrap";
 import Select from "react-select";
-import ReactDatetime from "react-datetime";
 import moment from "moment";
 import "react-datetime/css/react-datetime.css";
 import ReactBSAlert from "react-bootstrap-sweetalert";
@@ -23,8 +22,11 @@ import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "../../views/components/serverAddress";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./AssetRegister.css";
-import { GlobalContext } from "../../GlobalState";
-import DateRangePicker from "components/Common/DateRangePicker";
+import { GlobalContext } from "@/GlobalState";
+import "react-datetime/css/react-datetime.css";
+import "react-datetime/css/react-datetime.css";
+import ReactDatetime from "react-datetime";
+
 const camelCaseWithSpaces = (text) => {
   return text
     .split(" ")
@@ -96,6 +98,11 @@ const AssetRegister = () => {
     { value: "Sold", label: "Sold" },
   ];
 
+  const optionsMyEoIEdit = [
+    { value: "Payment Sent", label: "Payment Sent" },
+    { value: "Goods Received ", label: "Goods Received " },
+  ];
+
   const optionsCategory1 = [
     { value: "Construction Office", label: "Construction Office" },
     {
@@ -131,7 +138,12 @@ const AssetRegister = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (mode === "edit" || mode === "view" || mode === "exchange") {
+      if (
+        mode === "edit" ||
+        mode === "view" ||
+        mode === "exchange" ||
+        mode === "exchange_edit"
+      ) {
         try {
           const myHeaders = new Headers();
           myHeaders.append("accept", "application/json");
@@ -499,15 +511,30 @@ const AssetRegister = () => {
                         />
                       </FormGroup>
                     </Col>
-
                     <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>
+                        Forecasted Availability*
+                      </Label>
                       <FormGroup>
-                        <DateRangePicker
-                          label="Forecasted Availability*"
-                          name="availablility_range"
-                          onChange={handleDate}
-                          labelType="NonFloating"
-                          mode="single"
+                        <ReactDatetime
+                          inputProps={{
+                            className: "form-control",
+                            placeholder: "DD/MM/YYYY",
+                          }}
+                          value={
+                            formData.available_from
+                              ? moment(formData.available_from, "DD/MM/YYYY")
+                              : null
+                          }
+                          onChange={(momentDate) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              available_from: momentDate.format("DD/MM/YYYY"),
+                            }))
+                          }
+                          timeFormat={false}
+                          readOnly={isReadOnly}
+                          dateFormat="DD/MM/YYYY"
                         />
                       </FormGroup>
                     </Col>
@@ -663,7 +690,7 @@ const AssetRegister = () => {
               </Card>
             </Col>
             {/* Set Asset Status */}
-            {mode !== "exchange" && (
+            {mode !== "exchange" && mode !== "exchange_edit" && (
               <Col md="12">
                 <Card>
                   <CardHeader>
@@ -725,11 +752,14 @@ const AssetRegister = () => {
             >
               Close
             </Button>
-            {mode !== "view" && (mode === "add" || mode === "edit") && (
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            )}
+            {mode !== "view" &&
+              (mode === "add" ||
+                mode === "edit" ||
+                mode === "exchange_edit") && (
+                <Button color="primary" type="submit">
+                  Save
+                </Button>
+              )}
           </div>
         </Form>
       </div>

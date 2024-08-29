@@ -47,7 +47,7 @@ function Inventory() {
   const [liveIconImage, setliveIconImage] =
     React.useState(defaultLiveIconImage);
   const [applicationIconImage, setApplicationIconImage] = React.useState(
-    defaultApplicationIconImage
+    defaultApplicationIconImage,
   );
   const [errorMessage, setErrorMessage] = React.useState("");
   const [dataState, setDataState] = React.useState([]);
@@ -139,7 +139,7 @@ function Inventory() {
         btnSize=""
       >
         No Changes made
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -166,14 +166,14 @@ function Inventory() {
     try {
       const response = await fetch(
         `${BACKEND_ADDRESS}/assets/-1`,
-        requestOptions
+        requestOptions,
       );
       const result = await response.json();
       setDataState(result.appRespData);
       console.log(result);
     } catch (error) {
       setErrorMessage(
-        "Unable to load data. Please refresh the page or load after time"
+        "Unable to load data. Please refresh the page or load after time",
       );
       console.error(error);
     }
@@ -195,14 +195,14 @@ function Inventory() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/assets/-1`,
-          requestOptions
+          requestOptions,
         );
         const result = await response.json();
         setDataState(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time"
+          "Unable to load data. Please refresh the page or load after time",
         );
         console.error(error);
       }
@@ -243,11 +243,11 @@ function Inventory() {
               btnSize=""
             >
               Asset ID {assetId} has been deleted successfully
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
 
           setDataState((prevState) =>
-            prevState.filter((row) => row.asset_id !== assetId)
+            prevState.filter((row) => row.asset_id !== assetId),
           );
           console.log("Updated Data", dataState);
         } else {
@@ -262,7 +262,7 @@ function Inventory() {
               btnSize=""
             >
               Error deleting asset
-            </ReactBSAlert>
+            </ReactBSAlert>,
           );
           console.log("Error deleting asset");
         }
@@ -288,7 +288,7 @@ function Inventory() {
         btnSize=""
       >
         You will not be able to recover this item.
-      </ReactBSAlert>
+      </ReactBSAlert>,
     );
   };
 
@@ -304,7 +304,7 @@ function Inventory() {
         confirmBtnBsStyle="info"
         cancelBtnBsStyle="danger"
         btnSize=""
-      />
+      />,
     );
   };
 
@@ -321,7 +321,7 @@ function Inventory() {
             You entered: <b>{e}</b>
           </p>
         }
-      />
+      />,
     );
   };
   useEffect(() => {
@@ -495,7 +495,7 @@ function Inventory() {
         ),
       },
     ],
-    []
+    [],
   );
 
   return (

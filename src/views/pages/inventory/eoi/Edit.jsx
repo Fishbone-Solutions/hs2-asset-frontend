@@ -1,183 +1,79 @@
-import React, { useState, useEffect, useContext } from "react";
-// reactstrap components
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "@/GlobalState";
+import { useParams } from "react-router-dom";
+import { EndPointService } from "@/services/methods";
+import DynamicToast from "components/Common/Toast";
+import { FullPageLoader } from "components/Common/ComponentLoader";
 import {
   Card,
-  Button,
   CardBody,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  CardHeader,
-  CardTitle,
-  CardFooter,
   Row,
   Col,
+  Button,
+  Input,
+  CardHeader,
+  CardTitle,
+  Label,
+  FormGroup,
+  Form,
+  Modal,
 } from "reactstrap";
-import { GlobalContext } from "../../GlobalState";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import BACKEND_ADDRESS from "../components/serverAddress";
 import Select from "react-select";
-import ReactDatetime from "react-datetime";
 import moment from "moment";
+import ActivityTable from "components/Common/EoiTrackingHistory";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 
-const camelCaseWithSpaces = (text) => {
-  return text
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-};
-
-const EoIPage = () => {
-  const { assetId } = useParams();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const mode = query.get("mode");
-  const eoi = query.get("eoino");
-  const [registerEmailState, setRegisterEmailState] = useState("");
-  const [alert, setAlert] = useState(null);
-  const navigate = useNavigate();
+const Edit = () => {
+  const [dataState, setDataState] = useState({});
+  const [activities, setActivities] = useState({});
+  const [loader, setLoader] = useState(false);
+  const [toastType, setToastType] = useState(null);
+  const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
+  const { inventoryId, eoiId } = useParams();
+  const [alert, setAlert] = useState(null);
+  const headers = { user_id: username };
 
-  var options = [];
-  if (mode === "edit") {
-    options = [
-      { value: "EOI-SUBMITTED", label: "EOI Submitted" },
-      { value: "IN-NEGOTIATION", label: "In Negotiation" },
-      { value: "PAYMENT-RECEIVED", label: "Payment Received" },
-      { value: "GOODS-SENT", label: "Goods Sent" },
-    ];
-  }
-  if (mode === "exchange_edit") {
-    options = [
-      { value: "PAYMENT-SENT", label: "Payment Sent" },
-      { value: "GOODS-RECEIVED", label: "Goods Received" },
-    ];
-  }
-  const [formData, setFormData] = useState({
-    id: "",
-    code: "",
-    asset_id: "",
-    submission_date_formatted: "",
-    buyer_name: "",
-    organization: "",
-    contact_no: "",
-    email: "",
-    address: "",
-    delivery_location: "",
-    contact_time_preference: "",
-    eoi_status: "",
-    approval_status: "",
-    approval_ref_no: "",
-    status_trail: "",
-  });
+  const fetchData = async () => {
+    try {
+      setLoader(true);
+      const res = await EndPointService.inventoryBaseEoiDetails(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      const resEoiActivities = await EndPointService.eoiActivityTrackingHistory(
+        headers,
+        inventoryId,
+        eoiId
+      );
+
+      setDataState(res.appRespData[0]);
+      setActivities(resEoiActivities.appRespData);
+      setToastType("success");
+      setToastMessage(res.appRespMessage);
+      setLoader(false);
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (mode === "edit" || mode === "view" || mode === "exchange_edit") {
-        try {
-          const myHeaders = new Headers();
-          myHeaders.append("accept", "application/json");
-          myHeaders.append("token", "x8F!@p01,*MH");
-          myHeaders.append("user_id", username);
-
-          const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-          };
-
-          const response = await fetch(
-            `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoi}`,
-            requestOptions
-          );
-
-          if (response.ok) {
-            const result = await response.json();
-            console.log("results", result.appRespData[0]);
-            setFormData(result.appRespData[0]);
-          } else {
-            console.error("Failed to fetch data", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-    };
-
     fetchData();
-  }, [assetId, mode, eoi, username]);
-
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
-  const verifyEmail = (value) => {
-    var emailRex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return emailRex.test(value);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  }, []);
 
   const handleSelectChange = (selectedOption) => {
-    setFormData((prevState) => ({
+    setDataState((prevState) => ({
       ...prevState,
       eoi_status: selectedOption.value,
     }));
   };
 
-  const handleSubmit = async () => {
-    const url = `${BACKEND_ADDRESS}/assets/${assetId}/eoi/${eoi}`;
-    const requestBody = {
-      eoi_status: formData.eoi_status,
-      approval_status: formData.approval_status,
-      approval_ref_no: formData.approval_ref_no,
-      status_trail: formData.status_trail,
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          token: "x8F!@p01,*MH",
-          user_id: username,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      setAlert(
-        <ReactBSAlert
-          success
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Submitted"
-          onConfirm={() => hideAlert()}
-          onCancel={() => hideAlert()}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        >
-          EoI submitted
-        </ReactBSAlert>
-      );
-      if (mode == "edit") {
-        navigate(`/admin/eoi/${assetId}`);
-      } else if (mode == "exchange_edit") {
-        navigate(`/admin/myeoi`);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
-
   const handleFormSubmission = async (event) => {
+    console.log("edit", event);
     event.preventDefault();
     setAlert(
       <ReactBSAlert
@@ -196,9 +92,35 @@ const EoIPage = () => {
     );
   };
 
-  const isReadOnly = mode === "view" || mode === "edit";
+  const handleSubmit = async () => {
+    setLoader(true);
+    try {
+      const requestBody = {
+        eoi_status: dataState.eoi_status,
+        approval_status: dataState.approval_status,
+        approval_ref_no: dataState.approval_ref_no,
+        status_trail: dataState.status_trail,
+      };
+      const res = await EndPointService.eoiUpdateStatus(
+        headers,
+        inventoryId,
+        eoiId,
+        requestBody
+      );
+      setToastType("success");
+      setToastMessage(res.appRespMessage);
+      hideAlert();
+      setLoader(false);
+    } catch (e) {
+      console.log("asdfasfd");
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
 
   const handleApprove = () => {
+    console.log("handleapprove");
     setAlert(
       <ReactBSAlert
         input
@@ -218,10 +140,10 @@ const EoIPage = () => {
             className="react-select primary"
             classNamePrefix="react-select"
             name="approval_status"
-            value={options.find((option) => option.value === approvalStatus)}
-            onChange={(selectedOption) =>
-              setApprovalStatus(selectedOption.value)
-            }
+            // value={options.find((option) => option.value === approvalStatus)}
+            // onChange={(selectedOption) =>
+            //   setApprovalStatus(selectedOption.value)
+            // }
             options={[
               { value: "PENDING", label: "Pending" },
               { value: "APPROVED", label: "Approved" },
@@ -235,26 +157,30 @@ const EoIPage = () => {
     );
   };
 
-  const submitApproval = async () => {
-    setAlert(
-      <ReactBSAlert
-        success
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Submitted"
-        onConfirm={() => hideAlert()}
-        onCancel={() => hideAlert()}
-        confirmBtnBsStyle="info"
-        btnSize=""
-      >
-        Approval request submitted
-      </ReactBSAlert>
-    );
+  const submitApproval = () => {
+    console.log("approval");
   };
 
+  const hideAlert = () => {
+    setAlert(null);
+  };
+
+  var options = [
+    { value: "EOI-SUBMITTED", label: "EOI Submitted" },
+    { value: "IN-NEGOTIATION", label: "In Negotiation" },
+    { value: "PAYMENT-RECEIVED", label: "Payment Received" },
+    { value: "GOODS-SENT", label: "Goods Sent" },
+  ];
   return (
     <>
       <div className="content">
-        <Form onSubmit={handleFormSubmission}>
+        <DynamicToast
+          v-if={toastType}
+          type={toastType}
+          message={toastMessage}
+        />
+        {loader ? <FullPageLoader /> : ""}
+        <Form>
           <Row>
             <Col md="12">
               <Card>
@@ -276,14 +202,7 @@ const EoIPage = () => {
                     <Col sm="6">
                       <Label>EoI No</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="id"
-                          value={eoi}
-                          onChange={handleChange}
-                          required
-                          readOnly
-                        />
+                        <Input type="text" name="id" value={eoiId} readOnly />
                       </FormGroup>
                     </Col>
 
@@ -292,37 +211,16 @@ const EoIPage = () => {
                         Submission Date
                       </Label>
                       <FormGroup>
-                        <ReactDatetime
-                          inputProps={{
-                            className: "form-control",
-                            placeholder: "DD/MM/YYYY",
-                            readOnly: true, // Keep this as read-only for styling purposes
-                            disabled: true, // Disable the input entirely
-                          }}
-                          value={
-                            formData.submission_date_formatted
-                              ? moment(
-                                  formData.submission_date_formatted,
-                                  "DD/MM/YYYY"
-                                )
-                              : null
-                          }
-                          onChange={(momentDate) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              submission_date_formatted:
-                                momentDate.format("DD/MM/YYYY"),
-                            }))
-                          }
-                          timeFormat={false}
-                          readOnly // This readOnly is for the input field generated by the component
-                          dateFormat="DD/MM/YYYY" // Specify the date format
+                        <Input
+                          type="text"
+                          name="id"
+                          value={dataState.submission_date_formatted}
+                          readOnly
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>{/* Your Card Footer */}</CardFooter>
               </Card>
             </Col>
             {/* Approval Detail*/}
@@ -338,7 +236,7 @@ const EoIPage = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {camelCaseWithSpaces("Approval")}
+                    Approval
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -349,9 +247,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="approval_status"
-                          value={formData.approval_status}
-                          onChange={handleChange}
-                          required
+                          value={dataState.approval_status}
                           readOnly
                         />
                       </FormGroup>
@@ -363,9 +259,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="approval_ref_no" // Corrected name field
-                          value={formData.approval_ref_no}
-                          onChange={handleChange}
-                          required
+                          value={dataState.approval_ref_no}
                           readOnly
                         />
                       </FormGroup>
@@ -387,22 +281,13 @@ const EoIPage = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Tracking History")}
+                    Tracking History
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col md="12">
-                      <FormGroup>
-                        <Input
-                          type="textarea"
-                          name="status_trail"
-                          value={formData.status_trail}
-                          onChange={handleChange}
-                          style={{ width: "100%", height: "100%" }}
-                          readOnly
-                        />
-                      </FormGroup>
+                      <ActivityTable activities={activities} />
                     </Col>
                   </Row>
                 </CardBody>
@@ -422,7 +307,7 @@ const EoIPage = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Buyer Details")}
+                    Buyer Details
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -433,9 +318,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="buyer_name"
-                          value={formData.buyer_name}
-                          onChange={handleChange}
-                          required
+                          value={dataState.buyer_name}
                           readOnly
                         />
                       </FormGroup>
@@ -447,9 +330,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="organization"
-                          value={formData.organization}
-                          onChange={handleChange}
-                          required
+                          value={dataState.organization}
                           readOnly
                         />
                       </FormGroup>
@@ -462,8 +343,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="contact_no"
-                          value={formData.contact_no}
-                          onChange={handleChange}
+                          value={dataState.contact_no}
                           readOnly
                         />
                       </FormGroup>
@@ -471,31 +351,13 @@ const EoIPage = () => {
 
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Email</Label>
-                      <FormGroup className={`has-label ${formData.email}`}>
+                      <FormGroup className={`has-label ${dataState.email}`}>
                         <Input
                           type="text"
                           name="email"
-                          value={formData.email}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (!verifyEmail(value)) {
-                              setRegisterEmailState("has-danger");
-                            } else {
-                              setRegisterEmailState("has-success");
-                            }
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              email: value, // Corrected field
-                            }));
-                          }}
-                          required
+                          value={dataState.email}
                           readOnly
                         />
-                        {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null}
                       </FormGroup>
                     </Col>
                   </Row>
@@ -506,8 +368,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="address"
-                          value={formData.address}
-                          onChange={handleChange}
+                          value={dataState.address}
                           readOnly
                         />
                       </FormGroup>
@@ -520,8 +381,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="delivery_location"
-                          value={formData.delivery_location}
-                          onChange={handleChange}
+                          value={dataState.delivery_location}
                           readOnly
                         />
                       </FormGroup>
@@ -536,8 +396,7 @@ const EoIPage = () => {
                         <Input
                           type="text"
                           name="contact_time_preference"
-                          value={formData.contact_time_preference}
-                          onChange={handleChange}
+                          value={dataState.contact_time_preference}
                           readOnly
                         />
                       </FormGroup>
@@ -574,15 +433,11 @@ const EoIPage = () => {
                           classNamePrefix="react-select"
                           name="eoi_status"
                           value={options.find(
-                            (option) => option.value === formData.eoi_status
+                            (option) => option.value === dataState.eoi_status
                           )}
                           onChange={handleSelectChange}
                           options={options}
                           placeholder="Select an option"
-                          isDisabled={
-                            mode !== "edit" && mode !== "exchange_edit"
-                          } // Enable only in edit mode
-                          required
                         />
                       </FormGroup>
                     </Col>
@@ -592,22 +447,17 @@ const EoIPage = () => {
             </Col>
           </Row>
           {alert}
-
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            {mode === "edit" && (
-              <Button
-                color="primary"
-                onClick={() => handleApprove}
-                type="submit"
-              >
-                REQUEST APPROVAL
-              </Button>
-            )}
-            {(mode === "edit" || mode === "exchange_edit") && (
-              <Button color="primary" type="submit">
-                SAVE
-              </Button>
-            )}
+            <Button color="primary" onClick={handleApprove} type="button">
+              REQUEST APPROVAL
+            </Button>
+            <Button
+              color="primary"
+              type="button"
+              onClick={handleFormSubmission}
+            >
+              SAVE
+            </Button>
             <Button
               className="buttonClose"
               color="primary"
@@ -623,4 +473,4 @@ const EoIPage = () => {
   );
 };
 
-export default EoIPage;
+export default Edit;

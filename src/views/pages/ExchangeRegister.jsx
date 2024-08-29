@@ -22,16 +22,16 @@ import {
   Modal,
   Container,
 } from "reactstrap";
-import ReactTable from "../../components/ReactTable/ReactTable";
-import { GlobalContext } from "../../GlobalState";
+import ReactTable from "components/ReactTable/ReactTable";
+import { GlobalContext } from "@/GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
-import BACKEND_ADDRESS from "../components/serverAddress";
+import BACKEND_ADDRESS from "views/components/serverAddress";
 import defaultLiveIconImage from "assets/img/live.png";
 import DateRangePicker from "components/Common/DateRangePicker";
 
-import SvgFilePlus from "../../components/svg/FilePlus";
+import SvgFilePlus from "components/svg/FilePlus";
 
-import FloatingLabelDropdown from "../../components/Common/FloatingLabelDropdown";
+import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 import {
   IoSearchSharp,
   IoCloseSharp,
@@ -43,12 +43,7 @@ import SvgSearchPlus from "../../components/svg/SearchPlus";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
 
 function ExchangeRegister() {
-  const [filterFormData, setFilterFormDate] = useState({
-    id: "",
-    asset_name: "",
-    available_from: "",
-    available_to: "",
-  });
+  const [filterFormData, setFilterFormDate] = useState({});
   const [dataState, setDataState] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [rangeDates, setRangeDates] = useState({ startDate: "", endDate: "" });
@@ -74,7 +69,7 @@ function ExchangeRegister() {
 
   React.useEffect(() => {
     fetchData();
-  }, [filterFormData, refreshData]); // Empty dependency array to ensure this effect runs only once when the component mounts
+  }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
   const fetchData = async () => {
     const myHeaders = new Headers();
@@ -103,7 +98,7 @@ function ExchangeRegister() {
       );
       const result = await response.json();
       setDataState(result.appRespData);
-      console.log(result);
+      console.log("data code", result);
     } catch (error) {
       setErrorMessage(
         "Unable to load data. Please refresh the page or load after time"

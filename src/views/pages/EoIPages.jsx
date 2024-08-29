@@ -15,10 +15,10 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import ReactTable from "../../components/ReactTable/ReactTable";
-import { GlobalContext } from "../../GlobalState";
+import ReactTable from "components/ReactTable/ReactTable";
+import { GlobalContext } from "@/GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
-import BACKEND_ADDRESS from "../components/serverAddress";
+import BACKEND_ADDRESS from "views/components/serverAddress";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import defaultLiveIconImage from "assets/img/live.png";
 import defaultApplicationIconImage from "assets/img/layer-group-solid.svg";

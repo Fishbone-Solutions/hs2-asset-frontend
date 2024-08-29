@@ -105,8 +105,6 @@ const Show = () => {
       setLoader(true);
       const headers = { user_id: username };
       const res = await EndPointService.getInventoryById(headers, id);
-      console.log(res);
-      setLoader(false);
       setFormData(res.appRespData[0]);
       setToastType("success");
       setToastMessage(res.appRespMessage);

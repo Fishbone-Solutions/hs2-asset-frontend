@@ -29,8 +29,10 @@ import ReactTable from "../../../components/ReactTable/ReactTable";
 import { Form, NavLink, useNavigate } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
-import TableColumn from "variables/tables/inventory";
+import TableColumn from "variables/tables/inventory/Index";
 import LiveSvgComponent from "components/svg/LiveSvg";
+import { itemStatusOptions } from "variables/common";
+import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -41,11 +43,44 @@ const Index = () => {
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
+  const [isHovered, setIsHovered] = useState(false);
+  const [rangeDatesEntry, setRangeDatesEntry] = useState({
+    startDate: "",
+    endDate: "",
+  });
+  const [rangeDatesAvailablility, setRangeDatesAvailablility] = useState({
+    startDate: "",
+    endDate: "",
+  });
+  const [filterFormData, setFilterFormDate] = useState({
+    id: "",
+    asset_name: "",
+    entry_date_from: null,
+    entry_date_to: null,
+    available_from: null,
+    available_to: null,
+    statuscode: null,
+  });
+
+  const getValueOrDefault = (value) => (value ? value : "-1");
 
   const fetchInventory = async () => {
     try {
       setLoader(true);
       const headers = { user_id: username };
+      // Construct the query parameters
+      const params = new URLSearchParams({
+        fltr_id: getValueOrDefault(filterFormData.id),
+        fltr_name: getValueOrDefault(filterFormData.asset_name),
+        fltr_status: getValueOrDefault(filterFormData.statuscode),
+        fltr_from_entry_date: getValueOrDefault(filterFormData.entry_date_from),
+        fltr_to_entry_date: getValueOrDefault(filterFormData.entry_date_to),
+        fltr_from_availability: getValueOrDefault(
+          filterFormData.available_from
+        ),
+        fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+      });
+
       const res = await EndPointService.getInventory(headers);
       setDataState(res.appRespData);
       setToastType("success");
@@ -58,9 +93,54 @@ const Index = () => {
     }
   };
 
+  const handleEoI = () => {};
+
+  const handleDelete = (id) => {
+    console.log(id);
+  };
+
   React.useEffect(() => {
     fetchInventory();
-  }, []);
+  }, [filterFormData]);
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: formData.get("id"),
+      asset_name: formData.get("name"),
+      available_from: rangeDatesAvailablility.startDate,
+      available_to: rangeDatesAvailablility.endDate,
+      entry_date_from: rangeDatesEntry.startDate,
+      entry_date_to: rangeDatesEntry.endDate,
+    }));
+  };
+
+  const handleEntryDate = (startDate, endDate) => {
+    setRangeDatesEntry((prevState) => ({
+      ...prevState,
+      startDate: startDate,
+      endDate: endDate,
+    }));
+  };
+
+  const handleAvailablilityDate = (startDate, endDate) => {
+    setRangeDatesAvailablility((prevState) => ({
+      ...prevState,
+      startDate: startDate,
+      endDate: endDate,
+    }));
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      statuscode: selectedOption.value,
+    }));
+  };
 
   return (
     <>
@@ -95,7 +175,7 @@ const Index = () => {
 
                 <ReactTable
                   data={dataState}
-                  columns={TableColumn}
+                  columns={TableColumn(handleDelete)}
                   isLoading={loader}
                   className="-striped -highlight primary-pagination mt-2"
                 />
@@ -113,7 +193,7 @@ const Index = () => {
       >
         <div className="content2" style={{ overflow: "hidden" }}>
           <div className="placer">
-            <Form onSubmit="">
+            <Form onSubmit={handleFilter}>
               <Row>
                 <Col md="12">
                   <Card>
@@ -178,7 +258,7 @@ const Index = () => {
                             <FormGroup>
                               <DateRangePicker
                                 label="Entry Range"
-                                onChange=""
+                                onChange={handleEntryDate}
                               />
                             </FormGroup>
                           </div>
@@ -188,17 +268,17 @@ const Index = () => {
                           <FormGroup>
                             <DateRangePicker
                               label="Availablility Range"
-                              onChange=""
+                              onChange={handleAvailablilityDate}
                             />
                           </FormGroup>
                         </Col>
 
                         <Col sm="6">
-                          {/* <FloatingLabelDropdown
+                          <FloatingLabelDropdown
                             label="Status"
-                            options={statusOptions}
-                            onChange=""
-                          /> */}
+                            options={itemStatusOptions}
+                            onChange={handleSelectChange}
+                          />
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-end gap-1">

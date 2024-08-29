@@ -78,7 +78,7 @@
 .action-buttons {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .action-buttons .btn-icon {

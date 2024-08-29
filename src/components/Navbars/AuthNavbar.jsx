@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { PiBookBookmarkFill } from "react-icons/pi";
 import { PiHandTapFill } from "react-icons/pi";
-import {NavLink} from "reactstrap";
+import { NavLink } from "reactstrap";
 
 // reactstrap components
 import {

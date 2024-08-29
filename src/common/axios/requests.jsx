@@ -22,6 +22,9 @@ export const Post = (
   return serviceProvider.post(path, params, config);
 };
 
+export const UpdateWithPost = (path, params, headers) =>
+  serviceProvider.post(path, params, { ...(headers && { headers }) });
+
 export const Put = (path, params, headers) =>
   serviceProvider.put(path, params, { ...(headers && { headers }) });
 

@@ -10,15 +10,9 @@ import {
   Input,
   Label,
   CardHeader,
-  CardTitle,
   CardFooter,
   Row,
   Col,
-  Accordion,
-  AccordionBody,
-  AccordionHeader,
-  AccordionItem,
-  NavLink,
   Modal,
   Container,
 } from "reactstrap";
@@ -28,18 +22,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import DateRangePicker from "components/Common/DateRangePicker";
 import defaultLiveIconImage from "assets/img/live.png";
-
 import SvgFilePlus from "components/svg/FilePlus";
-
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 import { IoSearchSharp, IoMegaphoneOutline } from "react-icons/io5";
 import SvgSearchPlus from "components/svg/SearchPlus";
 
-function W10() {
+function MyEoIPage() {
   const [formData, setFormData] = useState([]);
   const [filterFormData, setFilterFormDate] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [alert, setAlert] = React.useState(null);
   const navigate = useNavigate();
@@ -88,64 +79,13 @@ function W10() {
     fetchData();
   }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFilterFormDate((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
-    const { name, value } = event.target;
-    event.preventDefault();
-
-    const getValueOrDefault = (value) => (value ? value : "-1");
-
-    // Construct the query parameters
-    const params = new URLSearchParams({
-      fltr_id: getValueOrDefault(filterFormData.id),
-      fltr_name: getValueOrDefault(filterFormData.asset_name),
-      fltr_from_availability: getValueOrDefault(filterFormData.available_from),
-      fltr_to_availability: getValueOrDefault(filterFormData.available_to),
-      fltr_category1: getValueOrDefault(filterFormData.fltr_category1),
-      fltr_category2: getValueOrDefault(filterFormData.fltr_category2),
-    });
-
-    const url = `${BACKEND_ADDRESS}/register?${params.toString()}`;
-
-    console.log("url", url);
-
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        token: "x8F!@p01,*MH",
-        user_id: username,
-      },
-    };
-
-    try {
-      const response = await fetch(url, requestOptions);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Fetched Data:", data.appRespData); // Debugging log
-      setFormData(data.appRespData); // Update your component state with fetched data
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   const handleView = (asset_id, mode) => {
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
   };
 
-  const handleSubmissionEoi = (assetId, mode) => {
-    navigate(`/admin/exchange/eoisubmission/${assetId}?mode=${mode}`);
+  const handleSubmissionEoi = (assetId, mode, eoino) => {
+    console.log("mode from edit", mode);
+    navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
   };
 
   const handleDate = (startDate, endDate) => {
@@ -266,7 +206,7 @@ function W10() {
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span> SUBMISSION DATE</span>
+            <span> Submission Date</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
@@ -278,7 +218,7 @@ function W10() {
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>ITEM</span>
+            <span>Item</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
@@ -291,26 +231,26 @@ function W10() {
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>SELLER</span>
+            <span>Seller</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
           </div>
         ),
         accessor: "seller_title",
-        width: "10%",
+        width: "4%",
       },
       {
         Header: ({ column }) => (
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>STATUS</span>
+            <span>Status</span>
             <span>
               {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
             </span>
           </div>
         ),
         accessor: "eoi_status",
-        width: "16%",
+        width: "0.4%",
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
@@ -366,7 +306,7 @@ function W10() {
         },
       },
       {
-        Header: "ACTIONS",
+        Header: "Actions",
         accessor: "actions",
         sortable: false,
         width: "1%",
@@ -384,9 +324,16 @@ function W10() {
               className="btn-icon btn-simple"
               color="success"
               size="sm"
-              onClick={() => handleSubmissionEoi(row.original.asset_id, "edit")}
+              onClick={() =>
+                handleSubmissionEoi(
+                  row.original.asset_id,
+                  "exchange_edit",
+                  row.original.id
+                )
+              }
             >
-              <SvgFilePlus />
+              {" "}
+              <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
             </Button>
           </div>
         ),
@@ -587,4 +534,4 @@ function W10() {
   );
 }
 
-export default W10;
+export default MyEoIPage;

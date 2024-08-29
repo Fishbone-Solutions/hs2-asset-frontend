@@ -28,8 +28,7 @@ const camelCaseWithSpaces = (text) => {
 };
 
 const SubmissionEoI = () => {
-
-  console.log("submission eoi")
+  console.log("submission eoi");
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -60,20 +59,19 @@ const SubmissionEoI = () => {
     statuscode: "",
   });
 
-const [EoiFormData,setEoiFormData ] = useState({  
-  code:"",
-  submission_date: "",
-  buyer_name: "",
-  organization: "",
-  contact_no: "",
-  email: "",
-  address: "",
-  delivery_location: "",
-  eoi_status:"",
-  approval_status:"",
-  status_trail:""
- })
-
+  const [EoiFormData, setEoiFormData] = useState({
+    code: "",
+    submission_date: "",
+    buyer_name: "",
+    organization: "",
+    contact_no: "",
+    email: "",
+    address: "",
+    delivery_location: "",
+    eoi_status: "",
+    approval_status: "",
+    status_trail: "",
+  });
 
   const options = [
     { value: "Listing", label: "Listing" },
@@ -139,19 +137,9 @@ const [EoiFormData,setEoiFormData ] = useState({
           } else {
             console.error("Failed to fetch data");
           }
-        } 
-
-  
-
-
-        
-        
-        catch (error) {
+        } catch (error) {
           console.error("Error:", error);
         }
-
-      
-        
       }
     };
 
@@ -172,8 +160,8 @@ const [EoiFormData,setEoiFormData ] = useState({
     const { name, value } = event.target;
     const timestamp = new Date().toISOString(); // Get the current timestamp
     const currentDate = new Date();
-    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
-    
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, "0")}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${currentDate.getFullYear()}`;
+
     // Only allow changes if not in add mode for id field
     if (name === "id" && isAddMode) {
       return; // Prevent changes to id if in add mode
@@ -183,14 +171,13 @@ const [EoiFormData,setEoiFormData ] = useState({
       ...prevState,
       [name]: value,
       eoi_status: "EOI_SUBMITTED", // Automatically set the EOI status
-      approval_status: "PENDING",  // Automatically set the approval status
+      approval_status: "PENDING", // Automatically set the approval status
       status_trail: `EOI_SUBMITTED:${timestamp}`, // Update status trail with current timestamp
-      submission_date: formattedDate
+      submission_date: formattedDate,
     }));
   };
 
-  
-    const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const url = `${BACKEND_ADDRESS}/assets/${id}/eoi/`;
     const requestBody = { ...EoiFormData };
 
@@ -233,9 +220,8 @@ const [EoiFormData,setEoiFormData ] = useState({
       "email",
       "address",
       "delivery_location",
-      "status_trail"
+      "status_trail",
     ];
-    
 
     for (let field of requiredFields) {
       if (!EoiFormData[field]) {
@@ -405,9 +391,7 @@ const [EoiFormData,setEoiFormData ] = useState({
 
                     <Col sm="6">
                       <Label style={{ color: "#36454F" }}>Email</Label>
-                      <FormGroup
-                        className={`has-label ${EoiFormData.email}`}
-                      >
+                      <FormGroup className={`has-label ${EoiFormData.email}`}>
                         <Input
                           type="text"
                           name="email"
@@ -497,7 +481,7 @@ const [EoiFormData,setEoiFormData ] = useState({
             </Button>
             {mode !== "view" && (
               <Button color="primary" type="submit">
-Submit EoI
+                Submit EoI
               </Button>
             )}
           </div>
