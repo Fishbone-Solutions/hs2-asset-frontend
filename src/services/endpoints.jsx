@@ -11,4 +11,6 @@ export const endpoints = {
     `assets/${inventory_id}/eoi/${eoi_id}/history`,
   eoiUpdateStatus: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}`,
+  myeoi: (username) => `/users/${username}/eoi`,
+  getEoiById: (id) => ``,
 };
