@@ -6,7 +6,7 @@ export const Get = (
   headers
 ) => serviceProvider.get(path, { ...(headers && { headers }) });
 
-export const Post = (
+export const PostWithMultiPart = (
   path,
   params, // Changed to FormData type
   headers
@@ -20,6 +20,14 @@ export const Post = (
   };
 
   return serviceProvider.post(path, params, config);
+};
+
+export const Post = (
+  path,
+  params, // Changed to FormData type
+  headers
+) => {
+  return serviceProvider.post(path, params, headers);
 };
 
 export const UpdateWithPost = (path, params, headers) =>
