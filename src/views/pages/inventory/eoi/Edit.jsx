@@ -22,6 +22,7 @@ import Select from "react-select";
 import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
 import ReactBSAlert from "react-bootstrap-sweetalert";
+import { approvalStatusOptions } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -144,11 +145,7 @@ const Edit = () => {
             // onChange={(selectedOption) =>
             //   setApprovalStatus(selectedOption.value)
             // }
-            options={[
-              { value: "PENDING", label: "Pending" },
-              { value: "APPROVED", label: "Approved" },
-              { value: "REJECTED", label: "Rejected" },
-            ]}
+            options={approvalStatusOptions}
             placeholder="Select an approval status"
             required
           />
@@ -207,9 +204,7 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Submission Date
-                      </Label>
+                      <Label>Submission Date</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -254,7 +249,7 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>CEMAR Ref No</Label>
+                      <Label>CEMAR Ref No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -313,7 +308,7 @@ const Edit = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
+                      <Label>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -325,7 +320,7 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
+                      <Label>Company</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -338,7 +333,7 @@ const Edit = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
+                      <Label>Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -350,7 +345,7 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email</Label>
+                      <Label>Email</Label>
                       <FormGroup className={`has-label ${dataState.email}`}>
                         <Input
                           type="text"
@@ -363,7 +358,7 @@ const Edit = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
+                      <Label>Buyer Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -374,9 +369,7 @@ const Edit = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
+                      <Label>Item Delivery Location</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -389,9 +382,7 @@ const Edit = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Preferred Contact Timings
-                      </Label>
+                      <Label>Preferred Contact Timings</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -426,7 +417,7 @@ const Edit = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}> Status *</Label>
+                      <Label> Status *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"

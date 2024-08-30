@@ -106,9 +106,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Submission Date
-                      </Label>
+                      <Label>Submission Date</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -153,7 +151,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>CEMAR Ref No</Label>
+                      <Label>CEMAR Ref No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -212,7 +210,7 @@ const Show = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
+                      <Label>Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -224,7 +222,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
+                      <Label>Company</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -237,7 +235,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
+                      <Label>Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -249,7 +247,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email</Label>
+                      <Label>Email</Label>
                       <FormGroup className={`has-label ${dataState.email}`}>
                         <Input
                           type="text"
@@ -262,7 +260,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
+                      <Label>Buyer Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -273,9 +271,7 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
+                      <Label>Item Delivery Location</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -288,9 +284,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Preferred Contact Timings
-                      </Label>
+                      <Label>Preferred Contact Timings</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -325,7 +319,7 @@ const Show = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}> Status *</Label>
+                      <Label> Status *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"

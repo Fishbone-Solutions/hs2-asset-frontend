@@ -18,12 +18,16 @@ import {
   CardTitle,
   Label,
   FormGroup,
+  Form,
   Modal,
 } from "reactstrap";
+import Select from "react-select";
+import DateRangePicker from "components/Common/DateRangePicker";
+import { inventoryStatusOptions } from "variables/common";
 
 const Create = () => {
   const [formData, setFormData] = useState({
-    id: isAddMode ? "Auto Generated" : "", // Initialize id based on mode
+    id: "Auto Generated", // Initialize id based on mode
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -43,10 +47,15 @@ const Create = () => {
     statuscode: "",
   });
 
+  const handleFormSubmission = () => {
+    console.log(formData);
+  };
+  const handleDate = () => {};
+
   return (
     <>
       <div className="content">
-        <Form onSubmit={handleFormSubmission}>
+        <Form>
           <Row>
             {/* Asset Seller Detail*/}
             <Col md="12">
@@ -61,7 +70,7 @@ const Create = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {camelCaseWithSpaces("Seller Information")}
+                    Seller Information
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -73,32 +82,38 @@ const Create = () => {
                           type="text"
                           name="seller_title"
                           value={formData.seller_title}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              seller_title: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No *</Label>
+                      <Label>Contact No *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="seller_contactno"
                           value={formData.seller_contactno}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              seller_contactno: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Email Address *
-                      </Label>
+                      <Label>Email Address *</Label>
                       <FormGroup
                         className={`has-label ${formData.seller_email}`}
                       >
@@ -106,45 +121,53 @@ const Create = () => {
                           type="text"
                           name="seller_email"
                           value={formData.seller_email}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (!verifyEmail(value)) {
-                              setRegisterEmailState("has-danger");
-                            } else {
-                              setRegisterEmailState("has-success");
-                            }
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              seller_email: value,
-                            }));
-                          }}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              seller_email: e.target.value,
+                            })
+                          }
+                          // onChange={(e) => {
+                          //   const value = e.target.value;
+                          //   if (!verifyEmail(value)) {
+                          //     setRegisterEmailState("has-danger");
+                          //   } else {
+                          //     setRegisterEmailState("has-success");
+                          //   }
+                          //   setFormData((prevState) => ({
+                          //     ...prevState,
+                          //     seller_email: value,
+                          //   }));
+                          // }}
                           required
-                          readOnly={isReadOnly}
                         />
-                        {registerEmailState === "has-danger" ? (
+                        {/* {registerEmailState === "has-danger" ? (
                           <label className="error">
                             Please enter a valid email address.
                           </label>
-                        ) : null}
+                        ) : null} */}
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Location *</Label>
+                      <Label>Location *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="seller_location"
                           value={formData.seller_location}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              seller_location: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter></CardFooter>
               </Card>
             </Col>
             {/* Category Detail*/}
@@ -160,15 +183,15 @@ const Create = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {camelCaseWithSpaces("Category")}
+                    Category
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Category</Label>
+                      <Label>Category</Label>
                       <FormGroup>
-                        <Select
+                        {/* <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
@@ -185,14 +208,14 @@ const Create = () => {
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
                           required
-                        />
+                        /> */}
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Sub Category</Label>
+                      <Label>Sub Category</Label>
                       <FormGroup>
-                        <Select
+                        {/* <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode2"
@@ -213,7 +236,7 @@ const Create = () => {
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
                           required
-                        />
+                        /> */}
                       </FormGroup>
                     </Col>
                   </Row>
@@ -233,50 +256,56 @@ const Create = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Item Information")}
+                    Item Information
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>ID</Label>
+                      <Label>ID</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="id"
                           value={" Auto Generated"}
-                          onChange={handleChange}
                           required
                           disabled
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name *</Label>
+                      <Label>Name *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="asset_name"
                           value={formData.asset_name}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              asset_name: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Description</Label>
+                      <Label>Description</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="description"
                           value={formData.description}
-                          onChange={handleChange}
-                          readOnly={isReadOnly}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              description: e.target.value,
+                            })
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -295,9 +324,9 @@ const Create = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Condition *</Label>
+                      <Label>Condition *</Label>
                       <FormGroup>
-                        <Select
+                        {/* <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
@@ -315,67 +344,79 @@ const Create = () => {
                           placeholder="Select an option"
                           isDisabled={isReadOnly}
                           required
-                        />
+                        /> */}
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Quantity *</Label>
+                      <Label>Quantity *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="quantity"
                           value={formData.quantity}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              quantity: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Location *</Label>
+                      <Label>Location *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="asset_location"
                           value={formData.asset_location}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              asset_location: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Estimated Value *
-                      </Label>
+                      <Label>Estimated Value *</Label>
                       <FormGroup>
                         <Input
                           type="text"
                           name="value"
                           value={formData.value}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              value: e.target.value,
+                            })
+                          }
                           required
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Label sm="8" style={{ color: "#36454F" }}>
-                      Other Details
-                    </Label>
+                    <Label sm="8">Other Details</Label>
                     <Col md="12">
                       <FormGroup>
                         <Input
                           type="textarea"
                           name="additional_info"
                           value={formData.additional_info}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              additional_info: e.target.value,
+                            })
+                          }
                           style={{ width: "100%", height: "100%" }}
-                          readOnly={isReadOnly}
                         />
                       </FormGroup>
                     </Col>
@@ -396,11 +437,11 @@ const Create = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Images")}
+                    Images
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <FileUpload
+                  {/* <FileUpload
                     name="demo[]"
                     url="/api/upload"
                     multiple
@@ -409,7 +450,7 @@ const Create = () => {
                     emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
                     disabled={isReadOnly}
                     className="custom-file-upload"
-                  />
+                  /> */}
                 </CardBody>
               </Card>
             </Col>
@@ -426,11 +467,11 @@ const Create = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Documents")}
+                    Documents
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <FileUpload
+                  {/* <FileUpload
                     name="demo[]"
                     url={"/api/upload"}
                     multiple
@@ -439,61 +480,54 @@ const Create = () => {
                     className="custom-file-upload"
                     emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
                     disabled={isReadOnly}
-                  />
+                  /> */}
                 </CardBody>
               </Card>
             </Col>
             {/* Set Asset Status */}
-            {mode !== "exchange" && (
-              <Col md="12">
-                <Card>
-                  <CardHeader>
-                    <CardTitle
-                      tag="h6"
-                      style={{
-                        color: "rgb(82,203,206)",
-                        fontWeight: "bold",
-                        textTransform: "capitalize",
-                        WebkitTextTransform: "capitalize", // for Safari
-                      }}
-                    >
-                      {camelCaseWithSpaces("Item Status")}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <Row>
-                      <Col sm="6">
-                        <Label style={{ color: "#36454F" }}>Status *</Label>
-                        <FormGroup>
-                          <Select
-                            className="react-select primary"
-                            classNamePrefix="react-select"
-                            name="statuscode"
-                            value={options.find(
-                              (option) => option.value === formData.statuscode
-                            )}
-                            onChange={(selectedOption) =>
-                              setFormData((prevState) => ({
-                                ...prevState,
-                                statuscode: selectedOption.value,
-                              }))
-                            }
-                            options={[
-                              { value: "Live", label: "Live" },
-                              { value: "Listing", label: "Listing" },
-                              { value: "Sold", label: "Sold" },
-                            ]}
-                            placeholder="Select an option"
-                            isDisabled={isReadOnly}
-                            required
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-              </Col>
-            )}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    Item Status
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Status *</Label>
+                      <FormGroup>
+                        <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="statuscode"
+                          value={inventoryStatusOptions.find(
+                            (option) => option.value === formData.statuscode
+                          )}
+                          onChange={(selectedOption) =>
+                            setFormData((prevState) => ({
+                              ...prevState,
+                              statuscode: selectedOption.value,
+                            }))
+                          }
+                          options={inventoryStatusOptions}
+                          placeholder="Select an option"
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
           </Row>
           {alert}
 
@@ -506,11 +540,13 @@ const Create = () => {
             >
               Close
             </Button>
-            {mode !== "view" && (mode === "add" || mode === "edit") && (
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            )}
+            <Button
+              color="primary"
+              type="button"
+              onClick={handleFormSubmission}
+            >
+              Save
+            </Button>
           </div>
         </Form>
       </div>

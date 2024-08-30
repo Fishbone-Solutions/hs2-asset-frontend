@@ -26,10 +26,8 @@ import SvgSearchPlus from "components/svg/SearchPlus";
 import SvgFilePlus from "components/svg/FilePlus";
 import FloatingLabelDropdown from "../../../components/Common/FloatingLabelDropdown";
 import { GlobalContext } from "../../../GlobalState";
-import TableColumn from "variables/tables/inventory";
 
-
-const  MyEoI  = () =>   {
+const MyEoI = () => {
   const [formData, setFormData] = useState([]);
   const [filterFormData, setFilterFormDate] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -65,14 +63,14 @@ const  MyEoI  = () =>   {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/users/${username}/eoi`,
-          requestOptions,
+          requestOptions
         );
         const result = await response.json();
         setFormData(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
+          "Unable to load data. Please refresh the page or load after time"
         );
         console.error(error);
       }
@@ -85,10 +83,10 @@ const  MyEoI  = () =>   {
     navigate(`/admin/assetregister/${asset_id}?mode=${mode}`);
   };
 
-    const handleSubmissionEoi = (assetId, mode, eoino) => {
-      console.log("mode from edit", mode);
-      navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
-    };
+  const handleSubmissionEoi = (assetId, mode, eoino) => {
+    console.log("mode from edit", mode);
+    navigate(`/admin/eoi/details/${assetId}?mode=${mode}&eoino=${eoino}`);
+  };
 
   const handleDate = (startDate, endDate) => {
     set;
@@ -371,6 +369,6 @@ const  MyEoI  = () =>   {
       </>
     </>
   );
-}
+};
 
 export default MyEoI;

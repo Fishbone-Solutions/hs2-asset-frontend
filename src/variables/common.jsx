@@ -18,3 +18,9 @@ export const approvalStatusOptions = [
   { value: "APPROVED", label: "Approved" },
   { value: "REJECTED", label: "Rejected" },
 ];
+
+export const inventoryStatusOptions = [
+  { value: "Live", label: "Live" },
+  { value: "Listing", label: "Listing" },
+  { value: "Sold", label: "Sold" },
+];

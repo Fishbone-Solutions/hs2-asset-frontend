@@ -162,7 +162,7 @@ const Index = () => {
                       className="icon-btn"
                     />
                   </div>
-                  <NavLink to="/admin/assetregister?mode=add">
+                  <NavLink to="/admin/inventory/create">
                     <div>
                       <IoAddCircleOutline
                         color="white"
