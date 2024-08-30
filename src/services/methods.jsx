@@ -15,8 +15,8 @@ function getInventoryById(headers = null, id) {
   return Get(`${endpoints.getInventoryById(id)}`, headers);
 }
 
-function createInventory(params) {
-  return Post(`${endpoints.createInventory()}`, params);
+function createInventory(headers = null, params) {
+  return Post(`${endpoints.createInventory()}`, params, headers);
 }
 
 function updateInventory(headers = null, id, params) {

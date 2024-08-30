@@ -26,7 +26,6 @@ import { useParams } from "react-router-dom";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Edit = () => {

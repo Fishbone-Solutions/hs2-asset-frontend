@@ -1,6 +1,6 @@
 export const endpoints = {
   inventories: () => "/assets/-1",
-  createInventory: (asset_id) => `/assets/${asset_id}`,
+  createInventory: () => `/assets`,
   getInventoryById: (id) => `/assets/${id}`,
   updateInventory: (id) => `/assets/${id}`,
   deleteInventory: (id) => `/assets/del/${id}`,

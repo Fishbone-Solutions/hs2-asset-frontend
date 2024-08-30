@@ -24,8 +24,20 @@ import {
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { inventoryStatusOptions } from "variables/common";
+import { FullPageLoader } from "components/Common/ComponentLoader";
+import { GlobalContext } from "@/GlobalState";
+import { useNavigate } from "react-router-dom";
+import { categorycode1 } from "variables/common";
+import { conditionOptions } from "variables/common";
+import { subCategory } from "variables/common";
 
 const Create = () => {
+  const [loader, setLoader] = useState(false);
+  const [toastType, setToastType] = useState(null);
+  const [toastMessage, setToastMessage] = useState();
+  const { username } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const headers = { user_id: username };
   const [formData, setFormData] = useState({
     id: "Auto Generated", // Initialize id based on mode
     code: "",
@@ -47,14 +59,33 @@ const Create = () => {
     statuscode: "",
   });
 
-  const handleFormSubmission = () => {
+  const handleFormSubmission = async () => {
+    try {
+      setLoader(true);
+      const res = await EndPointService.createInventory(headers, formData);
+      setToastType("success");
+      setToastMessage(res.appRespMessage);
+      navigate("/admin/inventory");
+      setLoader(false);
+    } catch (e) {}
     console.log(formData);
   };
-  const handleDate = () => {};
+  const handleDate = (date) => {
+    setFormData((preiousState) => ({
+      ...preiousState,
+      available_from: date,
+    }));
+  };
 
   return (
     <>
       <div className="content">
+        <DynamicToast
+          v-if={toastType}
+          type={toastType}
+          message={toastMessage}
+        />
+        {loader ? <FullPageLoader /> : ""}
         <Form>
           <Row>
             {/* Asset Seller Detail*/}
@@ -191,11 +222,11 @@ const Create = () => {
                     <Col sm="6">
                       <Label>Category</Label>
                       <FormGroup>
-                        {/* <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
-                          value={optionsCategory1.find(
+                          value={categorycode1.find(
                             (option) => option.value === formData.categorycode1
                           )}
                           onChange={(selectedOption) =>
@@ -204,39 +235,33 @@ const Create = () => {
                               categorycode1: selectedOption.value,
                             }))
                           }
-                          options={optionsCategory1}
+                          options={categorycode1}
                           placeholder="Select an option"
-                          isDisabled={isReadOnly}
                           required
-                        /> */}
+                        />
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
                       <Label>Sub Category</Label>
                       <FormGroup>
-                        {/* <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode2"
-                          value={{
-                            value: formData.categorycode2,
-                            label: formData.categorycode2,
-                          }}
+                          value={subCategory.find(
+                            (option) => option.value === formData.categorycode2
+                          )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
                               ...prevState,
                               categorycode2: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Generic", label: "Generic" },
-                            { value: "Other", label: "Other" },
-                          ]}
+                          options={subCategory}
                           placeholder="Select an option"
-                          isDisabled={isReadOnly}
                           required
-                        /> */}
+                        />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -326,11 +351,11 @@ const Create = () => {
                     <Col sm="6">
                       <Label>Condition *</Label>
                       <FormGroup>
-                        {/* <Select
+                        <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
-                          value={Conditionoptions.find(
+                          value={conditionOptions.find(
                             (option) =>
                               option.value === formData.asset_condition
                           )}
@@ -340,11 +365,10 @@ const Create = () => {
                               asset_condition: selectedOption.value,
                             }))
                           }
-                          options={Conditionoptions}
+                          options={conditionOptions}
                           placeholder="Select an option"
-                          isDisabled={isReadOnly}
                           required
-                        /> */}
+                        />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
