@@ -26,6 +26,8 @@ import { useParams } from "react-router-dom";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
+import { subCategory } from "variables/common";
+import { inventoryStatusOptions } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
@@ -252,20 +254,16 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode2"
-                          value={{
-                            value: formData.categorycode2,
-                            label: formData.categorycode2,
-                          }}
+                          value={subCategory.find(
+                            (option) => option.value === formData.categorycode1
+                          )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
                               ...prevState,
                               categorycode2: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Generic", label: "Generic" },
-                            { value: "Other", label: "Other" },
-                          ]}
+                          options={subCategory}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
@@ -505,7 +503,7 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="statuscode"
-                          value={options.find(
+                          value={inventoryStatusOptions.find(
                             (option) => option.value === formData.statuscode
                           )}
                           onChange={(selectedOption) =>
@@ -514,11 +512,7 @@ const Show = () => {
                               statuscode: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Live", label: "Live" },
-                            { value: "Listing", label: "Listing" },
-                            { value: "Sold", label: "Sold" },
-                          ]}
+                          options={inventoryStatusOptions}
                           placeholder="Select an option"
                           isDisabled="true"
                           required

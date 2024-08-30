@@ -81,10 +81,8 @@ const Index = () => {
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
       });
 
-      const res = await EndPointService.getInventory(headers);
+      const res = await EndPointService.getInventory(headers, params);
       setDataState(res.appRespData);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
       setLoader(false);
     } catch (e) {
       setToastType("error");

@@ -2,13 +2,14 @@ import {
   Get,
   Put,
   UpdateWithPost,
+  PostWithMultiPart,
   Delete,
   Post,
 } from "../common/axios/requests";
 import { endpoints } from "./endpoints";
 
-function getInventory(headers = null) {
-  return Get(`${endpoints.inventories()}`, headers);
+function getInventory(headers = null, params = null) {
+  return Get(`${endpoints.inventories(params)}`, headers);
 }
 
 function getInventoryById(headers = null, id) {
@@ -53,6 +54,18 @@ function eoiUpdateStatus(headers = null, inventory_id, eoi_id, params) {
   );
 }
 
+function createEoi(headers = null, inventory_id, params) {
+  return PostWithMultiPart(
+    `${endpoints.createEoi(inventory_id)}`,
+    params,
+    headers
+  );
+}
+
+function getExchange(headers = null, params = null) {
+  return Get(`${endpoints.exchanges(params)}`, headers);
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -63,4 +76,6 @@ export const EndPointService = {
   inventoryBaseEoiDetails,
   eoiActivityTrackingHistory,
   eoiUpdateStatus,
+  createEoi,
+  getExchange,
 };

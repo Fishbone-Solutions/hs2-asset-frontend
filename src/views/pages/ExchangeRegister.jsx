@@ -39,7 +39,7 @@ import {
   IoMegaphoneOutline,
   IoFileTrayStackedSharp,
 } from "react-icons/io5";
-import SvgSearchPlus from "../../components/svg/SearchPlus";
+import SvgSearchPlus from "components/svg/SearchPlus";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
 
 function ExchangeRegister() {

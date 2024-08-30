@@ -10,11 +10,15 @@ import InventoryEoi from "./views/pages/inventory/eoi/Index";
 import InventoryEoiDetails from "./views/pages/inventory/eoi/Show";
 import InventoryEoiEdit from "./views/pages/inventory/eoi/Edit";
 
+//exchange
+
+import Exchange from "./views/pages/exchange/Index";
+import ExchangeShow from "./views/pages/exchange/Show";
+import ExchangeEoiCreate from "./views/pages/exchange/eoi/Create";
+
 import AssetRegister from "views/pages/AssetRegister";
 import UserProfile from "./views/pages/UserProfile.jsx";
 import EoIPage from "./views/pages/EoIPage.jsx";
-import ExchangeRegister from "./views/pages/ExchangeRegister.jsx";
-import SubmissionEoI from "./views/pages/SubmissionEoI.jsx";
 import RequestEquipment from "./views/pages/RequestEquipment.jsx";
 import MyEoI from "./views/pages/myeoi/Index";
 
@@ -161,45 +165,51 @@ const routes = [
   },
 
   {
-    path: "/eoi/details/:assetId",
-    pathName: "/admin/eoi/details/:assetId?mode=view",
-    name: "All EOI | View EOI Detail",
-    component: <EoIPage />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true,
-  },
-  {
-    path: "/eoi/view/:id",
-    pathName: "/admin/eoi/view/:id",
-    name: "EoI",
-    component: <EoIPage />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true,
-  },
-  {
-    path: "/exchange/register",
-    pathName: "/admin/exchange/register",
+    path: "/exchange",
+    pathName: "/admin/exchange",
     name: "Exchange Register ",
-    component: <ExchangeRegister />,
+    component: <Exchange />,
     layout: "/admin",
     icon: <FaCubesStacked size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
   },
+  {
+    path: "/exchange/show/:id",
+    pathName: "/admin/exchange/show/:id",
+    name: "Exchange Register ",
+    component: <ExchangeShow />,
+    layout: "/admin",
+    icon: <FaCubesStacked size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchangeShow} />,
+    hidden: true,
+  },
+  {
+    path: "/exchange/eoi-submission/:id",
+    pathName: "/admin/exchange/eoi-submission/:id",
+    name: "EoI Submission ",
+    component: <ExchangeEoiCreate />,
+    layout: "/admin",
+    icon: "nc-icon nc-tile-56",
+    breadcrumbIcon: (
+      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.exchangeEoiSubmission} />
+    ),
+    hidden: true,
+  },
+
   {
     path: "/exchange/requestequipment",
     pathName: "/admin/exchange/requestequipment",
     name: "RequestEquipment",
     component: <RequestEquipment />,
-    layout: "/admin",
-    icon: "nc-icon nc-tile-56",
-    hidden: true,
-  },
-  {
-    path: "/exchange/eoisubmission/:id",
-    pathName: "/admin/exchange/eoisubmission/:id",
-    name: "EoI Submission ",
-    component: <SubmissionEoI />,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
     hidden: true,
