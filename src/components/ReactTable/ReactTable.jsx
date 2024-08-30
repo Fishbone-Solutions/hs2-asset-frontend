@@ -170,7 +170,7 @@ const Table = ({ columns, data, isLoading }) => {
             <div className="-center">
               <Container>
                 <Row className="justify-content-center">
-                  <Col md="4" sm="6" xs="12">
+                  <Col md="3" sm="6" xs="12">
                     <Select
                       className="react-select primary pageSelect"
                       classNamePrefix="react-select"
@@ -184,7 +184,7 @@ const Table = ({ columns, data, isLoading }) => {
                       placeholder="Choose Page"
                     />
                   </Col>
-                  <Col md="4" sm="6" xs="12">
+                  <Col md="3" sm="6" xs="12">
                     <Select
                       className="react-select primary pageRow"
                       classNamePrefix="react-select"

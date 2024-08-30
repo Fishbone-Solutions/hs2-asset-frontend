@@ -11289,7 +11289,8 @@ img {
     > a
     .sidebar-normal,
   .sidebar-mini .sidebar .sidebar-wrapper .user .info > a > span,
-  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p, .sidebar-mini .sidebar .sidebar-wrapper>.nav li>a span.menu-name {
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p,
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a span.menu-name {
     -webkit-transform: translate3d(-25px, 0, 0);
     -moz-transform: translate3d(-25px, 0, 0);
     -o-transform: translate3d(-25px, 0, 0);
@@ -17006,7 +17007,8 @@ img {
     > a
     .sidebar-normal,
   .sidebar-mini .sidebar .sidebar-wrapper .user .info > a > span,
-  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p, .sidebar-mini .sidebar .sidebar-wrapper>.nav li>a span.menu-name {
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p,
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a span.menu-name {
     -webkit-transform: translate3d(-25px, 0, 0);
     -moz-transform: translate3d(-25px, 0, 0);
     -o-transform: translate3d(-25px, 0, 0);

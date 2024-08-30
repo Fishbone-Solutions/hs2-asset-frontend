@@ -643,7 +643,7 @@
 
   .-previous,
   .-next {
-    flex: 0.7 !important; /* Allow buttons to take up equal space */
+    flex: 0.5 !important; /* Allow buttons to take up equal space */
     display: flex;
     justify-content: center;
   }
@@ -735,8 +735,8 @@
   padding: 0;
 }
 .react-select .react-select__control {
-  min-height: 31px !important;
-  height: 31px !important;
+  min-height: 38px;
+  height: 38px;
 }
 th {
   font-size: 11px;
@@ -770,4 +770,7 @@ select.form-control {
 }
 th.py-2.rt-th.rt-resizable-header {
   border-right: 1px solid;
+}
+.react-select .react-select__control .react-select__placeholder {
+  padding-top: 8px;
 }
