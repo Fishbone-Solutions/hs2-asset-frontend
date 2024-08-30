@@ -18,7 +18,6 @@ import SubmissionEoI from "./views/pages/SubmissionEoI.jsx";
 import RequestEquipment from "./views/pages/RequestEquipment.jsx";
 import MyEoI from "./views/pages/myeoi/Index";
 
-
 import W0 from "./views/pages/wireframe/W0.jsx";
 import W1 from "./views/pages/wireframe/W1.jsx";
 import W2 from "./views/pages/wireframe/W2.jsx";
@@ -43,6 +42,9 @@ import { GiWireframeGlobe } from "react-icons/gi";
 
 import Register from "./views/pages/auth/Register";
 import MyEoIPage from "views/pages/MyEoIPage";
+import Breadcrumb from "components/Common/Breadcrumb";
+import breadcrumbConfig from "variables/breadcrumbsConfig";
+
 const routes = [
   {
     path: "/user-profile",
@@ -56,9 +58,13 @@ const routes = [
   {
     path: "/inventory",
     pathName: "/admin/inventory",
-    name: "Inventory ",
+    name: "Inventory",
     component: <Inventory />,
     icon: <HiViewGridAdd size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventory} />,
     layout: "/admin",
   },
   {
@@ -68,6 +74,12 @@ const routes = [
     component: <InventoryCreate />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.inventoryCreate} />
+    ),
     hidden: true,
   },
 
@@ -78,6 +90,10 @@ const routes = [
     component: <InventoryShow />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventoryShow} />,
     hidden: true,
   },
   {
@@ -87,6 +103,10 @@ const routes = [
     component: <InventoryEdit />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventoryEdit} />,
     hidden: true,
   },
 
@@ -97,6 +117,10 @@ const routes = [
     component: <InventoryEoi />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventoryEoi} />,
     hidden: true,
   },
   {
@@ -106,6 +130,15 @@ const routes = [
     component: <InventoryEoiDetails />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: ({ match }) => {
+      const { inventoryId } = match.dynamicParams;
+      return (
+        <Breadcrumb items={breadcrumbConfig.inventoryEoiDetails(inventoryId)} />
+      );
+    },
     hidden: true,
   },
   {
@@ -115,6 +148,15 @@ const routes = [
     component: <InventoryEoiEdit />,
     layout: "/admin",
     icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <HiViewGridAdd size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: ({ match }) => {
+      const { inventoryId } = match.dynamicParams;
+      return (
+        <Breadcrumb items={breadcrumbConfig.inventoryEoiEdit(inventoryId)} />
+      );
+    },
     hidden: true,
   },
 

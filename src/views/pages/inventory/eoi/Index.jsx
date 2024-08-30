@@ -29,10 +29,8 @@ const Index = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const { id } = useParams();
-  console.log(TableColumn);
 
   const fetchData = async () => {
-    console.log("calll");
     try {
       setLoader(true);
       const headers = { user_id: username };

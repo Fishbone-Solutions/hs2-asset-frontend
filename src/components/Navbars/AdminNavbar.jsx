@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   Button,
   Collapse,
@@ -9,7 +9,6 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   Form,
-  NavbarBrand,
   Navbar,
   Nav,
   Container,
@@ -18,44 +17,49 @@ import routes from "../../routes.jsx";
 import { IoLogOutOutline } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
+const extractParams = (route, pathname) => {
+  const pathPattern = route.pathName.replace(/:\w+/g, "([^/]+)");
+  const regex = new RegExp(`^${pathPattern}$`);
+  const match = pathname.match(regex);
+
+  if (match) {
+    const keys = (route.pathName.match(/:\w+/g) || []).map((key) =>
+      key.substring(1)
+    );
+    return keys.reduce((params, key, index) => {
+      params[key] = match[index + 1];
+      return params;
+    }, {});
+  }
+
+  return {};
+};
+
 function AdminNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  const [color, setColor] = React.useState("#52CBCE");
   const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const mode = query.get("mode");
-  const id = query.get("id");
+
+  const matchPathWithParams = (route, pathname) => {
+    const routeRegex = new RegExp(
+      "^" + route.pathName.replace(/:\w+/g, "[^/]+") + "$"
+    );
+    return routeRegex.test(pathname);
+  };
 
   const currentRoute = routes.find((route) =>
-    location.pathname.includes(route.pathName),
+    matchPathWithParams(route, location.pathname)
   );
 
-  const { name, icon } = currentRoute || {};
+  const dynamicParams = currentRoute
+    ? extractParams(currentRoute, location.pathname)
+    : {};
 
-  console.log("location", location.pathname);
-  console.log("mode", mode);
-
-  React.useEffect(() => {
-    window.addEventListener("resize", updateColor);
-  });
-
-  React.useEffect(() => {
-    if (
-      window.outerWidth < 993 &&
-      document.documentElement.className.indexOf("nav-open") !== -1
-    ) {
-      document.documentElement.classList.toggle("nav-open");
-    }
-  }, [location]);
-
-  const updateColor = () => {
-    if (window.innerWidth < 993 && collapseOpen) {
-      setColor("bg-primary");
-    } else {
-      setColor("bg-primary");
-    }
-  };
+  const breadcrumbIcon = currentRoute?.breadcrumbIcon;
+  const breadcrumbComponent =
+    typeof currentRoute?.breadcrumbComponent === "function"
+      ? currentRoute.breadcrumbComponent({ match: { dynamicParams } })
+      : currentRoute?.breadcrumbComponent;
 
   const toggleSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
@@ -63,102 +67,46 @@ function AdminNavbar(props) {
   };
 
   const toggleCollapse = () => {
-    if (!collapseOpen) {
-      setColor("bg-white");
-    } else {
-      setColor("bg-primary");
-    }
     setCollapseOpen(!collapseOpen);
-  };
-
-  const pathKeyToTitleMap = [
-    { pattern: /^\/admin\/inventory$/, title: "Inventory" },
-    {
-      pattern: /^\/admin\/assetregister\/\d+\?mode=view$/,
-      title: "Inventory | View Item",
-    },
-    {
-      pattern: /^\/admin\/assetregister\/\d+\?mode=edit$/,
-      title: "Inventory | Edit Item",
-    },
-    {
-      pattern: /^\/admin\/assetregister+\?mode=add$/,
-      title: "Inventory | Add Item",
-    },
-    { pattern: /^\/admin\/eoi\/\d+$/, title: "Inventory | All EOI" },
-    {
-      pattern: /^\/admin\/eoi\/details\/\d+\?mode=view&eoino=\d+$/,
-      title: "Inventory | All EOI | View",
-    },
-    {
-      pattern: /^\/admin\/eoi\/details\/\d+\?mode=edit&eoino=\d+$/,
-      title: "Inventory | All EOI | Edit",
-    },
-    { pattern: /^\/admin\/exchange\/register$/, title: "Exchange Register" },
-    {
-      pattern: /^\/admin\/assetregister\/\d+\?mode=exchange$/,
-      title: "Exchange Register | View Item",
-    },
-    {
-      pattern: /^\/admin\/exchange\/eoisubmission\/105\?mode=edit$/,
-      title: "Exchange Register | Submit EOI",
-    },
-    {
-      pattern: /^\/admin\/exchange\/requestequipment$/,
-      title: "Exchange Register | Broadcast Item Request",
-    },
-    {
-      pattern: /^\/admin\/myeoi$/,
-      title: "My EoI ",
-    },
-    {
-      pattern: /^\/admin\/myeoi\/105\?mode=exchange$/,
-      title: "Exchange Register | View Item",
-    },
-    {
-      pattern: /^\/admin\/eoi\/details\/\d+\?mode=exchange_edit&eoino=\d+$/,
-      title: "MyEoI | Edit",
-    },
-  ];
-
-  const renderTitle = () => {
-    const pathKey = location.pathname + location.search;
-
-    for (const entry of pathKeyToTitleMap) {
-      if (entry.pattern.test(pathKey)) {
-        return entry.title;
-      }
-    }
-
-    return ""; // Provide a default title if no pattern matches
   };
 
   return (
     <>
       <Navbar
-        className={classnames("navbar-absolute fixed-top", "#52CBCE")}
+        className={classnames("navbar-absolute fixed-top", "bg-primary")}
         expand="lg"
-        style={{ backgroundColor: "#52CBCE" }}
       >
-        <Container className="custom-fuild" fluid>
-          <div className="navbar-wrapper">
-            <div className="navbar-minimize">
-              <Button
-                className="btn-icon btn-round"
-                color="primary"
-                id="minimizeSidebar"
-                onClick={props.handleMiniClick}
-                style={{ backgroundColor: "grey" }}
-              >
-                <IoIosArrowForward className="visible-on-sidebar-mini"   color="white"
-                      size="1.5em" />
-                <IoIosArrowBack className="visible-on-sidebar-regular"  color="white"
-                      size="1.5em"/>
-          
-              </Button>
-            </div>
+        <Container fluid>
+          <div className="navbar-wrapper d-flex align-items-center">
+            <Button
+              className="btn-icon btn-round mr-2"
+              color="primary"
+              id="minimizeSidebar"
+              onClick={props.handleMiniClick}
+              style={{ backgroundColor: "grey" }}
+            >
+              <IoIosArrowForward
+                className="visible-on-sidebar-mini"
+                color="white"
+                size="1.5em"
+              />
+              <IoIosArrowBack
+                className="visible-on-sidebar-regular"
+                color="white"
+                size="1.5em"
+              />
+            </Button>
+            {breadcrumbIcon && (
+              <span className="breadcrumb-icon">{breadcrumbIcon}</span>
+            )}
+            <span
+              className="breadcrumb-text"
+              style={{ fontWeight: "bold", color: "white" }}
+            >
+              {breadcrumbComponent}
+            </span>
             <div
-              className={classnames("navbar-toggle", {
+              className={classnames("navbar-toggle ml-auto", {
                 toggled: sidebarOpen,
               })}
             >
@@ -172,32 +120,6 @@ function AdminNavbar(props) {
                 <span className="navbar-toggler-bar bar3" />
               </button>
             </div>
-            <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
-              <span className="d-none d-md-block" style={{ color: "white" }}>
-                {icon && <i className={icon}></i>}
-                <span
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    marginLeft: "8px",
-                  }}
-                >
-                  {renderTitle()}
-                </span>
-              </span>
-              <span className="d-block d-md-none">
-                {icon && <i className={icon}></i>}
-                <span
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    marginLeft: "8px",
-                  }}
-                >
-                  {renderTitle()}
-                </span>
-              </span>
-            </NavbarBrand>
           </div>
           <button
             aria-controls="navigation-index"
@@ -228,8 +150,7 @@ function AdminNavbar(props) {
                   id="navbarDropdownMenuLink"
                   nav
                 >
-                  <IoLogOutOutline  color="white"
-                      size="2em" />
+                  <IoLogOutOutline color="white" size="2em" />
                   <p>
                     <span className="d-lg-none d-md-block">Logout</span>
                   </p>

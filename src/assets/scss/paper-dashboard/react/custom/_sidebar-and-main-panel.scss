@@ -669,3 +669,17 @@ td {
 .react-select__single-value.css-1dimb5e-singleValue {
   margin-top: 4px;
 }
+
+//breadcrumbs
+.breadcrumb-item.active {
+  margin-top: 2px;
+}
+.breadcrumb {
+  background: transparent !important;
+  margin-bottom: auto !important;
+  font-size: medium !important;
+}
+.breadcrumb-icon {
+  font-size: large !important;
+  color: #fff !important;
+}
