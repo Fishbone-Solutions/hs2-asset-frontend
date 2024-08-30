@@ -79,8 +79,8 @@
     "not op_mini all"
   ],
   "optionalDependencies": {
-    "typescript": "5.0.4",
-    "@rollup/rollup-linux-arm64-gnu": "^4.21.1"
+    "@rollup/rollup-linux-arm64-gnu": "^4.21.1",
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
