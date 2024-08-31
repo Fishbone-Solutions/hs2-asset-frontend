@@ -340,7 +340,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={" Auto Generated"}
+                          value={formData.id}
                           disabled
                         />
                       </FormGroup>

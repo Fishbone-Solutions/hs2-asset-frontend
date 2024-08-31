@@ -297,7 +297,7 @@ const Show = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={" Auto Generated"}
+                          value={formData.id}
                           disabled
                           readOnly="true"
                         />

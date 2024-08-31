@@ -292,7 +292,7 @@ const Create = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={" Auto Generated"}
+                          value={formData.id}
                           required
                           disabled
                         />
