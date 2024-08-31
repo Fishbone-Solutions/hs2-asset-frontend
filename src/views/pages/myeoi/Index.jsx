@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import DynamicToast from "components/Common/Toast";
 import { EndPointService } from "../../../services/methods";
+
 import {
   Card,
   CardBody,
@@ -29,9 +30,10 @@ import ReactTable from "../../../components/ReactTable/ReactTable";
 import { Form, NavLink, useNavigate } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
-import TableColumn from "variables/tables/inventory/Index";
+import TableColumn from "variables/tables/myeoi/Index";
 import { itemStatusOptions } from "variables/common";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
+
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -63,7 +65,7 @@ const Index = () => {
 
   const getValueOrDefault = (value) => (value ? value : "-1");
 
-  const fetchInventory = async () => {
+  const fetchMyEoI = async () => {
     try {
       setLoader(true);
       const headers = { user_id: username };
@@ -80,7 +82,7 @@ const Index = () => {
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
       });
 
-      const res = await EndPointService.getInventory(headers);
+      const res = await EndPointService.getMyEoI(headers,username);
       setDataState(res.appRespData);
       setToastType("success");
       setToastMessage(res.appRespMessage);
@@ -92,14 +94,8 @@ const Index = () => {
     }
   };
 
-  const handleEoI = () => {};
-
-  const handleDelete = (id) => {
-    console.log(id);
-  };
-
   React.useEffect(() => {
-    fetchInventory();
+    fetchMyEoI();
   }, [filterFormData]);
 
   const handleFilter = (e) => {
@@ -174,7 +170,7 @@ const Index = () => {
 
                 <ReactTable
                   data={dataState}
-                  columns={TableColumn(handleDelete)}
+                  columns={TableColumn()}
                   isLoading={loader}
                   className="-striped -highlight primary-pagination mt-2"
                 />

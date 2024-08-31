@@ -26,6 +26,9 @@ import { useParams } from "react-router-dom";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
+import { subCategory } from "variables/common";
+import { conditionOptions } from "variables/common";
+import { categorycode1 } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
@@ -53,52 +56,6 @@ const Show = () => {
     seller_location: "",
     statuscode: "",
   });
-
-  const Conditionoptions = [
-    { value: "New", label: "New" },
-    { value: "Used-Working", label: "Used - Working" },
-    { value: "Used-Not-Working", label: "Used - Not Working" },
-    { value: "Refurbished", label: "Refurbished" },
-    { value: "Expired", label: "Expired" },
-  ];
-  const options = [
-    { value: "Live", label: "Live" },
-    { value: "Listing", label: "Listing" },
-    { value: "Sold", label: "Sold" },
-  ];
-
-  const optionsCategory1 = [
-    { value: "Construction Office", label: "Construction Office" },
-    {
-      value: "Storage/Logistics Facilities",
-      label: "Storage/Logistics Facilities",
-    },
-    { value: "Processing Facilities", label: "Processing Facilities" },
-    { value: "Fixed Services", label: "Fixed Services" },
-    { value: "Temporary Services", label: "Temporary Services" },
-    { value: "Security", label: "Security" },
-    {
-      value: "Compound Security/Safety Infrastructure",
-      label: "Compound Security/Safety Infrastructure",
-    },
-    {
-      value: "Site Roads and Infrastructure",
-      label: "Site Roads and Infrastructure",
-    },
-    { value: "Temporary Siding", label: "Temporary Siding" },
-    { value: "Consolidation Yards", label: "Consolidation Yards" },
-    { value: "Concrete Production", label: "Concrete Production" },
-    { value: "Diversions", label: "Diversions" },
-    { value: "Earthworks", label: "Earthworks" },
-    { value: "Static Plant", label: "Static Plant" },
-    { value: "Piling", label: "Piling" },
-    { value: "Pipework", label: "Pipework" },
-    {
-      value: "Public Highway Traffic Management",
-      label: "Public Highway Traffic Management",
-    },
-    { value: "Other Assets", label: "Other Assets" },
-  ];
 
   const fetchInventoryById = async () => {
     try {
@@ -229,7 +186,7 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
-                          value={optionsCategory1.find(
+                          value={categorycode1.find(
                             (option) => option.value === formData.categorycode1
                           )}
                           onChange={(selectedOption) =>
@@ -238,7 +195,7 @@ const Show = () => {
                               categorycode1: selectedOption.value,
                             }))
                           }
-                          options={optionsCategory1}
+                          options={categorycode1}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
@@ -252,20 +209,16 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode2"
-                          value={{
-                            value: formData.categorycode2,
-                            label: formData.categorycode2,
-                          }}
+                          value={subCategory.find(
+                            (option) => option.value === formData.categorycode2
+                          )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
                               ...prevState,
                               categorycode2: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Generic", label: "Generic" },
-                            { value: "Other", label: "Other" },
-                          ]}
+                          options={subCategory}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
@@ -350,7 +303,7 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
-                          value={Conditionoptions.find(
+                          value={conditionOptions.find(
                             (option) =>
                               option.value === formData.asset_condition
                           )}
@@ -360,7 +313,7 @@ const Show = () => {
                               asset_condition: selectedOption.value,
                             }))
                           }
-                          options={Conditionoptions}
+                          options={conditionOptions}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
@@ -437,17 +390,17 @@ const Show = () => {
                   </CardTitle>
                 </CardHeader>
                 {/* <CardBody>
-                  <FileUpload
-                    name="demo[]"
-                    url="/api/upload"
-                    multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled="true"
-                    className="custom-file-upload"
-                  />
-                </CardBody> */}
+                    <FileUpload
+                      name="demo[]"
+                      url="/api/upload"
+                      multiple
+                      accept="image/*"
+                      maxFileSize={1000000}
+                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
+                      disabled="true"
+                      className="custom-file-upload"
+                    />
+                  </CardBody> */}
               </Card>
             </Col>
             {/* Upload Documents*/}
@@ -468,67 +421,19 @@ const Show = () => {
                 </CardHeader>
                 <CardBody>
                   {/* <FileUpload
-                    name="demo[]"
-                    url={"/api/upload"}
-                    multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
-                    className="custom-file-upload"
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled="true"
-                  /> */}
+                      name="demo[]"
+                      url={"/api/upload"}
+                      multiple
+                      accept="image/*"
+                      maxFileSize={1000000}
+                      className="custom-file-upload"
+                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
+                      disabled="true"
+                    /> */}
                 </CardBody>
               </Card>
             </Col>
             {/* Set Asset Status */}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Item Status
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Status *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="statuscode"
-                          value={options.find(
-                            (option) => option.value === formData.statuscode
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              statuscode: selectedOption.value,
-                            }))
-                          }
-                          options={[
-                            { value: "Live", label: "Live" },
-                            { value: "Listing", label: "Listing" },
-                            { value: "Sold", label: "Sold" },
-                          ]}
-                          placeholder="Select an option"
-                          isDisabled="true"
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
           </Row>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

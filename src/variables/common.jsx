@@ -70,3 +70,8 @@ export const subCategory = [
   { value: "Generic", label: "Generic" },
   { value: "Other", label: "Other" },
 ];
+
+export const   myEoIUpdateoptions = [
+  { value: "PAYMENT-RECEIVED", label: "Payment Received" },
+  { value: "GOODS-SENT", label: "Goods Sent" },
+];

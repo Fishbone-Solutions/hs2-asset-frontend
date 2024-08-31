@@ -20,7 +20,11 @@ import AssetRegister from "views/pages/AssetRegister";
 import UserProfile from "./views/pages/UserProfile.jsx";
 import EoIPage from "./views/pages/EoIPage.jsx";
 import RequestEquipment from "./views/pages/RequestEquipment.jsx";
-import MyEoI from "./views/pages/myeoi/Index";
+
+// myeoi
+import  MyEoI from "./views/pages/myeoi/Index";
+import MyEoIShow from "./views/pages/myeoi/Show.jsx";
+import MyEoIEdit from "./views/pages/myeoi/Edit.jsx";
 
 import W0 from "./views/pages/wireframe/W0.jsx";
 import W1 from "./views/pages/wireframe/W1.jsx";
@@ -45,7 +49,6 @@ import { BsMegaphoneFill } from "react-icons/bs";
 import { GiWireframeGlobe } from "react-icons/gi";
 
 import Register from "./views/pages/auth/Register";
-import MyEoIPage from "views/pages/MyEoIPage";
 import Breadcrumb from "components/Common/Breadcrumb";
 import breadcrumbConfig from "variables/breadcrumbsConfig";
 
@@ -225,16 +228,6 @@ const routes = [
     hidden: true,
   },
   {
-    path: "/myeoi",
-    pathName: "/admin/myeoi",
-    name: "My EoI",
-    component: <MyEoIPage />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true,
-  },
-
-  {
     path: "/dashboard",
     pathName: "/admin/dashboard",
     name: "Bulk Import",
@@ -259,15 +252,47 @@ const routes = [
     layout: "/admin",
     icon: <FaHand size="2.5em" style={{ float: "left" }} />,
   },
-
   {
     path: "/myeoi",
     pathName: "/admin/myeoi",
-    name: "My EoI's",
+    name: "My EoI",
     component: <MyEoI />,
     layout: "/admin",
     icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
+   },
+  {
+    path: "/myeoi/show/:id",
+    pathName: "/admin/myeoi/show/:id",
+    name: "My EoI | View EoI ",
+    component: <MyEoIShow />,
+    layout: "/admin",
+    icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiShow} />,
+    hidden: true,
   },
+  {
+    path: "/myeoi/:inventoryId/eois/edit/:eoiId",
+    pathName: "/admin/myeoi/:inventoryId/eois/edit/:eoiId",
+    name: "My EoI | Item Edit",
+    component: <MyEoIEdit />,
+    layout: "/admin",
+    icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiEdit} />,
+    hidden: true,
+
+  },
+
+
   {
     collapse: true,
     name: "WireFrame Pages",

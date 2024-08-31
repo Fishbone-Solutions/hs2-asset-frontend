@@ -37,6 +37,15 @@ const breadcrumbConfig = {
     { label: "Exchange", to: "/admin/exchange" },
     { label: "Eoi Submission", to: "#" },
   ],
+  myEoi: [{ label: "My EoI", to: "#" }],
+  myEoiShow: [
+    { label: "My EoI", to: "/admin/myeoi" },
+    { label: "View Item", to: "#" },
+  ],
+  myEoiEdit: [
+    { label: "My EoI", to: "/admin/myeoi" },
+    { label: "Edit Item", to: "#" },
+  ],
   // Add more as needed
 };
 
