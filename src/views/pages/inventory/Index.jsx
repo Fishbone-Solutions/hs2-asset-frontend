@@ -1,39 +1,26 @@
-import React, {
-  PropTypes,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DynamicToast from "components/Common/Toast";
-import { EndPointService } from "../../../services/methods";
+import { EndPointService } from "@/services/methods";
 import {
   Card,
   CardBody,
   Row,
   Col,
-  Button,
   Input,
   CardHeader,
-  CardTitle,
   Label,
   FormGroup,
   Modal,
 } from "reactstrap";
-import {
-  IoSearchSharp,
-  IoAddCircleOutline,
-  IoListSharp,
-} from "react-icons/io5";
-import ReactTable from "../../../components/ReactTable/ReactTable";
-import { Form, NavLink, useNavigate } from "react-router-dom";
+import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
+import ReactTable from "components/ReactTable/ReactTable";
+import { Form, NavLink } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/inventory/Index";
-import LiveSvgComponent from "components/svg/LiveSvg";
-import { itemStatusOptions } from "variables/common";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
-import ReactBSAlert from "react-bootstrap-sweetalert";
+import { useAlert } from "components/Common/NotificationAlert"; // import the custom hook
+import { inventoryStatusOptions } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -44,8 +31,6 @@ const Index = () => {
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
-  const [isHovered, setIsHovered] = useState(false);
-  const [alert, setAlert] = React.useState(null);
   const [refreshData, setRefreshData] = useState(0);
   const [rangeDatesEntry, setRangeDatesEntry] = useState({
     startDate: "",
@@ -65,13 +50,14 @@ const Index = () => {
     statuscode: null,
   });
 
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+
   const getValueOrDefault = (value) => (value ? value : "-1");
 
   const fetchInventory = async () => {
     try {
       setLoader(true);
       const headers = { user_id: username };
-      // Construct the query parameters
       const params = new URLSearchParams({
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
@@ -94,60 +80,36 @@ const Index = () => {
     }
   };
 
-  const handleEoI = () => {};
-
   const handleDelete = (id) => {
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => successDelete(id)}
-        onCancel={hideAlert}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      >
-        You will not be able to recover this item.
-      </ReactBSAlert>
-    );
+    showAlert({
+      title: "Are you sure?",
+      message: "You will not be able to recover this item.",
+      type: "warning",
+      onConfirm: () => successDelete(id),
+      onCancel: hideAlert,
+    });
   };
 
   const successDelete = async (id) => {
     try {
       setLoader(true);
       const res = await EndPointService.deleteInventoryById(id);
-      setAlert(
-        <ReactBSAlert
-          success
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Deleted!"
-          onConfirm={hideAlert}
-          onCancel={hideAlert}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        >
-          Asset ID {id} has been deleted successfully
-        </ReactBSAlert>
-      );
+      showAlert({
+        title: "Deleted!",
+        message: `Asset ID ${id} has been deleted successfully`,
+        type: "success",
+        onConfirm: hideAlert,
+      });
       setRefreshData(refreshData + 1);
       setLoader(false);
     } catch (e) {
-      console.log(e);
       setToastType("error");
       setToastMessage(e.appRespMessage);
       setLoader(false);
     }
   };
 
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     fetchInventory();
   }, [filterFormData, refreshData]);
 
@@ -282,9 +244,7 @@ const Index = () => {
                               name="id"
                               id="id"
                               placeholder="id"
-                              onChange=""
                             />
-
                             <Label for="id">ID</Label>
                           </FormGroup>
                         </Col>
@@ -295,9 +255,7 @@ const Index = () => {
                               type="text"
                               name="asset_name"
                               placeholder="name"
-                              onChange=""
                             />
-
                             <Label for="name">Name</Label>
                           </FormGroup>
                         </Col>
@@ -325,7 +283,7 @@ const Index = () => {
                         <Col sm="6">
                           <FloatingLabelDropdown
                             label="Status"
-                            options={itemStatusOptions}
+                            options={inventoryStatusOptions}
                             onChange={handleSelectChange}
                           />
                         </Col>
@@ -333,7 +291,6 @@ const Index = () => {
                       <div className="d-flex justify-content-end gap-1">
                         <button
                           className="btn btn-primary px-2 py-2"
-                          onClick=""
                           type="clear"
                         >
                           Clear

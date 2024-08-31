@@ -55,11 +55,7 @@ function eoiUpdateStatus(headers = null, inventory_id, eoi_id, params) {
 }
 
 function createEoi(headers = null, inventory_id, params) {
-  return PostWithMultiPart(
-    `${endpoints.createEoi(inventory_id)}`,
-    params,
-    headers
-  );
+  return Post(`${endpoints.createEoi(inventory_id)}`, params, headers);
 }
 
 function getExchange(headers = null, params = null) {

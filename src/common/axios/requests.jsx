@@ -27,7 +27,7 @@ export const Post = (
   params, // Changed to FormData type
   headers
 ) => {
-  return serviceProvider.post(path, params, headers);
+  return serviceProvider.post(path, params, { ...(headers && { headers }) });
 };
 
 export const UpdateWithPost = (path, params, headers) =>
