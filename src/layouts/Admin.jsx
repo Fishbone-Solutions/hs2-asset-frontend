@@ -81,9 +81,10 @@ function Admin(props) {
         routes={routes}
         bgColor={backgroundColor}
         activeColor={activeColor}
+        handleMiniClick={handleMiniClick}
       />
       <div className="main-panel" ref={mainPanel}>
-        <AdminNavbar {...location} handleMiniClick={handleMiniClick} />
+        <AdminNavbar {...location} />
         <Routes>{getRoutes(routes)}</Routes>
         {
           // we don't want the Footer to be rendered on full screen maps page

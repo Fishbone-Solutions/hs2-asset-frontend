@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 import routes from "../../routes.jsx";
 import { IoLogOutOutline } from "react-icons/io5";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const extractParams = (route, pathname) => {
   const pathPattern = route.pathName.replace(/:\w+/g, "([^/]+)");
@@ -78,24 +77,6 @@ function AdminNavbar(props) {
       >
         <Container fluid>
           <div className="navbar-wrapper d-flex align-items-center">
-            <Button
-              className="btn-icon btn-round mr-2"
-              color="primary"
-              id="minimizeSidebar"
-              onClick={props.handleMiniClick}
-              style={{ backgroundColor: "grey" }}
-            >
-              <IoIosArrowForward
-                className="visible-on-sidebar-mini"
-                color="white"
-                size="1.5em"
-              />
-              <IoIosArrowBack
-                className="visible-on-sidebar-regular"
-                color="white"
-                size="1.5em"
-              />
-            </Button>
             {breadcrumbIcon && (
               <span className="breadcrumb-icon">{breadcrumbIcon}</span>
             )}

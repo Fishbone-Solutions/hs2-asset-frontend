@@ -683,3 +683,15 @@ td {
   font-size: large !important;
   color: #fff !important;
 }
+
+button#minimizeSidebar {
+  position: absolute;
+  right: -19px;
+  top: 4px;
+  background-color: #fff !important;
+  color: grey !important;
+  height: 1.5rem;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  box-shadow: 0px 9px 29px rgba(0, 0, 0, 1.2) !important;
+}

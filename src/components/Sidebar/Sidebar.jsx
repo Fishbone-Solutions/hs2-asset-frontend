@@ -1,12 +1,14 @@
 import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Nav, Collapse } from "reactstrap";
+import { Nav, Collapse, Button } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/faces/ex_logo.jpg";
 import { GlobalContext } from "../../GlobalState";
 import BACKEND_ADDRESS from "../../views/components/serverAddress.js";
+
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 var ps;
 
@@ -107,7 +109,7 @@ function Sidebar(props) {
           <Link to={prop.layout + prop.path}>
             {prop.icon !== undefined ? (
               <>
-                {prop.icon}   <p className="ml-5 menu-name">{prop.name}</p>
+                {prop.icon} <p className="ml-5 menu-name">{prop.name}</p>
               </>
             ) : (
               <>
@@ -162,7 +164,7 @@ function Sidebar(props) {
     try {
       const response = await fetch(
         `${BACKEND_ADDRESS}/users/${username}`,
-        requestOptions,
+        requestOptions
       );
       const result = await response.json();
       setDataState(result.appRespData[0]);
@@ -208,6 +210,24 @@ function Sidebar(props) {
             HS2 EXCHANGE
           </a>
         </div>
+        <Button
+          className="btn-icon btn-round mr-2"
+          color="primary"
+          id="minimizeSidebar"
+          onClick={props.handleMiniClick}
+          style={{ backgroundColor: "grey" }}
+        >
+          <IoIosArrowForward
+            className="visible-on-sidebar-mini"
+            color="grey"
+            size="1.3em"
+          />
+          <IoIosArrowBack
+            className="visible-on-sidebar-regular"
+            color="grey"
+            size="1.3em"
+          />
+        </Button>
       </div>
 
       <div className="sidebar-wrapper" ref={sidebar}>
