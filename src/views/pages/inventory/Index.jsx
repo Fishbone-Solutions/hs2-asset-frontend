@@ -33,6 +33,7 @@ import TableColumn from "variables/tables/inventory/Index";
 import LiveSvgComponent from "components/svg/LiveSvg";
 import { itemStatusOptions } from "variables/common";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
+import ReactBSAlert from "react-bootstrap-sweetalert";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -44,6 +45,8 @@ const Index = () => {
   const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
   const [isHovered, setIsHovered] = useState(false);
+  const [alert, setAlert] = React.useState(null);
+  const [refreshData, setRefreshData] = useState(0);
   const [rangeDatesEntry, setRangeDatesEntry] = useState({
     startDate: "",
     endDate: "",
@@ -94,12 +97,59 @@ const Index = () => {
   const handleEoI = () => {};
 
   const handleDelete = (id) => {
-    console.log(id);
+    setAlert(
+      <ReactBSAlert
+        warning
+        style={{ display: "block", marginTop: "-100px" }}
+        title="Are you sure?"
+        onConfirm={() => successDelete(id)}
+        onCancel={hideAlert}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        confirmBtnText="Yes"
+        cancelBtnText="Cancel"
+        showCancel
+        btnSize=""
+      >
+        You will not be able to recover this item.
+      </ReactBSAlert>
+    );
+  };
+
+  const successDelete = async (id) => {
+    try {
+      setLoader(true);
+      const res = await EndPointService.deleteInventoryById(id);
+      setAlert(
+        <ReactBSAlert
+          success
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Deleted!"
+          onConfirm={hideAlert}
+          onCancel={hideAlert}
+          confirmBtnBsStyle="info"
+          btnSize=""
+        >
+          Asset ID {id} has been deleted successfully
+        </ReactBSAlert>
+      );
+      setRefreshData(refreshData + 1);
+      setLoader(false);
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+
+  const hideAlert = () => {
+    setAlert(null);
   };
 
   React.useEffect(() => {
     fetchInventory();
-  }, [filterFormData]);
+  }, [filterFormData, refreshData]);
 
   const handleFilter = (e) => {
     e.preventDefault();
@@ -148,6 +198,7 @@ const Index = () => {
           type={toastType}
           message={toastMessage}
         />
+        {alert}
         <Row>
           <Col md="12">
             <Card>

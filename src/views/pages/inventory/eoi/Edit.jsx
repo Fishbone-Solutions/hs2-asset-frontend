@@ -100,7 +100,7 @@ const Edit = () => {
         eoi_status: dataState.eoi_status,
         approval_status: dataState.approval_status,
         approval_ref_no: dataState.approval_ref_no,
-        status_trail: dataState.status_trail,
+        status_trail: "EOI-SUBMITTED : 21/08/2024 01:08",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,

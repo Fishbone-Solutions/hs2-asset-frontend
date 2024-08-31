@@ -25,7 +25,7 @@ function updateInventory(headers = null, id, params) {
 }
 
 function deleteInventoryById(id) {
-  return Delete(`${endpoints.deleteInventoryById(id)}`);
+  return Post(`${endpoints.deleteInventory(id)}`);
 }
 
 function eoiOnbehaveInventory(headers = null, inventory_id) {
