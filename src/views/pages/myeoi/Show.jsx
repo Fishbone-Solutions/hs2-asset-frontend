@@ -38,6 +38,7 @@ const Show = () => {
   const { username } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
+    asset_id:"",
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -252,7 +253,7 @@ const Show = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={" Auto Generated"}
+                          value={formData.asset_id}
                           disabled
                           readOnly="true"
                         />

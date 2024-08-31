@@ -39,7 +39,7 @@ const Create = () => {
   const navigate = useNavigate();
   const headers = { user_id: username };
   const [formData, setFormData] = useState({
-    id: "Auto Generated", // Initialize id based on mode
+    id: "Auto Generated", 
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -292,7 +292,7 @@ const Create = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={formData.id}
+                          value={formData.asset_id}
                           required
                           disabled
                         />

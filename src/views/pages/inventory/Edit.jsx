@@ -37,6 +37,7 @@ const Edit = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
+    asset_id:"",
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -340,7 +341,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={formData.id}
+                          value={formData.asset_id}
                           disabled
                         />
                       </FormGroup>
