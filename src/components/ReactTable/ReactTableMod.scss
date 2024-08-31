@@ -110,6 +110,10 @@
   min-height: 31px !important;
   height: 31px !important;
 }
+.pageRow .react-select__single-value,
+.pageSelect .react-select__single-value {
+  margin-top: 4px !important;
+}
 th {
   font-size: 11px;
 }
