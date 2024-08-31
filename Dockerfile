@@ -5,7 +5,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-# production environment
+# production environment migrate
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /usr/src/app/dist .
