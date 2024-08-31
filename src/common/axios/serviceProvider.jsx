@@ -3,7 +3,6 @@ import config from "../../services/config";
 
 // Retrieve the base URL from your config
 const baseURL = `${config.baseURL}`;
-console.log(baseURL);
 
 // Create an Axios instance
 const serviceProvider = axios.create({
@@ -20,8 +19,7 @@ serviceProvider.interceptors.request.use(
   async (config) => {
     // Retrieve the token from localStorage
     //const token = localStorage.getItem("authToken");
-    const token = 'x8F!@p01,*MH';
-    
+    const token = "x8F!@p01,*MH";
 
     // If the token exists, set it in the Authorization header
     if (token) {
@@ -47,7 +45,9 @@ serviceProvider.interceptors.response.use(
     // Handle errors (e.g., unauthorized, token expiration)
     if (error.response && error.response.status === 401) {
       // Optionally, handle specific cases like token expiration
-      console.error("Unauthorized access - possibly due to invalid/expired token");
+      console.error(
+        "Unauthorized access - possibly due to invalid/expired token"
+      );
       // You can also redirect to login page or refresh token here
     }
 
