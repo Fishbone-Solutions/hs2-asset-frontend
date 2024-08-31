@@ -113,7 +113,6 @@ const Edit = () => {
       hideAlert();
       setLoader(false);
     } catch (e) {
-      console.log("error");
       setToastType("error");
       setToastMessage(e.appRespMessage);
       setLoader(false);

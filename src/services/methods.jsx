@@ -66,12 +66,9 @@ function getExchange(headers = null, params = null) {
   return Get(`${endpoints.exchanges(params)}`, headers);
 }
 
-function getMyEoI(headers = null,params = null) {
+function getMyEoI(headers = null, params = null) {
   return Get(`${endpoints.myeoi(params)}`, headers);
 }
-
-
-
 
 export const EndPointService = {
   getInventory,
@@ -85,5 +82,5 @@ export const EndPointService = {
   eoiUpdateStatus,
   createEoi,
   getExchange,
-  getMyEoI
+  getMyEoI,
 };
