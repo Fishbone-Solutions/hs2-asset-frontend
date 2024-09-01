@@ -35,7 +35,7 @@ import TableColumn from "variables/tables/myeoi/Index";
 import { itemStatusOptions } from "variables/common";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 import SvgSearchPlus from "components/svg/SearchPlus";
-
+import { orderStatusOptions } from "variables/common";
 const Index = () => {
   const [dataState, setDataState] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -281,7 +281,7 @@ const Index = () => {
                               onChange=""
                             />
 
-                            <Label for="id">ID</Label>
+                            <Label for="id">EoI ID</Label>
                           </FormGroup>
                         </Col>
                         <Col sm="6">
@@ -299,21 +299,20 @@ const Index = () => {
                         </Col>
 
                         <Col sm="6">
-                          <div className="placer2">
                             <FormGroup>
                               <DateRangePicker
                                 label="Entry Range"
-                                onChange={handleEntryDate}
                               />
                             </FormGroup>
-                          </div>
                         </Col>
 
                         <Col sm="6">
                           <FormGroup>
-                            <DateRangePicker
-                              label="Availablility Range"
-                              onChange={handleAvailablilityDate}
+                          <Input
+                              id="eoi_id"
+                              type="text"
+                              name="eoi_id"
+                              placeholder="Item ID"
                             />
                           </FormGroup>
                         </Col>
@@ -321,7 +320,7 @@ const Index = () => {
                         <Col sm="6">
                           <FloatingLabelDropdown
                             label="Status"
-                            options={itemStatusOptions}
+                            options={orderStatusOptions}
                             onChange={handleSelectChange}
                           />
                         </Col>
