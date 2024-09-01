@@ -215,6 +215,12 @@ const routes = [
     component: <RequestEquipment />,
     layout: "/admin",
     icon: "nc-icon nc-tile-56",
+    breadcrumbIcon: (
+      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.exchangeRequestEquipment} />
+    ),
     hidden: true,
   },
 

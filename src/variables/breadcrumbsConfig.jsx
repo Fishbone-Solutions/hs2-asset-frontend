@@ -29,6 +29,7 @@ const breadcrumbConfig = {
     { label: "Edit View", to: "#" },
   ],
   exchange: [{ label: "Exchange", to: "#" }],
+  exchangeRequestEquipment: [{ label: "Exchange  Register| Broadcast Item Request", to: "#" }],
   exchangeShow: [
     { label: "Exchange", to: "/admin/exchange" },
     { label: "View Details", to: "#" },

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import DynamicToast from "components/Common/Toast";
 import { EndPointService } from "../../../services/methods";
-
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -20,11 +20,12 @@ import {
   Label,
   FormGroup,
   Modal,
+  Container,
 } from "reactstrap";
 import {
   IoSearchSharp,
-  IoAddCircleOutline,
-  IoListSharp,
+  IoMegaphoneOutline,
+
 } from "react-icons/io5";
 import ReactTable from "../../../components/ReactTable/ReactTable";
 import { Form, NavLink, useNavigate } from "react-router-dom";
@@ -33,7 +34,7 @@ import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/myeoi/Index";
 import { itemStatusOptions } from "variables/common";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
-
+import SvgSearchPlus from "components/svg/SearchPlus";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -137,6 +138,31 @@ const Index = () => {
     }));
   };
 
+  const handleNameSearch = (e) => {
+    if (e.key === "Enter") {
+      setFilterFormDate({ asset_name: e.target.value });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    // Update the state with the new input value
+    setFilterFormDate({ ...filterFormData, asset_name: e.target.value });
+  };
+
+  const handleAdvancedFilter = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: formData.get("id"),
+      asset_name: formData.get("name"),
+      available_from: rangeDates.startDate,
+      available_to: rangeDates.endDate,
+    }));
+  };
+
   return (
     <>
       <div className="content">
@@ -149,24 +175,48 @@ const Index = () => {
           <Col md="12">
             <Card>
               <CardBody>
-                <div className="float-end d-inline-flex p-2 justify-content-end">
-                  <div onClick={openModal} className="mr-2 cursor-pointer">
-                    <IoSearchSharp
-                      color="white"
-                      size="2.4em"
-                      className="icon-btn"
-                    />
-                  </div>
-                  <NavLink to="/admin/inventory/create">
-                    <div>
-                      <IoAddCircleOutline
-                        color="white"
-                        size="2.4em"
-                        className="icon-btn"
-                      />
-                    </div>
-                  </NavLink>
-                </div>
+              <Container className="custom-fuild mb-1" fluid>
+                    <Row className="align-items-center">
+                      <Col xs={12} md={12}>
+                        <div className="d-flex justify-content-end align-items-center">
+                          {/* Search Input */}
+                   
+
+                          {/* Search Icon */}
+
+                          <div className="ms-auto d-inline-flex">
+                            <div
+                              onClick={openModal}
+                              className="me-2 icon-style"
+                              style={{ cursor: "pointer" }}
+                            >
+                              <SvgSearchPlus
+                                width="30"
+                                height="30"
+                                color="white"
+                                size="2.4em"
+                              />
+                            </div>
+
+                            {/* Add Icon */}
+                            <Link to="/admin/exchange/requestequipment">
+                            <button
+                              
+                              className="p-0 icon-style"
+                            >
+                              <div>
+                                <IoMegaphoneOutline
+                                  color="white"
+                                  size="2.2em"
+                                />
+                              </div>
+                            </button>
+                            </Link>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                  </Container>
 
                 <ReactTable
                   data={dataState}
