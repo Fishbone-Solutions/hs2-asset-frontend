@@ -74,7 +74,6 @@ const Show = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     fetchInventoryById();
   }, []);
 

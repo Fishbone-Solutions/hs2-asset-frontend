@@ -76,6 +76,8 @@ function Admin(props) {
     <div className="wrapper">
       {/* ToastContainer is needed to render the toasts */}
       <ToastContainer />
+
+      {alert}
       <Sidebar
         {...props}
         routes={routes}

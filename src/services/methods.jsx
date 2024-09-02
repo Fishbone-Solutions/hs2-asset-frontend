@@ -58,6 +58,10 @@ function createEoi(headers = null, inventory_id, params) {
   return Post(`${endpoints.createEoi(inventory_id)}`, params, headers);
 }
 
+function deleteEoiById(headers, inventory_id, eoi_id) {
+  return Post(`${endpoints.deleteEoi(inventory_id, eoi_id)}`, headers);
+}
+
 function getExchange(headers = null, params = null) {
   return Get(`${endpoints.exchanges(params)}`, headers);
 }
@@ -77,6 +81,7 @@ export const EndPointService = {
   eoiActivityTrackingHistory,
   eoiUpdateStatus,
   createEoi,
+  deleteEoiById,
   getExchange,
   getMyEoI,
 };

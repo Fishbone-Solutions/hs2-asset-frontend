@@ -17,9 +17,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { EndPointService } from "@/services/methods";
 import TableColumn from "variables/tables/inventory/Eoi";
-import ReactBSAlert from "react-bootstrap-sweetalert";
 import { GlobalContext } from "@/GlobalState";
 import ReactTable from "components/ReactTable/ReactTable";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -29,6 +29,7 @@ const Index = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const { id } = useParams();
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook her
 
   const fetchData = async () => {
     try {
@@ -40,8 +41,6 @@ const Index = () => {
       //eois
       const eoiData = await EndPointService.eoiOnbehaveInventory(headers, id);
       setDataState(eoiData.appRespData);
-      setToastType("success");
-      setToastMessage(eoiData.appRespMessage);
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -55,27 +54,35 @@ const Index = () => {
   }, []);
 
   const handleDelete = (assetId, eoino) => {
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => successDelete(assetId, eoino)}
-        onCancel={cancelDelete}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      >
-        You will not be able to recover this item.
-      </ReactBSAlert>
-    );
+    console.log("handleDelete", assetId, eoino);
+    showAlert({
+      title: "Are you sure?",
+      message: "You will not be able to recover this item.",
+      type: "warning",
+      onConfirm: () => successDelete(assetId, eoino),
+      onCancel: hideAlert,
+    });
   };
 
-  const successDelete = (assetId, eoiNo) => {
-    console.log("successfully delete");
+  const successDelete = async (assetId, eoiNo) => {
+    console.log("successfully delete", assetId, eoiNo);
+    try {
+      setLoader(true);
+      const res = await EndPointService.deleteEoiById(assetId, eoiNo);
+      showAlert({
+        title: "Deleted!",
+        message: `EoI ${eoiNo} has been deleted successfully`,
+        type: "success",
+        onConfirm: hideAlert,
+      });
+      setRefreshData(refreshData + 1);
+      setLoader(false);
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
   };
 
   return (
@@ -86,6 +93,7 @@ const Index = () => {
           type={toastType}
           message={toastMessage}
         />
+        {alert}
         <Form>
           <Row>
             <Col md="12">

@@ -23,8 +23,6 @@ import {
 } from "reactstrap";
 import {
   IoSearchSharp,
-  IoAddCircleOutline,
-  IoListSharp,
   IoCloseSharp,
   IoMegaphoneOutline,
 } from "react-icons/io5";
@@ -97,11 +95,7 @@ const Index = () => {
 
   const handleEoI = () => {};
 
-  const handleDelete = (id) => {
-    console.log(id);
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     fetchInventory();
   }, [filterFormData]);
 

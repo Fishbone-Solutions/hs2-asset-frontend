@@ -117,18 +117,16 @@ const useColumns = (handleDelete) => {
                 <i className="fa fa-edit fs-6"></i>
               </Button>
             </Link>
-            <Link to={"#"}>
-              <Button
-                className="btn-icon btn-simple text-danger"
-                size="sm"
-                color="danger"
-                onClick={() =>
-                  handleDelete(row.original.asset_id, row.original.id)
-                }
-              >
-                <i className="fa fa-times fs-6"></i>
-              </Button>
-            </Link>
+            <Button
+              className="btn-icon btn-simple text-danger"
+              size="sm"
+              color="danger"
+              onClick={() =>
+                handleDelete(row.original.asset_id, row.original.id)
+              }
+            >
+              <i className="fa fa-times fs-6"></i>
+            </Button>
           </div>
         ),
       },
