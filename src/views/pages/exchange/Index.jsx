@@ -26,7 +26,7 @@ import {
   IoCloseSharp,
   IoMegaphoneOutline,
 } from "react-icons/io5";
-import ReactTable from "../../../components/ReactTable/ReactTable";
+import ReactTable from "components/ReactTable/ReactTable";
 import { Form, NavLink, useNavigate } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
@@ -290,9 +290,8 @@ const Index = () => {
                         type="button"
                         onClick={closeModal}
                         aria-label="Close"
-                        className="btn-close close-icon"
                       >
-                        <i className="fa fa-times text-white"></i>
+                        <i className="fa fa-times text-red"></i>
                       </button>
                     </CardHeader>
                     <CardBody>

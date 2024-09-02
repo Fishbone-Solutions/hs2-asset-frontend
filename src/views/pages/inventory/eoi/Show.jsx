@@ -55,8 +55,7 @@ const Show = () => {
 
       setDataState(res.appRespData[0]);
       setActivities(resEoiActivities.appRespData);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
+
       setLoader(false);
     } catch (e) {
       console.log(e);

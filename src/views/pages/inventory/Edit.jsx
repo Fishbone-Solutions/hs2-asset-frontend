@@ -67,8 +67,7 @@ const Edit = () => {
       const headers = { user_id: username };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
+
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -88,8 +87,7 @@ const Edit = () => {
         id,
         requestBody
       );
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
+
       setLoader(false);
       navigate("/admin/inventory");
     } catch (e) {

@@ -6,22 +6,25 @@ const useColumns = () => {
   return useMemo(
     () => [
       {
+        Header: "Submission Date",
+        isSortable: true,
+        accessor: "submission_date_formatted",
+        width: "2%",
+      },
+
+      {
         Header: "EoI. No",
         isSortable: true,
+        defaultSort: true, // Indicates this column should be the default sort
+        defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "id",
-        width: "2%",
+        width: "1%",
       },
       {
         Header: "Item ID",
         isSortable: true,
         accessor: "asset_id",
-        width: "2%",
-      },
-      {
-        Header: "Submission Date",
-        isSortable: true,
-        accessor: "submission_date_formatted",
-        width: "2%",
+        width: "1%",
       },
 
       {
@@ -99,7 +102,7 @@ const useColumns = () => {
         Header: "Actions",
         accessor: "actions",
         sortable: false,
-        width: "1%",
+        width: "0.2%",
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Link to={`/admin/myeoi/show/${row.original.asset_id}`}>
@@ -111,7 +114,7 @@ const useColumns = () => {
               to={`/admin/myeoi/${row.original.asset_id}/eois/edit/${row.original.id}`}
             >
               <Button className="btn-icon btn-simple" color="success" size="sm">
-                <SvgFilePlus />
+                <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
           </div>
@@ -123,4 +126,3 @@ const useColumns = () => {
 };
 
 export default useColumns;
-

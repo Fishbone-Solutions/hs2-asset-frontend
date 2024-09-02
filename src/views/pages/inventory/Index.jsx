@@ -98,6 +98,8 @@ const Index = () => {
         title: "Deleted!",
         message: `Asset ID ${id} has been deleted successfully`,
         type: "success",
+        showCancelButton: false,
+        confirmText: "ok",
         onConfirm: hideAlert,
       });
       setRefreshData(refreshData + 1);
@@ -245,7 +247,7 @@ const Index = () => {
                         aria-label="Close"
                       >
                         <i
-                          className="fa fa-times text-white"
+                          className="fa fa-times text-red"
                           style={{ fontSize: "1em" }}
                         ></i>
                       </button>

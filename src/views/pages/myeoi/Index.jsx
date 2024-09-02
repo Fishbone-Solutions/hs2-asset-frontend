@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DynamicToast from "components/Common/Toast";
 import { EndPointService } from "../../../services/methods";
 import { Link } from "react-router-dom";
@@ -18,15 +14,12 @@ import {
   Modal,
   Container,
 } from "reactstrap";
-import {
-  IoMegaphoneOutline,
-} from "react-icons/io5";
+import { IoSearchSharp } from "react-icons/io5";
 import ReactTable from "../../../components/ReactTable/ReactTable";
 import { Form } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/myeoi/Index";
-import SvgSearchPlus from "components/svg/SearchPlus";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -38,7 +31,7 @@ const Index = () => {
   const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const [rangeDatesEntry, setRangeDatesEntry] = useState({
     startDate: null,
     endDate: null,
@@ -68,8 +61,6 @@ const Index = () => {
 
       const res = await EndPointService.getMyEoI(headers, username, params);
       setDataState(res.appRespData);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -105,7 +96,7 @@ const Index = () => {
     });
   };
 
-  const handleEntryDate = (startDate, endDate ) => {
+  const handleEntryDate = (startDate, endDate) => {
     setRangeDatesEntry((prevState) => ({
       ...prevState,
       startDate: startDate,
@@ -115,9 +106,7 @@ const Index = () => {
   return (
     <>
       <div className="content">
-        {toastType && (
-          <DynamicToast type={toastType} message={toastMessage} />
-        )}
+        {toastType && <DynamicToast type={toastType} message={toastMessage} />}
         <Row>
           <Col md="12">
             <Card>
@@ -129,23 +118,15 @@ const Index = () => {
                         <div className="ms-auto d-inline-flex">
                           <div
                             onClick={openModal}
-                            className="me-2 icon-style"
+                            className="icon-style"
                             style={{ cursor: "pointer" }}
                           >
-                            <SvgSearchPlus
-                              width="30"
-                              height="30"
+                            <IoSearchSharp
                               color="white"
                               size="2.4em"
+                              className="icon-btn"
                             />
                           </div>
-                          <Link to="/admin/exchange/requestequipment">
-                            <button className="p-0 icon-style">
-                              <div>
-                                <IoMegaphoneOutline color="white" size="2.2em" />
-                              </div>
-                            </button>
-                          </Link>
                         </div>
                       </div>
                     </Col>
@@ -162,55 +143,105 @@ const Index = () => {
           </Col>
         </Row>
       </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Filter Modal">
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Filter Modal"
+      >
         <div className="content2" style={{ overflow: "hidden" }}>
           <div className="placer">
             <Form onSubmit={handleFilter}>
               <Row>
                 <Col md="12">
                   <Card>
-                    <CardHeader className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom" style={{ height: "32px", backgroundColor: "#52CBCE" }}>
+                    <CardHeader
+                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
+                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
+                    >
                       <h6 className="text-white m-0 d-flex align-items-center">
-                        <i className="fa fa-filter me-2 p-1" style={{ fontSize: "0.9em", backgroundColor: "#52CBCE", border: "2px solid #52CBCE", borderRadius: "15%" }}></i>
+                        <i
+                          className="fa fa-filter me-2 p-1"
+                          style={{
+                            fontSize: "0.9em",
+                            backgroundColor: "#52CBCE",
+                            border: "2px solid #52CBCE",
+                            borderRadius: "15%",
+                          }}
+                        ></i>
                         Filter
                       </h6>
-                      <button type="button" onClick={closeModal} aria-label="Close">
-                        <i className="fa fa-times text-white" style={{ fontSize: "1em" }}></i>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        aria-label="Close"
+                      >
+                        <i
+                          className="fa fa-times text-red"
+                          style={{ fontSize: "1em" }}
+                        ></i>
                       </button>
                     </CardHeader>
                     <CardBody>
                       <Row>
                         <Col sm="6">
                           <FormGroup floating>
-                            <Input type="text" name="id" id="id" placeholder="id" />
+                            <Input
+                              type="text"
+                              name="id"
+                              id="id"
+                              placeholder="id"
+                            />
                             <Label for="id">EoI ID</Label>
                           </FormGroup>
                         </Col>
                         <Col sm="6">
                           <FormGroup floating>
-                            <Input id="asset_id" type="text" name="asset_id" placeholder="Item ID" />
+                            <Input
+                              id="asset_id"
+                              type="text"
+                              name="asset_id"
+                              placeholder="Item ID"
+                            />
                             <Label for="name">Item ID</Label>
                           </FormGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col sm="6">
-                        <div className="placer2">
-
-                          <FormGroup>
-                            <DateRangePicker label="Submission Date Range" onChange={handleEntryDate} />
-                          </FormGroup>
+                          <div className="placer2">
+                            <FormGroup>
+                              <DateRangePicker
+                                label="Submission Date Range"
+                                onChange={handleEntryDate}
+                              />
+                            </FormGroup>
                           </div>
                         </Col>
                         <Col sm="6">
                           <FormGroup>
-                            <Input id="itemname" type="text" name="itemname" placeholder="Item Name" />
+                            <Input
+                              id="itemname"
+                              type="text"
+                              name="itemname"
+                              placeholder="Item Name"
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-end gap-1">
-                        <button className="btn btn-primary px-2 py-2" onClick={handleClear} type="button">Clear</button>
-                        <button className="btn btn-success px-2 py-2" type="submit">Filter</button>
+                        <button
+                          className="btn btn-primary px-2 py-2"
+                          onClick={handleClear}
+                          type="button"
+                        >
+                          Clear
+                        </button>
+                        <button
+                          className="btn btn-success px-2 py-2"
+                          type="submit"
+                        >
+                          Filter
+                        </button>
                       </div>
                     </CardBody>
                   </Card>

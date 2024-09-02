@@ -63,8 +63,7 @@ const Create = () => {
     try {
       setLoader(true);
       const res = await EndPointService.createInventory(headers, formData);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
+
       navigate("/admin/inventory");
       setLoader(false);
     } catch (e) {}

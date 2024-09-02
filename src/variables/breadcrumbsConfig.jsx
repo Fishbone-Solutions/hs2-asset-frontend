@@ -12,7 +12,7 @@ const breadcrumbConfig = {
   ],
   inventoryEdit: [
     { label: "Inventory", to: "/admin/inventory" },
-    { label: "Edit View", to: "#" },
+    { label: "Edit Details", to: "#" },
   ],
   inventoryEoi: [
     { label: "Inventory", to: "/admin/inventory" },
@@ -26,10 +26,13 @@ const breadcrumbConfig = {
   inventoryEoiEdit: (inventoryId) => [
     { label: "Inventory", to: "/admin/inventory" },
     { label: "EOI", to: `/admin/eois/inventory/${inventoryId}` },
-    { label: "Edit View", to: "#" },
+    { label: "Edit Details", to: "#" },
   ],
   exchange: [{ label: "Exchange", to: "#" }],
-  exchangeRequestEquipment: [{ label: "Exchange  Register| Broadcast Item Request", to: "#" }],
+  exchangeRequestEquipment: [
+    { label: "Exchange", to: "/admin/exchange" },
+    { label: "Broadcast Item Request", to: "#" },
+  ],
   exchangeShow: [
     { label: "Exchange", to: "/admin/exchange" },
     { label: "View Details", to: "#" },
@@ -41,11 +44,11 @@ const breadcrumbConfig = {
   myEoi: [{ label: "My EoI", to: "#" }],
   myEoiShow: [
     { label: "My EoI", to: "/admin/myeoi" },
-    { label: "View Item", to: "#" },
+    { label: "View Details", to: "#" },
   ],
   myEoiEdit: [
     { label: "My EoI", to: "/admin/myeoi" },
-    { label: "Edit Item", to: "#" },
+    { label: "Edit Details", to: "#" },
   ],
   // Add more as needed
 };

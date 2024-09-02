@@ -94,7 +94,7 @@ const useColumns = (handleDelete) => {
         Header: "Actions",
         accessor: "actions",
         sortable: false,
-        width: "0.7%",
+        width: "0.3%",
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Link

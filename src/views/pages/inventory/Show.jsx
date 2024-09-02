@@ -37,7 +37,7 @@ const Show = () => {
   const { username } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
-    asset_id:"",
+    asset_id: "",
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -109,8 +109,7 @@ const Show = () => {
       const headers = { user_id: username };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
-      setToastType("success");
-      setToastMessage(res.appRespMessage);
+
       setLoader(false);
     } catch (e) {
       setToastType("error");

@@ -67,7 +67,6 @@ const Index = () => {
   };
 
   const successDelete = async (assetId, eoiNo) => {
-    console.log("successfully delete", assetId, eoiNo);
     try {
       setLoader(true);
       const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo);
@@ -75,6 +74,8 @@ const Index = () => {
         title: "Deleted!",
         message: `EoI ${eoiNo} has been deleted successfully`,
         type: "success",
+        showCancelButton: false,
+        confirmText: "ok",
         onConfirm: hideAlert,
       });
       setRefreshData(refreshData + 1);
