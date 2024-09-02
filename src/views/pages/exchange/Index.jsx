@@ -47,6 +47,8 @@ const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [refreshData, setRefreshData] = useState(0);
   const [inputValue, setInputValue] = useState("");
+
+  const headers = { user_id: username };
   const [rangeDates, setRangeDates] = useState({
     startDate: "",
     endDate: "",
@@ -67,7 +69,6 @@ const Index = () => {
   const fetchInventory = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: username };
       // Construct the query parameters
       const params = new URLSearchParams({
         fltr_id: getValueOrDefault(filterFormData.id),
@@ -80,7 +81,6 @@ const Index = () => {
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
       });
-      console.log(params);
 
       const res = await EndPointService.getExchange(headers, params);
       setDataState(res.appRespData);

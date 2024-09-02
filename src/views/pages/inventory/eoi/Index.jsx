@@ -28,13 +28,15 @@ const Index = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
+  const [refreshData, setRefreshData] = useState(0);
   const { id } = useParams();
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook her
+
+  const headers = { user_id: username };
 
   const fetchData = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: username };
       //inventory
       const res = await EndPointService.getInventoryById(headers, id);
       setInventoryData(res.appRespData[0]);
@@ -51,7 +53,7 @@ const Index = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refreshData]);
 
   const handleDelete = (assetId, eoino) => {
     console.log("handleDelete", assetId, eoino);
@@ -68,7 +70,7 @@ const Index = () => {
     console.log("successfully delete", assetId, eoiNo);
     try {
       setLoader(true);
-      const res = await EndPointService.deleteEoiById(assetId, eoiNo);
+      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo);
       showAlert({
         title: "Deleted!",
         message: `EoI ${eoiNo} has been deleted successfully`,
