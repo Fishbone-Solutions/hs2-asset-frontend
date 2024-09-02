@@ -16,13 +16,12 @@ import Exchange from "./views/pages/exchange/Index";
 import ExchangeShow from "./views/pages/exchange/Show";
 import ExchangeEoiCreate from "./views/pages/exchange/eoi/Create";
 
-import AssetRegister from "views/pages/AssetRegister";
 import UserProfile from "./views/pages/UserProfile.jsx";
-import EoIPage from "./views/pages/EoIPage.jsx";
+// import EoIPage from "./views/pages/EoIPage.jsx";
 import RequestEquipment from "./views/pages/RequestEquipment.jsx";
 
 // myeoi
-import  MyEoI from "./views/pages/myeoi/Index";
+import MyEoI from "./views/pages/myeoi/Index";
 import MyEoIShow from "./views/pages/myeoi/Show.jsx";
 import MyEoIEdit from "./views/pages/myeoi/Edit.jsx";
 
@@ -223,16 +222,6 @@ const routes = [
     ),
     hidden: true,
   },
-
-  {
-    path: "/assetregister",
-    pathName: "/admin/assetregister",
-    name: "Add New Item",
-    component: <AssetRegister />,
-    layout: "/admin",
-    icon: "nc-icon nc-book-bookmark",
-    hidden: true,
-  },
   {
     path: "/dashboard",
     pathName: "/admin/dashboard",
@@ -266,10 +255,14 @@ const routes = [
     layout: "/admin",
     icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
     breadcrumbIcon: (
-      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+      <FaCartFlatbedSuitcase
+        size="2em"
+        color="white"
+        style={{ float: "left" }}
+      />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
-   },
+  },
   {
     path: "/myeoi/show/:id",
     pathName: "/admin/myeoi/show/:id",
@@ -278,7 +271,11 @@ const routes = [
     layout: "/admin",
     icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
     breadcrumbIcon: (
-      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+      <FaCartFlatbedSuitcase
+        size="2em"
+        color="white"
+        style={{ float: "left" }}
+      />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiShow} />,
     hidden: true,
@@ -291,13 +288,15 @@ const routes = [
     layout: "/admin",
     icon: <FaCartFlatbedSuitcase size="2.5em" style={{ float: "left" }} />,
     breadcrumbIcon: (
-      <FaCartFlatbedSuitcase size="2em" color="white" style={{ float: "left" }} />
+      <FaCartFlatbedSuitcase
+        size="2em"
+        color="white"
+        style={{ float: "left" }}
+      />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiEdit} />,
     hidden: true,
-
   },
-
 
   {
     collapse: true,

@@ -22,7 +22,6 @@ import { GlobalContext } from "@/GlobalState";
 import { useParams, useNavigate } from "react-router-dom";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import defaultLiveIconImage from "assets/img/live.png";
-import "../EoiPages.css";
 import "assets/css/floating-label.css";
 import DateRangePicker from "components/Common/DateRangePicker";
 

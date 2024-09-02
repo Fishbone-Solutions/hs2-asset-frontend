@@ -22,7 +22,6 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import { FileUpload } from "primereact/fileupload";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "../AssetRegister.css";
 import { GlobalContext } from "@/GlobalState";
 const camelCaseWithSpaces = (text) => {
   return text
@@ -118,7 +117,7 @@ const W7 = () => {
 
           const response = await fetch(
             `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions,
+            requestOptions
           );
 
           if (response.ok) {
@@ -185,7 +184,7 @@ const W7 = () => {
           btnSize=""
         >
           Asset Listing submitted
-        </ReactBSAlert>,
+        </ReactBSAlert>
       );
       navigate("/admin/inventory");
     } catch (error) {
@@ -225,7 +224,7 @@ const W7 = () => {
             btnSize=""
           >
             Please fill in all required fields.
-          </ReactBSAlert>,
+          </ReactBSAlert>
         );
         return;
       }
@@ -243,7 +242,7 @@ const W7 = () => {
         cancelBtnText="Cancel"
         showCancel
         btnSize=""
-      />,
+      />
     );
   };
 
@@ -332,7 +331,7 @@ const W7 = () => {
                     }}
                   >
                     {camelCaseWithSpaces(
-                      "Buyer Details For Expression Of Interest",
+                      "Buyer Details For Expression Of Interest"
                     )}
                   </CardTitle>
                 </CardHeader>
