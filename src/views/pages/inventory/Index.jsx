@@ -109,6 +109,21 @@ const Index = () => {
     }
   };
 
+  const handleClear = () => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      id: "",
+      asset_name: "",
+      entry_date_from: null,
+      entry_date_to: null,
+      available_from: null,
+      available_to: null,
+      statuscode: null,
+    }));
+
+    console.log(filterFormData, refreshData);
+  };
+
   useEffect(() => {
     fetchInventory();
   }, [filterFormData, refreshData]);
@@ -291,7 +306,8 @@ const Index = () => {
                       <div className="d-flex justify-content-end gap-1">
                         <button
                           className="btn btn-primary px-2 py-2"
-                          type="clear"
+                          type="button"
+                          onClick={handleClear}
                         >
                           Clear
                         </button>
