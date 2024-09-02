@@ -7569,6 +7569,7 @@ body {
 .off-canvas-sidebar .navbar-minimize,
 .sidebar .nav p,
 .off-canvas-sidebar .nav p,
+.off-canvas-sidebar .nav span,
 .sidebar .logo a.logo-mini,
 .sidebar .logo a.logo-normal,
 .off-canvas-sidebar .logo a.logo-mini,
@@ -7625,6 +7626,7 @@ body {
 .off-canvas-sidebar .navbar-minimize,
 .sidebar .nav p,
 .off-canvas-sidebar .nav p,
+.off-canvas-sidebar .nav span,
 .sidebar .logo a.logo-mini,
 .sidebar .logo a.logo-normal,
 .off-canvas-sidebar .logo a.logo-mini,
@@ -11287,7 +11289,8 @@ img {
     > a
     .sidebar-normal,
   .sidebar-mini .sidebar .sidebar-wrapper .user .info > a > span,
-  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p {
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p,
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a span.menu-name {
     -webkit-transform: translate3d(-25px, 0, 0);
     -moz-transform: translate3d(-25px, 0, 0);
     -o-transform: translate3d(-25px, 0, 0);
@@ -17004,7 +17007,8 @@ img {
     > a
     .sidebar-normal,
   .sidebar-mini .sidebar .sidebar-wrapper .user .info > a > span,
-  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p {
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a p,
+  .sidebar-mini .sidebar .sidebar-wrapper > .nav li > a span.menu-name {
     -webkit-transform: translate3d(-25px, 0, 0);
     -moz-transform: translate3d(-25px, 0, 0);
     -o-transform: translate3d(-25px, 0, 0);

@@ -153,7 +153,7 @@
         opacity: 1;
       }
 
-      &.active > a[data-toggle="collapse"] > {
+      &.active > a[data-toggle="collapse"] {
         background-color: transparent;
         box-shadow: $box-shadow;
       }
@@ -651,4 +651,47 @@
 }
 .profile-view > .caret {
   top: 17px !important;
+}
+
+th {
+  font-size: 11px !important;
+}
+td {
+  font-size: 12px !important;
+  padding: 6px !important;
+}
+
+//select
+.react-select__input-container {
+  position: absolute;
+  top: 0px;
+}
+.react-select__single-value {
+  margin-top: 8px;
+}
+
+//breadcrumbs
+.breadcrumb-item.active {
+  margin-top: 2px;
+}
+.breadcrumb {
+  background: transparent !important;
+  margin-bottom: auto !important;
+  font-size: medium !important;
+}
+.breadcrumb-icon {
+  font-size: large !important;
+  color: #fff !important;
+}
+
+button#minimizeSidebar {
+  position: absolute;
+  right: -19px;
+  top: 4px;
+  background-color: #fff !important;
+  color: grey !important;
+  height: 1.5rem;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  box-shadow: 0px 9px 29px rgba(0, 0, 0, 1.2) !important;
 }

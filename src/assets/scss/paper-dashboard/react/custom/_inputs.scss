@@ -40,7 +40,7 @@ fieldset[disabled] .form-control {
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {
-  color: #000;
+  color: #9a9a9a;
   font-weight: 600;
   background: #fff;
   opacity: 1;
@@ -86,7 +86,7 @@ floating label for date range picker
   background-color: transparent;
   opacity: 1;
   transform: scale(0.75);
-  color: #000;
+  color: #9a9a9a;
   z-index: 999;
   font-weight: 600;
   background: #fff;
@@ -227,4 +227,13 @@ search clear btn
 
 #basic-addon1 {
   padding: 0.175rem 0.4rem !important;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.icon-btn {
+  background-color: #52cbce;
+  border: 2px solid #52cbce;
+  border-radius: 15%;
 }

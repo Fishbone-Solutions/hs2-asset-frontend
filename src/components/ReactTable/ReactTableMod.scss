@@ -76,9 +76,9 @@
 }
 
 .action-buttons {
-  display: flex;
+  display: inline-flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .action-buttons .btn-icon {
@@ -101,9 +101,18 @@
   margin: 0;
   padding: 0;
 }
-.react-select .react-select__control {
+.pageRow .react-select__control {
   min-height: 31px !important;
   height: 31px !important;
+}
+
+.pageSelect .react-select__control {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+.pageRow .react-select__single-value,
+.pageSelect .react-select__single-value {
+  margin-top: 4px !important;
 }
 th {
   font-size: 11px;

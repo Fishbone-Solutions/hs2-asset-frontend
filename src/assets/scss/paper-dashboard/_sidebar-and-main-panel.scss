@@ -149,7 +149,7 @@
         opacity: 1;
       }
 
-      &.active > a[data-toggle="collapse"] > {
+      &.active > a[data-toggle="collapse"] {
         background-color: transparent;
         box-shadow: $box-shadow;
       }
@@ -629,4 +629,148 @@
   &[data-color="white"] {
     border-right: 1px solid #ddd;
   }
+}
+
+/* ReactTableMod.scss */
+.primary-pagination {
+  .-pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .-previous,
+  .-next {
+    flex: 0.5 !important; /* Allow buttons to take up equal space */
+    display: flex;
+    justify-content: center;
+  }
+
+  .-center {
+    flex: 2; /* Take up two-thirds of the space */
+    display: flex;
+    justify-content: center;
+  }
+
+  .-btn {
+    padding: 5px 10px; /* Reduced padding */
+    background-color: rgb(82, 203, 206) !important;
+    color: white;
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    flex-grow: 1;
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.react-select.primary {
+  width: 100%;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Light grey for even rows */
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f7f7f7; /* White for odd rows */
+}
+
+.-striped .rt-tbody .rt-tr.-odd {
+  background-color: #f7f7f7;
+}
+
+.-striped .rt-tbody .rt-tr.-even {
+  background-color: #ffffff; /* White for even rows */
+}
+
+.-striped .rt-thead .rt-th {
+  background-color: #5e5954; /* Grey color for headers */
+  color: #000; /* Black text color for headers */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid black; /* Border for header cells */
+}
+
+.rt-table {
+  width: 100%;
+  border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+.rt-th,
+.rt-td {
+  border: 1px solid #dee2e7; /* Border for table cells */
+  padding: 10px; /* Reduced padding */
+}
+
+.action-buttons {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.action-buttons .btn-icon {
+  flex: 1 1 auto;
+  margin: 0 2px; /* Adjust margin as needed */
+  border: 1px solid #ccc; /* Add border */
+  background: transparent; /* Transparent background */
+  padding: 5px; /* Add some padding for better click area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.action-buttons .btn-icon:hover {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+.action-buttons .btn-icon i {
+  margin: 0;
+  padding: 0;
+}
+.react-select .react-select__control {
+  min-height: 38px;
+  height: 38px;
+}
+th {
+  font-size: 11px;
+}
+td {
+  font-size: 12px !important;
+  padding: 6px !important;
+}
+.no-data {
+  text-align: center;
+  padding: 10px;
+  color: #999; /* or any color you prefer */
+}
+.pageSelect
+  .react-select__value-container.react-select__value-container--has-value {
+  padding: 0px 8px !important;
+}
+
+.pageRow
+  .react-select__value-container.react-select__value-container--has-value {
+  padding: 0px 8px !important;
+}
+
+select.form-control {
+  height: calc(0.9em + 0.75rem + 2px) !important;
+  padding: 4px 12px !important;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+th.py-2.rt-th.rt-resizable-header {
+  border-right: 1px solid;
+}
+.react-select .react-select__control .react-select__placeholder {
+  padding-top: 8px;
 }

@@ -8,3 +8,24 @@
     }
   }
 }
+
+nav.navbar-absolute.fixed-top.bg-primary.navbar.navbar-expand-lg {
+  padding: 2px !important;
+}
+
+nav.navbar-absolute.fixed-top.bg-primary.navbar.navbar-expand-lg {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar-absolute.fixed-top.bg-primary {
+  position: sticky !important;
+  top: 0;
+  z-index: 1050; /* Ensures the navbar is on top */
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+}
+
+.main-panel > .content {
+  margin-top: 50px !important;
+}
