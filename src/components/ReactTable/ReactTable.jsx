@@ -23,6 +23,15 @@ const Table = ({ columns, data, isLoading }) => {
 
   const defaultColumn = useMemo(() => ({ width: 100 }), []);
 
+  // Determine the default sorting column and direction
+  const defaultSortColumn = columns.find((col) => col.defaultSort);
+  const defaultSortId = defaultSortColumn
+    ? defaultSortColumn.accessor
+    : undefined;
+  const defaultSortDesc = defaultSortColumn
+    ? defaultSortColumn.defaultSortDesc
+    : false;
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -42,7 +51,15 @@ const Table = ({ columns, data, isLoading }) => {
       columns,
       data,
       defaultColumn,
-      initialState: { pageIndex: 0 },
+      initialState: {
+        pageIndex: 0,
+        sortBy: [
+          {
+            id: defaultSortId,
+            desc: defaultSortDesc,
+          },
+        ],
+      },
     },
     useSortBy,
     usePagination,

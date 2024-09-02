@@ -11,6 +11,8 @@ const useColumns = (handleDelete) => {
         Header: "ID",
         accessor: "asset_id",
         width: "2%",
+        defaultSort: true, // Indicates this column should be the default sort
+        defaultSortDesc: true, // Indicates the sort direction (descending)
         isSortable: true,
       },
       {

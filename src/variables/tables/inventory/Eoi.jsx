@@ -8,6 +8,8 @@ const useColumns = (handleDelete) => {
       {
         Header: "EoI. No",
         isSortable: true,
+        defaultSort: true, // Indicates this column should be the default sort
+        defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "id",
         width: "0.9%",
       },

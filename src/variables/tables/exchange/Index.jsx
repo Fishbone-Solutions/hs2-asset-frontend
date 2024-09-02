@@ -8,6 +8,8 @@ const useColumns = () => {
       {
         Header: "ID",
         isSortable: true,
+        defaultSort: true, // Indicates this column should be the default sort
+        defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "asset_id",
         width: "2%",
       },
