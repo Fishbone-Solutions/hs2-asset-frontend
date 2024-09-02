@@ -27,6 +27,10 @@ import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
 import { useNavigate } from "react-router-dom";
+import { categorycode1 } from "variables/common";
+import { subCategory } from "variables/common";
+import { inventoryStatusOptions } from "variables/common";
+import { conditionOptions } from "variables/common";
 
 const Edit = () => {
   const { id } = useParams();
@@ -37,7 +41,7 @@ const Edit = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
-    asset_id:"",
+    asset_id: "",
     code: "",
     entrydate_formatted: "",
     categorycode1: "",
@@ -56,52 +60,6 @@ const Edit = () => {
     seller_location: "",
     statuscode: "",
   });
-
-  const Conditionoptions = [
-    { value: "New", label: "New" },
-    { value: "Used-Working", label: "Used - Working" },
-    { value: "Used-Not-Working", label: "Used - Not Working" },
-    { value: "Refurbished", label: "Refurbished" },
-    { value: "Expired", label: "Expired" },
-  ];
-  const options = [
-    { value: "Live", label: "Live" },
-    { value: "Listing", label: "Listing" },
-    { value: "Sold", label: "Sold" },
-  ];
-
-  const optionsCategory1 = [
-    { value: "Construction Office", label: "Construction Office" },
-    {
-      value: "Storage/Logistics Facilities",
-      label: "Storage/Logistics Facilities",
-    },
-    { value: "Processing Facilities", label: "Processing Facilities" },
-    { value: "Fixed Services", label: "Fixed Services" },
-    { value: "Temporary Services", label: "Temporary Services" },
-    { value: "Security", label: "Security" },
-    {
-      value: "Compound Security/Safety Infrastructure",
-      label: "Compound Security/Safety Infrastructure",
-    },
-    {
-      value: "Site Roads and Infrastructure",
-      label: "Site Roads and Infrastructure",
-    },
-    { value: "Temporary Siding", label: "Temporary Siding" },
-    { value: "Consolidation Yards", label: "Consolidation Yards" },
-    { value: "Concrete Production", label: "Concrete Production" },
-    { value: "Diversions", label: "Diversions" },
-    { value: "Earthworks", label: "Earthworks" },
-    { value: "Static Plant", label: "Static Plant" },
-    { value: "Piling", label: "Piling" },
-    { value: "Pipework", label: "Pipework" },
-    {
-      value: "Public Highway Traffic Management",
-      label: "Public Highway Traffic Management",
-    },
-    { value: "Other Assets", label: "Other Assets" },
-  ];
 
   const fetchInventoryById = async () => {
     try {
@@ -273,7 +231,7 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
-                          value={optionsCategory1.find(
+                          value={categorycode1.find(
                             (option) => option.value === formData.categorycode1
                           )}
                           onChange={(selectedOption) =>
@@ -282,7 +240,7 @@ const Edit = () => {
                               categorycode1: selectedOption.value,
                             }))
                           }
-                          options={optionsCategory1}
+                          options={categorycode1}
                           placeholder="Select an option"
                         />
                       </FormGroup>
@@ -295,20 +253,16 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode2"
-                          value={{
-                            value: formData.categorycode2,
-                            label: formData.categorycode2,
-                          }}
+                          value={subCategory.find(
+                            (option) => option.value === formData.categorycode2
+                          )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({
                               ...prevState,
                               categorycode2: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Generic", label: "Generic" },
-                            { value: "Other", label: "Other" },
-                          ]}
+                          options={subCategory}
                           placeholder="Select an option"
                         />
                       </FormGroup>
@@ -401,7 +355,7 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
-                          value={Conditionoptions.find(
+                          value={conditionOptions.find(
                             (option) =>
                               option.value === formData.asset_condition
                           )}
@@ -411,7 +365,7 @@ const Edit = () => {
                               asset_condition: selectedOption.value,
                             }))
                           }
-                          options={Conditionoptions}
+                          options={conditionOptions}
                           placeholder="Select an option"
                         />
                       </FormGroup>
@@ -575,7 +529,7 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="statuscode"
-                          value={options.find(
+                          value={inventoryStatusOptions.find(
                             (option) => option.value === formData.statuscode
                           )}
                           onChange={(selectedOption) =>
@@ -584,13 +538,8 @@ const Edit = () => {
                               statuscode: selectedOption.value,
                             }))
                           }
-                          options={[
-                            { value: "Live", label: "Live" },
-                            { value: "Listing", label: "Listing" },
-                            { value: "Sold", label: "Sold" },
-                          ]}
+                          options={inventoryStatusOptions}
                           placeholder="Select an option"
-                          isDisabled="true"
                           required
                         />
                       </FormGroup>
