@@ -57,7 +57,7 @@ const Create = () => {
   const timestamp = new Date().toISOString(); // Get the current timestamp
   const currentDate = new Date();
   const formattedDate = `${String(currentDate.getDate()).padStart(2, "0")}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${currentDate.getFullYear()}`;
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("user", user);
   const [eoiFormData, setEoiFormData] = useState({
     code: "",
