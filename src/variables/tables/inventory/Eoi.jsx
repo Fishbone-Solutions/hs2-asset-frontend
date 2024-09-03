@@ -6,6 +6,12 @@ const useColumns = (handleDelete) => {
   return useMemo(
     () => [
       {
+        Header: "Submission Date",
+        isSortable: true,
+        accessor: "submission_date_formatted",
+        width: "1.5%",
+      },
+      {
         Header: "EoI. No",
         isSortable: true,
         defaultSort: true, // Indicates this column should be the default sort
@@ -25,12 +31,7 @@ const useColumns = (handleDelete) => {
         accessor: "organization",
         width: "6%",
       },
-      {
-        Header: "Submission Date",
-        isSortable: true,
-        accessor: "submission_date_formatted",
-        width: "1.5%",
-      },
+
       {
         Header: "Status",
         accessor: "eoi_status",
