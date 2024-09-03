@@ -213,19 +213,9 @@ const Edit = () => {
                         />
                       </FormGroup>
                     </Col>
+
                     <Col sm="6">
-                      <Label>Item Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="id"
-                          value={eoiState.asset_name}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="6">
-                      <Label>Status</Label>
+                      <Label>Current Status</Label>
                       <FormGroup>
                         <Input
                           type="text"
