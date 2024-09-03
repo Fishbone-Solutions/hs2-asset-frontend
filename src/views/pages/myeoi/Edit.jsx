@@ -274,7 +274,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="asset_id"
-                          value={eoiState.asset_id}
+                          value={dataState.ref_asset_name}
                           readOnly
                         />
                       </FormGroup>
@@ -286,7 +286,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="asset_id"
-                          value={eoiState.asset_name}
+                          value={dataState.asset_name}
                           readOnly
                         />
                       </FormGroup>
@@ -298,7 +298,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="seller_title" // Corrected name field
-                          value={eoiState.seller_title}
+                          value={dataState.ref_asset_seller}
                           readOnly
                         />
                       </FormGroup>

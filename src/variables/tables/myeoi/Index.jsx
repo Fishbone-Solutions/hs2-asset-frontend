@@ -9,7 +9,7 @@ const useColumns = () => {
         Header: "Submission Date",
         isSortable: true,
         accessor: "submission_date_formatted",
-        width: "0.6%",
+        width: "1%",
       },
 
       {
