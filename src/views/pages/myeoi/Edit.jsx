@@ -27,6 +27,7 @@ import { myEoIUpdateoptions } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
+  const [eoiState, setEoiState] = useState({});
   const [activities, setActivities] = useState({});
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
@@ -44,6 +45,11 @@ const Edit = () => {
         inventoryId,
         eoiId
       );
+
+      const resEoi = await EndPointService.getMyEoI(headers, username);
+      setEoiState(resEoi.appRespData[0]);
+      console.log(eoiState);
+
       const resEoiActivities = await EndPointService.eoiActivityTrackingHistory(
         headers,
         inventoryId,
@@ -203,6 +209,28 @@ const Edit = () => {
                           type="text"
                           name="id"
                           value={dataState.submission_date_formatted}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Item Name</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="id"
+                          value={eoiState.asset_name}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Status</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="id"
+                          value={eoiState.eoi_status}
                           readOnly
                         />
                       </FormGroup>
