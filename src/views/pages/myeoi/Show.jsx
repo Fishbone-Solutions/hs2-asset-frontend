@@ -73,7 +73,7 @@ const Show = () => {
         {toastType && <DynamicToast type={toastType} message={toastMessage} />}
         {loader && <FullPageLoader />}
         <Form>
-          {formData ? (
+          {formData && formData.seller_title ? (
             <Row>
               {/* Asset Seller Detail */}
               <Col md="12">

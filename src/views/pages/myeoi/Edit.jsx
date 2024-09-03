@@ -241,7 +241,7 @@ const Edit = () => {
                   >
                     Reference Item Summary{" "}
                     <Link
-                      to={`/admin/myeoi/show/${eoiState.asset_id}`}
+                      to={`/admin/myeoi/show/${dataState.asset_id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <Button

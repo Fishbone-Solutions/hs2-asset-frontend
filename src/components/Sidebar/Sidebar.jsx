@@ -152,7 +152,6 @@ function Sidebar(props) {
 
   const fetchData = async () => {
     try {
-      console.log(!!username ?? "okay");
       const res = await EndPointService.getUserInformation(
         headers,
         !!username ? username : localStorage.getItem("username")
