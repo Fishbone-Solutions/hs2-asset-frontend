@@ -11,7 +11,7 @@ export const endpoints = {
   eoiActivityTrackingHistory: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/history`,
   eoiUpdateStatus: (inventory_id, eoi_id) =>
-    `assets/${inventory_id}/eoi/${eoi_id}`,
+    `assets/${inventory_id}/eoi/${eoi_id}/status`,
   deleteEoi: (inventory_id, eoi_id) =>
     `/assets/${inventory_id}/eoi/${eoi_id}/-1`,
   myeoi: (username, query_params) => `/users/${username}/eoi?${query_params}`,

@@ -26,6 +26,7 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
 import { myEoIUpdateoptions } from "variables/common";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -39,6 +40,7 @@ const Edit = () => {
   const [alert, setAlert] = useState(null);
   const headers = { user_id: localStorage.getItem("username") };
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
@@ -101,9 +103,6 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: dataState.eoi_status,
-        approval_status: dataState.approval_status,
-        approval_ref_no: dataState.approval_ref_no,
-        status_trail: dataState.status_trail,
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -112,6 +111,7 @@ const Edit = () => {
         requestBody
       );
 
+      navigate("/admin/myeoi");
       hideAlert();
       setLoader(false);
     } catch (e) {
