@@ -59,7 +59,11 @@ const Index = () => {
         fItr_to_subDate: getValueOrDefault(filterFormData.entry_date_to),
       });
 
-      const res = await EndPointService.getMyEoI(headers, username, params);
+      const res = await EndPointService.getMyEoI(
+        headers,
+        sessionStorage.getItem("username"),
+        params
+      );
       setDataState(res.appRespData);
       setLoader(false);
     } catch (e) {
