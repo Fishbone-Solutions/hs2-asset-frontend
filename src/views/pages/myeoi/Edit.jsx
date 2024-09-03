@@ -23,6 +23,7 @@ import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
+import { myEoIUpdateoptions } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -160,10 +161,6 @@ const Edit = () => {
     setAlert(null);
   };
 
-  var options = [
-    { value: "PAYMENT-RECEIVED", label: "Payment Received" },
-    { value: "GOODS-SENT", label: "Goods Sent" },
-  ];
   return (
     <>
       <div className="content">
@@ -419,11 +416,11 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          value={options.find(
+                          value={myEoIUpdateoptions.find(
                             (option) => option.value === dataState.eoi_status
                           )}
                           onChange={handleSelectChange}
-                          options={options}
+                          options={myEoIUpdateoptions}
                           placeholder="Select an option"
                         />
                       </FormGroup>

@@ -71,7 +71,7 @@ export const subCategory = [
   { value: "Other", label: "Other" },
 ];
 
-export const   myEoIUpdateoptions = [
-  { value: "PAYMENT-RECEIVED", label: "Payment Received" },
-  { value: "GOODS-SENT", label: "Goods Sent" },
+export const myEoIUpdateoptions = [
+  { value: "PAYMENT-SENT", label: "Payment Sent" },
+  { value: "GOODS-RECEIVED", label: "Goods RECEIVED" },
 ];
