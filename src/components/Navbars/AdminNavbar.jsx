@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import routes from "../../routes.jsx";
 import { IoLogOutOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const extractParams = (route, pathname) => {
   const pathPattern = route.pathName.replace(/:\w+/g, "([^/]+)");
@@ -38,12 +39,19 @@ function AdminNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const matchPathWithParams = (route, pathname) => {
     const routeRegex = new RegExp(
       "^" + route.pathName.replace(/:\w+/g, "[^/]+") + "$"
     );
     return routeRegex.test(pathname);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    navigate("/auth/login");
   };
 
   const currentRoute = routes.find((route) =>
@@ -141,11 +149,8 @@ function AdminNavbar(props) {
                   aria-labelledby="navbarDropdownMenuLink"
                   right
                 >
-                  <DropdownItem
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Another action
+                  <DropdownItem href="#" onClick={(e) => logout()}>
+                    Logout
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

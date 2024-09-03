@@ -29,7 +29,7 @@ const Create = () => {
   const [toastMessage, setToastMessage] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { username } = useContext(GlobalContext);
-  const headers = { user_id: username };
+  const headers = { user_id: localStorage.getItem("username") };
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
@@ -57,12 +57,13 @@ const Create = () => {
   const timestamp = new Date().toISOString(); // Get the current timestamp
   const currentDate = new Date();
   const formattedDate = `${String(currentDate.getDate()).padStart(2, "0")}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${currentDate.getFullYear()}`;
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("user", user);
   const [eoiFormData, setEoiFormData] = useState({
     code: "",
     submission_date: formattedDate,
-    buyer_name: "",
-    organization: "",
+    buyer_name: user.firstname + " " + user.lastname,
+    organization: user.organization_title,
     contact_no: "",
     email: "",
     address: "",
@@ -230,7 +231,7 @@ const Create = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    Buyer Details For Expression Of Interest
+                    Buyer Details
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -249,6 +250,7 @@ const Create = () => {
                               buyer_name: e.target.value,
                             })
                           }
+                          readOnly
                         />
                       </FormGroup>
                     </Col>
@@ -267,6 +269,7 @@ const Create = () => {
                               organization: e.target.value,
                             })
                           }
+                          readOnly
                         />
                       </FormGroup>
                     </Col>

@@ -48,7 +48,7 @@ const Index = () => {
   const [refreshData, setRefreshData] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
-  const headers = { user_id: username };
+  const headers = { user_id: localStorage.getItem("username") };
   const [rangeDates, setRangeDates] = useState({
     startDate: "",
     endDate: "",

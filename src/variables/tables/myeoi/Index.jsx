@@ -9,7 +9,7 @@ const useColumns = () => {
         Header: "Submission Date",
         isSortable: true,
         accessor: "submission_date_formatted",
-        width: "2%",
+        width: "0.6%",
       },
 
       {
@@ -105,16 +105,16 @@ const useColumns = () => {
         width: "0.2%",
         Cell: ({ row }) => (
           <div className="action-buttons">
-            <Link to={`/admin/myeoi/show/${row.original.asset_id}`}>
+            {/* <Link to={`/admin/myeoi/show/${row.original.asset_id}`}>
               <Button className="btn-icon btn-simple" color="info" size="sm">
                 <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
               </Button>
-            </Link>
+            </Link> */}
             <Link
               to={`/admin/myeoi/${row.original.asset_id}/eois/edit/${row.original.id}`}
             >
-              <Button className="btn-icon btn-simple" color="success" size="sm">
-                <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
+              <Button className="btn-simple" color="success" size="sm">
+                update
               </Button>
             </Link>
           </div>

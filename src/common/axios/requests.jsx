@@ -1,10 +1,7 @@
 import serviceProvider from "./serviceProvider";
 
-export const Get = (
-  path,
-  // params: AxiosRequestConfig
-  headers
-) => serviceProvider.get(path, { ...(headers && { headers }) });
+export const Get = (path, headers) =>
+  serviceProvider.get(path, { ...(headers && { headers }) });
 
 export const PostWithMultiPart = (
   path,

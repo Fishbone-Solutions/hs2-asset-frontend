@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const getBadgeClass = (activity) => {
   switch (activity) {
     case "EOI-SUBMITTED":
-      return "badge bg-primary"; // Blue
+      return "badge bg-primary-dark"; // Blue
     case "IN-NEGOTIATION":
       return "badge bg-info"; // Shade of Blue
     case "PAYMENT-SENT":

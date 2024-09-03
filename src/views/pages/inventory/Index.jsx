@@ -57,7 +57,8 @@ const Index = () => {
   const fetchInventory = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: username };
+
+      const headers = { user_id: localStorage.getItem("username") ?? username };
       const params = new URLSearchParams({
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
@@ -69,7 +70,7 @@ const Index = () => {
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
       });
-
+      console.log("inventory", headers);
       const res = await EndPointService.getInventory(headers, params);
       setDataState(res.appRespData);
       setLoader(false);

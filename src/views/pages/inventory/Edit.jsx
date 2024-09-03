@@ -64,7 +64,7 @@ const Edit = () => {
   const fetchInventoryById = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: username };
+      const headers = { user_id: localStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
 
@@ -79,7 +79,7 @@ const Edit = () => {
   const handleUpdateInventory = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: username };
+      const headers = { user_id: localStorage.getItem("username") };
       const requestBody = { ...formData };
       console.log(requestBody);
       const res = await EndPointService.updateInventory(

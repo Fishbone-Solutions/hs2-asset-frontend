@@ -37,7 +37,7 @@ const Create = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const headers = { user_id: username };
+  const headers = { user_id: localStorage.getItem("username") };
   const [formData, setFormData] = useState({
     id: "Auto Generated",
     code: "",

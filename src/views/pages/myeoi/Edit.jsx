@@ -17,6 +17,7 @@ import {
   FormGroup,
   Form,
   Modal,
+  Tooltip as ReactstrapTooltip,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -24,6 +25,7 @@ import ActivityTable from "components/Common/EoiTrackingHistory";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
 import { myEoIUpdateoptions } from "variables/common";
+import { Link } from "react-router-dom";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -35,35 +37,31 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
   const [alert, setAlert] = useState(null);
-  const headers = { user_id: username };
+  const headers = { user_id: localStorage.getItem("username") };
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   const fetchData = async () => {
     try {
       setLoader(true);
-      const res = await EndPointService.inventoryBaseEoiDetails(
-        headers,
-        inventoryId,
-        eoiId
-      );
+      // Start all the promises simultaneously
+      const [res, resEoi, resEoiActivities] = await Promise.all([
+        EndPointService.inventoryBaseEoiDetails(headers, inventoryId, eoiId),
+        EndPointService.getMyEoI(headers, username),
+        EndPointService.eoiActivityTrackingHistory(headers, inventoryId, eoiId),
+      ]);
 
-      const resEoi = await EndPointService.getMyEoI(headers, username);
+      // Update the state with the results
       setEoiState(resEoi.appRespData[0]);
-      console.log(eoiState);
-
-      const resEoiActivities = await EndPointService.eoiActivityTrackingHistory(
-        headers,
-        inventoryId,
-        eoiId
-      );
-
       setDataState(res.appRespData[0]);
       setActivities(resEoiActivities.appRespData);
-
-      setLoader(false);
     } catch (e) {
       console.log(e);
       setToastType("error");
       setToastMessage(e.appRespMessage);
+    } finally {
+      // Ensure loader is always turned off
       setLoader(false);
     }
   };
@@ -80,7 +78,6 @@ const Edit = () => {
   };
 
   const handleFormSubmission = async (event) => {
-    console.log("edit", event);
     event.preventDefault();
     setAlert(
       <ReactBSAlert
@@ -242,7 +239,31 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    Reference Item Summary
+                    Reference Item Summary{" "}
+                    <Link
+                      to={`/admin/myeoi/show/${eoiState.asset_id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button
+                        className="btn-icon btn-simple"
+                        variant="info"
+                        size="sm"
+                        id="viewButtonTooltip"
+                      >
+                        <i
+                          className="fa fa-eye"
+                          style={{ fontSize: "0.9em" }}
+                        ></i>
+                      </Button>
+                    </Link>
+                    <ReactstrapTooltip
+                      placement="top"
+                      isOpen={tooltipOpen}
+                      target="viewButtonTooltip"
+                      toggle={toggleTooltip}
+                    >
+                      View Asset Details
+                    </ReactstrapTooltip>
                   </CardTitle>
                 </CardHeader>
                 <CardBody>

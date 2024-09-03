@@ -14,6 +14,7 @@ export const endpoints = {
     `assets/${inventory_id}/eoi/${eoi_id}`,
   deleteEoi: (inventory_id, eoi_id) =>
     `/assets/${inventory_id}/eoi/${eoi_id}/-1`,
-  myeoi: (username,query_params) => `/users/${username}/eoi?${query_params}`,
+  myeoi: (username, query_params) => `/users/${username}/eoi?${query_params}`,
   exchanges: (query_params) => `register?${query_params}`,
+  userProfile: (username) => `users/${username}`,
 };

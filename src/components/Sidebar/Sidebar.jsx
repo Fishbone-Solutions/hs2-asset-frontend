@@ -9,6 +9,7 @@ import { GlobalContext } from "../../GlobalState";
 import BACKEND_ADDRESS from "../../views/components/serverAddress.js";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { EndPointService } from "@/services/methods";
 
 var ps;
 
@@ -25,7 +26,7 @@ function Sidebar(props) {
   const { username } = useContext(GlobalContext);
   const [dataState, setDataState] = React.useState({});
   const sidebar = React.useRef();
-
+  const headers = { user_id: localStorage.getItem("username") };
   // Initialize collapse states based on routes
   const getCollapseStates = (routes) => {
     let initialState = {};
@@ -150,25 +151,20 @@ function Sidebar(props) {
   }, [props.routes]);
 
   const fetchData = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("token", "x8F!@p01,*MH");
-    myHeaders.append("user_id", username); // Add user_id to headers
-
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
     try {
-      const response = await fetch(
-        `${BACKEND_ADDRESS}/users/${username}`,
-        requestOptions
+      console.log(!!username ?? "okay");
+      const res = await EndPointService.getUserInformation(
+        headers,
+        !!username ? username : localStorage.getItem("username")
       );
-      const result = await response.json();
-      setDataState(result.appRespData[0]);
-      console.log("companyName", dataState, result.appRespData[0]);
+
+      localStorage.setItem("user", JSON.stringify(res.appRespData[0]));
+      localStorage.setItem(
+        "username",
+        !!username ? username : localStorage.getItem("username")
+      );
+      setDataState(res.appRespData[0]);
+      console.log("companyName", dataState, res.appRespData);
     } catch (error) {
       console.error(error);
     }
