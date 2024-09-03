@@ -22,7 +22,7 @@ import { GlobalContext } from "@/GlobalState";
 import { subCategory, conditionOptions, categorycode1 } from "variables/common";
 
 const Show = () => {
-  const { id } = useParams();
+  const { inventoryId } = useParams();
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
@@ -53,7 +53,7 @@ const Show = () => {
     try {
       setLoader(true);
       const headers = { user_id: localStorage.getItem("username") };
-      const res = await EndPointService.getInventoryById(headers, id);
+      const res = await EndPointService.getInventoryById(headers, inventoryId);
       setFormData(res.appRespData[0]);
       setLoader(false);
     } catch (e) {
@@ -65,7 +65,7 @@ const Show = () => {
 
   useEffect(() => {
     fetchInventoryById();
-  }, [id]);
+  }, []);
 
   return (
     <>

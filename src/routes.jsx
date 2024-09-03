@@ -264,8 +264,8 @@ const routes = [
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
   },
   {
-    path: "/myeoi/show/:id",
-    pathName: "/admin/myeoi/show/:id",
+    path: "/myeoi/:inventoryId/show/:eoiId",
+    pathName: "/admin/myeoi/:inventoryId/show/:eoiId",
     name: "My EoI | View EoI ",
     component: <MyEoIShow />,
     layout: "/admin",
@@ -278,6 +278,13 @@ const routes = [
       />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiShow} />,
+    breadcrumbComponent: ({ match }) => {
+      const { inventoryId } = match.dynamicParams;
+      const { eoiId } = match.dynamicParams;
+      return (
+        <Breadcrumb items={breadcrumbConfig.myEoiShow(inventoryId, eoiId)} />
+      );
+    },
     hidden: true,
   },
   {

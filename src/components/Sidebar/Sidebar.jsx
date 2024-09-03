@@ -256,18 +256,6 @@ function Sidebar(props) {
                     <span className="sidebar-normal">My Profile</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="/admin/user-profile">
-                    <span className="sidebar-mini-icon">EP</span>
-                    <span className="sidebar-normal">Edit Profile</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/admin/user-profile">
-                    <span className="sidebar-mini-icon">S</span>
-                    <span className="sidebar-normal">Settings</span>
-                  </Link>
-                </li>
               </ul>
             </Collapse>
           </div>

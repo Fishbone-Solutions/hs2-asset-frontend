@@ -250,7 +250,6 @@ const Create = () => {
                               buyer_name: e.target.value,
                             })
                           }
-                          readOnly
                         />
                       </FormGroup>
                     </Col>
@@ -269,7 +268,6 @@ const Create = () => {
                               organization: e.target.value,
                             })
                           }
-                          readOnly
                         />
                       </FormGroup>
                     </Col>

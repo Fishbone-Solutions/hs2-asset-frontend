@@ -42,9 +42,13 @@ const breadcrumbConfig = {
     { label: "EoI Submission", to: "#" },
   ],
   myEoi: [{ label: "My EoI", to: "#" }],
-  myEoiShow: [
+  myEoiShow: (inventoryId, eoiId) => [
     { label: "My EoI", to: "/admin/myeoi" },
-    { label: "View Details", to: "#" },
+    {
+      label: "Edit Details",
+      to: `/admin/myeoi/${inventoryId}/eois/edit/${eoiId}`,
+    },
+    { label: "View Item Details", to: "#" },
   ],
   myEoiEdit: [
     { label: "My EoI", to: "/admin/myeoi" },

@@ -239,31 +239,7 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    Reference Item Summary{" "}
-                    <Link
-                      to={`/admin/myeoi/show/${dataState.asset_id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Button
-                        className="btn-icon btn-simple"
-                        variant="info"
-                        size="sm"
-                        id="viewButtonTooltip"
-                      >
-                        <i
-                          className="fa fa-eye"
-                          style={{ fontSize: "0.9em" }}
-                        ></i>
-                      </Button>
-                    </Link>
-                    <ReactstrapTooltip
-                      placement="top"
-                      isOpen={tooltipOpen}
-                      target="viewButtonTooltip"
-                      toggle={toggleTooltip}
-                    >
-                      View Asset Details
-                    </ReactstrapTooltip>
+                    Reference Item Summary
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -274,7 +250,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="asset_id"
-                          value={dataState.ref_asset_name}
+                          value={dataState.asset_id}
                           readOnly
                         />
                       </FormGroup>
@@ -286,7 +262,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="asset_id"
-                          value={dataState.asset_name}
+                          value={dataState.ref_asset_name}
                           readOnly
                         />
                       </FormGroup>
@@ -302,6 +278,13 @@ const Edit = () => {
                           readOnly
                         />
                       </FormGroup>
+                    </Col>
+                    <Col sm="6  more-col">
+                      <Link
+                        to={`/admin/myeoi/${dataState.asset_id}/show/${dataState.id}`}
+                      >
+                        More...
+                      </Link>
                     </Col>
                   </Row>
                 </CardBody>
