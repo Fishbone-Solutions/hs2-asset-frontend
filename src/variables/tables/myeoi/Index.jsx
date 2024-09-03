@@ -102,19 +102,14 @@ const useColumns = () => {
         Header: "Actions",
         accessor: "actions",
         sortable: false,
-        width: "0.2%",
+        width: "0.02%",
         Cell: ({ row }) => (
           <div className="action-buttons">
-            {/* <Link to={`/admin/myeoi/show/${row.original.asset_id}`}>
-              <Button className="btn-icon btn-simple" color="info" size="sm">
-                <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
-              </Button>
-            </Link> */}
             <Link
               to={`/admin/myeoi/${row.original.asset_id}/eois/edit/${row.original.id}`}
             >
-              <Button className="btn-simple" color="success" size="sm">
-                update
+              <Button className="btn-icon btn-simple" color="success" size="sm">
+                <i className="fa fa-edit"></i>
               </Button>
             </Link>
           </div>
