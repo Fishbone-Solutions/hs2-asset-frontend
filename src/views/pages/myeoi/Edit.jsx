@@ -38,7 +38,7 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
   const [alert, setAlert] = useState(null);
-  const headers = { user_id: localStorage.getItem("username") };
+  const headers = { user_id: sessionStorage.getItem("username") };
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const navigate = useNavigate();
 

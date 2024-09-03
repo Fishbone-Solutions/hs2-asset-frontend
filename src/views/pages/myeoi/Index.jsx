@@ -50,7 +50,7 @@ const Index = () => {
   const fetchMyEoI = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: localStorage.getItem("username") };
+      const headers = { user_id: sessionStorage.getItem("username") };
       const params = new URLSearchParams({
         fltr_eoi_id: getValueOrDefault(filterFormData.id),
         fltr_item_id: getValueOrDefault(filterFormData.asset_id),

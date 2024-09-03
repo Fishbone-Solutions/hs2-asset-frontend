@@ -32,7 +32,7 @@ const Index = () => {
   const { id } = useParams();
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook her
 
-  const headers = { user_id: localStorage.getItem("username") };
+  const headers = { user_id: sessionStorage.getItem("username") };
 
   const fetchData = async () => {
     try {

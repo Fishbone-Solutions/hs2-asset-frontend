@@ -30,7 +30,7 @@ const Show = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
-  const headers = { user_id: localStorage.getItem("username") };
+  const headers = { user_id: sessionStorage.getItem("username") };
 
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },

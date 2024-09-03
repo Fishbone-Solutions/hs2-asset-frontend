@@ -49,8 +49,8 @@ function AdminNavbar(props) {
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("username");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("username");
     navigate("/auth/login");
   };
 

@@ -26,7 +26,7 @@ function Sidebar(props) {
   const { username } = useContext(GlobalContext);
   const [dataState, setDataState] = React.useState({});
   const sidebar = React.useRef();
-  const headers = { user_id: localStorage.getItem("username") };
+  const headers = { user_id: sessionStorage.getItem("username") };
   // Initialize collapse states based on routes
   const getCollapseStates = (routes) => {
     let initialState = {};
@@ -154,13 +154,13 @@ function Sidebar(props) {
     try {
       const res = await EndPointService.getUserInformation(
         headers,
-        !!username ? username : localStorage.getItem("username")
+        !!username ? username : sessionStorage.getItem("username")
       );
 
-      localStorage.setItem("user", JSON.stringify(res.appRespData[0]));
-      localStorage.setItem(
+      sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
+      sessionStorage.setItem(
         "username",
-        !!username ? username : localStorage.getItem("username")
+        !!username ? username : sessionStorage.getItem("username")
       );
       setDataState(res.appRespData[0]);
       console.log("companyName", dataState, res.appRespData);

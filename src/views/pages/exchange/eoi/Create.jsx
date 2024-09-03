@@ -29,7 +29,7 @@ const Create = () => {
   const [toastMessage, setToastMessage] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { username } = useContext(GlobalContext);
-  const headers = { user_id: localStorage.getItem("username") };
+  const headers = { user_id: sessionStorage.getItem("username") };
   const [registerEmailState, setRegisterEmailState] = useState("");
   const [alert, setAlert] = useState(null);
   const navigate = useNavigate();

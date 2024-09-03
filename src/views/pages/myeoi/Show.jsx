@@ -52,7 +52,7 @@ const Show = () => {
   const fetchInventoryById = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: localStorage.getItem("username") };
+      const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, inventoryId);
       setFormData(res.appRespData[0]);
       setLoader(false);

@@ -58,7 +58,9 @@ const Index = () => {
     try {
       setLoader(true);
 
-      const headers = { user_id: localStorage.getItem("username") ?? username };
+      const headers = {
+        user_id: sessionStorage.getItem("username") ?? username,
+      };
       const params = new URLSearchParams({
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
