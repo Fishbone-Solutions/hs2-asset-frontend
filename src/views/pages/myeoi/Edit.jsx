@@ -239,7 +239,7 @@ const Edit = () => {
                 </CardBody>
               </Card>
             </Col>
-            {/* Approval Detail*/}
+            {/* Reference Item Summary*/}
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -252,30 +252,42 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    Approval
+                    Reference Item Summary
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Approval Status</Label>
+                      <Label>Asset Id</Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="approval_status"
-                          value={dataState.approval_status}
+                          name="asset_id"
+                          value={eoiState.asset_id}
                           readOnly
                         />
                       </FormGroup>
                     </Col>
 
                     <Col sm="6">
-                      <Label>CEMAR Ref No</Label>
+                      <Label>Asset Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
-                          name="approval_ref_no" // Corrected name field
-                          value={dataState.approval_ref_no}
+                          name="asset_id"
+                          value={eoiState.asset_name}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="6">
+                      <Label>Seller Title</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title" // Corrected name field
+                          value={eoiState.seller_title}
                           readOnly
                         />
                       </FormGroup>
