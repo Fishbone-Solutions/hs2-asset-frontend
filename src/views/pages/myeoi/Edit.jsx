@@ -217,7 +217,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="id"
-                          value={eoiState.eoi_status}
+                          value={dataState.eoi_status}
                           readOnly
                         />
                       </FormGroup>

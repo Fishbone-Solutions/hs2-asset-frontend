@@ -139,8 +139,10 @@ const Index = () => {
 
   const openModal = () => {
     setModalIsOpen(true);
-    setFilterFormDate({ ...filterFormData, asset_name: "" });
-    clearInput();
+    if (inputValue.length > 0) {
+      setFilterFormDate({ ...filterFormData, asset_name: "" });
+      clearInput();
+    }
   };
 
   const handleInputChange = (e) => {
