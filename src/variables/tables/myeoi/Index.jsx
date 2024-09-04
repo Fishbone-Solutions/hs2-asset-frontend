@@ -28,7 +28,7 @@ const useColumns = () => {
       },
 
       {
-        Header: "Item",
+        Header: "Item Name",
         isSortable: true,
         accessor: "asset_name",
         width: "8%",
@@ -109,7 +109,7 @@ const useColumns = () => {
               to={`/admin/myeoi/${row.original.asset_id}/eois/edit/${row.original.id}`}
             >
               <Button className="btn-icon btn-simple" color="success" size="sm">
-                <i className="fa fa-edit"></i>
+                <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
           </div>
