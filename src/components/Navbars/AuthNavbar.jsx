@@ -14,6 +14,7 @@ import {
   Nav,
   Container,
 } from "reactstrap";
+import { useLocation } from "react-router-dom";
 
 function AuthNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
@@ -56,18 +57,22 @@ function AuthNavbar(props) {
         </button>
         <Collapse isOpen={collapseOpen} className="justify-content-end" navbar>
           <Nav navbar>
-            <NavItem>
-              <Link to="/auth/register" className="nav-link">
-                <PiBookBookmarkFill size="2em" />
-                Register
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/auth/login" className="nav-link">
-                <PiHandTapFill size="2em" />
-                Login
-              </Link>
-            </NavItem>
+            {/* Conditionally render the Login link */}
+            {useLocation().pathname !== "/auth/login" ? (
+              <NavItem>
+                <Link to="/auth/login" className="nav-link">
+                  <PiHandTapFill size="2em" />
+                  Login
+                </Link>
+              </NavItem>
+            ) : (
+              <NavItem>
+                <Link to="/auth/register" className="nav-link">
+                  <PiBookBookmarkFill size="2em" />
+                  Register
+                </Link>
+              </NavItem>
+            )}
           </Nav>
         </Collapse>
       </Container>
