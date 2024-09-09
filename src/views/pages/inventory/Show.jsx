@@ -30,8 +30,7 @@ import { subCategory } from "variables/common";
 import { inventoryStatusOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
 import { conditionOptions } from "variables/common";
-import "lightbox.js-react/dist/index.css";
-import { SlideshowLightbox, initLightboxJS } from "lightbox.js-react";
+import AttachmentList from "components/Common/AttachmentList";
 
 const Show = () => {
   const { id } = useParams();
@@ -400,26 +399,10 @@ const Show = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <div className="row">
-                    <ul>
-                      {attachments.map((data) => (
-                        <li className="attachment-images-list">
-                          <SlideshowLightbox
-                            theme="lightbox"
-                            framework="next"
-                            className="container grid grid-cols-3 gap-1 mx-auto"
-                          >
-                            <img
-                              width="200"
-                              height="200"
-                              className="attachment-images"
-                              src={data["att_locatioin"]}
-                            />
-                          </SlideshowLightbox>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <AttachmentList
+                    attachments={attachments}
+                    attachmentType="images"
+                  />
                 </CardBody>
               </Card>
             </Col>
@@ -441,7 +424,10 @@ const Show = () => {
                 </CardHeader>
                 <CardBody>
                   <div>
-                    <p>No documents found</p>
+                    <AttachmentList
+                      attachments={attachments}
+                      attachmentType="docs"
+                    />
                   </div>
                 </CardBody>
               </Card>
