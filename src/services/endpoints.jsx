@@ -1,5 +1,5 @@
 export const endpoints = {
-  inventories: (query_params) => `/assets/-1?${query_params}`,
+  inventories: (query_params) => `/assets?${query_params}`,
   createInventory: () => `/assets`,
   getInventoryById: (id) => `/assets/${id}`,
   updateInventory: (id) => `/assets/${id}`,
@@ -17,4 +17,5 @@ export const endpoints = {
   myeoi: (username, query_params) => `/users/${username}/eoi?${query_params}`,
   exchanges: (query_params) => `register?${query_params}`,
   userProfile: (username) => `users/${username}`,
+  getAttachmentByAssetId: (asset_id) => `assets/${asset_id}/attachments`,
 };

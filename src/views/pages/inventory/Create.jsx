@@ -30,6 +30,8 @@ import { useNavigate } from "react-router-dom";
 import { categorycode1 } from "variables/common";
 import { conditionOptions } from "variables/common";
 import { subCategory } from "variables/common";
+import { FileUpload } from "primereact/fileupload";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -37,7 +39,16 @@ const Create = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const headers = { user_id: sessionStorage.getItem("username") };
+  const headers = {
+    user_id: sessionStorage.getItem("username"),
+    "Content-Type": "multipart/form-data",
+  };
+  const [files, setFiles] = useState([]);
+
+  const [docs, setDocs] = useState([]);
+
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+
   const [formData, setFormData] = useState({
     id: "Auto Generated",
     code: "",
@@ -60,20 +71,118 @@ const Create = () => {
   });
 
   const handleFormSubmission = async () => {
+    showAlert({
+      title: "Are you sure?",
+      type: "warning",
+      onConfirm: () => successSubmit(),
+      onCancel: hideAlert,
+    });
+  };
+
+  const successSubmit = async () => {
     try {
       setLoader(true);
-      const res = await EndPointService.createInventory(headers, formData);
+      const formDataWithFiles = new FormData();
+      Object.keys(formData).forEach((key) => {
+        formDataWithFiles.append(key, formData[key]);
+      });
+      files.forEach((file) => {
+        formDataWithFiles.append("files[]", file);
+      });
 
-      navigate("/admin/inventory");
+      docs.forEach((file) => {
+        formDataWithFiles.append("docs[]", file);
+      });
+
+      const res = await EndPointService.createInventory(
+        headers,
+        formDataWithFiles
+      );
       setLoader(false);
-    } catch (e) {}
-    console.log(formData);
+      showAlert({
+        title: `Item ${formData.asset_name} added to Inventory.`,
+        message: `Asset ID = ${res.appRespData.asset_id}`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate("/admin/inventory");
+        },
+      });
+    } catch (e) {
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
   };
+
   const handleDate = (date) => {
     setFormData((preiousState) => ({
       ...preiousState,
       available_from: date,
     }));
+  };
+
+  const onUploadImages = (event) => {
+    const files = Array.from(event.files);
+    setFiles(files);
+    console.log("images", event.files, files);
+  };
+  const onUploadDocs = (event) => {
+    const checkValidation = onFileUpload(event, 2, [
+      ".pdf",
+      ".docx",
+      ".doc",
+      "ppt",
+      "pptx",
+      "csv",
+    ]);
+    if (checkValidation) {
+      const files = Array.from(event.files);
+      setDocs(files);
+    }
+  };
+
+  const onFileUpload = (
+    event,
+    maxFiles = 2,
+    allowedExtensions = [".pdf", ".docx"],
+    maxSize = 2000000
+  ) => {
+    console.log("hello", event);
+    const files = event.files;
+
+    // Limit number of files
+    if (files.length > maxFiles) {
+      setToastType("error");
+      setToastMessage(`You can only upload a maximum of ${maxFiles} files.`);
+      return;
+    }
+
+    for (let file of files) {
+      // Check file type
+      const fileExtension = file.name
+        .substring(file.name.lastIndexOf("."))
+        .toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        setToastType("error");
+        setToastMessage(
+          `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`
+        );
+        return;
+      }
+
+      // Check file size
+      if (file.size > maxSize) {
+        setToastType("error");
+        setToastMessage(
+          `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`
+        );
+        return;
+      }
+    }
+    return true;
   };
 
   return (
@@ -464,16 +573,17 @@ const Create = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  {/* <FileUpload
-                    name="demo[]"
-                    url="/api/upload"
+                  <FileUpload
+                    name="files[]"
                     multiple
                     accept="image/*"
-                    maxFileSize={1000000}
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled={isReadOnly}
+                    onSelect={onUploadImages}
+                    maxFileSize={2000000}
+                    emptyTemplate={
+                      <p className="m-0">Choose a images of asset</p>
+                    }
                     className="custom-file-upload"
-                  /> */}
+                  />
                 </CardBody>
               </Card>
             </Col>
@@ -494,16 +604,16 @@ const Create = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  {/* <FileUpload
-                    name="demo[]"
-                    url={"/api/upload"}
+                  <FileUpload
+                    name="docs[]"
                     multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
+                    accept=".pdf, .doc, .docx, .odt, .txt"
+                    maxFileSize={2000000}
+                    onSelect={onUploadDocs}
                     className="custom-file-upload"
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled={isReadOnly}
-                  /> */}
+                    customUpload
+                    emptyTemplate={<p className="m-0">Choose a docs files</p>}
+                  />
                 </CardBody>
               </Card>
             </Col>

@@ -74,6 +74,10 @@ function getUserInformation(headers = null, username) {
   return Get(`${endpoints.userProfile(username)}`, headers);
 }
 
+function getAttachmentByAssetId(headers = null, assetId) {
+  return Get(`${endpoints.getAttachmentByAssetId(assetId)}`, headers);
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -89,4 +93,5 @@ export const EndPointService = {
   getExchange,
   getMyEoI,
   getUserInformation,
+  getAttachmentByAssetId,
 };

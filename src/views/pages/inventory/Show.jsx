@@ -28,6 +28,8 @@ import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
 import { subCategory } from "variables/common";
 import { inventoryStatusOptions } from "variables/common";
+import { categorycode1 } from "variables/common";
+import { conditionOptions } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
@@ -35,6 +37,7 @@ const Show = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
+  const [attachments, setAttachments] = useState([]);
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
     asset_id: "",
@@ -57,58 +60,18 @@ const Show = () => {
     statuscode: "",
   });
 
-  const Conditionoptions = [
-    { value: "New", label: "New" },
-    { value: "Used-Working", label: "Used - Working" },
-    { value: "Used-Not-Working", label: "Used - Not Working" },
-    { value: "Refurbished", label: "Refurbished" },
-    { value: "Expired", label: "Expired" },
-  ];
-  const options = [
-    { value: "Live", label: "Live" },
-    { value: "Listing", label: "Listing" },
-    { value: "Sold", label: "Sold" },
-  ];
-
-  const optionsCategory1 = [
-    { value: "Construction Office", label: "Construction Office" },
-    {
-      value: "Storage/Logistics Facilities",
-      label: "Storage/Logistics Facilities",
-    },
-    { value: "Processing Facilities", label: "Processing Facilities" },
-    { value: "Fixed Services", label: "Fixed Services" },
-    { value: "Temporary Services", label: "Temporary Services" },
-    { value: "Security", label: "Security" },
-    {
-      value: "Compound Security/Safety Infrastructure",
-      label: "Compound Security/Safety Infrastructure",
-    },
-    {
-      value: "Site Roads and Infrastructure",
-      label: "Site Roads and Infrastructure",
-    },
-    { value: "Temporary Siding", label: "Temporary Siding" },
-    { value: "Consolidation Yards", label: "Consolidation Yards" },
-    { value: "Concrete Production", label: "Concrete Production" },
-    { value: "Diversions", label: "Diversions" },
-    { value: "Earthworks", label: "Earthworks" },
-    { value: "Static Plant", label: "Static Plant" },
-    { value: "Piling", label: "Piling" },
-    { value: "Pipework", label: "Pipework" },
-    {
-      value: "Public Highway Traffic Management",
-      label: "Public Highway Traffic Management",
-    },
-    { value: "Other Assets", label: "Other Assets" },
-  ];
-
   const fetchInventoryById = async () => {
     try {
       setLoader(true);
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
+
+      const resAttachment = await EndPointService.getAttachmentByAssetId(
+        headers,
+        id
+      );
+      setAttachments(resAttachment.appRespData);
 
       setLoader(false);
     } catch (e) {
@@ -231,7 +194,7 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="categorycode1"
-                          value={optionsCategory1.find(
+                          value={categorycode1.find(
                             (option) => option.value === formData.categorycode1
                           )}
                           onChange={(selectedOption) =>
@@ -240,7 +203,7 @@ const Show = () => {
                               categorycode1: selectedOption.value,
                             }))
                           }
-                          options={optionsCategory1}
+                          options={categorycode1}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
@@ -348,7 +311,7 @@ const Show = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="asset_condition"
-                          value={Conditionoptions.find(
+                          value={conditionOptions.find(
                             (option) =>
                               option.value === formData.asset_condition
                           )}
@@ -358,7 +321,7 @@ const Show = () => {
                               asset_condition: selectedOption.value,
                             }))
                           }
-                          options={Conditionoptions}
+                          options={conditionOptions}
                           placeholder="Select an option"
                           isDisabled="true"
                         />
