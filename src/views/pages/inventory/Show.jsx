@@ -30,6 +30,8 @@ import { subCategory } from "variables/common";
 import { inventoryStatusOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
 import { conditionOptions } from "variables/common";
+import "lightbox.js-react/dist/index.css";
+import { SlideshowLightbox, initLightboxJS } from "lightbox.js-react";
 
 const Show = () => {
   const { id } = useParams();
@@ -397,18 +399,28 @@ const Show = () => {
                     Images
                   </CardTitle>
                 </CardHeader>
-                {/* <CardBody>
-                  <FileUpload
-                    name="demo[]"
-                    url="/api/upload"
-                    multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled="true"
-                    className="custom-file-upload"
-                  />
-                </CardBody> */}
+                <CardBody>
+                  <div className="row">
+                    <ul>
+                      {attachments.map((data) => (
+                        <li className="attachment-images-list">
+                          <SlideshowLightbox
+                            theme="lightbox"
+                            framework="next"
+                            className="container grid grid-cols-3 gap-1 mx-auto"
+                          >
+                            <img
+                              width="200"
+                              height="200"
+                              className="attachment-images"
+                              src={data["att_locatioin"]}
+                            />
+                          </SlideshowLightbox>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardBody>
               </Card>
             </Col>
             {/* Upload Documents*/}
@@ -428,16 +440,9 @@ const Show = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  {/* <FileUpload
-                    name="demo[]"
-                    url={"/api/upload"}
-                    multiple
-                    accept="image/*"
-                    maxFileSize={1000000}
-                    className="custom-file-upload"
-                    emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                    disabled="true"
-                  /> */}
+                  <div>
+                    <p>No documents found</p>
+                  </div>
                 </CardBody>
               </Card>
             </Col>

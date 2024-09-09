@@ -277,7 +277,6 @@ const routes = [
         style={{ float: "left" }}
       />
     ),
-    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoiShow} />,
     breadcrumbComponent: ({ match }) => {
       const { inventoryId } = match.dynamicParams;
       const { eoiId } = match.dynamicParams;
