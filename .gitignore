@@ -14,6 +14,7 @@ package-lock.json
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -25,9 +26,5 @@ yarn-error.log*
 
 # other files to ignore
 original_code.zip
-<<<<<<< HEAD
-src/components/Navbars/Untitled-1.rb
-=======
 src/views/components/serverAddress.js
 src/components/Navbars/Untitled-1.rb
->>>>>>> 3c0b1caf54b5ce0fdb2f728d420e43b15a7aa4ee
