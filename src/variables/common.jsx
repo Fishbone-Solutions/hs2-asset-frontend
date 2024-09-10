@@ -76,3 +76,40 @@ export const myEoIUpdateoptions = [
   { value: "GOODS-RECEIVED", label: "Goods Received" },
   { value: "WITHDRAWN", label: "Withdrawn" },
 ];
+
+export const DocumentType = [
+  // Text Documents
+  ".txt", // Plain Text
+  ".rtf", // Rich Text Format
+  ".doc", // Microsoft Word 97-2003 Document
+  ".docx", // Microsoft Word Document
+  ".odt", // OpenDocument Text
+
+  // Portable Documents
+  ".pdf", // Portable Document Format
+
+  // Spreadsheets
+  ".xls", // Microsoft Excel 97-2003 Spreadsheet
+  ".xlsx", // Microsoft Excel Spreadsheet
+  ".ods", // OpenDocument Spreadsheet
+
+  // Presentations
+  ".ppt", // Microsoft PowerPoint 97-2003 Presentation
+  ".pptx", // Microsoft PowerPoint Presentation
+  ".odp", // OpenDocument Presentation
+
+  // Other Formats
+  ".html", // HyperText Markup Language
+  ".xml", // eXtensible Markup Language
+  ".md", // Markdown
+
+  // Compressed Archives
+  ".zip", // ZIP Archive
+  ".rar", // RAR Archive
+  ".7z", // 7-Zip Archive
+
+  // Other Documents
+  ".epub", // Electronic Publication
+  ".mobi", // Mobipocket eBook
+  ".tex", // LaTeX Document
+];

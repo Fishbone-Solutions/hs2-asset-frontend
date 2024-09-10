@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
-import { inventoryStatusOptions } from "variables/common";
+import { inventoryStatusOptions, DocumentType } from "variables/common";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
 import { useNavigate } from "react-router-dom";
@@ -130,14 +130,7 @@ const Create = () => {
     console.log("images", event.files, files);
   };
   const onUploadDocs = (event) => {
-    const checkValidation = onFileUpload(event, 2, [
-      ".pdf",
-      ".docx",
-      ".doc",
-      "ppt",
-      "pptx",
-      "csv",
-    ]);
+    const checkValidation = onFileUpload(event, 3, DocumentType);
     if (checkValidation) {
       const files = Array.from(event.files);
       setDocs(files);

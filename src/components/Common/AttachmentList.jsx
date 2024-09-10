@@ -1,19 +1,74 @@
+import Doc from "components/svg/Doc";
+import MyIcon from "components/svg/Generic";
+import Pdf from "components/svg/Pdf";
+import PptxIcon from "components/svg/Pptx";
+import TxtIcon from "components/svg/Txt";
+import SpreadsheetIcon from "components/svg/Xls";
 import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css"; // Import the lightbox styles
+
+export const DOCUMENT_TYPES = [
+  ".txt",
+  ".rtf",
+  ".doc",
+  ".docx",
+  ".odt",
+  ".pdf",
+  ".xls",
+  ".xlsx",
+  ".ods",
+  ".ppt",
+  ".pptx",
+  ".odp",
+  ".html",
+  ".xml",
+  ".md",
+  ".zip",
+  ".rar",
+  ".7z",
+  ".epub",
+  ".mobi",
+  ".tex",
+];
+
+// Function to get the appropriate icon based on the file extension
+const getFileIcon = (fileName) => {
+  const extension = fileName.split(".").pop().toLowerCase();
+
+  switch (extension) {
+    case "pdf":
+      return <Pdf />;
+    case "doc":
+    case "docx":
+    case "odt":
+      return <Doc />;
+    case "xls":
+    case "xlsx":
+    case "ods":
+      return <SpreadsheetIcon />;
+    case "ppt":
+    case "pptx":
+    case "odp":
+      return <PptxIcon />;
+    case "txt":
+    case "rtf":
+      return <TxtIcon />;
+    default:
+      return <MyIcon IconTxt={extension.toUpperCase()} />;
+  }
+};
 
 const AttachmentList = ({ attachments, attachmentType }) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Filter attachments based on attachment type
   const filteredAttachments = attachments.filter((data) =>
     attachmentType === "images"
       ? data["att_type"] === "images"
-      : data["att_type"] === "doc" || data["att_type"] === "pdf"
+      : data["att_type"] === "docs" || data["att_type"] === "pdf"
   );
 
-  // Prepare images for the lightbox
   const images = filteredAttachments
     .filter((data) => data["att_type"] === "images")
     .map((data) => ({
@@ -21,13 +76,11 @@ const AttachmentList = ({ attachments, attachmentType }) => {
       title: `attachment-${data["id"]}`,
     }));
 
-  // Function to open the lightbox
   const openLightbox = (index) => {
     setCurrentImageIndex(index);
     setIsLightboxOpen(true);
   };
 
-  // Function to close the lightbox
   const closeLightbox = () => {
     setIsLightboxOpen(false);
   };
@@ -43,7 +96,7 @@ const AttachmentList = ({ attachments, attachmentType }) => {
                   <a
                     key={index}
                     onClick={() => openLightbox(index)}
-                    className="me-2 mb-2"
+                    className="me-4 mb-2 shadow-box-image"
                     href="#"
                     aria-label={`Open lightbox for image ${index}`}
                   >
@@ -69,37 +122,38 @@ const AttachmentList = ({ attachments, attachmentType }) => {
           )}
 
           {attachmentType === "docs" && (
-            <ul className="list-unstyled d-flex flex-wrap">
+            <div className="d-flex flex-wrap">
               {filteredAttachments
-                .filter((data) => data["att_type"] === "doc")
+                .filter((data) => data["att_type"] === "docs")
                 .map((data, index) => (
-                  <li key={index} className="me-2 mb-2">
-                    <div className="card">
-                      <a
-                        href={data["att_location"]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-decoration-none"
-                      >
-                        <img
-                          width="200"
-                          height="200"
-                          className="card-img-top"
-                          src="/path-to-thumbnail-image/doc-thumbnail.png"
-                          alt={`Document thumbnail ${index}`}
-                        />
-                        <div className="card-body text-center">
-                          <p className="card-text">View Document</p>
-                        </div>
-                      </a>
-                    </div>
-                  </li>
+                  <div className="card customized-docs-card me-4">
+                    <a
+                      href={data["att_location"]}
+                      rel="noopener noreferrer"
+                      className="text-decoration-none"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title={data["att_name"]}
+                    >
+                      <div className="d-flex justify-content-center">
+                        {/* Display the appropriate icon based on file type */}
+                        {getFileIcon(data["att_location"])}
+                      </div>
+                      <div className="card-body text-center">
+                        <p className="card-text text-truncate w-100">
+                          {data["att_name"]}
+                        </p>
+                      </div>
+                    </a>
+                  </div>
                 ))}
-            </ul>
+            </div>
           )}
         </>
       ) : (
-        <p>No attachments found!</p>
+        <>
+          <p>No attachments!</p>
+        </>
       )}
     </div>
   );
