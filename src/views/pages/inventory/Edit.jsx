@@ -31,6 +31,7 @@ import { categorycode1 } from "variables/common";
 import { subCategory } from "variables/common";
 import { inventoryStatusOptions } from "variables/common";
 import { conditionOptions } from "variables/common";
+import { FileUpload } from "primereact/fileupload";
 
 const Edit = () => {
   const { id } = useParams();
@@ -100,6 +101,60 @@ const Edit = () => {
     console.log("useEffect");
     fetchInventoryById();
   }, []);
+
+  const onUploadImages = (event) => {
+    const files = Array.from(event.files);
+    setFiles(files);
+    console.log("images", event.files, files);
+  };
+  const onUploadDocs = (event) => {
+    const checkValidation = onFileUpload(event, 3, DocumentType);
+    if (checkValidation) {
+      const files = Array.from(event.files);
+      setDocs(files);
+    }
+  };
+
+  const onFileUpload = (
+    event,
+    maxFiles = 2,
+    allowedExtensions = [".pdf", ".docx"],
+    maxSize = 2000000
+  ) => {
+    console.log("hello", event);
+    const files = event.files;
+
+    // Limit number of files
+    if (files.length > maxFiles) {
+      setToastType("error");
+      setToastMessage(`You can only upload a maximum of ${maxFiles} files.`);
+      return;
+    }
+
+    for (let file of files) {
+      // Check file type
+      const fileExtension = file.name
+        .substring(file.name.lastIndexOf("."))
+        .toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        setToastType("error");
+        setToastMessage(
+          `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`
+        );
+        return;
+      }
+
+      // Check file size
+      if (file.size > maxSize) {
+        setToastType("error");
+        setToastMessage(
+          `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`
+        );
+        return;
+      }
+    }
+    return true;
+  };
 
   return (
     <>
@@ -458,18 +513,19 @@ const Edit = () => {
                     Images
                   </CardTitle>
                 </CardHeader>
-                {/* <CardBody>
-                    <FileUpload
-                      name="demo[]"
-                      url="/api/upload"
-                      multiple
-                      accept="image/*"
-                      maxFileSize={1000000}
-                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                      disabled="true"
-                      className="custom-file-upload"
-                    />
-                  </CardBody> */}
+                <CardBody>
+                  <FileUpload
+                    name="files[]"
+                    multiple
+                    accept="image/*"
+                    onSelect={onUploadImages}
+                    maxFileSize={2000000}
+                    emptyTemplate={
+                      <p className="m-0">Choose a images of asset</p>
+                    }
+                    className="custom-file-upload"
+                  />
+                </CardBody>
               </Card>
             </Col>
             {/* Upload Documents*/}
@@ -489,16 +545,16 @@ const Edit = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  {/* <FileUpload
-                      name="demo[]"
-                      url={"/api/upload"}
-                      multiple
-                      accept="image/*"
-                      maxFileSize={1000000}
-                      className="custom-file-upload"
-                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                      disabled="true"
-                    /> */}
+                  <FileUpload
+                    name="docs[]"
+                    multiple
+                    accept=".pdf, .doc, .docx, .odt, .txt"
+                    maxFileSize={2000000}
+                    onSelect={onUploadDocs}
+                    className="custom-file-upload"
+                    customUpload
+                    emptyTemplate={<p className="m-0">Choose a docs files</p>}
+                  />
                 </CardBody>
               </Card>
             </Col>

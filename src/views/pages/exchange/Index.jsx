@@ -48,6 +48,7 @@ const Index = () => {
   const [refreshData, setRefreshData] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
+  const [clearDateBoolean, setClearDateBoolean] = useState(false);
 
   const headers = { user_id: sessionStorage.getItem("username") };
   const [rangeDates, setRangeDates] = useState({
@@ -58,11 +59,19 @@ const Index = () => {
   const [filterFormData, setFilterFormDate] = useState({
     id: "",
     asset_name: "",
-    entry_date_from: null,
-    entry_date_to: null,
+    category: null,
+    subCategory: null,
     available_from: null,
     available_to: null,
     statuscode: null,
+  });
+
+  const [filterDataState, setFilterDataState] = useState({
+    id: null,
+    asset_name: null,
+    statuscode: null,
+    category: null,
+    subCategory: null,
   });
 
   const getValueOrDefault = (value) => (value ? value : "-1");
@@ -75,8 +84,8 @@ const Index = () => {
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
         fltr_status: getValueOrDefault(filterFormData.statuscode),
-        fltr_from_entry_date: getValueOrDefault(filterFormData.entry_date_from),
-        fltr_to_entry_date: getValueOrDefault(filterFormData.entry_date_to),
+        fltr_category1: getValueOrDefault(filterFormData.category),
+        fltr_category2: getValueOrDefault(filterFormData.subCategory),
         fltr_from_availability: getValueOrDefault(
           filterFormData.available_from
         ),
@@ -106,6 +115,8 @@ const Index = () => {
       startDate: startDate,
       endDate: endDate,
     }));
+
+    setClearDateBoolean(false);
   };
 
   const handleClearClick = () => {
@@ -115,20 +126,29 @@ const Index = () => {
       asset_name: "",
       available_from: "",
       available_to: "",
+      category: "",
+      subCategory: "",
     }));
+    setFilterDataState({
+      id: "",
+      asset_name: "",
+      statuscode: "",
+      category: "",
+      subCategory: "",
+    });
+
+    setClearDateBoolean(true);
   };
 
-  const handleAdvancedFilter = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-
+  const handleAdvancedFilter = () => {
     setFilterFormDate((prevState) => ({
       ...prevState,
-      id: formData.get("id"),
-      asset_name: formData.get("name"),
+      id: filterDataState.id,
+      asset_name: filterDataState.asset_name,
       available_from: rangeDates.startDate,
       available_to: rangeDates.endDate,
+      category: filterDataState.category,
+      subCategory: filterDataState.subCategory,
     }));
   };
 
@@ -164,10 +184,14 @@ const Index = () => {
 
   const handleCategoryChange = (category) => {
     console.log(category);
+    setFilterDataState({ ...filterDataState, category: category.value });
+    setClearDateBoolean(false);
   };
 
   const handleSubCategoryChange = (subCategory) => {
     console.log(subCategory);
+    setFilterDataState({ ...filterDataState, subCategory: subCategory.value });
+    setClearDateBoolean(false);
   };
   const closeModal = () => setModalIsOpen(false);
 
@@ -276,7 +300,7 @@ const Index = () => {
       >
         <div className="content2">
           <div className="placer">
-            <Form onSubmit={handleAdvancedFilter}>
+            <Form>
               <Row>
                 <Col md="12">
                   <Card>
@@ -304,6 +328,13 @@ const Index = () => {
                             <Input
                               id="id"
                               name="id"
+                              value={filterDataState.id}
+                              onChange={(e) =>
+                                setFilterDataState((previousState) => ({
+                                  ...previousState,
+                                  id: e.target.value,
+                                }))
+                              }
                               placeholder="ID"
                               type="number"
                             />
@@ -316,6 +347,13 @@ const Index = () => {
                             <Input
                               id="assetName"
                               name="name"
+                              value={filterDataState.asset_name}
+                              onChange={(e) =>
+                                setFilterDataState((previousState) => ({
+                                  ...previousState,
+                                  asset_name: e.target.value,
+                                }))
+                              }
                               placeholder="name"
                               type="text"
                             />
@@ -329,6 +367,7 @@ const Index = () => {
                             label="Category"
                             options={categorycode1}
                             onChange={handleCategoryChange}
+                            clearSelection={clearDateBoolean}
                           />
                         </Col>
                         <Col sm="6">
@@ -336,6 +375,7 @@ const Index = () => {
                             label="Sub-Category"
                             options={subCategory}
                             onChange={handleSubCategoryChange}
+                            clearSelection={clearDateBoolean}
                           />
                         </Col>
 
@@ -345,6 +385,7 @@ const Index = () => {
                               label="Availability Range"
                               inputName="availablility_range"
                               onChange={handleDate}
+                              clearDates={clearDateBoolean}
                             />
                           </FormGroup>
                         </Col>
@@ -359,8 +400,9 @@ const Index = () => {
                           Clear
                         </button>
                         <button
-                          className="btn btn-success px-2 py-2"
-                          type="submit"
+                          className="btn btn-success submission px-2 py-2"
+                          type="button"
+                          onClick={handleAdvancedFilter}
                         >
                           Filter
                         </button>
