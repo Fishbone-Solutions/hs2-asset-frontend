@@ -1,6 +1,7 @@
 // breadcrumbConfig.js
 
 const breadcrumbConfig = {
+  profile: [{ label: "Profile", to: "#" }],
   inventory: [{ label: "Inventory", to: "#" }],
   inventoryCreate: [
     { label: "Inventory", to: "/admin/inventory" },

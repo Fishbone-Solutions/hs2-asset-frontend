@@ -50,6 +50,7 @@ import { GiWireframeGlobe } from "react-icons/gi";
 import Register from "./views/pages/auth/Register";
 import Breadcrumb from "components/Common/Breadcrumb";
 import breadcrumbConfig from "variables/breadcrumbsConfig";
+import { CgProfile } from "react-icons/cg";
 
 const routes = [
   {
@@ -58,7 +59,11 @@ const routes = [
     name: "My Profile",
     component: <UserProfile />,
     layout: "/admin",
-    icon: <HiViewGridAdd />,
+    icon: <CgProfile />,
+    breadcrumbIcon: (
+      <CgProfile size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.profile} />,
     hidden: true,
   },
   {
