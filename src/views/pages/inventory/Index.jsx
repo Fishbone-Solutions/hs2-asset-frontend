@@ -50,6 +50,13 @@ const Index = () => {
     statuscode: null,
   });
 
+  const [filterDataState, setFilterDataState] = useState({
+    id: null,
+    asset_name: null,
+    statuscode: null,
+  });
+  const [clearDateBoolean, setClearDateBoolean] = useState(false);
+
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
   const getValueOrDefault = (value) => (value ? value : "-1");
@@ -72,7 +79,6 @@ const Index = () => {
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
       });
-      console.log("inventory", headers);
       const res = await EndPointService.getInventory(headers, params);
       setDataState(res.appRespData);
       setLoader(false);
@@ -125,27 +131,29 @@ const Index = () => {
       available_to: null,
       statuscode: null,
     }));
-
-    console.log(filterFormData, refreshData);
+    setFilterDataState({
+      id: "",
+      asset_name: "",
+      statuscode: "",
+    });
+    setClearDateBoolean(true);
   };
 
   useEffect(() => {
     fetchInventory();
   }, [filterFormData, refreshData]);
 
-  const handleFilter = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-
+  const handleFilter = () => {
+    console.log("handleFilter", filterDataState.id);
     setFilterFormDate((prevState) => ({
       ...prevState,
-      id: formData.get("id"),
-      asset_name: formData.get("name"),
+      id: filterDataState.id,
+      asset_name: filterDataState.asset_name,
       available_from: rangeDatesAvailablility.startDate,
       available_to: rangeDatesAvailablility.endDate,
       entry_date_from: rangeDatesEntry.startDate,
       entry_date_to: rangeDatesEntry.endDate,
+      statuscode: filterDataState.statuscode,
     }));
   };
 
@@ -155,6 +163,8 @@ const Index = () => {
       startDate: startDate,
       endDate: endDate,
     }));
+
+    setClearDateBoolean(false);
   };
 
   const handleAvailablilityDate = (startDate, endDate) => {
@@ -163,13 +173,15 @@ const Index = () => {
       startDate: startDate,
       endDate: endDate,
     }));
+    setClearDateBoolean(false);
   };
 
   const handleSelectChange = (selectedOption) => {
-    setFilterFormDate((prevState) => ({
+    setFilterDataState((prevState) => ({
       ...prevState,
       statuscode: selectedOption.value,
     }));
+    setClearDateBoolean(false);
   };
 
   return (
@@ -224,7 +236,7 @@ const Index = () => {
       >
         <div className="content2" style={{ overflow: "hidden" }}>
           <div className="placer">
-            <Form onSubmit={handleFilter}>
+            <Form>
               <Row>
                 <Col md="12">
                   <Card>
@@ -261,6 +273,13 @@ const Index = () => {
                           <FormGroup floating>
                             <Input
                               type="text"
+                              value={filterDataState.id}
+                              onChange={(e) =>
+                                setFilterDataState((previousState) => ({
+                                  ...previousState,
+                                  id: e.target.value,
+                                }))
+                              }
                               name="id"
                               id="id"
                               placeholder="id"
@@ -272,6 +291,13 @@ const Index = () => {
                           <FormGroup floating>
                             <Input
                               id="name"
+                              value={filterDataState.asset_name}
+                              onChange={(e) =>
+                                setFilterDataState((previousState) => ({
+                                  ...previousState,
+                                  asset_name: e.target.value,
+                                }))
+                              }
                               type="text"
                               name="asset_name"
                               placeholder="name"
@@ -285,6 +311,7 @@ const Index = () => {
                             <FormGroup>
                               <DateRangePicker
                                 label="Entry Range"
+                                clearDates={clearDateBoolean}
                                 onChange={handleEntryDate}
                               />
                             </FormGroup>
@@ -295,6 +322,7 @@ const Index = () => {
                           <FormGroup>
                             <DateRangePicker
                               label="Availablility Range"
+                              clearDates={clearDateBoolean}
                               onChange={handleAvailablilityDate}
                             />
                           </FormGroup>
@@ -305,6 +333,7 @@ const Index = () => {
                             label="Status"
                             options={inventoryStatusOptions}
                             onChange={handleSelectChange}
+                            clearSelection={clearDateBoolean}
                           />
                         </Col>
                       </Row>
@@ -317,8 +346,9 @@ const Index = () => {
                           Clear
                         </button>
                         <button
-                          className="btn btn-success px-2 py-2"
-                          type="submit"
+                          className="btn btn-success submission px-2 py-2"
+                          type="button"
+                          onClick={handleFilter}
                         >
                           Filter
                         </button>

@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormGroup, Label } from "reactstrap";
 import Select from "react-select";
 import "../../assets/css/floating-label.css";
 
-const MyFloatingLabelSelect = ({ label, options, onChange }) => {
+const MyFloatingLabelSelect = ({
+  label,
+  options,
+  onChange,
+  clearSelection,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -11,6 +16,13 @@ const MyFloatingLabelSelect = ({ label, options, onChange }) => {
     setSelectedValue(selectedOption);
     onChange(selectedOption); // Pass selected option to parent component
   };
+
+  // Clear the selected value when clearSelection prop changes
+  useEffect(() => {
+    if (clearSelection) {
+      setSelectedValue(null);
+    }
+  }, [clearSelection]);
 
   return (
     <FormGroup className="floating-label-select">

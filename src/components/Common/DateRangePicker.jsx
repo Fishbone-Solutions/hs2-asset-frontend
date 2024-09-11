@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/css/date-picker.css";
@@ -10,6 +10,7 @@ const DateRangePicker = ({
   labelType = "floating",
   onChange,
   mode = "range",
+  clearDates = false, // New prop for clearing dates
 }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -22,7 +23,7 @@ const DateRangePicker = ({
       setEndDate(end);
       onChange(
         moment(start).format("DD/MM/YYYY"),
-        end ? moment(end).format("DD/MM/YYYY") : null,
+        end ? moment(end).format("DD/MM/YYYY") : null
       );
     } else {
       setStartDate(dates);
@@ -30,13 +31,25 @@ const DateRangePicker = ({
     }
   };
 
+  const handleClear = () => {
+    setStartDate(null);
+    setEndDate(null);
+    onChange(null, null); // Notify parent about clearing the date range
+  };
+
+  useEffect(() => {
+    if (clearDates) {
+      handleClear(); // Clear dates if the prop is toggled
+    }
+  }, [clearDates]); // This will listen for changes in the clearDates prop
+
   const handleClickOutside = (event) => {
     if (event.target.closest(".datepicker-wrapper") === null) {
       setIsOpen(false);
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
