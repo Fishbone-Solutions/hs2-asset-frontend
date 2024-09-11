@@ -239,7 +239,7 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    Reference Item Summary
+                    Item Reference
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
@@ -444,7 +444,7 @@ const Edit = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label> Status *</Label>
+                      <Label> Acknowledgement To Seller *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"

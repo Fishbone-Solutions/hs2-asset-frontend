@@ -305,6 +305,7 @@ const routes = [
   },
 
   {
+    hidden: true,
     collapse: true,
     name: "WireFrame Pages",
     icon: <GiWireframeGlobe size="2.5em" style={{ float: "left" }} />,

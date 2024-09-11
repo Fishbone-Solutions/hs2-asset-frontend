@@ -47,6 +47,7 @@ const Index = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [refreshData, setRefreshData] = useState(0);
   const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
 
   const headers = { user_id: sessionStorage.getItem("username") };
   const [rangeDates, setRangeDates] = useState({
