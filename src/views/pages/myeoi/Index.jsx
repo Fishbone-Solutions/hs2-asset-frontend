@@ -29,6 +29,10 @@ const Index = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+  const [searchFilter, setSearchFilter] = useState(0);
+
+  const [clearDateBoolean, setClearDateBoolean] = useState(false);
+
   const { username } = useContext(GlobalContext);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -75,19 +79,11 @@ const Index = () => {
 
   useEffect(() => {
     fetchMyEoI();
-  }, [filterFormData]);
+  }, [searchFilter]);
 
-  const handleFilter = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    setFilterFormData((prevState) => ({
-      ...prevState,
-      id: formData.get("id"),
-      asset_id: formData.get("asset_id"),
-      asset_name: formData.get("itemname"),
-      entry_date_from: rangeDatesEntry.startDate,
-      entry_date_to: rangeDatesEntry.endDate,
-    }));
+  const handleFilter = () => {
+    const updateSearchFilter = searchFilter + 1;
+    setSearchFilter(updateSearchFilter);
   };
 
   const handleClear = () => {
@@ -98,6 +94,7 @@ const Index = () => {
       entry_date_from: null,
       entry_date_to: null,
     });
+    setClearDateBoolean(true);
   };
 
   const handleEntryDate = (startDate, endDate) => {
@@ -106,6 +103,7 @@ const Index = () => {
       startDate: startDate,
       endDate: endDate,
     }));
+    setClearDateBoolean(false);
   };
   return (
     <>
@@ -154,7 +152,7 @@ const Index = () => {
       >
         <div className="content2" style={{ overflow: "hidden" }}>
           <div className="placer">
-            <Form onSubmit={handleFilter}>
+            <Form>
               <Row>
                 <Col md="12">
                   <Card>
@@ -191,6 +189,13 @@ const Index = () => {
                           <FormGroup floating>
                             <Input
                               type="text"
+                              value={filterFormData.id}
+                              onChange={(e) =>
+                                setFilterFormData((previousState) => ({
+                                  ...previousState,
+                                  id: e.target.value,
+                                }))
+                              }
                               name="id"
                               id="id"
                               placeholder="id"
@@ -202,6 +207,13 @@ const Index = () => {
                           <FormGroup floating>
                             <Input
                               id="asset_id"
+                              value={filterFormData.asset_id}
+                              onChange={(e) =>
+                                setFilterFormData((previousState) => ({
+                                  ...previousState,
+                                  asset_id: e.target.value,
+                                }))
+                              }
                               type="text"
                               name="asset_id"
                               placeholder="Item ID"
@@ -217,6 +229,7 @@ const Index = () => {
                               <DateRangePicker
                                 label="Submission Date Range"
                                 onChange={handleEntryDate}
+                                clearDates={clearDateBoolean}
                               />
                             </FormGroup>
                           </div>
@@ -226,6 +239,13 @@ const Index = () => {
                             <Input
                               id="itemname"
                               type="text"
+                              value={filterFormData.asset_name}
+                              onChange={(e) =>
+                                setFilterFormData((previousState) => ({
+                                  ...previousState,
+                                  asset_name: e.target.value,
+                                }))
+                              }
                               name="itemname"
                               placeholder="Item Name"
                             />
@@ -241,8 +261,9 @@ const Index = () => {
                           Clear
                         </button>
                         <button
-                          className="btn btn-success px-2 py-2"
-                          type="submit"
+                          className="btn btn-success submission px-2 py-2"
+                          type="button"
+                          onClick={handleFilter}
                         >
                           Filter
                         </button>
