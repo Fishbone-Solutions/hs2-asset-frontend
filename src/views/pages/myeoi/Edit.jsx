@@ -22,11 +22,11 @@ import {
 import Select from "react-select";
 import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
-import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
 import { myEoIUpdateoptions } from "variables/common";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -37,10 +37,11 @@ const Edit = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
-  const [alert, setAlert] = useState(null);
   const headers = { user_id: sessionStorage.getItem("username") };
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
@@ -81,21 +82,27 @@ const Edit = () => {
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => handleSubmit()}
-        onCancel={() => hideAlert()}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      />
-    );
+    showAlert({
+      title: "Are you sure?",
+      type: "warning",
+      onConfirm: () => handleSubmit(),
+      onCancel: hideAlert,
+    });
+    // setAlert(
+    //   <ReactBSAlert
+    //     warning
+    //     style={{ display: "block", marginTop: "-100px" }}
+    //     title="Are you sure?"
+    //     onConfirm={() => handleSubmit()}
+    //     onCancel={() => hideAlert()}
+    //     confirmBtnBsStyle="info"
+    //     cancelBtnBsStyle="danger"
+    //     confirmBtnText="Yes"
+    //     cancelBtnText="Cancel"
+    //     showCancel
+    //     btnSize=""
+    //   />
+    // );
   };
 
   const handleSubmit = async () => {
@@ -111,9 +118,18 @@ const Edit = () => {
         requestBody
       );
 
-      navigate("/admin/myeoi");
-      hideAlert();
       setLoader(false);
+      showAlert({
+        title: `EOI Submitted to the Seller.`,
+        message: `Eoi ID = ${eoiId}`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate("/admin/myeoi");
+        },
+      });
     } catch (e) {
       console.log("error");
       setToastType("error");
@@ -158,10 +174,6 @@ const Edit = () => {
 
   const submitApproval = () => {
     console.log("approval");
-  };
-
-  const hideAlert = () => {
-    setAlert(null);
   };
 
   return (
@@ -437,14 +449,14 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {"EoI Status"}
+                    Acknowledgement To Seller
                   </CardTitle>
                 </CardHeader>
 
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label> Acknowledgement To Seller *</Label>
+                      <Label>EoI Status *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"

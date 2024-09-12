@@ -34,6 +34,7 @@ import { conditionOptions } from "variables/common";
 import { FileUpload } from "primereact/fileupload";
 import AttachmentList from "components/Common/AttachmentList";
 import { DocumentType } from "variables/common";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Edit = () => {
   const { id } = useParams();
@@ -43,6 +44,8 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const [attachments, setAttachments] = useState([]);
   const [deletedAttachmentsIds, setDeletedAttachmentsIds] = useState([]);
+
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const [files, setFiles] = useState([]);
 
   const [docs, setDocs] = useState([]);
@@ -90,6 +93,15 @@ const Edit = () => {
     }
   };
 
+  const handleFormSubmission = async () => {
+    showAlert({
+      title: "Are you sure?",
+      type: "warning",
+      onConfirm: () => handleUpdateInventory(),
+      onCancel: hideAlert,
+    });
+  };
+
   const handleUpdateInventory = async () => {
     try {
       setLoader(true);
@@ -118,7 +130,17 @@ const Edit = () => {
       );
 
       setLoader(false);
-      navigate("/admin/inventory");
+      showAlert({
+        title: `Item ${formData.asset_name} added to Inventory.`,
+        message: `Asset ID = ${id}`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate("/admin/inventory");
+        },
+      });
     } catch (e) {
       console.log(e);
       setLoader(false);
@@ -202,6 +224,7 @@ const Edit = () => {
           type={toastType}
           message={toastMessage}
         />
+        {alert}
         {loader ? <FullPageLoader /> : ""}
         <Form>
           <Row>
@@ -668,7 +691,7 @@ const Edit = () => {
             <Button
               className="buttonClose"
               color="primary"
-              onClick={handleUpdateInventory}
+              onClick={handleFormSubmission}
               style={{ visibility: "visible", opacity: 1 }}
             >
               Update
