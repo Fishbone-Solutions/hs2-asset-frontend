@@ -18,4 +18,6 @@ export const endpoints = {
   exchanges: (query_params) => `register?${query_params}`,
   userProfile: (username) => `users/${username}`,
   getAttachmentByAssetId: (asset_id) => `assets/${asset_id}/attachments`,
+  updateEoiBuyerDetials: (asset_id, eoi_id) =>
+    `assets/${asset_id}/eoi/${eoi_id}`,
 };

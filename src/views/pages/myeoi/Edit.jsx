@@ -172,6 +172,53 @@ const Edit = () => {
     );
   };
 
+  const buyerConfirmation = () => {
+    showAlert({
+      title: "Are you sure?",
+      type: "warning",
+      onConfirm: () => handleFormBuyerDetails(),
+      onCancel: hideAlert,
+    });
+  };
+
+  const handleFormBuyerDetails = async () => {
+    setLoader(true);
+    try {
+      const requestBody = {
+        buyer_name: dataState.buyer_name,
+        organization: dataState.organization,
+        contact_no: dataState.contact_no,
+        email: dataState.email,
+        address: dataState.address,
+        delivery_location: dataState.delivery_location,
+        contact_time_preference: dataState.contact_time_preference,
+      };
+      const res = await EndPointService.updateEoiBuyerDetials(
+        headers,
+        inventoryId,
+        eoiId,
+        requestBody
+      );
+
+      setLoader(false);
+      showAlert({
+        title: `Buyer Update successfully.`,
+        message: ``,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+        },
+      });
+    } catch (e) {
+      console.log("error");
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+
   const submitApproval = () => {
     console.log("approval");
   };
@@ -353,7 +400,12 @@ const Edit = () => {
                           type="text"
                           name="buyer_name"
                           value={dataState.buyer_name}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              buyer_name: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -365,7 +417,12 @@ const Edit = () => {
                           type="text"
                           name="organization"
                           value={dataState.organization}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              organization: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -378,7 +435,12 @@ const Edit = () => {
                           type="text"
                           name="contact_no"
                           value={dataState.contact_no}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              contact_no: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -390,7 +452,12 @@ const Edit = () => {
                           type="text"
                           name="email"
                           value={dataState.email}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              email: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -403,7 +470,12 @@ const Edit = () => {
                           type="text"
                           name="address"
                           value={dataState.address}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              address: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -414,7 +486,12 @@ const Edit = () => {
                           type="text"
                           name="delivery_location"
                           value={dataState.delivery_location}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              delivery_location: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
@@ -427,11 +504,25 @@ const Edit = () => {
                           type="text"
                           name="contact_time_preference"
                           value={dataState.contact_time_preference}
-                          readOnly
+                          onChange={(e) =>
+                            setDataState((previousState) => ({
+                              ...previousState,
+                              contact_time_preference: e.target.value,
+                            }))
+                          }
                         />
                       </FormGroup>
                     </Col>
                   </Row>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      color="primary"
+                      type="button"
+                      onClick={buyerConfirmation}
+                    >
+                      SAVE
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Col>
@@ -456,7 +547,7 @@ const Edit = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>EoI Status *</Label>
+                      <Label>Status *</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -472,19 +563,21 @@ const Edit = () => {
                       </FormGroup>
                     </Col>
                   </Row>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      color="primary"
+                      type="button"
+                      onClick={handleFormSubmission}
+                    >
+                      SAVE
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Col>
           </Row>
           {alert}
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              color="primary"
-              type="button"
-              onClick={handleFormSubmission}
-            >
-              SAVE
-            </Button>
             <Button
               className="buttonClose"
               color="primary"

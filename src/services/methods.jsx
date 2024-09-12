@@ -78,6 +78,14 @@ function getAttachmentByAssetId(headers = null, assetId) {
   return Get(`${endpoints.getAttachmentByAssetId(assetId)}`, headers);
 }
 
+function updateEoiBuyerDetials(headers = null, assetId, eoiId, params) {
+  return Post(
+    `${endpoints.updateEoiBuyerDetials(assetId, eoiId)}`,
+    params,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -94,4 +102,5 @@ export const EndPointService = {
   getMyEoI,
   getUserInformation,
   getAttachmentByAssetId,
+  updateEoiBuyerDetials,
 };
