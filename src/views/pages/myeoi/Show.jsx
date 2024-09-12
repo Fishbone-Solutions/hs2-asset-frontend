@@ -390,16 +390,6 @@ const Show = () => {
                       attachments={attachments}
                       attachmentType="images"
                     />
-                    {/* <FileUpload
-                      name="demo[]"
-                      url="/api/upload"
-                      multiple
-                      accept="image/*"
-                      maxFileSize={1000000}
-                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                      disabled
-                      className="custom-file-upload"
-                    /> */}
                   </CardBody>
                 </Card>
               </Col>
@@ -425,16 +415,6 @@ const Show = () => {
                       attachments={attachments}
                       attachmentType="docs"
                     />
-                    {/* <FileUpload
-                        name="demo[]"
-                        url={"/api/upload"}
-                        multiple
-                        accept="image/*"
-                        maxFileSize={1000000}
-                        className="custom-file-upload"
-                        emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                        disabled
-                      /> */}
                   </CardBody>
                 </Card>
               </Col>

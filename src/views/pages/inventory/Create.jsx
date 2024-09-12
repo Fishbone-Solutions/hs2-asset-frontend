@@ -580,9 +580,6 @@ const Create = () => {
                     }
                     onSelect={onUploadImages}
                     maxFileSize={2000000}
-                    emptyTemplate={
-                      <p className="m-0">Choose a images of asset</p>
-                    }
                     className="custom-file-upload"
                   />
                 </CardBody>
@@ -619,7 +616,6 @@ const Create = () => {
                     onSelect={onUploadDocs}
                     className="custom-file-upload"
                     customUpload
-                    emptyTemplate={<p className="m-0">Choose a docs files</p>}
                   />
                 </CardBody>
               </Card>

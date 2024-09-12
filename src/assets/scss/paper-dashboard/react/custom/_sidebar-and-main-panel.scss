@@ -732,6 +732,8 @@ button#minimizeSidebar {
   width: 50%;
   justify-self: flex-end;
   float: left;
+  height: 86px;
+  padding: 10px;
 }
 .p-fileupload-content {
   contain: layout;
@@ -746,7 +748,7 @@ button#minimizeSidebar {
 }
 
 .p-fileupload .p-fileupload-content {
-  padding: 1rem 1rem;
+  padding: 0rem 0rem;
 }
 .attachment-images {
   box-shadow: -1px 1px 5px 0px #999999;
@@ -758,7 +760,7 @@ button#minimizeSidebar {
 
 .customized-docs-card {
   box-shadow: 0 7px 24px -3px rgba(0, 0, 0, 0.15) !important;
-  width: 12%;
+  width: 15%;
   padding: 15px;
 }
 .shadow-box-image {
@@ -774,4 +776,24 @@ button#minimizeSidebar {
 }
 svg.p-icon.p-button-icon.p-clickable.p-button-icon-left {
   display: none;
+}
+
+button.p-button.p-component {
+  display: none;
+}
+
+.p-fileupload-row .p-fileupload-filename {
+  font-size: 0.6rem;
+  top: 5px;
+}
+.p-fileupload-row span {
+  font-size: 0.6rem;
+}
+
+button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-button-danger {
+  display: inline-block;
+  float: right;
+}
+img.p-fileupload-file-thumbnail {
+  height: 70px;
 }

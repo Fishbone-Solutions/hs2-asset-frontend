@@ -7,6 +7,7 @@ import SpreadsheetIcon from "components/svg/Xls";
 import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css"; // Import the lightbox styles
+import { FaDownload } from "react-icons/fa"; // Import download icon
 
 export const DOCUMENT_TYPES = [
   ".txt",
@@ -57,6 +58,14 @@ const getFileIcon = (fileName) => {
     default:
       return <MyIcon IconTxt={extension.toUpperCase()} />;
   }
+};
+
+// Function to truncate the file name if it exceeds 200 characters
+const truncateFileName = (fileName, maxLength = 200) => {
+  if (fileName.length > maxLength) {
+    return fileName.substring(0, maxLength) + "...";
+  }
+  return fileName;
 };
 
 const AttachmentList = ({
@@ -152,22 +161,24 @@ const AttachmentList = ({
                 .filter((data) => data["att_type"] === "docs")
                 .map((data, index) => (
                   <div key={index} className="card customized-docs-card me-4">
-                    <a
-                      href={data["att_location"]}
-                      rel="noopener noreferrer"
-                      className="text-decoration-none"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title={data["att_name"]}
-                    >
-                      <div className="d-flex justify-content-center">
-                        {/* Display the appropriate icon based on file type */}
-                        {getFileIcon(data["att_location"])}
-                      </div>
-                      <div className="card-body text-center">
-                        <p className="card-text">{data["att_name"]}</p>
-                      </div>
-                    </a>
+                    <div className="d-flex justify-content-center mt-2">
+                      {/* Display the appropriate icon based on file type */}
+                      {getFileIcon(data["att_location"])}
+                    </div>
+                    <div className="card-body text-center">
+                      <p className="card-text">
+                        {/* Truncate the document name if it's longer than 200 characters */}
+                        {truncateFileName(data["att_name"])}
+                      </p>
+                      <a
+                        href={data["att_location"]}
+                        download={data["att_name"]}
+                        className="btn btn-primary btn-sm position-absolute bottom-0 end-0 m-1 "
+                        aria-label="Download document"
+                      >
+                        <FaDownload /> {/* Download icon */}
+                      </a>
+                    </div>
                     {showDeleteIcon && (
                       <button
                         type="button"
