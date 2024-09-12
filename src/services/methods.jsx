@@ -21,7 +21,7 @@ function createInventory(headers = null, params) {
 }
 
 function updateInventory(headers = null, id, params) {
-  return UpdateWithPost(`${endpoints.updateInventory(id)}`, params, headers);
+  return Post(`${endpoints.updateInventory(id)}`, params, headers);
 }
 
 function deleteInventoryById(id) {

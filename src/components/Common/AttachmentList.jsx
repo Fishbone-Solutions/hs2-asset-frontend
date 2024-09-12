@@ -59,7 +59,12 @@ const getFileIcon = (fileName) => {
   }
 };
 
-const AttachmentList = ({ attachments, attachmentType }) => {
+const AttachmentList = ({
+  attachments,
+  attachmentType,
+  showDeleteIcon,
+  onDelete,
+}) => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -85,6 +90,12 @@ const AttachmentList = ({ attachments, attachmentType }) => {
     setIsLightboxOpen(false);
   };
 
+  const handleDelete = (id) => {
+    if (onDelete) {
+      onDelete(id);
+    }
+  };
+
   return (
     <div className="container-fluid py-3">
       {filteredAttachments.length > 0 ? (
@@ -93,21 +104,35 @@ const AttachmentList = ({ attachments, attachmentType }) => {
             <>
               <div className="d-flex flex-wrap">
                 {filteredAttachments.map((data, index) => (
-                  <a
+                  <div
                     key={index}
-                    onClick={() => openLightbox(index)}
-                    className="me-4 mb-2 shadow-box-image"
-                    href="#"
-                    aria-label={`Open lightbox for image ${index}`}
+                    className="position-relative me-4 mb-2 shadow-box-image"
                   >
-                    <img
-                      width="150"
-                      height="150"
-                      className="rounded"
-                      src={data["att_location"]}
-                      alt={`attachment-${index}`}
-                    />
-                  </a>
+                    <a
+                      onClick={() => openLightbox(index)}
+                      className="d-block"
+                      href="#"
+                      aria-label={`Open lightbox for image ${index}`}
+                    >
+                      <img
+                        width="150"
+                        height="150"
+                        className="rounded"
+                        src={data["att_location"]}
+                        alt={`attachment-${index}`}
+                      />
+                    </a>
+                    {showDeleteIcon && (
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 cross-btn-attachments"
+                        onClick={() => handleDelete(data.att_id)}
+                        aria-label="Delete image"
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </div>
                 ))}
               </div>
               {isLightboxOpen && (
@@ -126,7 +151,7 @@ const AttachmentList = ({ attachments, attachmentType }) => {
               {filteredAttachments
                 .filter((data) => data["att_type"] === "docs")
                 .map((data, index) => (
-                  <div className="card customized-docs-card me-4">
+                  <div key={index} className="card customized-docs-card me-4">
                     <a
                       href={data["att_location"]}
                       rel="noopener noreferrer"
@@ -145,6 +170,16 @@ const AttachmentList = ({ attachments, attachmentType }) => {
                         </p>
                       </div>
                     </a>
+                    {showDeleteIcon && (
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 cross-btn-attachments"
+                        onClick={() => handleDelete(data.att_id)}
+                        aria-label="Delete document"
+                      >
+                        &times;
+                      </button>
+                    )}
                   </div>
                 ))}
             </div>

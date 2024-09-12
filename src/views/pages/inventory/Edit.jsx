@@ -32,6 +32,8 @@ import { subCategory } from "variables/common";
 import { inventoryStatusOptions } from "variables/common";
 import { conditionOptions } from "variables/common";
 import { FileUpload } from "primereact/fileupload";
+import AttachmentList from "components/Common/AttachmentList";
+import { DocumentType } from "variables/common";
 
 const Edit = () => {
   const { id } = useParams();
@@ -39,6 +41,11 @@ const Edit = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
+  const [attachments, setAttachments] = useState([]);
+  const [deletedAttachmentsIds, setDeletedAttachmentsIds] = useState([]);
+  const [files, setFiles] = useState([]);
+
+  const [docs, setDocs] = useState([]);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
@@ -69,6 +76,12 @@ const Edit = () => {
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
 
+      const resAttachment = await EndPointService.getAttachmentByAssetId(
+        headers,
+        id
+      );
+      setAttachments(resAttachment.appRespData);
+
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -80,13 +93,28 @@ const Edit = () => {
   const handleUpdateInventory = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: sessionStorage.getItem("username") };
-      const requestBody = { ...formData };
-      console.log(requestBody);
+      const headers = {
+        user_id: sessionStorage.getItem("username"),
+        "Content-Type": "multipart/form-data",
+      };
+
+      const formDataWithFiles = new FormData();
+      Object.keys(formData).forEach((key) => {
+        formDataWithFiles.append(key, formData[key]);
+      });
+      files.forEach((file) => {
+        formDataWithFiles.append("files[]", file);
+      });
+
+      docs.forEach((file) => {
+        formDataWithFiles.append("docs[]", file);
+      });
+      formDataWithFiles.append("deletedIds", deletedAttachmentsIds);
+      console.log(formDataWithFiles);
       const res = await EndPointService.updateInventory(
         headers,
         id,
-        requestBody
+        formDataWithFiles
       );
 
       setLoader(false);
@@ -109,10 +137,20 @@ const Edit = () => {
   };
   const onUploadDocs = (event) => {
     const checkValidation = onFileUpload(event, 3, DocumentType);
+    console.log("checkValidation", checkValidation);
     if (checkValidation) {
       const files = Array.from(event.files);
       setDocs(files);
+      console.log("onuploadodcs");
     }
+  };
+
+  const handleDeleteAttachment = (id) => {
+    setAttachments(
+      attachments.filter((attachment) => attachment.att_id !== id)
+    );
+    // Add the deleted attachment ID to the deletedAttachmentsIds array
+    setDeletedAttachmentsIds((prevIds) => [...prevIds, id]);
   };
 
   const onFileUpload = (
@@ -514,6 +552,13 @@ const Edit = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
+                  <AttachmentList
+                    attachments={attachments}
+                    attachmentType="images"
+                    showDeleteIcon="true"
+                    onDelete={handleDeleteAttachment}
+                  />
+
                   <FileUpload
                     name="files[]"
                     multiple
@@ -545,6 +590,13 @@ const Edit = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
+                  <AttachmentList
+                    attachments={attachments}
+                    attachmentType="docs"
+                    showDeleteIcon="true"
+                    onDelete={handleDeleteAttachment}
+                  />
+
                   <FileUpload
                     name="docs[]"
                     multiple
