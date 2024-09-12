@@ -107,12 +107,12 @@ Select file to import records
                     <FileUpload
                     name="docs[]"
                     multiple
-                    accept=".pdf, .doc, .docx, .odt, .txt"
+                    accept=".csv .xlsx .xls"
                     maxFileSize={2000000}
                 //    onSelect={onUploadDocs}
                     className="custom-file-upload"
                     customUpload
-                    emptyTemplate={<p className="m-0">Choose a docs files</p>}
+                    emptyTemplate={<p className="m-0">Choose data sheet</p>}
                   />
                     </Col>
 
