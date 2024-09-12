@@ -61,7 +61,7 @@ const Show = () => {
 
       const resAttachment = await EndPointService.getAttachmentByAssetId(
         headers,
-        id
+        inventoryId
       );
       setAttachments(resAttachment.appRespData);
       setLoader(false);
