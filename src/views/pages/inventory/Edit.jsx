@@ -131,7 +131,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Item ${formData.asset_name} added to Inventory.`,
+        title: `Item ${formData.asset_name} updated to Inventory.`,
         message: `Asset ID = ${id}`,
         type: "success",
         showCancelButton: false,
