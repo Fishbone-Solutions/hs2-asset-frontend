@@ -25,6 +25,9 @@ import MyEoI from "./views/pages/myeoi/Index";
 import MyEoIShow from "./views/pages/myeoi/Show.jsx";
 import MyEoIEdit from "./views/pages/myeoi/Edit.jsx";
 
+// import Bulk Imports 
+import BulkImport from "views/pages/BulkImport";
+
 import W0 from "./views/pages/wireframe/W0.jsx";
 import W1 from "./views/pages/wireframe/W1.jsx";
 import W2 from "./views/pages/wireframe/W2.jsx";
@@ -228,13 +231,20 @@ const routes = [
     hidden: true,
   },
   {
-    path: "/dashboard",
-    pathName: "/admin/dashboard",
+    path: "/bulkimport",
+    pathName: "/admin/bulkimport",
     name: "Bulk Import",
-    component: <W0 />,
+    component: <BulkImport />,
     layout: "/admin",
     icon: <HiRectangleStack size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <HiRectangleStack size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.bulkImport} />
+    ),
   },
+
 
   {
     path: "/itemsrequests",
