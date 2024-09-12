@@ -1,5 +1,7 @@
 // breadcrumbConfig.js
 
+import BulkImport from "views/pages/BulkImport";
+
 const breadcrumbConfig = {
   profile: [{ label: "My Profile", to: "#" }],
   inventory: [{ label: "Inventory", to: "#" }],
@@ -55,6 +57,8 @@ const breadcrumbConfig = {
     { label: "My EoI", to: "/admin/myeoi" },
     { label: "Edit Details", to: "#" },
   ],
+  bulkImport: [{ label: "Bulk Import", to: "#" }],
+
   // Add more as needed
 };
 
