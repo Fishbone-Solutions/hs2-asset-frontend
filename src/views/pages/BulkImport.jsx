@@ -141,19 +141,19 @@ Processing Status
                         bar
                         barClassName="progress-bar-success"
                         max="100"
-                        value="15"
+                        value="33"
                       />
                       <Progress
                         bar
                         barClassName="progress-bar-warning"
                         max="100"
-                        value="30"
+                        value="33"
                       />
                       <Progress
                         bar
                         barClassName="progress-bar-info"
                         max="100"
-                        value="20"
+                        value="34"
                       />
                     </Progress>
                     </Col>
