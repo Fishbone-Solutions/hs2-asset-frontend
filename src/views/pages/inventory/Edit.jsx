@@ -36,6 +36,8 @@ import AttachmentList from "components/Common/AttachmentList";
 import { DocumentType } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 
+import { RiAttachment2 } from "react-icons/ri";
+
 const Edit = () => {
   const { id } = useParams();
   const [loader, setLoader] = useState(false);
@@ -587,10 +589,13 @@ const Edit = () => {
                     multiple
                     accept="image/*"
                     onSelect={onUploadImages}
-                    maxFileSize={2000000}
-                    emptyTemplate={
-                      <p className="m-0">Choose a images of asset</p>
+                    chooseLabel={
+                      <span>
+                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
+                        Attach
+                      </span>
                     }
+                    maxFileSize={2000000}
                     className="custom-file-upload"
                   />
                 </CardBody>
@@ -627,8 +632,13 @@ const Edit = () => {
                     maxFileSize={2000000}
                     onSelect={onUploadDocs}
                     className="custom-file-upload"
+                    chooseLabel={
+                      <span>
+                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
+                        Attach
+                      </span>
+                    }
                     customUpload
-                    emptyTemplate={<p className="m-0">Choose a docs files</p>}
                   />
                 </CardBody>
               </Card>

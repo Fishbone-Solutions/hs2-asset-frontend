@@ -33,7 +33,6 @@ import { subCategory } from "variables/common";
 import { FileUpload } from "primereact/fileupload";
 import { useAlert } from "components/Common/NotificationAlert";
 import { RiAttachment2 } from "react-icons/ri";
-import { FaUpload } from "react-icons/fa";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);

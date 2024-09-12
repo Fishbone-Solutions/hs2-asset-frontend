@@ -20,6 +20,7 @@ import { GlobalContext } from "@/GlobalState";
 import { EndPointService } from "@/services/methods";
 import DynamicToast from "components/Common/Toast";
 import { FullPageLoader } from "components/Common/ComponentLoader";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Create = () => {
   const { id } = useParams();
@@ -31,7 +32,8 @@ const Create = () => {
   const { username } = useContext(GlobalContext);
   const headers = { user_id: sessionStorage.getItem("username") };
   const [registerEmailState, setRegisterEmailState] = useState("");
-  const [alert, setAlert] = useState(null);
+
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const navigate = useNavigate();
   const query = new URLSearchParams(location.search);
   const [formData, setFormData] = useState({
@@ -90,29 +92,38 @@ const Create = () => {
     fetchData();
   }, []);
 
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
   const handleSubmit = async () => {
     try {
       console.log("submission eoi");
       setLoader(true);
       const res = await EndPointService.createEoi(headers, id, eoiFormData);
+      console.log(res);
       setLoader(false);
-      setAlert(
-        <ReactBSAlert
-          success
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Submitted"
-          onConfirm={() => confirmation()}
-          onCancel={() => hideAlert()}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        >
-          EoI submitted
-        </ReactBSAlert>
-      );
+      showAlert({
+        title: `Expression of Interest for '${formData.asset_name}' submitted to Seller. `,
+        message: `Reference No: ${res.appRespData[0].eoi_add}`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate("/admin/exchange");
+        },
+      });
+
+      // setAlert(
+      //   <ReactBSAlert
+      //     success
+      //     style={{ display: "block", marginTop: "-100px" }}
+      //     title="Submitted"
+      //     onConfirm={() => confirmation()}
+      //     onCancel={() => hideAlert()}
+      //     confirmBtnBsStyle="info"
+      //     btnSize=""
+      //   >
+      //     EoI submitted
+      //   </ReactBSAlert>
+      // );
     } catch (e) {
       console.log(e);
       setToastType("error");
@@ -121,27 +132,28 @@ const Create = () => {
     }
   };
 
-  const confirmation = () => {
-    hideAlert();
-    navigate("/admin/exchange");
-  };
-
   const handleFormSubmission = async (e) => {
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => handleSubmit()}
-        onCancel={() => hideAlert()}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      />
-    );
+    showAlert({
+      title: "Are you sure?",
+      type: "warning",
+      onConfirm: () => handleSubmit(),
+      onCancel: hideAlert,
+    });
+    // setAlert(
+    //   <ReactBSAlert
+    //     warning
+    //     style={{ display: "block", marginTop: "-100px" }}
+    //     title="Are you sure?"
+    //     onConfirm={() => handleSubmit()}
+    //     onCancel={() => hideAlert()}
+    //     confirmBtnBsStyle="info"
+    //     cancelBtnBsStyle="danger"
+    //     confirmBtnText="Yes"
+    //     cancelBtnText="Cancel"
+    //     showCancel
+    //     btnSize=""
+    //   />
+    // );
   };
 
   return (
