@@ -32,6 +32,8 @@ import { conditionOptions } from "variables/common";
 import { subCategory } from "variables/common";
 import { FileUpload } from "primereact/fileupload";
 import { useAlert } from "components/Common/NotificationAlert";
+import { RiAttachment2 } from "react-icons/ri";
+import { FaUpload } from "react-icons/fa";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -100,7 +102,7 @@ const Create = () => {
       );
       setLoader(false);
       showAlert({
-        title: `Item ${formData.asset_name} added to Inventory.`,
+        title: `Item '${formData.asset_name}' added to Inventory.`,
         message: `Asset ID = ${res.appRespData.asset_id}`,
         type: "success",
         showCancelButton: false,
@@ -570,6 +572,12 @@ const Create = () => {
                     name="files[]"
                     multiple
                     accept="image/*"
+                    chooseLabel={
+                      <span>
+                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
+                        Attach
+                      </span>
+                    }
                     onSelect={onUploadImages}
                     maxFileSize={2000000}
                     emptyTemplate={
@@ -602,6 +610,12 @@ const Create = () => {
                     multiple
                     accept=".pdf, .doc, .docx, .odt, .txt"
                     maxFileSize={2000000}
+                    chooseLabel={
+                      <span>
+                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
+                        Attach
+                      </span>
+                    }
                     onSelect={onUploadDocs}
                     className="custom-file-upload"
                     customUpload

@@ -29,6 +29,7 @@ import { GlobalContext } from "@/GlobalState";
 import { subCategory } from "variables/common";
 import { conditionOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
+import AttachmentList from "components/Common/AttachmentList";
 
 const Show = () => {
   const { id } = useParams();
@@ -36,6 +37,8 @@ const Show = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
+
+  const [attachments, setAttachments] = useState([]);
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
     code: "",
@@ -63,6 +66,12 @@ const Show = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
+
+      const resAttachment = await EndPointService.getAttachmentByAssetId(
+        headers,
+        id
+      );
+      setAttachments(resAttachment.appRespData);
 
       setLoader(false);
     } catch (e) {
@@ -387,6 +396,10 @@ const Show = () => {
                     Images
                   </CardTitle>
                 </CardHeader>
+                <AttachmentList
+                  attachments={attachments}
+                  attachmentType="images"
+                />
                 {/* <CardBody>
                     <FileUpload
                       name="demo[]"
@@ -418,6 +431,10 @@ const Show = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
+                  <AttachmentList
+                    attachments={attachments}
+                    attachmentType="docs"
+                  />
                   {/* <FileUpload
                       name="demo[]"
                       url={"/api/upload"}

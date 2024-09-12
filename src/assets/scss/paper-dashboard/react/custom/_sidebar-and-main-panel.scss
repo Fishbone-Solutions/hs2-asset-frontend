@@ -758,7 +758,7 @@ button#minimizeSidebar {
 
 .customized-docs-card {
   box-shadow: 0 7px 24px -3px rgba(0, 0, 0, 0.15) !important;
-  width: 10%;
+  width: 12%;
   padding: 15px;
 }
 .shadow-box-image {
@@ -771,4 +771,7 @@ button#minimizeSidebar {
   background: #eb6532 !important;
   border-radius: 50%;
   padding: 1px 6px 1px 6px;
+}
+svg.p-icon.p-button-icon.p-clickable.p-button-icon-left {
+  display: none;
 }

@@ -20,6 +20,7 @@ import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
 import { subCategory, conditionOptions, categorycode1 } from "variables/common";
+import AttachmentList from "components/Common/AttachmentList";
 
 const Show = () => {
   const { inventoryId } = useParams();
@@ -27,6 +28,8 @@ const Show = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
   const { username } = useContext(GlobalContext);
+
+  const [attachments, setAttachments] = useState([]);
   const [formData, setFormData] = useState({
     id: "",
     asset_id: "",
@@ -55,6 +58,12 @@ const Show = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, inventoryId);
       setFormData(res.appRespData[0]);
+
+      const resAttachment = await EndPointService.getAttachmentByAssetId(
+        headers,
+        id
+      );
+      setAttachments(resAttachment.appRespData);
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -376,18 +385,22 @@ const Show = () => {
                     </CardTitle>
                   </CardHeader>
                   {/* Uncomment the FileUpload component when needed */}
-                  {/* <CardBody>
-                      <FileUpload
-                        name="demo[]"
-                        url="/api/upload"
-                        multiple
-                        accept="image/*"
-                        maxFileSize={1000000}
-                        emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
-                        disabled
-                        className="custom-file-upload"
-                      />
-                    </CardBody> */}
+                  <CardBody>
+                    <AttachmentList
+                      attachments={attachments}
+                      attachmentType="images"
+                    />
+                    {/* <FileUpload
+                      name="demo[]"
+                      url="/api/upload"
+                      multiple
+                      accept="image/*"
+                      maxFileSize={1000000}
+                      emptyTemplate={<p className="m-0">{UPLOAD_TEXT}</p>}
+                      disabled
+                      className="custom-file-upload"
+                    /> */}
+                  </CardBody>
                 </Card>
               </Col>
               {/* Upload Documents */}
@@ -408,6 +421,10 @@ const Show = () => {
                   </CardHeader>
                   <CardBody>
                     {/* Uncomment the FileUpload component when needed */}
+                    <AttachmentList
+                      attachments={attachments}
+                      attachmentType="docs"
+                    />
                     {/* <FileUpload
                         name="demo[]"
                         url={"/api/upload"}

@@ -165,9 +165,7 @@ const AttachmentList = ({
                         {getFileIcon(data["att_location"])}
                       </div>
                       <div className="card-body text-center">
-                        <p className="card-text text-truncate w-100">
-                          {data["att_name"]}
-                        </p>
+                        <p className="card-text">{data["att_name"]}</p>
                       </div>
                     </a>
                     {showDeleteIcon && (
