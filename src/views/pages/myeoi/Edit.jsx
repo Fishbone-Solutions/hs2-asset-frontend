@@ -520,7 +520,7 @@ const Edit = () => {
                       type="button"
                       onClick={buyerConfirmation}
                     >
-                      SAVE
+                      update
                     </Button>
                   </div>
                 </CardBody>
@@ -569,7 +569,7 @@ const Edit = () => {
                       type="button"
                       onClick={handleFormSubmission}
                     >
-                      SAVE
+                      UPDATE
                     </Button>
                   </div>
                 </CardBody>
