@@ -86,6 +86,13 @@ function updateEoiBuyerDetials(headers = null, assetId, eoiId, params) {
   );
 }
 
+function getApprovalRequests(headers = null) {
+  return Get(`${endpoints.getApprovalRequests()}`, headers);
+}
+function updateRequestStatus(headers = null, requestId, params) {
+  return Post(`${endpoints.approvalRequest(requestId)}`, params, headers);
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -103,4 +110,6 @@ export const EndPointService = {
   getUserInformation,
   getAttachmentByAssetId,
   updateEoiBuyerDetials,
+  getApprovalRequests,
+  updateRequestStatus,
 };

@@ -25,7 +25,11 @@ import MyEoI from "./views/pages/myeoi/Index";
 import MyEoIShow from "./views/pages/myeoi/Show.jsx";
 import MyEoIEdit from "./views/pages/myeoi/Edit.jsx";
 
-// import Bulk Imports 
+//approval
+import Approval from "./views/pages/approval/Index";
+import ApprovalShow from "./views/pages/approval/Show";
+
+// import Bulk Imports
 import BulkImport from "views/pages/BulkImport";
 
 import W0 from "./views/pages/wireframe/W0.jsx";
@@ -240,11 +244,8 @@ const routes = [
     breadcrumbIcon: (
       <HiRectangleStack size="2em" color="white" style={{ float: "left" }} />
     ),
-    breadcrumbComponent: (
-      <Breadcrumb items={breadcrumbConfig.bulkImport} />
-    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.bulkImport} />,
   },
-
 
   {
     path: "/itemsrequests",
@@ -255,12 +256,33 @@ const routes = [
     icon: <BsMegaphoneFill size="2.5em" style={{ float: "left" }} />,
   },
   {
-    path: "/approvalsrequests",
-    pathName: "/admin/w2",
+    path: "/approvals/requests",
+    pathName: "/admin/approvals/requests",
     name: "Approval Requests",
-    component: <W2 />,
+    component: <Approval />,
     layout: "/admin",
     icon: <FaHand size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaHand size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.approvalRequests} />
+    ),
+  },
+  {
+    path: "/approval/request/show/:eoiId/:inventoryId/:requestId",
+    pathName: "/admin/approval/request/show/:eoiId/:inventoryId/:requestId",
+    name: "View Details",
+    component: <ApprovalShow />,
+    layout: "/admin",
+    icon: <FaHand size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaHand size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: (
+      <Breadcrumb items={breadcrumbConfig.showApprovalRequests} />
+    ),
+    hidden: true,
   },
   {
     path: "/myeoi",

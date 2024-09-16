@@ -20,4 +20,6 @@ export const endpoints = {
   getAttachmentByAssetId: (asset_id) => `assets/${asset_id}/attachments`,
   updateEoiBuyerDetials: (asset_id, eoi_id) =>
     `assets/${asset_id}/eoi/${eoi_id}`,
+  getApprovalRequests: () => `/approvals/eoiapprovals/requests`,
+  approvalRequest: (requestId) => `approvals/approvalrequests/${requestId}`,
 };

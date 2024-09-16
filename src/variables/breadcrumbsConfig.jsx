@@ -44,6 +44,11 @@ const breadcrumbConfig = {
     { label: "Exchange", to: "/admin/exchange" },
     { label: "EoI Submission", to: "#" },
   ],
+  approvalRequests: [{ label: "Approvals Requests", to: "#" }],
+  showApprovalRequests: [
+    { label: "Approvals Requests", to: "/admin/approvals/requests" },
+    { label: "View Details" },
+  ],
   myEoi: [{ label: "My EoI", to: "#" }],
   myEoiShow: (inventoryId, eoiId) => [
     { label: "My EoI", to: "/admin/myeoi" },

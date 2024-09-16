@@ -6,7 +6,7 @@ export const useAlert = () => {
 
   const showAlert = ({
     title,
-    message,
+    content,
     type,
     onConfirm,
     onCancel,
@@ -28,7 +28,8 @@ export const useAlert = () => {
         type={type}
         btnSize=""
       >
-        {message}
+        {content}{" "}
+        {/* This will contain custom inputs like text field or dropdown */}
       </ReactBSAlert>
     );
   };
