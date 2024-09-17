@@ -118,7 +118,7 @@ const Edit = () => {
         requestBody
       );
       showAlert({
-        title: `Eoi Status has been Updated`,
+        title: `EOI status updated`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

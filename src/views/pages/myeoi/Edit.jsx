@@ -105,7 +105,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Acknowledgement status updated`,
+        title: `Acknowledgement Status updated`,
         content: `Eoi ID = ${eoiId}`,
         type: "success",
         showCancelButton: false,

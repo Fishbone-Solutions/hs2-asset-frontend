@@ -834,3 +834,34 @@ header.sweet-alert-header {
 .custom-approval-field-rejected {
   background-color: #dc384833 !important;
 }
+.success-sweet-content-color {
+  color: rgb(92, 184, 92);
+}
+.success-sweet-title {
+  font-size: 0.8em !important;
+}
+
+.cross-icon {
+  position: absolute;
+  top: -3px;
+  right: 0px;
+  background: red;
+  z-index: 9;
+  border-radius: 50px;
+}
+
+.bg-purple {
+  background-color: #9466b6;
+}
+.bg-success-light {
+  background-color: #7ebb9d;
+}
+.bg-warning-dark {
+  background-color: #fbd786;
+}
+.bg-warning-light {
+  background-color: #fce582;
+}
+.bg-lime {
+  background-color: #b9e026;
+}

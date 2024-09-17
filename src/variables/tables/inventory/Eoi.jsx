@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { RxCrossCircled } from "react-icons/rx";
 
 const useColumns = (handleDelete) => {
   return useMemo(
@@ -39,30 +40,39 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
-            SOLD: { bgColor: "bg-danger", textColor: "text-white" },
+            SOLD: { bgColor: "bg-danger", textColor: "text-white" }, // Red for sold items
             LIVE: {
-              bgColor: "bg-success",
+              bgColor: "bg-success", // Green for live items
               textColor: "text-white",
-              icon: "path/to/live-icon.png",
+              icon: "path/to/live-icon.png", // Optional icon
             },
-            LISTING: { bgColor: "bg-info", textColor: "text-white" },
-            "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
+            LISTING: { bgColor: "bg-info", textColor: "text-white" }, // Blue for listings
+            "EOI-SUBMITTED": {
+              bgColor: "bg-primary-dark",
+              textColor: "text-white",
+            }, // Turquoise
             "IN-NEGOTIATION": {
-              bgColor: "bg-success",
+              bgColor: "bg-info", // Light blue
               textColor: "text-white",
             },
-            "PAYMENT-SENT": { bgColor: "bg-dark", textColor: "text-white" },
+            "PAYMENT-SENT": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            }, // Dark orange
             "PAYMENT-RECEIVED": {
-              bgColor: "bg-danger",
+              bgColor: "bg-warning-light", // Yellow
               textColor: "text-white",
             },
-            "GOODS-SENT": { bgColor: "bg-warning", textColor: "text-white" },
+            "GOODS-SENT": {
+              bgColor: "bg-success-light",
+              textColor: "text-white",
+            }, // Light green
             "GOODS-RECEIVED": {
-              bgColor: "bg-warning",
+              bgColor: "bg-lime", // Bright lime green
               textColor: "text-white",
             },
             "UNAVAILABLE-SOLD": {
-              bgColor: "bg-danger",
+              bgColor: "bg-danger", // Red for unavailable sold items
               textColor: "text-white",
             },
           };
@@ -109,17 +119,35 @@ const useColumns = (handleDelete) => {
                 <i className="fa fa-eye fs-6"></i>
               </Button>
             </Link>
-            <Link
-              to={`/admin/inventory/${row.original.asset_id}/eois/edit/${row.original.id}`}
-            >
-              <Button
-                className="btn-icon btn-simple text-success"
-                color="success"
-                size="sm"
+            {row.original.eoi_status !== "WITHDRAWN" ? (
+              <Link
+                to={`/admin/inventory/${row.original.asset_id}/eois/edit/${row.original.id}`}
               >
-                <i className="fa fa-edit fs-6"></i>
-              </Button>
-            </Link>
+                <Button
+                  className="btn-icon btn-simple text-success"
+                  color="success"
+                  size="sm"
+                >
+                  <i className="fa fa-edit fs-6"></i>
+                </Button>
+              </Link>
+            ) : (
+              <div className="position-relative">
+                <RxCrossCircled
+                  size="1.4em"
+                  color="white"
+                  className="cross-icon"
+                />
+                <Button
+                  className="btn-icon btn-simple text-success"
+                  color="success"
+                  size="sm"
+                >
+                  <i className="fa fa-edit fs-6"></i>
+                </Button>
+              </div>
+            )}
+
             <Button
               className="btn-icon btn-simple text-danger"
               size="sm"

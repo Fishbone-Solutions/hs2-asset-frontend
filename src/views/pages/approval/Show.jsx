@@ -126,7 +126,7 @@ const Show = () => {
           <label className="" htmlFor="">
             {type === "APPROVED"
               ? `Enter CEMAR Ref No to Approve this request`
-              : `Enter Reason of Rejection`}
+              : `Enter reason of Rejection`}
           </label>
           <input
             type="text"
