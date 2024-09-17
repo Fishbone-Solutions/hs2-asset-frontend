@@ -105,6 +105,13 @@ function deleteApprovalRequest(headers = null, requestId) {
   return Post(`${endpoints.deleteApprovalRequest(requestId)}`, headers);
 }
 
+function inventoryStatsAgainOrgainsation(headers = null, queryParams) {
+  return Get(
+    `${endpoints.inventoryStatsAgainOrgainsation(queryParams)}`,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -127,4 +134,5 @@ export const EndPointService = {
   organizatioinApproval,
   createApprovalRequest,
   deleteApprovalRequest,
+  inventoryStatsAgainOrgainsation,
 };

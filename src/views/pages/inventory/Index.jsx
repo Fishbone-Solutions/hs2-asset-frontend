@@ -21,13 +21,20 @@ import TableColumn from "variables/tables/inventory/Index";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 import { useAlert } from "components/Common/NotificationAlert"; // import the custom hook
 import { inventoryStatusOptions } from "variables/common";
+import { FaChartPie } from "react-icons/fa";
+import PieChart from "components/Common/PieChart";
+import { FullPageLoader } from "components/Common/ComponentLoader";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [fullLoader, setFullLoader] = useState(false);
+
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpenPie, setModalIsOpenPie] = useState(false);
+
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
@@ -56,8 +63,14 @@ const Index = () => {
     statuscode: null,
   });
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
+  const headers = {
+    user_id: sessionStorage.getItem("username") ?? username,
+  };
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [graphData, setGraphData] = useState([]);
 
   const getValueOrDefault = (value) => (value ? value : "-1");
 
@@ -65,9 +78,6 @@ const Index = () => {
     try {
       setLoader(true);
 
-      const headers = {
-        user_id: sessionStorage.getItem("username") ?? username,
-      };
       const params = new URLSearchParams({
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
@@ -157,6 +167,64 @@ const Index = () => {
     }));
   };
 
+  const getColorForStatus = (status) => {
+    switch (status) {
+      case "Live":
+        return "#E38627";
+      case "Listing":
+        return "#C13C37";
+      case "Sold":
+        return "#6A2135";
+      default:
+        return "#000000"; // Default color if no match
+    }
+  };
+
+  const showPieChartInventory = async () => {
+    setFullLoader(true);
+    try {
+      const params = new URLSearchParams({
+        organisation_id: user.organization_id,
+      });
+      const res = await EndPointService.inventoryStatsAgainOrgainsation(
+        headers,
+        params
+      );
+
+      setGraphData(res.appRespData); // Set the data from the response
+
+      // Ensure graphData is set before rendering PieChart
+      if (res.appRespData && res.appRespData.length > 0) {
+        showAlert({
+          customHeader: (
+            <header class="py-2 mb-4 border-bottom sweet-alert-header">
+              <div class="container d-flex flex-wrap justify-content-left">
+                <span class="fs-6 text-white">Piechart</span>
+              </div>
+            </header>
+          ),
+          onCancel: hideAlert,
+          confirmText: "Ok",
+          onConfirm: () => {
+            hideAlert();
+          },
+          showCancelButton: false,
+          content: <PieChart data={res.appRespData} />, // Pass the response data directly
+        });
+      } else {
+        // Handle the case where the response data is null or empty
+        console.error("No data available for the pie chart");
+      }
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage || "Error fetching data");
+      setLoader(false);
+    } finally {
+      setFullLoader(false);
+    }
+  };
+
   const handleEntryDate = (startDate, endDate) => {
     setRangeDatesEntry((prevState) => ({
       ...prevState,
@@ -192,12 +260,23 @@ const Index = () => {
           type={toastType}
           message={toastMessage}
         />
+        {fullLoader ? <FullPageLoader /> : ""}
         {alert}
         <Row>
           <Col md="12">
             <Card>
               <CardBody>
                 <div className="float-end d-inline-flex p-2 justify-content-end">
+                  <div
+                    onClick={showPieChartInventory}
+                    className="mr-2 cursor-pointer"
+                  >
+                    <FaChartPie
+                      color="white"
+                      size="2.4em"
+                      className="icon-btn"
+                    />
+                  </div>
                   <div onClick={openModal} className="mr-2 cursor-pointer">
                     <IoSearchSharp
                       color="white"
@@ -351,6 +430,69 @@ const Index = () => {
                           onClick={handleFilter}
                         >
                           Filter
+                        </button>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        </div>
+      </Modal>
+
+      {/* { filter modal } */}
+      <Modal
+        isOpen={modalIsOpenPie}
+        onRequestClose={closeModal}
+        contentLabel="Filter Modal"
+      >
+        <div className="content2" style={{ overflow: "hidden" }}>
+          <div className="placer">
+            <Form>
+              <Row>
+                <Col md="12">
+                  <Card>
+                    <CardHeader
+                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
+                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
+                    >
+                      <h6 className="text-white m-0 d-flex align-items-center">
+                        <i
+                          className="fa fa-filter me-2 p-1"
+                          style={{
+                            fontSize: "0.9em",
+                            backgroundColor: "#52CBCE",
+                            border: "2px solid #52CBCE",
+                            borderRadius: "15%",
+                          }}
+                        ></i>
+                        Filter
+                      </h6>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        aria-label="Close"
+                      >
+                        <i
+                          className="fa fa-times text-red"
+                          style={{ fontSize: "1em" }}
+                        ></i>
+                      </button>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col>
+                          <PieChart data={graphData} />
+                        </Col>
+                      </Row>
+                      <div className="d-flex justify-content-end gap-1">
+                        <button
+                          className="btn btn-primary px-2 py-2"
+                          type="button"
+                          onClick={handleClear}
+                        >
+                          Close
                         </button>
                       </div>
                     </CardBody>

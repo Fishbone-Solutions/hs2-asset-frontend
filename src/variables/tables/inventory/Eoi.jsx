@@ -32,7 +32,6 @@ const useColumns = (handleDelete) => {
         accessor: "organization",
         width: "6%",
       },
-
       {
         Header: "Status",
         accessor: "eoi_status",

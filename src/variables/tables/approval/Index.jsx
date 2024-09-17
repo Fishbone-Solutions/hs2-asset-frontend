@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { FaStamp } from "react-icons/fa";
+
 const useColumns = (handleDelete) => {
   return useMemo(
     () => [
@@ -52,7 +54,7 @@ const useColumns = (handleDelete) => {
               to={`/admin/approval/request/show/${row.original.eoi_id}/${row.original.asset_id}/${row.original.request_id}`}
             >
               <Button className="btn-icon btn-simple" color="info" size="sm">
-                <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
+                <FaStamp size="1.4em" />
               </Button>
             </Link>
             {row.original.request_status !== "Pending" ? (

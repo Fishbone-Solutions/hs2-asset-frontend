@@ -28,4 +28,5 @@ export const endpoints = {
   createApprovalRequest: (eoi_id) => `/approvals/eoi/${eoi_id}/approvalrequest`,
   deleteApprovalRequest: (request_id) =>
     `approvals/approvalrequests/${request_id}/-1`,
+  inventoryStatsAgainOrgainsation: (query_params) => `/stats?${query_params}`,
 };
