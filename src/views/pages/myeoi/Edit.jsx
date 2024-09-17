@@ -540,8 +540,14 @@ const Edit = () => {
                           value={myEoIUpdateoptions.find(
                             (option) => option.value === dataState.eoi_status
                           )}
+                          options={myEoIUpdateoptions.map((option) => ({
+                            ...option,
+                            isdisabled:
+                              dataState.approval_status === "PENDING" &&
+                              (option.value === "PAYMENT-SENT" ||
+                                option.value === "GOODS-RECEIVED"),
+                          }))}
                           onChange={handleSelectChange}
-                          options={myEoIUpdateoptions}
                           placeholder="Select an option"
                         />
                       </FormGroup>
