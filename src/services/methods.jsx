@@ -86,11 +86,23 @@ function updateEoiBuyerDetials(headers = null, assetId, eoiId, params) {
   );
 }
 
-function getApprovalRequests(headers = null) {
-  return Get(`${endpoints.getApprovalRequests()}`, headers);
+function getApprovalRequests(headers = null, queryParams) {
+  return Get(`${endpoints.getApprovalRequests(queryParams)}`, headers);
 }
 function updateRequestStatus(headers = null, requestId, params) {
   return Post(`${endpoints.approvalRequest(requestId)}`, params, headers);
+}
+
+function organizatioinApproval(headers = null, organisationId) {
+  return Get(`${endpoints.organizatioinApproval(organisationId)}`, headers);
+}
+
+function createApprovalRequest(headers = null, eoiId, params) {
+  return Post(`${endpoints.createApprovalRequest(eoiId)}`, params, headers);
+}
+
+function deleteApprovalRequest(headers = null, requestId) {
+  return Post(`${endpoints.deleteApprovalRequest(requestId)}`, headers);
 }
 
 export const EndPointService = {
@@ -112,4 +124,7 @@ export const EndPointService = {
   updateEoiBuyerDetials,
   getApprovalRequests,
   updateRequestStatus,
+  organizatioinApproval,
+  createApprovalRequest,
+  deleteApprovalRequest,
 };

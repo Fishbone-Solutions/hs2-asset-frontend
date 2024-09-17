@@ -92,7 +92,7 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: "Are you sure?",
-      message: "You will not be able to recover this item.",
+      content: "You will not be able to recover this item.",
       type: "warning",
       onConfirm: () => successDelete(id),
       onCancel: hideAlert,
@@ -105,7 +105,7 @@ const Index = () => {
       const res = await EndPointService.deleteInventoryById(id);
       showAlert({
         title: "Deleted!",
-        message: `Asset ID ${id} has been deleted successfully`,
+        content: `Asset ID ${id} has been deleted successfully`,
         type: "success",
         showCancelButton: false,
         confirmText: "ok",

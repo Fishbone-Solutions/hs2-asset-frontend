@@ -102,7 +102,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: `Item '${formData.asset_name}' added to Inventory.`,
-        message: `Asset ID = ${res.appRespData.asset_id}`,
+        content: `Asset ID = ${res.appRespData.asset_id}`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

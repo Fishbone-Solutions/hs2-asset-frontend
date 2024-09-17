@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { GlobalContext } from "@/GlobalState";
 import { useParams } from "react-router-dom";
 import { EndPointService } from "@/services/methods";
@@ -23,6 +23,8 @@ import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
 import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
+import { useAlert } from "components/Common/NotificationAlert";
+import { useNavigate } from "react-router-dom";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -32,8 +34,14 @@ const Edit = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
-  const [alert, setAlert] = useState(null);
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const headers = { user_id: sessionStorage.getItem("username") };
+  const usersInformation = JSON.parse(sessionStorage.getItem("user"));
+  const [approvals, setApprovals] = useState([]);
+  const [selectedApproval, setSelectedApproval] = useState(null);
+  // Create a ref to hold the latest params value
+  const latestSelectedApprovalRef = useRef(selectedApproval);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -63,7 +71,17 @@ const Edit = () => {
 
   useEffect(() => {
     fetchData();
+    fetchApprovals();
   }, []);
+
+  // Update the ref whenever the params state changes
+  useEffect(() => {
+    console.log("selectedApproval", selectedApproval);
+    if (selectedApproval != null) {
+      latestSelectedApprovalRef.current = selectedApproval;
+      handleApprove();
+    }
+  }, [selectedApproval]);
 
   const handleSelectChange = (selectedOption) => {
     setDataState((prevState) => ({
@@ -97,9 +115,6 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: dataState.eoi_status,
-        approval_status: dataState.approval_status,
-        approval_ref_no: dataState.approval_ref_no,
-        status_trail: "EOI-SUBMITTED : 21/08/2024 01:08",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -117,54 +132,132 @@ const Edit = () => {
     }
   };
 
-  const handleApprove = () => {
-    console.log("handleapprove");
-    setAlert(
-      <ReactBSAlert
-        input
-        title="Approval"
-        showCancel
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Submit"
-        cancelBtnText="Cancel"
-        onConfirm={submitApproval}
-        onCancel={() => hideAlert()}
-        btnSize=""
-      >
-        <div>
-          <Label>Approval Status</Label>
-          <Select
-            className="react-select primary"
-            classNamePrefix="react-select"
-            name="approval_status"
-            // value={options.find((option) => option.value === approvalStatus)}
-            // onChange={(selectedOption) =>
-            //   setApprovalStatus(selectedOption.value)
-            // }
-            options={approvalStatusOptions}
-            placeholder="Select an approval status"
-            required
-          />
-        </div>
-      </ReactBSAlert>
+  const fetchApprovals = async () => {
+    try {
+      const res = await EndPointService.organizatioinApproval(
+        headers,
+        usersInformation.organization_id
+      );
+      setApprovals(res.appRespData);
+    } catch (e) {
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+
+  const handleSelectChangeApproval = (selectedOption) => {
+    setSelectedApproval(selectedOption.value);
+    console.log(selectedApproval, selectedOption.value);
+  };
+
+  const approvalRequest = async () => {
+    const latestParams = {
+      requester_user_id: sessionStorage.getItem("username"),
+      approver_user_id: latestSelectedApprovalRef.current,
+    };
+
+    setLoader(true);
+    try {
+      console.log("Submitting with params:", latestParams);
+      const res = await EndPointService.createApprovalRequest(
+        headers,
+        eoiId,
+        latestParams
+      );
+
+      showAlert({
+        title: `Approval Request sent.`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate(`/admin/inventory/${inventoryId}/eois/edit/${eoiId}`);
+        },
+      });
+
+      setLoader(false);
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+  const ApproverSelectionContent = () => {
+    // Find the approver with user_id "michael.admin"
+    const selectedApproverDetails = approvals.find(
+      (approver) => approver.user_id === latestSelectedApprovalRef.current
     );
+
+    return (
+      <div className="popup-sweet-alert">
+        <Select
+          options={[
+            { value: "", label: "Select Approver" },
+            ...approvals.map((option) => ({
+              value: option.user_id,
+              label: option.approver_name,
+            })),
+          ]}
+          value={{
+            label: selectedApproverDetails
+              ? selectedApproverDetails.approver_name
+              : "Select Approver",
+          }}
+          onChange={handleSelectChangeApproval}
+        />
+        {/* Dynamically show the selected approver's details */}
+        <span className="d-flex flex-wrap justify-content-left text-black mt-2">
+          {selectedApproverDetails ? (
+            <>
+              <div className="sweet-alert-content">
+                Email: {selectedApproverDetails.email}
+              </div>
+              <div className="sweet-alert-content">
+                Contact: {selectedApproverDetails.contact_no}
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+        </span>
+      </div>
+    );
+  };
+
+  const handleApprove = () => {
+    showAlert({
+      customHeader: (
+        <header class="py-2 mb-4 border-bottom sweet-alert-header">
+          <div class="container d-flex flex-wrap justify-content-left">
+            <span class="fs-6 text-white">REQUEST APPROVAL</span>
+          </div>
+        </header>
+      ),
+      confirmText: "Send Request",
+      onConfirm: async () => {
+        await approvalRequest(); // No need to pass params, we'll use the ref
+      },
+      onCancel: hideAlert,
+      showCancelButton: true,
+      content: <ApproverSelectionContent />, // Use functional component here
+    });
   };
 
   const submitApproval = () => {
     console.log("approval");
   };
 
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
+    { value: "PAYMENT-REQUEST", label: "Payment Request" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
   ];
+
   return (
     <>
       <div className="content">
@@ -248,6 +341,13 @@ const Edit = () => {
                       <Label>Approval Status</Label>
                       <FormGroup>
                         <Input
+                          className={
+                            dataState.approval_status == "APPROVED"
+                              ? "custom-approval-field"
+                              : dataState.approval_status == "REJECTED"
+                                ? "custom-approval-field-rejected"
+                                : ""
+                          }
                           type="text"
                           name="approval_status"
                           value={dataState.approval_status}
@@ -435,7 +535,15 @@ const Edit = () => {
                             (option) => option.value === dataState.eoi_status
                           )}
                           onChange={handleSelectChange}
-                          options={options}
+                          options={options.map((option) => ({
+                            ...option,
+                            isdisabled:
+                              dataState.approval_status === "PENDING" &&
+                              (option.value === "PAYMENT-RECEIVED" ||
+                                option.value === "GOODS-SENT" ||
+                                option.value === "PAYMENT-REQUEST"),
+                          }))}
+                          isOptionDisabled={(option) => option.isdisabled} // disable an option
                           placeholder="Select an option"
                         />
                       </FormGroup>

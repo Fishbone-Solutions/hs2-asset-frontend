@@ -260,112 +260,6 @@ const RequestEquipment = () => {
       <div className="content">
         <Form onSubmit={handleFormSubmission}>
           <Row>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize",
-                    }}
-                  >
-                    {camelCaseWithSpaces("Buyer Details")}
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_title"
-                          value={formData.seller_title}
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
-
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_contactno"
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_contactno"
-                          value={formData.seller_contactno}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email Address</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Preferred Contact Timings
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter></CardFooter>
-              </Card>
-            </Col>
-
             {/* Requested Equipment Details */}
             <Col md="12">
               <Card>
@@ -444,6 +338,112 @@ const RequestEquipment = () => {
                     </Col>
                   </Row>
                 </CardBody>
+              </Card>
+            </Col>
+
+            {/* Asset Seller Detail*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize",
+                    }}
+                  >
+                    {camelCaseWithSpaces("Buyer Details")}
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Name</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title"
+                          value={formData.seller_title}
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Company</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_contactno"
+                          onChange={handleChange}
+                          required
+                          readOnly={isReadOnly}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Contact No</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_contactno"
+                          value={formData.seller_contactno}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Email Address</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>
+                        Item Delivery Location
+                      </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label style={{ color: "#36454F" }}>
+                        Preferred Contact Timings
+                      </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_email"
+                          value={formData.seller_email}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+                <CardFooter></CardFooter>
               </Card>
             </Col>
           </Row>

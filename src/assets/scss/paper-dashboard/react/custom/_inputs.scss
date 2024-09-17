@@ -34,7 +34,7 @@ global changes overall the project template
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #e3e3e37a !important;
+  background-color: #e3e3e37a;
 }
 
 .form-floating > .form-control:focus ~ label,

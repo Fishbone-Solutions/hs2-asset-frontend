@@ -20,6 +20,12 @@ export const endpoints = {
   getAttachmentByAssetId: (asset_id) => `assets/${asset_id}/attachments`,
   updateEoiBuyerDetials: (asset_id, eoi_id) =>
     `assets/${asset_id}/eoi/${eoi_id}`,
-  getApprovalRequests: () => `/approvals/eoiapprovals/requests`,
+  getApprovalRequests: (query_params) =>
+    `/approvals/eoiapprovals/requests?${query_params}`,
   approvalRequest: (requestId) => `approvals/approvalrequests/${requestId}`,
+  organizatioinApproval: (organisationId) =>
+    `approvals/organisations/${organisationId}/eoiapprovers`,
+  createApprovalRequest: (eoi_id) => `/approvals/eoi/${eoi_id}/approvalrequest`,
+  deleteApprovalRequest: (request_id) =>
+    `approvals/approvalrequests/${request_id}/-1`,
 };

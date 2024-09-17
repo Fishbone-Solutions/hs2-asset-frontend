@@ -36,11 +36,14 @@ const Show = () => {
   const headers = { user_id: sessionStorage.getItem("username") };
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const [updateInput, setUpdateInput] = useState(0);
+
   const navigate = useNavigate();
   const [params, setParams] = useState({
     approval_status: "PENDING",
     approval_ref_no: null,
   });
+  // Create a ref to hold the latest params value
+  const latestParamsRef = useRef(params);
 
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
@@ -79,9 +82,6 @@ const Show = () => {
     setSelectedOption(e.target.value);
   };
 
-  // Create a ref to hold the latest params value
-  const latestParamsRef = useRef(params);
-
   // Update the ref whenever the params state changes
   useEffect(() => {
     latestParamsRef.current = params;
@@ -105,8 +105,16 @@ const Show = () => {
     }));
 
     showAlert({
-      title: type === "APPROVED" ? "APPROVAL" : type,
-      type: "info",
+      customHeader: (
+        <header class="py-2 mb-4 border-bottom sweet-alert-header">
+          <div class="container d-flex flex-wrap justify-content-left">
+            <span class="fs-6 text-white">{type} REQUEST</span>
+          </div>
+        </header>
+      ),
+      confirmText: type === "APPROVED" ? "APPROVE" : "REJECT",
+      //title: type === "APPROVED" ? "APPROVAL" : type,
+      //type: "info",
       onConfirm: async () => {
         await approvalRequest(); // No need to pass params, we'll use the ref
       },
@@ -114,6 +122,11 @@ const Show = () => {
       showCancelButton: true,
       content: (
         <div>
+          <label className="" htmlFor="">
+            {type === "APPROVED"
+              ? `CEMAR Ref No to Approve this request`
+              : `Reason of Rejection`}
+          </label>
           <input
             type="text"
             key={updateInput} // Forcing re-render when state changes
@@ -121,9 +134,7 @@ const Show = () => {
             value={params.approval_ref_no} // Binding to params state
             onChange={handleModalInput} // Calling handler directly
             placeholder={
-              type === "APPROVED"
-                ? `Enter CEMAR Ref No`
-                : `Enter Reason of Rejection`
+              type === "APPROVED" ? `CEMAR Ref No` : `Reason of Rejection`
             }
           />
         </div>
@@ -146,7 +157,6 @@ const Show = () => {
 
       showAlert({
         title: `Request Status Updated Successfully`,
-        message: ``,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

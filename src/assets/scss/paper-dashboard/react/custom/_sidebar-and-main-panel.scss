@@ -803,3 +803,34 @@ img.p-fileupload-file-thumbnail {
 .success-btn {
   background-color: green !important;
 }
+
+.sweet-alert {
+  padding: 5px 5px 5px 5px !important;
+  overflow: visible !important;
+}
+
+header.sweet-alert-header {
+  background-color: $primary-color;
+}
+.popup-sweet-alert {
+  text-align: left !important;
+}
+.sweet-alert-content {
+  font-weight: 400;
+  font-size: 16px;
+}
+.nav-pills:not(.flex-column) .nav-item:first-child .nav-link {
+  border-radius: 5px 0 0 5px !important;
+}
+.nav-pills .nav-item .nav-link {
+  padding: 5px 25px;
+}
+.nav-pills:not(.flex-column) .nav-item:last-child .nav-link {
+  border-radius: 0 5px 5px 0 !important;
+}
+.custom-approval-field {
+  background-color: #00780133 !important;
+}
+.custom-approval-field-rejected {
+  background-color: #dc384833 !important;
+}

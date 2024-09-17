@@ -59,7 +59,7 @@ const Index = () => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: "Are you sure?",
-      message: "You will not be able to recover this item.",
+      content: "You will not be able to recover this item.",
       type: "warning",
       onConfirm: () => successDelete(assetId, eoino),
       onCancel: hideAlert,
@@ -72,7 +72,7 @@ const Index = () => {
       const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo);
       showAlert({
         title: "Deleted!",
-        message: `EoI ${eoiNo} has been deleted successfully`,
+        content: `EoI ${eoiNo} has been deleted successfully`,
         type: "success",
         showCancelButton: false,
         confirmText: "ok",

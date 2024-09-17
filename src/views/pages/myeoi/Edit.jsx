@@ -121,7 +121,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: `EOI Submitted to the Seller.`,
-        message: `Eoi ID = ${eoiId}`,
+        content: `Eoi ID = ${eoiId}`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -203,7 +203,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: `Buyer Update successfully.`,
-        message: ``,
+        content: ``,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

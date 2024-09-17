@@ -13,11 +13,12 @@ export const useAlert = () => {
     showCancelButton = true,
     confirmText = "Yes",
     cancelText = "Cancel",
+    customHeader = null,
   }) => {
     setAlert(
       <ReactBSAlert
         style={{ display: "block", marginTop: "-100px" }}
-        title={title}
+        title={customHeader ? customHeader : title}
         onConfirm={onConfirm}
         onCancel={onCancel}
         confirmBtnBsStyle="info"
@@ -27,9 +28,10 @@ export const useAlert = () => {
         showCancel={showCancelButton}
         type={type}
         btnSize=""
+        closeOnClickOutside={false} // Prevent closing when clicking outside
+        showCloseButton={false} // Disable the close button (X) at the top right
       >
-        {content}{" "}
-        {/* This will contain custom inputs like text field or dropdown */}
+        {content}
       </ReactBSAlert>
     );
   };

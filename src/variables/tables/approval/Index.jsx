@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { Button } from "reactstrap";
-import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
-const useColumns = () => {
+const useColumns = (handleDelete) => {
   return useMemo(
     () => [
       {
@@ -11,26 +10,26 @@ const useColumns = () => {
         defaultSort: true, // Indicates this column should be the default sort
         defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "request_date_formatted",
-        width: "8%",
+        width: "2%",
       },
       {
         Header: "Requested Time",
         isSortable: true,
         accessor: "request_time",
-        width: "8%",
+        width: "2%",
       },
 
       {
         Header: "Eoi Id",
         isSortable: true,
         accessor: "eoi_id",
-        width: "10%",
+        width: "2%",
       },
       {
         Header: "Asset Name",
         isSortable: true,
         accessor: "asset_name",
-        width: "10%",
+        width: "16%",
       },
       {
         Header: "Buyer Title",
@@ -51,6 +50,18 @@ const useColumns = () => {
                 <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
+            {row.original.request_status !== "Pending" ? (
+              <Button
+                className="btn-icon btn-simple"
+                color="danger"
+                size="sm"
+                onClick={() => handleDelete(row.original.request_id)}
+              >
+                <i className="fa fa-trash" style={{ fontSize: "0.9em" }}></i>
+              </Button>
+            ) : (
+              ""
+            )}
           </div>
         ),
       },
