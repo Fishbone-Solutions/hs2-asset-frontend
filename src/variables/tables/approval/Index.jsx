@@ -5,18 +5,18 @@ const useColumns = (handleDelete) => {
   return useMemo(
     () => [
       {
-        Header: "Requested Date",
+        Header: "Request Date",
         isSortable: true,
         defaultSort: true, // Indicates this column should be the default sort
         defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "request_date_formatted",
-        width: "2%",
+        width: "5%",
       },
       {
-        Header: "Requested Time",
+        Header: "Request Time",
         isSortable: true,
         accessor: "request_time",
-        width: "2%",
+        width: "5%",
       },
 
       {
@@ -26,15 +26,20 @@ const useColumns = (handleDelete) => {
         width: "2%",
       },
       {
-        Header: "Asset Name",
+        Header: "Item Name",
         isSortable: true,
         accessor: "asset_name",
         width: "16%",
       },
       {
-        Header: "Buyer Title",
+        Header: "Buyer",
         accessor: "buyer_title",
-        width: "16%",
+        width: "10%",
+      },
+      {
+        Header: "Seller",
+        accessor: "seller_title",
+        width: "10%",
       },
       {
         Header: "Actions",

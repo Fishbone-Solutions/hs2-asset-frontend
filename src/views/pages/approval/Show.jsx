@@ -121,11 +121,11 @@ const Show = () => {
       onCancel: hideAlert,
       showCancelButton: true,
       content: (
-        <div>
+        <div className="d-flex flex-wrap justify-content-left text-black mt-2">
           <label className="" htmlFor="">
             {type === "APPROVED"
-              ? `CEMAR Ref No to Approve this request`
-              : `Reason of Rejection`}
+              ? `Enter CEMAR Ref No to Approve this request`
+              : `Enter Reason of Rejection`}
           </label>
           <input
             type="text"
@@ -156,7 +156,7 @@ const Show = () => {
       );
 
       showAlert({
-        title: `Request Status Updated Successfully`,
+        title: `Request Approved`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

@@ -126,16 +126,44 @@ const Create = () => {
   };
 
   const onUploadImages = (event) => {
+    console.log("repeat", event);
+    const maxFiles = 5;
+    onFileUpload(event, maxFiles, DocumentType);
     const files = Array.from(event.files);
-    setFiles(files);
-    console.log("images", event.files, files);
+    // Take only up to the limit
+    const limitedFiles = files.slice(0, maxFiles);
+    //const files = Array.from(event.files);
+    setFiles(limitedFiles);
   };
+
+  // Handle deleting an image
+  const deleteImage = (imageIndex) => {
+    console.log("deleteImages");
+    // Remove the image from the state
+    const updatedImages = files.filter((_, index) => index !== imageIndex);
+    // Update the state and re-trigger the onUploadImages to handle the updated list
+    setFiles(updatedImages);
+    // Optional: you can call onUploadImages again if necessary for further processing
+  };
+
+  // Handle deleting an image
+  const deleteDocs = (imageIndex) => {
+    console.log("deleteDocs");
+    // Remove the image from the state
+    const updatedImages = files.filter((_, index) => index !== imageIndex);
+    // Update the state and re-trigger the onUploadImages to handle the updated list
+    setFiles(updatedImages);
+    // Optional: you can call onUploadImages again if necessary for further processing
+  };
+
   const onUploadDocs = (event) => {
-    const checkValidation = onFileUpload(event, 3, DocumentType);
-    if (checkValidation) {
-      const files = Array.from(event.files);
-      setDocs(files);
-    }
+    const maxFiles = 3;
+    onFileUpload(event, maxFiles, DocumentType);
+
+    const files = Array.from(event.files);
+    // Take only up to the limit
+    const limitedFiles = files.slice(0, maxFiles);
+    setDocs(limitedFiles);
   };
 
   const onFileUpload = (
@@ -260,25 +288,8 @@ const Create = () => {
                               seller_email: e.target.value,
                             })
                           }
-                          // onChange={(e) => {
-                          //   const value = e.target.value;
-                          //   if (!verifyEmail(value)) {
-                          //     setRegisterEmailState("has-danger");
-                          //   } else {
-                          //     setRegisterEmailState("has-success");
-                          //   }
-                          //   setFormData((prevState) => ({
-                          //     ...prevState,
-                          //     seller_email: value,
-                          //   }));
-                          // }}
                           required
                         />
-                        {/* {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null} */}
                       </FormGroup>
                     </Col>
 
@@ -578,6 +589,7 @@ const Create = () => {
                       </span>
                     }
                     onSelect={onUploadImages}
+                    onRemove={deleteImage}
                     maxFileSize={2000000}
                     className="custom-file-upload"
                   />
@@ -613,6 +625,7 @@ const Create = () => {
                       </span>
                     }
                     onSelect={onUploadDocs}
+                    onRemove={deleteDocs}
                     className="custom-file-upload"
                     customUpload
                   />

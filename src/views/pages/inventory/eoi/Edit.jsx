@@ -93,21 +93,31 @@ const Edit = () => {
   const handleFormSubmission = async (event) => {
     console.log("edit", event);
     event.preventDefault();
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => handleSubmit()}
-        onCancel={() => hideAlert()}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      />
-    );
+    showAlert({
+      title: "Are you sure?",
+      confirmText: "Yes",
+      onConfirm: async () => {
+        await handleSubmit(); // No need to pass params, we'll use the ref
+      },
+      type: "warning",
+      onCancel: hideAlert,
+      showCancelButton: true,
+    });
+    // setAlert(
+    //   <ReactBSAlert
+    //     warning
+    //     style={{ display: "block", marginTop: "-100px" }}
+    //     title="Are you sure?"
+    //     onConfirm={() => handleSubmit()}
+    //     onCancel={() => hideAlert()}
+    //     confirmBtnBsStyle="info"
+    //     cancelBtnBsStyle="danger"
+    //     confirmBtnText="Yes"
+    //     cancelBtnText="Cancel"
+    //     showCancel
+    //     btnSize=""
+    //   />
+    // );
   };
 
   const handleSubmit = async () => {
@@ -122,8 +132,16 @@ const Edit = () => {
         eoiId,
         requestBody
       );
-
-      hideAlert();
+      showAlert({
+        title: `Eoi Status has been Updated.`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate(`/admin/eois/inventory/${inventoryId}`);
+        },
+      });
       setLoader(false);
     } catch (e) {
       setToastType("error");
