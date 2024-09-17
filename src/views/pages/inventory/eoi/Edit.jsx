@@ -103,21 +103,6 @@ const Edit = () => {
       onCancel: hideAlert,
       showCancelButton: true,
     });
-    // setAlert(
-    //   <ReactBSAlert
-    //     warning
-    //     style={{ display: "block", marginTop: "-100px" }}
-    //     title="Are you sure?"
-    //     onConfirm={() => handleSubmit()}
-    //     onCancel={() => hideAlert()}
-    //     confirmBtnBsStyle="info"
-    //     cancelBtnBsStyle="danger"
-    //     confirmBtnText="Yes"
-    //     cancelBtnText="Cancel"
-    //     showCancel
-    //     btnSize=""
-    //   />
-    // );
   };
 
   const handleSubmit = async () => {
@@ -559,7 +544,7 @@ const Edit = () => {
                               dataState.approval_status === "PENDING" &&
                               (option.value === "PAYMENT-RECEIVED" ||
                                 option.value === "GOODS-SENT" ||
-                                option.value === "PAYMENT-REQUEST"),
+                                option.value === "PAYMENT-REQUESTED"),
                           }))}
                           isOptionDisabled={(option) => option.isdisabled} // disable an option
                           placeholder="Select an option"

@@ -77,6 +77,20 @@ export const myEoIUpdateoptions = [
   { value: "WITHDRAWN", label: "Withdrawn" },
 ];
 
+export const ImageType = [
+  ".png",
+  ".jpeg",
+  ".jpg",
+  ".gif",
+  ".bmp",
+  ".tiff",
+  ".svg",
+  ".webp",
+  ".ico",
+  ".heic",
+  ".heif",
+];
+
 export const DocumentType = [
   // Text Documents
   ".txt", // Plain Text

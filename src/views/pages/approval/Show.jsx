@@ -48,6 +48,7 @@ const Show = () => {
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
+    { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
   ];
@@ -116,7 +117,7 @@ const Show = () => {
       //title: type === "APPROVED" ? "APPROVAL" : type,
       //type: "info",
       onConfirm: async () => {
-        await approvalRequest(); // No need to pass params, we'll use the ref
+        await approvalRequest(type); // No need to pass params, we'll use the ref
       },
       onCancel: hideAlert,
       showCancelButton: true,
@@ -143,7 +144,7 @@ const Show = () => {
   };
 
   // Approval request function that uses the ref to get the latest params
-  const approvalRequest = async () => {
+  const approvalRequest = async (type) => {
     const latestParams = latestParamsRef.current; // Get the most recent params
 
     setLoader(true);
@@ -156,7 +157,7 @@ const Show = () => {
       );
 
       showAlert({
-        title: `Request Approved`,
+        title: type === "APPROVED" ? `Request Approved` : "Rejection Sent",
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

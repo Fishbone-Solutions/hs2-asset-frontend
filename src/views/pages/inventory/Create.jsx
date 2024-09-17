@@ -33,6 +33,7 @@ import { subCategory } from "variables/common";
 import { FileUpload } from "primereact/fileupload";
 import { useAlert } from "components/Common/NotificationAlert";
 import { RiAttachment2 } from "react-icons/ri";
+import { ImageType } from "variables/common";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -128,7 +129,7 @@ const Create = () => {
   const onUploadImages = (event) => {
     console.log("repeat", event);
     const maxFiles = 5;
-    onFileUpload(event, maxFiles, DocumentType);
+    onFileUpload(event, maxFiles, ImageType);
     const files = Array.from(event.files);
     // Take only up to the limit
     const limitedFiles = files.slice(0, maxFiles);
