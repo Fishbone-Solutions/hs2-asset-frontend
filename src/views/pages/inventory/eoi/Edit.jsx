@@ -271,7 +271,7 @@ const Edit = () => {
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
-    { value: "PAYMENT-REQUEST", label: "Payment Request" },
+    { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
   ];
