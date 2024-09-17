@@ -100,7 +100,7 @@ const Create = () => {
       console.log(res);
       setLoader(false);
       showAlert({
-        title: `Expression of Interest for '${formData.asset_name}' submitted to Seller. `,
+        title: `Expression of Interest for '${formData.asset_name}' submitted to Seller`,
         content: `Reference No: ${res.appRespData[0].eoi_add}`,
         type: "success",
         showCancelButton: false,
@@ -139,21 +139,6 @@ const Create = () => {
       onConfirm: () => handleSubmit(),
       onCancel: hideAlert,
     });
-    // setAlert(
-    //   <ReactBSAlert
-    //     warning
-    //     style={{ display: "block", marginTop: "-100px" }}
-    //     title="Are you sure?"
-    //     onConfirm={() => handleSubmit()}
-    //     onCancel={() => hideAlert()}
-    //     confirmBtnBsStyle="info"
-    //     cancelBtnBsStyle="danger"
-    //     confirmBtnText="Yes"
-    //     cancelBtnText="Cancel"
-    //     showCancel
-    //     btnSize=""
-    //   />
-    // );
   };
 
   return (

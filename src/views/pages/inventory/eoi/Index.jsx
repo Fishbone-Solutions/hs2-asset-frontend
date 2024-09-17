@@ -59,7 +59,7 @@ const Index = () => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item.",
+      content: "You will not be able to recover this item",
       type: "warning",
       onConfirm: () => successDelete(assetId, eoino),
       onCancel: hideAlert,

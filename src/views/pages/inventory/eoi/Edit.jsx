@@ -133,7 +133,7 @@ const Edit = () => {
         requestBody
       );
       showAlert({
-        title: `Eoi Status has been Updated.`,
+        title: `Eoi Status has been Updated`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -185,7 +185,7 @@ const Edit = () => {
       );
 
       showAlert({
-        title: `Approval Request sent.`,
+        title: `Approval Request sent`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

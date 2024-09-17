@@ -88,21 +88,6 @@ const Edit = () => {
       onConfirm: () => handleSubmit(),
       onCancel: hideAlert,
     });
-    // setAlert(
-    //   <ReactBSAlert
-    //     warning
-    //     style={{ display: "block", marginTop: "-100px" }}
-    //     title="Are you sure?"
-    //     onConfirm={() => handleSubmit()}
-    //     onCancel={() => hideAlert()}
-    //     confirmBtnBsStyle="info"
-    //     cancelBtnBsStyle="danger"
-    //     confirmBtnText="Yes"
-    //     cancelBtnText="Cancel"
-    //     showCancel
-    //     btnSize=""
-    //   />
-    // );
   };
 
   const handleSubmit = async () => {
@@ -120,7 +105,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `EOI Submitted to the Seller.`,
+        title: `EOI Submitted to the Seller`,
         content: `Eoi ID = ${eoiId}`,
         type: "success",
         showCancelButton: false,
@@ -202,7 +187,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Buyer Update successfully.`,
+        title: `Buyer Update successfully`,
         content: ``,
         type: "success",
         showCancelButton: false,

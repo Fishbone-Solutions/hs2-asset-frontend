@@ -92,7 +92,7 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item.",
+      content: "You will not be able to recover this item",
       type: "warning",
       onConfirm: () => successDelete(id),
       onCancel: hideAlert,

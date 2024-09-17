@@ -54,7 +54,7 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item.",
+      content: "You will not be able to recover this item",
       type: "warning",
       onConfirm: () => successDelete(id),
       onCancel: hideAlert,
@@ -67,7 +67,7 @@ const Index = () => {
       const res = await EndPointService.deleteApprovalRequest(headers, id);
       showAlert({
         title: "Deleted!",
-        content: `Request ID ${id} has been deleted.`,
+        content: `Request ID ${id} has been deleted`,
         type: "success",
         showCancelButton: false,
         confirmText: "ok",
