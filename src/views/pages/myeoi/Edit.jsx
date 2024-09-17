@@ -105,7 +105,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `EOI Submitted to the Seller`,
+        title: `Acknowledgement status updated`,
         content: `Eoi ID = ${eoiId}`,
         type: "success",
         showCancelButton: false,
@@ -187,8 +187,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Buyer Update successfully`,
-        content: ``,
+        title: `Buyer details updated`,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
