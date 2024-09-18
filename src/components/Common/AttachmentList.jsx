@@ -62,10 +62,13 @@ const getFileIcon = (fileName) => {
 
 // Function to truncate the file name if it exceeds 200 characters
 const truncateFileName = (fileName, maxLength = 200) => {
-  if (fileName.length > maxLength) {
-    return fileName.substring(0, maxLength) + "...";
+  // Remove numeric prefix followed by a hyphen
+  const cleanedFileName = fileName.replace(/^\d+-/, "");
+
+  if (cleanedFileName.length > maxLength) {
+    return cleanedFileName.substring(0, maxLength) + "...";
   }
-  return fileName;
+  return cleanedFileName;
 };
 
 const AttachmentList = ({
