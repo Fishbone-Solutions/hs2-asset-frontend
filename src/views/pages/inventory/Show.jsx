@@ -299,6 +299,7 @@ const Show = () => {
                           label="Forecasted Availability*"
                           name="availablility_range"
                           labelType="NonFloating"
+                          selectedDate={formData.available_from}
                           mode="single"
                         />
                       </FormGroup>
