@@ -244,6 +244,9 @@ const Index = () => {
                             onClick={handleRefreshComponet}
                             className="me-2 icon-style"
                             style={{ cursor: "pointer" }}
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Refresh Gird"
                           >
                             <RefreshComponetIcon
                               width="30"
@@ -256,6 +259,9 @@ const Index = () => {
                             onClick={openModal}
                             className="me-2 icon-style"
                             style={{ cursor: "pointer" }}
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Advanced Search"
                           >
                             <SvgSearchPlus
                               width="30"
@@ -271,6 +277,9 @@ const Index = () => {
                               navigate("/admin/exchange/requestequipment")
                             }
                             className="p-0 icon-style"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Request Equipment"
                           >
                             <div>
                               <IoMegaphoneOutline color="white" size="2.2em" />

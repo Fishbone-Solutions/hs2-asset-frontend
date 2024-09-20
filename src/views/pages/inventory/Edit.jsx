@@ -35,7 +35,7 @@ import { FileUpload } from "primereact/fileupload";
 import AttachmentList from "components/Common/AttachmentList";
 import { DocumentType } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
-
+import moment from "moment";
 import { RiAttachment2 } from "react-icons/ri";
 
 const Edit = () => {
@@ -114,7 +114,16 @@ const Edit = () => {
 
       const formDataWithFiles = new FormData();
       Object.keys(formData).forEach((key) => {
-        formDataWithFiles.append(key, formData[key]);
+        let value = formData[key];
+
+        // Check if the key is 'available_form' and if the value is a valid date
+        if (key === "available_from") {
+          // Format the date to your desired format, e.g., 'YYYY-MM-DD'
+          value = moment(value).format("DD/MM/YYYY");
+        }
+
+        // Append the value (formatted or not) to the formDataWithFiles object
+        formDataWithFiles.append(key, value);
       });
       files.forEach((file) => {
         formDataWithFiles.append("files[]", file);
@@ -222,6 +231,13 @@ const Edit = () => {
       }
     }
     return true;
+  };
+
+  const handleDate = (date) => {
+    setFormData((preiousState) => ({
+      ...preiousState,
+      available_from: date,
+    }));
   };
 
   return (
@@ -464,6 +480,8 @@ const Edit = () => {
                           label="Forecasted Availability*"
                           name="availablility_range"
                           labelType="NonFloating"
+                          selectedDate={formData.available_from}
+                          onChange={handleDate}
                           mode="single"
                         />
                       </FormGroup>

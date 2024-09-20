@@ -57,14 +57,28 @@ const useColumns = () => {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Link to={`/admin/exchange/show/${row.original.asset_id}`}>
-              <Button className="btn-icon btn-simple" color="info" size="sm">
+              <Button
+                className="btn-icon btn-simple"
+                color="info"
+                size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="View Detail"
+              >
                 <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
             <Link
               to={`/admin/exchange/eoi-submission/${row.original.asset_id}`}
             >
-              <Button className="btn-icon btn-simple" color="success" size="sm">
+              <Button
+                className="btn-icon btn-simple"
+                color="success"
+                size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="EOI Submission"
+              >
                 <SvgFilePlus />
               </Button>
             </Link>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -13,6 +13,8 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { GlobalProvider } from "./GlobalState";
 import ErrorComponent from "./ErrorBoundary";
+
+import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
@@ -32,10 +34,23 @@ const router = createBrowserRouter([
   },
 ]);
 
+const App = () => {
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
+
+  return <RouterProvider router={router} />;
+};
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <GlobalProvider>
-      <RouterProvider router={router} errorElement={ErrorComponent} />
+      <App />
     </GlobalProvider>
   </React.StrictMode>
 );

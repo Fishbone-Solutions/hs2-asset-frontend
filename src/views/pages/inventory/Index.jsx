@@ -21,7 +21,7 @@ import TableColumn from "variables/tables/inventory/Index";
 import FloatingLabelDropdown from "components/Common/FloatingLabelDropdown";
 import { useAlert } from "components/Common/NotificationAlert"; // import the custom hook
 import { inventoryStatusOptions } from "variables/common";
-import { FaChartPie } from "react-icons/fa";
+import { ImStatsBars } from "react-icons/im";
 import PieChart from "components/Common/PieChart";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 
@@ -199,12 +199,13 @@ const Index = () => {
           customHeader: (
             <header class="py-2 mb-4 border-bottom sweet-alert-header">
               <div class="container d-flex flex-wrap justify-content-left">
-                <span class="fs-6 text-white">Piechart</span>
+                <span class="fs-6 text-white">Inventory Stats</span>
               </div>
             </header>
           ),
           onCancel: hideAlert,
-          confirmText: "Ok",
+          confirmText: "Close",
+          showCloseButton: true,
           onConfirm: () => {
             hideAlert();
           },
@@ -270,14 +271,23 @@ const Index = () => {
                   <div
                     onClick={showPieChartInventory}
                     className="mr-2 cursor-pointer"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Inventory Stats"
                   >
-                    <FaChartPie
+                    <ImStatsBars
                       color="white"
                       size="2.4em"
                       className="icon-btn"
                     />
                   </div>
-                  <div onClick={openModal} className="mr-2 cursor-pointer">
+                  <div
+                    onClick={openModal}
+                    className="mr-2 cursor-pointer"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Inventory Search"
+                  >
                     <IoSearchSharp
                       color="white"
                       size="2.4em"
@@ -285,7 +295,11 @@ const Index = () => {
                     />
                   </div>
                   <NavLink to="/admin/inventory/create">
-                    <div>
+                    <div
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Create Inventory"
+                    >
                       <IoAddCircleOutline
                         color="white"
                         size="2.4em"

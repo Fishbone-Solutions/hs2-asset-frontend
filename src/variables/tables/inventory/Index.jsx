@@ -92,13 +92,27 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Link to={`/admin/inventory/show/${row.original.asset_id}`}>
-              <Button className="btn-icon btn-simple" color="info" size="sm">
+              <Button
+                className="btn-icon btn-simple"
+                color="info"
+                size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="View Detail"
+              >
                 <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
 
             <Link to={`/admin/inventory/edit/${row.original.asset_id}`}>
-              <Button className="btn-icon btn-simple" color="success" size="sm">
+              <Button
+                className="btn-icon btn-simple"
+                color="success"
+                size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Edit Detail"
+              >
                 <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
@@ -107,6 +121,9 @@ const useColumns = (handleDelete) => {
                 className="btn-icon btn-simple"
                 color="secondary"
                 size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="View EOI"
               >
                 <IoListSharp />
               </Button>
@@ -115,6 +132,9 @@ const useColumns = (handleDelete) => {
               className="btn-icon btn-simple"
               color="danger"
               size="sm"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Delete Inventory"
               onClick={() => handleDelete(row.original.asset_id)}
             >
               <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>

@@ -115,6 +115,17 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
+                    <Col sm="6">
+                      <Label>Current Status</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="id"
+                          value={dataState.eoi_status}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>

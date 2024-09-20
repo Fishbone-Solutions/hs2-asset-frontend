@@ -865,3 +865,29 @@ header.sweet-alert-header {
 .bg-lime {
   background-color: #b9e026;
 }
+
+/* Custom Tooltip Styles */
+.tooltip .tooltip-inner {
+  background-color: black; /* Tooltip background color */
+  color: white; /* Tooltip text color */
+  padding: 2px; /* Custom padding */
+  font-size: 14px; /* Optional: Adjust font size */
+  border-radius: 5px; /* Optional: Adjust border-radius */
+}
+
+/* Tooltip Arrow Customization */
+.tooltip.bs-tooltip-top .tooltip-arrow {
+  border-top-color: black;
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow {
+  border-bottom-color: black;
+}
+
+.tooltip.bs-tooltip-left .tooltip-arrow {
+  border-left-color: black;
+}
+
+.tooltip.bs-tooltip-right .tooltip-arrow {
+  border-right-color: black;
+}

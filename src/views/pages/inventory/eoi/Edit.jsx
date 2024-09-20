@@ -360,7 +360,11 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>CEMAR Ref No</Label>
+                      <Label>
+                        {dataState.approval_status == "APPROVED"
+                          ? "CEMAR Ref No"
+                          : "Rejection Reason"}
+                      </Label>
                       <FormGroup>
                         <Input
                           type="text"

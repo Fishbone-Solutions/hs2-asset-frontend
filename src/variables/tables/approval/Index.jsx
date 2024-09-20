@@ -53,8 +53,19 @@ const useColumns = (handleDelete) => {
             <Link
               to={`/admin/approval/request/show/${row.original.eoi_id}/${row.original.asset_id}/${row.original.request_id}`}
             >
-              <Button className="btn-icon btn-simple" color="info" size="sm">
-                <FaStamp size="1.4em" />
+              <Button
+                className="btn-icon btn-simple"
+                color="info"
+                size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Tooltip on top"
+              >
+                {row.original.request_status !== "Pending" ? (
+                  <FaStamp size="1.4em" />
+                ) : (
+                  <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
+                )}
               </Button>
             </Link>
             {row.original.request_status !== "Pending" ? (

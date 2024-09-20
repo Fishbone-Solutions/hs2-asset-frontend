@@ -10,39 +10,80 @@ const DateRangePicker = ({
   labelType = "floating",
   onChange,
   mode = "range",
-  clearDates = false, // New prop for clearing dates
+  clearDates = false,
+  selectedDate, // Single date passed from parent for non-range mode
+  selectedRange, // Date range passed from parent for range mode
 }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Validate the date before using moment
+  const formatDate = (date) => {
+    if (moment(date).isValid()) {
+      return moment(date).format("DD MMM yy");
+    }
+    return null;
+  };
+
+  // Handle date changes from DatePicker
   const handleChange = (dates) => {
     if (mode === "range") {
-      const [start, end] = dates;
-      setStartDate(start);
-      setEndDate(end);
-      onChange(
-        moment(start).format("DD/MM/YYYY"),
-        end ? moment(end).format("DD/MM/YYYY") : null
-      );
+      const [start, end] = dates || [];
+      setStartDate(start || null);
+      setEndDate(end || null);
+      onChange(formatDate(start), formatDate(end));
     } else {
-      setStartDate(dates);
-      onChange(moment(dates).format("DD/MM/YYYY"));
+      setStartDate(formatDate(dates) || null);
+      onChange(formatDate(dates));
     }
   };
 
+  // Handle clearing the date selection
   const handleClear = () => {
     setStartDate(null);
     setEndDate(null);
     onChange(null, null); // Notify parent about clearing the date range
   };
 
+  // Update state when selectedDate or selectedRange props change
+  useEffect(() => {
+    if (mode === "range" && selectedRange) {
+      const [start, end] = selectedRange;
+      // Only update if different from current state to avoid overriding user input
+      if (
+        !startDate ||
+        !moment(startDate).isSame(moment(start, "dd MMM yy")) ||
+        !endDate ||
+        !moment(endDate).isSame(moment(end, "dd MMM yy"))
+      ) {
+        setStartDate(
+          moment(start, "dd MMM yy", true).isValid()
+            ? moment(start, "dd MMM yy").toDate()
+            : null
+        );
+        setEndDate(
+          moment(end, "dd MMM yy", true).isValid()
+            ? moment(end, "dd MMM yy").toDate()
+            : null
+        );
+      }
+    } else if (
+      selectedDate &&
+      (!startDate || !moment(startDate).isSame(moment(selectedDate)))
+    ) {
+      setStartDate(selectedDate);
+    }
+  }, [selectedDate, selectedRange, mode, startDate, endDate]);
+
+  // Clear dates if the clearDates prop is toggled
   useEffect(() => {
     if (clearDates) {
-      handleClear(); // Clear dates if the prop is toggled
+      handleClear();
     }
-  }, [clearDates]); // This will listen for changes in the clearDates prop
+  }, [clearDates]);
 
+  // Close the date picker when clicking outside
   const handleClickOutside = (event) => {
     if (event.target.closest(".datepicker-wrapper") === null) {
       setIsOpen(false);
@@ -67,7 +108,7 @@ const DateRangePicker = ({
         <DatePicker
           className="datepicker-input"
           name={inputName}
-          dateFormat="d/MM/YYYY"
+          dateFormat="dd MMM yy"
           selected={startDate}
           onChange={handleChange}
           startDate={mode === "range" ? startDate : null}
