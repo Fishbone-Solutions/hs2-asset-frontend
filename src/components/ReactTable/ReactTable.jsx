@@ -10,7 +10,6 @@ import { Container, Col, Row } from "reactstrap";
 import Select from "react-select";
 import "./ReactTableMod.scss";
 import { Loader } from "components/Common/ComponentLoader";
-import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
 const Table = ({ columns, data, isLoading }) => {
   const [numberOfRows, setNumberOfRows] = useState({
@@ -83,15 +82,6 @@ const Table = ({ columns, data, isLoading }) => {
       label: `Page ${key + 1}`,
     })
   );
-
-  useEffect(() => {
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new Tooltip(tooltipTriggerEl);
-    });
-  }, [page]);
 
   return (
     <div className="-striped -highlight primary-pagination">
