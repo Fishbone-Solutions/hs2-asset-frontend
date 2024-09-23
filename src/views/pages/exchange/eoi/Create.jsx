@@ -206,7 +206,7 @@ const Create = () => {
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>Name</Label>
+                          <Label className="required">Name</Label>
                           <FormGroup>
                             <Field type="text" name="buyer_name" as={Input} />
                             <ErrorMessage
@@ -218,7 +218,7 @@ const Create = () => {
                         </Col>
 
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>Company</Label>
+                          <Label className="required">Company</Label>
                           <FormGroup>
                             <Field type="text" name="organization" as={Input} />
                             <ErrorMessage
@@ -231,7 +231,7 @@ const Create = () => {
                       </Row>
                       <Row>
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>Contact No</Label>
+                          <Label className="required">Contact No</Label>
                           <FormGroup>
                             <Field type="text" name="contact_no" as={Input} />
                             <ErrorMessage
@@ -243,7 +243,7 @@ const Create = () => {
                         </Col>
 
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>Email</Label>
+                          <Label className="required">Email</Label>
                           <FormGroup
                             className={`has-label ${eoiFormData.email}`}
                           >
@@ -258,9 +258,7 @@ const Create = () => {
                       </Row>
                       <Row>
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>
-                            Buyer Address
-                          </Label>
+                          <Label className="required">Buyer Address</Label>
                           <FormGroup>
                             <Field type="text" name="address" as={Input} />
                             <ErrorMessage
@@ -271,7 +269,7 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>
+                          <Label className="required">
                             Item Delivery Location
                           </Label>
                           <FormGroup>
@@ -290,7 +288,7 @@ const Create = () => {
                       </Row>
                       <Row>
                         <Col sm="6">
-                          <Label style={{ color: "#36454F" }}>
+                          <Label className="required">
                             Preferred Contact Timings
                           </Label>
                           <FormGroup>

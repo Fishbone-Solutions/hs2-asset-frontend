@@ -21,11 +21,19 @@ export const initialInventoryValues = {
   seller_location: "",
   statuscode: "",
   asset_id: "",
+  maintenance_requirements: "",
+  residual_forecast_value: "",
+  date_of_purchase: "",
+  contract_no: "",
+  purchase_price: "",
+  sold_value: "",
 };
 
 // Validation schema using Yup
 export const inventorySchema = Yup.object({
-  seller_title: Yup.string().required("Seller Title is required"),
+  seller_title: Yup.string()
+    .required("Seller Title is required")
+    .max(50, "No Longer than 50 character"),
   seller_contactno: Yup.string().required("Contact number is required"),
   seller_email: Yup.string()
     .email("Invalid email")
@@ -35,16 +43,25 @@ export const inventorySchema = Yup.object({
   categorycode2: Yup.string().required("Sub-category is required"),
   statuscode: Yup.string().required("Status is required"),
   available_from: Yup.string().required("Availability date is required"),
-  additional_info: Yup.string().required("Additional Information is required"),
+
   asset_name: Yup.string().required("Asset Name is required"),
   description: Yup.string().required("Description is required"),
   value: Yup.string().required("Value is required"),
   asset_condition: Yup.string().required("Asset Condition is required"),
   quantity: Yup.string().required("Quantity is required"),
-  asset_location: Yup.string().required("Asset Location is required"),
-
-  // Optional fields (not in validation)
+  maintenance_requirements: Yup.string().nullable(),
+  residual_forecast_value: Yup.string().nullable(),
+  date_of_purchase: Yup.string().nullable(),
+  contract_no: Yup.string()
+    .matches(
+      /^[a-zA-Z0-9\/\\]+$/,
+      "Must be only alphanumeric and alphanbatic characters and / \\"
+    )
+    .nullable(),
+  purchase_price: Yup.string().nullable(),
   code: Yup.string().nullable(), // Optional
   entrydate_formatted: Yup.string().nullable(), // Optional
   id: Yup.string().nullable(),
+  sold_value: Yup.string().nullable(),
+  additional_info: Yup.string().nullable(),
 });

@@ -77,6 +77,8 @@ const Create = () => {
         if (key === "available_from") {
           // Format the date to your desired format, e.g., 'YYYY-MM-DD'
           value = moment(value).format("DD/MM/YYYY");
+        } else if (key === "date_of_purchase") {
+          value = moment(value).format("DD/MM/YYYY");
         }
 
         // Append the value (formatted or not) to the formDataWithFiles object
@@ -273,7 +275,7 @@ const Create = () => {
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label>Seller Title *</Label>
+                          <Label className="required">Seller Title</Label>
                           <FormGroup>
                             <Field type="text" name="seller_title" as={Input} />
                             <ErrorMessage
@@ -285,7 +287,7 @@ const Create = () => {
                         </Col>
 
                         <Col sm="6">
-                          <Label>Contact No *</Label>
+                          <Label className="required">Contact No</Label>
                           <FormGroup>
                             <Field
                               type="text"
@@ -302,7 +304,7 @@ const Create = () => {
                       </Row>
                       <Row>
                         <Col sm="6">
-                          <Label>Email Address *</Label>
+                          <Label className="required">Email Address </Label>
                           <FormGroup>
                             <Field
                               type="email"
@@ -318,7 +320,7 @@ const Create = () => {
                         </Col>
 
                         <Col sm="6">
-                          <Label>Location *</Label>
+                          <Label className="required">Location </Label>
                           <FormGroup>
                             <Field
                               type="text"
@@ -355,7 +357,7 @@ const Create = () => {
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label>Category</Label>
+                          <Label className="required">Category</Label>
                           <FormGroup>
                             <Select
                               name="categorycode1"
@@ -399,7 +401,7 @@ const Create = () => {
                         </Col>
 
                         <Col sm="6">
-                          <Label>Sub Category</Label>
+                          <Label className="required">Sub Category</Label>
                           <FormGroup>
                             <Select
                               name="categorycode2"
@@ -466,18 +468,16 @@ const Create = () => {
                           <Label>ID</Label>
                           <FormGroup>
                             <Field type="text" name="id" as={Input} disabled />
-                            {/* <Input
-                              type="text"
-                              name="id"
-                              value={formData.id}
-                              required
-                              disabled
-                            /> */}
                           </FormGroup>
                         </Col>
-
                         <Col sm="6">
-                          <Label>Name *</Label>
+                          <Label>Reference Code</Label>
+                          <FormGroup>
+                            <Field type="text" name="code" as={Input} />
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <Label className="required">Name </Label>
                           <FormGroup>
                             <Field type="text" name="asset_name" as={Input} />
                             <ErrorMessage
@@ -485,22 +485,8 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Input
-                              type="text"
-                              name="asset_name"
-                              value={formData.asset_name}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  asset_name: e.target.value,
-                                })
-                              }
-                              required
-                            /> */}
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
                         <Col sm="6">
                           <Label>Description</Label>
                           <FormGroup>
@@ -512,29 +498,11 @@ const Create = () => {
                             />
                           </FormGroup>
                         </Col>
-
-                        <Col sm="6">
-                          <FormGroup>
-                            <DateRangePicker
-                              label="Available From"
-                              name="available_from"
-                              labelType="NonFloating"
-                              onChange={(date) =>
-                                setFieldValue("available_from", date)
-                              }
-                              mode="single"
-                            />
-                            <ErrorMessage
-                              name="available_from"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
                       </Row>
+
                       <Row>
                         <Col sm="6">
-                          <Label>Condition *</Label>
+                          <Label className="required">Condition </Label>
                           <FormGroup>
                             <Select
                               name="asset_condition"
@@ -558,7 +526,24 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Quantity *</Label>
+                          <Label>Maintenance Requirements </Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="maintenance_requirements"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="maintenance_requirements"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label className="required">Quantity </Label>
                           <FormGroup>
                             <Field type="text" name="quantity" as={Input} />
                             <ErrorMessage
@@ -568,10 +553,8 @@ const Create = () => {
                             />
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
                         <Col sm="6">
-                          <Label>Location *</Label>
+                          <Label className="required">Location </Label>
                           <FormGroup>
                             <Field
                               type="text"
@@ -585,13 +568,109 @@ const Create = () => {
                             />
                           </FormGroup>
                         </Col>
-
+                      </Row>
+                      <Row>
                         <Col sm="6">
-                          <Label>Estimated Value *</Label>
+                          <Label className="required">Estimated Value </Label>
                           <FormGroup>
                             <Field type="text" name="value" as={Input} />
                             <ErrorMessage
                               name="value"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <FormGroup>
+                            <DateRangePicker
+                              label="Forecasted Availability"
+                              requireLabel={true}
+                              name="available_from"
+                              labelType="NonFloating"
+                              onChange={(date) =>
+                                setFieldValue("available_from", date)
+                              }
+                              mode="single"
+                            />
+                            <ErrorMessage
+                              name="available_from"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <FormGroup>
+                            <DateRangePicker
+                              label="Purchase Date "
+                              name="date_of_purchase"
+                              labelType="NonFloating"
+                              onChange={(date) =>
+                                setFieldValue("date_of_purchase", date)
+                              }
+                              mode="single"
+                            />
+                            <ErrorMessage
+                              name="date_of_purchase"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <Label>Purcahse Value </Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="purchase_price"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="purchase_price"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Contract No </Label>
+                          <FormGroup>
+                            <Field type="text" name="contract_no" as={Input} />
+                            <ErrorMessage
+                              name="contract_no"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <Label>Residual Forcast Value </Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="residual_forcast_value"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="residual_forcast_value"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Sold Value </Label>
+                          <FormGroup>
+                            <Field type="text" name="sold_value" as={Input} />
+                            <ErrorMessage
+                              name="sold_value"
                               component="div"
                               className="text-danger"
                             />
@@ -708,7 +787,7 @@ const Create = () => {
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label>Status *</Label>
+                          <Label className="required">Status </Label>
                           <FormGroup>
                             <Select
                               name="statuscode"

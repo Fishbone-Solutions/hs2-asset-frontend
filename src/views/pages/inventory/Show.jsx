@@ -269,6 +269,20 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
+                      <Label>Reference Code</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="id"
+                          value={formData.code}
+                          disabled
+                          readOnly="true"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
                       <Label>Name *</Label>
                       <FormGroup>
                         <Input
@@ -279,8 +293,6 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
                     <Col sm="6">
                       <Label>Description</Label>
                       <FormGroup>
@@ -289,18 +301,6 @@ const Show = () => {
                           name="description"
                           value={formData.description}
                           readOnly="true"
-                        />
-                      </FormGroup>
-                    </Col>
-
-                    <Col sm="6">
-                      <FormGroup>
-                        <DateRangePicker
-                          label="Forecasted Availability*"
-                          name="availablility_range"
-                          labelType="NonFloating"
-                          selectedDate={formData.available_from}
-                          mode="single"
                         />
                       </FormGroup>
                     </Col>
@@ -330,6 +330,19 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
+                      <Label>Maintenance Requirements *</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="quantity"
+                          value={formData.maintenance_requirements}
+                          readOnly="true"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
                       <Label>Quantity *</Label>
                       <FormGroup>
                         <Input
@@ -340,8 +353,6 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
                     <Col sm="6">
                       <Label>Location *</Label>
                       <FormGroup>
@@ -353,7 +364,8 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-
+                  </Row>
+                  <Row>
                     <Col sm="6">
                       <Label>Estimated Value *</Label>
                       <FormGroup>
@@ -362,6 +374,80 @@ const Show = () => {
                           name="value"
                           value={formData.value}
                           readOnly="true"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <FormGroup>
+                        <DateRangePicker
+                          label="Forecasted Availability*"
+                          name="availablility_range"
+                          labelType="NonFloating"
+                          selectedDate={formData.available_from}
+                          mode="single"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col sm="6">
+                      <FormGroup>
+                        <DateRangePicker
+                          label="Purchase Date "
+                          name="date_of_purchase"
+                          labelType="NonFloating"
+                          selectedDate={formData.date_of_purchase}
+                          mode="single"
+                          disabled
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Purcahse Value </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="purchase_price"
+                          value={formData.purchase_price}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Contract No </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          value={formData.contract_no}
+                          name="contract_no"
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Residual Forcast Value </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          value={formData.residual_forecast_value}
+                          name="residual_forecast_value"
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Sold Value </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          value={formData.sold_value}
+                          name="sold_value"
+                          readOnly
                         />
                       </FormGroup>
                     </Col>

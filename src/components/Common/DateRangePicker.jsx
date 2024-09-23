@@ -8,6 +8,7 @@ const DateRangePicker = ({
   inputName,
   label,
   labelType = "floating",
+  requireLabel = false,
   onChange,
   mode = "range",
   clearDates = false,
@@ -101,7 +102,7 @@ const DateRangePicker = ({
         <label
           className={`${labelType === "floating" ? "floating-label" : ""} ${
             startDate || (mode === "range" && endDate) ? "active" : ""
-          }`}
+          } ${requireLabel ? "required" : ""}`}
         >
           {label}
         </label>
