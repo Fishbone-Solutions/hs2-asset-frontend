@@ -18,17 +18,19 @@ import {
 import { GlobalContext } from "@/GlobalState";
 import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
+const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
 const BulkImport = () => {
-  const [dataState, setDataState] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
-  const [selectedOption, setSelectedOption] = useState('hs2csv'); // Default value
+  const [selectedOption, setSelectedOption] = useState('.csv'); // Default value
   const [fileUploaded, setFileUploaded] = useState(false); // New state to track if a file is uploaded
-
   const { username } = useContext(GlobalContext);
-
+  const [fileFormatVertification ,setFileFormatVerification ] = useState([]);
+  const [totalRecordsFound,setTotalRecordsFound] = useState([]);
+  const [totalRecordsParsed,settotalRecordsParsed] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
@@ -37,28 +39,35 @@ const BulkImport = () => {
   };
 
   const onUploadDocs = async (event) => {
-    const checkValidation = onFileUpload(event, 1, ['.xlsx', '.csv']);
-    if (checkValidation) {
-      const files = Array.from(event.files);
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('file', file);
-      });
+    const files = Array.from(event.files);
+    setUploadedFiles(files); // Save files to state
 
+    const checkValidation = onFileUpload({ files }, 1, [selectedOption]);
+    if (checkValidation) {
       try {
         setLoader(true);
-        const response = await axios.post('http://localhost/bulkimport/file', formData, {
+        const formData = new FormData();
+        files.forEach((file) => {
+          formData.append('file', file);
+        });
+
+        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/parse`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
+
         setToastType("success");
         setToastMessage(response.data.message || "File uploaded successfully!");
-        setFileUploaded(true); // Set fileUploaded to true once file is successfully uploaded
+        setFileUploaded(true);
+        setFileFormatVerification(response.data.file_format_verfication);
+        setTotalRecordsFound(response.data.total_records_found);
+        settotalRecordsParsed(response.data.total_records_found);
+
       } catch (error) {
         setToastType("error");
         setToastMessage(error.response?.data?.message || "File upload failed.");
-        setFileUploaded(false); // Set fileUploaded to false on error
+        setFileUploaded(false);
       } finally {
         setLoader(false);
       }
@@ -68,16 +77,22 @@ const BulkImport = () => {
   const onFileUpload = (
     event,
     maxFiles = 1,
-    allowedExtensions = ['.xlsx', '.csv'],
+    allowedExtensions = [selectedOption],
     maxSize = 2000000
   ) => {
     const files = event.files;
+
+    if (!files || !Array.isArray(files) || files.length === 0) {
+      setToastType("error");
+      setToastMessage("No files selected.");
+      return false;
+    }
 
     // Limit number of files
     if (files.length > maxFiles) {
       setToastType("error");
       setToastMessage(`You can only upload a maximum of ${maxFiles} files.`);
-      return;
+      return false;
     }
 
     for (let file of files) {
@@ -86,17 +101,51 @@ const BulkImport = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         setToastType("error");
         setToastMessage(`Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`);
-        return;
+        return false;
       }
 
       // Check file size
       if (file.size > maxSize) {
         setToastType("error");
         setToastMessage(`File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`);
-        return;
+        return false;
       }
     }
     return true;
+  };
+
+  const handleIngest = async () => {
+    if (!uploadedFiles || uploadedFiles.length === 0) {
+      setToastType("error");
+      setToastMessage("No files to ingest. Please upload a file first.");
+      return;
+    }
+
+    const checkValidation = onFileUpload({ files: uploadedFiles }, 1, [selectedOption]);
+    if (checkValidation) {
+      const formData = new FormData();
+      uploadedFiles.forEach((file) => {
+        formData.append('file', file);
+      });
+
+      try {
+        setLoader(true);
+        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/ingest`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        setToastType("success");
+        setToastMessage(response.data.message || "Bulk Import Successful");
+        setModalIsOpen("Bulk Import Successful")
+        // Handle response as needed
+      } catch (error) {
+        setToastType("error");
+        setToastMessage(error.response?.data?.message || "Bulk Import failed.");
+      } finally {
+        setLoader(false);
+      }
+    }
   };
 
   return (
@@ -128,11 +177,11 @@ const BulkImport = () => {
                         <FormGroup>
                           <Label check>
                             <Input
-                              value="hs2csv"
+                              value=".csv"
                               id="hs2csv"
                               name="options"
                               type="radio"
-                              checked={selectedOption === "hs2csv"}
+                              checked={selectedOption === ".csv"}
                               onChange={handleRadioChange}
                             />
                             HS2 CSV <span className="form-check-sign" />
@@ -145,11 +194,11 @@ const BulkImport = () => {
                         <FormGroup>
                           <Label check>
                             <Input
-                              value="hs2excel"
+                              value=".xlsx"
                               id="hs2excel"
                               name="options"
                               type="radio"
-                              checked={selectedOption === "hs2excel"}
+                              checked={selectedOption === ".xlsx"}
                               onChange={handleRadioChange}
                             />
                             HS2 Excel <span className="form-check-sign" />
@@ -240,18 +289,18 @@ const BulkImport = () => {
                     <CardBody>
                       <Row>
                         <Col sm="12">
-                          File Format Verification: Passed
+                          File Format Verification: {fileFormatVertification}
                           <br />
-                          Total Records Found: 97
+                          Total Records Found: {totalRecordsFound}
                           <br />
-                          Total Records Successfully Parsed: 90
+                          Total Records Successfully Parsed:  {totalRecordsParsed}
                           <br />
                         </Col>
                         <Col sm="12">
                           Click the button below if you wish to save these records in the database
                         </Col>
                         <Col sm="12">
-                          <Button color="primary">Save to Database</Button>
+                          <Button color="primary"onClick={(event) => handleIngest(event)}>Save to Database</Button>
                         </Col>
                       </Row>
                     </CardBody>
