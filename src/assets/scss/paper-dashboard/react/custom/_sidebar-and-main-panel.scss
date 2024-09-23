@@ -895,3 +895,6 @@ label.required::after {
   content: " *";
   color: red;
 }
+.datepicker-input[disabled] {
+  background-color: rgba(227, 227, 227, 0.4784313725);
+}

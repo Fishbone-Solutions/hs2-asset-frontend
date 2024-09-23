@@ -296,6 +296,7 @@ const Show = () => {
                         <DateRangePicker
                           label="Forecasted Availability*"
                           name="availablility_range"
+                          isdisabled={true}
                           selectedDate={formData.available_from}
                           labelType="NonFloating"
                           mode="single"

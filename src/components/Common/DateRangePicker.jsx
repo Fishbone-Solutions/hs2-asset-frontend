@@ -12,6 +12,7 @@ const DateRangePicker = ({
   onChange,
   mode = "range",
   clearDates = false,
+  isdisabled = false,
   selectedDate, // Single date passed from parent for non-range mode
   selectedRange, // Date range passed from parent for range mode
 }) => {
@@ -120,6 +121,7 @@ const DateRangePicker = ({
           dropdownMode="select"
           showMonthDropdown
           showYearDropdown
+          disabled={isdisabled}
         />
       </div>
     </div>

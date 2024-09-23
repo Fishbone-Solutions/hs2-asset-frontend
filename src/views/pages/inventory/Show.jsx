@@ -383,6 +383,7 @@ const Show = () => {
                           label="Forecasted Availability*"
                           name="availablility_range"
                           labelType="NonFloating"
+                          isdisabled={true}
                           selectedDate={formData.available_from}
                           mode="single"
                         />
@@ -397,6 +398,7 @@ const Show = () => {
                           label="Purchase Date "
                           name="date_of_purchase"
                           labelType="NonFloating"
+                          isdisabled={true}
                           selectedDate={formData.date_of_purchase}
                           mode="single"
                           disabled
