@@ -328,6 +328,19 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
+                      <Label>Maintenance Requirements *</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="quantity"
+                          value={formData.maintenance_requirements}
+                          readOnly="true"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm="6">
                       <Label>Quantity *</Label>
                       <FormGroup>
                         <Input
@@ -338,8 +351,6 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
                     <Col sm="6">
                       <Label>Location *</Label>
                       <FormGroup>
@@ -351,7 +362,8 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-
+                  </Row>
+                  <Row>
                     <Col sm="6">
                       <Label>Estimated Value *</Label>
                       <FormGroup>

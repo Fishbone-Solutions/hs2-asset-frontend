@@ -285,6 +285,31 @@ const routes = [
     hidden: true,
   },
   {
+    path: "/approval/inventory/:id/show/:requestId/:eoiId",
+    pathName: "/admin/approval/inventory/:id/show/:requestId/:eoiId",
+    name: "Inventory | Item Details",
+    component: <InventoryShow />,
+    layout: "/admin",
+    icon: "nc-icon nc-book-bookmark",
+    breadcrumbIcon: (
+      <FaHand size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: ({ match }) => {
+      const { id, eoiId, requestId } = match.dynamicParams;
+      return (
+        <Breadcrumb
+          items={breadcrumbConfig.showApprovalRequestsInventory(
+            eoiId,
+            id,
+            requestId
+          )}
+        />
+      );
+    },
+
+    hidden: true,
+  },
+  {
     path: "/myeoi",
     pathName: "/admin/myeoi",
     name: "My EoI",

@@ -26,7 +26,7 @@ export const initialInventoryValues = {
   date_of_purchase: "",
   contract_no: "",
   purchase_price: "",
-  sold_value: "",
+  sold_value: "Pending",
 };
 
 // Validation schema using Yup

@@ -23,6 +23,7 @@ import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
 import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -226,6 +227,71 @@ const Show = () => {
                           readOnly
                         />
                       </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+
+            {/* Reference Item Summary*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize",
+                    }}
+                  >
+                    Item Reference
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Asset Id</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="asset_id"
+                          value={dataState.asset_id}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="6">
+                      <Label>Asset Name</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="asset_id"
+                          value={dataState.ref_asset_name}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="6">
+                      <Label>Seller Title</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="seller_title" // Corrected name field
+                          value={dataState.ref_asset_seller}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6  more-col">
+                      <Link
+                        to={`/admin/approval/inventory/${dataState.asset_id}/show/${requestId}/${eoiId}`}
+                      >
+                        More...
+                      </Link>
                     </Col>
                   </Row>
                 </CardBody>
