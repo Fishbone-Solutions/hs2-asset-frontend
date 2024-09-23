@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 // Initial schema for form values
-export const initialValues = {
+export const initialInventoryValues = {
   id: "Auto Generated", // Not validated (auto-generated)
   code: "", // Not validated (can be optional)
   entrydate_formatted: "", // Not validated (formatted date)
@@ -20,6 +20,7 @@ export const initialValues = {
   seller_email: "",
   seller_location: "",
   statuscode: "",
+  asset_id: "",
 };
 
 // Validation schema using Yup

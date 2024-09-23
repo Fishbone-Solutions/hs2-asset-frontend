@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
-  Form,
   FormGroup,
   Label,
   Input,
@@ -21,6 +20,9 @@ import { EndPointService } from "@/services/methods";
 import DynamicToast from "components/Common/Toast";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { useAlert } from "components/Common/NotificationAlert";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { initialEoiValues, eoiSchema } from "variables/Validations/EoiSchema";
+import { initialInventoryValues } from "variables/Validations/InventorySchema";
 
 const Create = () => {
   const { id } = useParams();
@@ -36,43 +38,18 @@ const Create = () => {
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const navigate = useNavigate();
   const query = new URLSearchParams(location.search);
-  const [formData, setFormData] = useState({
-    id: "",
-    code: "",
-    entrydate_formatted: "",
-    categorycode1: "",
-    categorycode2: "",
-    asset_name: "",
-    description: "",
-    asset_condition: "",
-    quantity: "",
-    asset_location: "",
-    value: "",
-    additional_info: "",
-    available_from: "",
-    seller_title: "",
-    seller_contactno: "",
-    seller_email: "",
-    seller_location: "",
-    statuscode: "",
-  });
+  const [formData, setFormData] = useState(initialInventoryValues);
   const timestamp = new Date().toISOString(); // Get the current timestamp
   const currentDate = new Date();
   const formattedDate = `${String(currentDate.getDate()).padStart(2, "0")}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${currentDate.getFullYear()}`;
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log("user", user);
+  // Set the initial state using dynamic values
   const [eoiFormData, setEoiFormData] = useState({
-    code: "",
+    ...initialEoiValues, // Spread the initial object
     submission_date: formattedDate,
     buyer_name: user.firstname + " " + user.lastname,
     organization: user.organization_title,
-    contact_no: "",
-    email: "",
-    address: "",
-    delivery_location: "",
-    eoi_status: "EOI_SUBMITTED",
-    approval_status: "PENDING",
-    status_trail: `EOI_SUBMITTED:${timestamp}`,
   });
 
   const fetchData = async () => {
@@ -92,11 +69,11 @@ const Create = () => {
     fetchData();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values) => {
     try {
       console.log("submission eoi");
       setLoader(true);
-      const res = await EndPointService.createEoi(headers, id, eoiFormData);
+      const res = await EndPointService.createEoi(headers, id, values);
       console.log(res);
       setLoader(false);
       showAlert({
@@ -110,20 +87,6 @@ const Create = () => {
           navigate("/admin/exchange");
         },
       });
-
-      // setAlert(
-      //   <ReactBSAlert
-      //     success
-      //     style={{ display: "block", marginTop: "-100px" }}
-      //     title="Submitted"
-      //     onConfirm={() => confirmation()}
-      //     onCancel={() => hideAlert()}
-      //     confirmBtnBsStyle="info"
-      //     btnSize=""
-      //   >
-      //     EoI submitted
-      //   </ReactBSAlert>
-      // );
     } catch (e) {
       console.log(e);
       setToastType("error");
@@ -132,11 +95,11 @@ const Create = () => {
     }
   };
 
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
       title: "Are you sure?",
       type: "warning",
-      onConfirm: () => handleSubmit(),
+      onConfirm: () => handleSubmit(values),
       onCancel: hideAlert,
     });
   };
@@ -150,261 +113,222 @@ const Create = () => {
           message={toastMessage}
         />
         {loader ? <FullPageLoader /> : ""}
-        <Form>
-          <Row>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize",
-                    }}
-                  >
-                    Asset Reference
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Asset ID</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="id"
-                          value={id}
-                          required
-                          readOnly={true}
-                        />
-                      </FormGroup>
-                    </Col>
+        <Formik
+          initialValues={eoiFormData}
+          validationSchema={eoiSchema}
+          onSubmit={handleFormSubmission}
+          enableReinitialize={true}
+        >
+          {({ values, setFieldValue }) => (
+            <Form>
+              <Row>
+                {/* Asset Seller Detail*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize",
+                        }}
+                      >
+                        Asset Reference
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Asset ID</Label>
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="id"
+                              value={id}
+                              required
+                              readOnly={true}
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="asset_name"
-                          value={formData.asset_name}
-                          required
-                          readOnly={true}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Description</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="description"
-                          value={formData.description}
-                          readOnly={true}
-                        />
-                      </FormGroup>
-                    </Col>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>Name</Label>
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="asset_name"
+                              value={formData.asset_name}
+                              required
+                              readOnly={true}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>
+                            Description
+                          </Label>
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="description"
+                              value={formData.description}
+                              readOnly={true}
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6"></Col>
-                  </Row>
-                </CardBody>
-                <CardFooter></CardFooter>
-              </Card>
-            </Col>
+                        <Col sm="6"></Col>
+                      </Row>
+                    </CardBody>
+                    <CardFooter></CardFooter>
+                  </Card>
+                </Col>
 
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Buyer Details
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="buyer_name"
-                          required
-                          value={eoiFormData.buyer_name}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              buyer_name: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize", // for Safari
+                        }}
+                      >
+                        Buyer Details
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>Name</Label>
+                          <FormGroup>
+                            <Field type="text" name="buyer_name" as={Input} />
+                            <ErrorMessage
+                              name="buyer_name"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="organization"
-                          required
-                          value={eoiFormData.organization}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              organization: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="contact_no"
-                          value={eoiFormData.contact_no}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              contact_no: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>Company</Label>
+                          <FormGroup>
+                            <Field type="text" name="organization" as={Input} />
+                            <ErrorMessage
+                              name="organization"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>Contact No</Label>
+                          <FormGroup>
+                            <Field type="text" name="contact_no" as={Input} />
+                            <ErrorMessage
+                              name="contact_no"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email</Label>
-                      <FormGroup className={`has-label ${eoiFormData.email}`}>
-                        <Input
-                          type="text"
-                          name="email"
-                          value={eoiFormData.email}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              email: e.target.value,
-                            })
-                          }
-                          //   onChange={(e) => {
-                          //     const value = e.target.value;
-                          //     if (!verifyEmail(value)) {
-                          //       setRegisterEmailState("has-danger");
-                          //     } else {
-                          //       setRegisterEmailState("has-success");
-                          //     }
-                          //     setEoiFormData((prevState) => ({
-                          //       ...prevState,
-                          //       email: value,
-                          //     }));
-                          //   }}
-                          required
-                        />
-                        {/* {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null} */}
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="address"
-                          required
-                          value={eoiFormData.address}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              address: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="delivery_location"
-                          required
-                          value={eoiFormData.delivery_location}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              delivery_location: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Preferred Contact Timings
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="contact_time_preference"
-                          value={eoiFormData.contact_time_preference}
-                          onChange={(e) =>
-                            setEoiFormData({
-                              ...eoiFormData,
-                              contact_time_preference: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          {alert}
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>Email</Label>
+                          <FormGroup
+                            className={`has-label ${eoiFormData.email}`}
+                          >
+                            <Field type="email" name="email" as={Input} />
+                            <ErrorMessage
+                              name="email"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>
+                            Buyer Address
+                          </Label>
+                          <FormGroup>
+                            <Field type="text" name="address" as={Input} />
+                            <ErrorMessage
+                              name="address"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>
+                            Item Delivery Location
+                          </Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="delivery_location"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="delivery_location"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label style={{ color: "#36454F" }}>
+                            Preferred Contact Timings
+                          </Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="contact_time_preference"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="contact_time_preference"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+              {alert}
 
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              className="buttonClose"
-              color="primary"
-              onClick={() => window.history.back()}
-              style={{ visibility: "visible", opacity: 1 }}
-            >
-              Close
-            </Button>
-            <Button
-              color="primary"
-              type="button"
-              onClick={handleFormSubmission}
-            >
-              Submit EoI
-            </Button>
-          </div>
-        </Form>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  className="buttonClose"
+                  color="primary"
+                  onClick={() => navigate("/admin/exchange")}
+                  style={{ visibility: "visible", opacity: 1 }}
+                >
+                  Close
+                </Button>
+                <Button color="primary" type="submit">
+                  Submit EoI
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );

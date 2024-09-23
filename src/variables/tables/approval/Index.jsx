@@ -7,20 +7,20 @@ const useColumns = (handleDelete) => {
   return useMemo(
     () => [
       {
-        Header: "Request Date",
+        Header: "Requested On",
         isSortable: true,
         defaultSort: true, // Indicates this column should be the default sort
         defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "request_date_formatted",
-        width: "5%",
+        width: "8%",
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row.original.request_date_formatted} {row.original.request_time}
+            </span>
+          );
+        },
       },
-      {
-        Header: "Request Time",
-        isSortable: true,
-        accessor: "request_time",
-        width: "5%",
-      },
-
       {
         Header: "Eoi Id",
         isSortable: true,
@@ -61,7 +61,7 @@ const useColumns = (handleDelete) => {
                 data-bs-placement="top"
                 title="Tooltip on top"
               >
-                {row.original.request_status !== "Pending" ? (
+                {row.original.request_status === "Pending" ? (
                   <FaStamp size="1.4em" />
                 ) : (
                   <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
@@ -75,7 +75,7 @@ const useColumns = (handleDelete) => {
                 size="sm"
                 onClick={() => handleDelete(row.original.request_id)}
               >
-                <i className="fa fa-trash" style={{ fontSize: "0.9em" }}></i>
+                <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>
               </Button>
             ) : (
               ""

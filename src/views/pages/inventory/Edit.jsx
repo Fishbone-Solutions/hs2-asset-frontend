@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import DynamicToast from "components/Common/Toast";
 import {
-  Form,
   Card,
   CardBody,
   Row,
@@ -37,6 +36,11 @@ import { DocumentType } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 import moment from "moment";
 import { RiAttachment2 } from "react-icons/ri";
+import { ErrorMessage, Field, Formik, Form } from "formik";
+import {
+  initialInventoryValues,
+  inventorySchema,
+} from "variables/Validations/InventorySchema";
 
 const Edit = () => {
   const { id } = useParams();
@@ -52,27 +56,7 @@ const Edit = () => {
 
   const [docs, setDocs] = useState([]);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    id: "", // Initialize id based on mode
-    asset_id: "",
-    code: "",
-    entrydate_formatted: "",
-    categorycode1: "",
-    categorycode2: "",
-    asset_name: "",
-    description: "",
-    asset_condition: "",
-    quantity: "",
-    asset_location: "",
-    value: "",
-    additional_info: "",
-    available_from: "",
-    seller_title: "",
-    seller_contactno: "",
-    seller_email: "",
-    seller_location: "",
-    statuscode: "",
-  });
+  const [formData, setFormData] = useState(initialInventoryValues);
 
   const fetchInventoryById = async () => {
     try {
@@ -95,16 +79,16 @@ const Edit = () => {
     }
   };
 
-  const handleFormSubmission = async () => {
+  const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
       title: "Are you sure?",
       type: "warning",
-      onConfirm: () => handleUpdateInventory(),
+      onConfirm: () => handleUpdateInventory(values),
       onCancel: hideAlert,
     });
   };
 
-  const handleUpdateInventory = async () => {
+  const handleUpdateInventory = async (values) => {
     try {
       setLoader(true);
       const headers = {
@@ -113,8 +97,8 @@ const Edit = () => {
       };
 
       const formDataWithFiles = new FormData();
-      Object.keys(formData).forEach((key) => {
-        let value = formData[key];
+      Object.keys(values).forEach((key) => {
+        let value = values[key];
 
         // Check if the key is 'available_form' and if the value is a valid date
         if (key === "available_from") {
@@ -125,6 +109,7 @@ const Edit = () => {
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
       });
+
       files.forEach((file) => {
         formDataWithFiles.append("files[]", file);
       });
@@ -180,7 +165,6 @@ const Edit = () => {
     if (checkValidation) {
       const files = Array.from(event.files);
       setDocs(files);
-      console.log("onuploadodcs");
     }
   };
 
@@ -233,6 +217,26 @@ const Edit = () => {
     return true;
   };
 
+  // Handle deleting an image
+  const deleteImage = (imageIndex) => {
+    console.log("deleteImages");
+    // Remove the image from the state
+    const updatedImages = files.filter((_, index) => index !== imageIndex);
+    // Update the state and re-trigger the onUploadImages to handle the updated list
+    setFiles(updatedImages);
+    // Optional: you can call onUploadImages again if necessary for further processing
+  };
+
+  // Handle deleting an image
+  const deleteDocs = (imageIndex) => {
+    console.log("deleteDocs");
+    // Remove the image from the state
+    const updatedImages = files.filter((_, index) => index !== imageIndex);
+    // Update the state and re-trigger the onUploadImages to handle the updated list
+    setFiles(updatedImages);
+    // Optional: you can call onUploadImages again if necessary for further processing
+  };
+
   const handleDate = (date) => {
     setFormData((preiousState) => ({
       ...preiousState,
@@ -250,488 +254,596 @@ const Edit = () => {
         />
         {alert}
         {loader ? <FullPageLoader /> : ""}
-        <Form>
-          <Row>
-            {/* Asset Seller Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize",
-                    }}
-                  >
-                    Seller Information
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Seller Title *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_title"
-                          value={formData.seller_title}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              seller_title: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-
-                    <Col sm="6">
-                      <Label>Contact No *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_contactno"
-                          value={formData.seller_contactno}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              seller_contactno: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Email Address *</Label>
-                      <FormGroup
-                        className={`has-label ${formData.seller_email}`}
+        <Formik
+          initialValues={formData}
+          validationSchema={inventorySchema}
+          onSubmit={handleFormSubmission}
+          enableReinitialize={true}
+        >
+          {({ values, setFieldValue }) => (
+            <Form>
+              <Row>
+                {/* Asset Seller Detail*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize",
+                        }}
                       >
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              seller_email: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+                        Seller Information
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Seller Title *</Label>
+                          <FormGroup>
+                            <Field type="text" name="seller_title" as={Input} />
+                            <ErrorMessage
+                              name="seller_title"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label>Location *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_location"
-                          value={formData.seller_location}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              seller_location: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-            {/* Category Detail*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize",
-                    }}
-                  >
-                    Category
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Category</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="categorycode1"
-                          value={categorycode1.find(
-                            (option) => option.value === formData.categorycode1
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              categorycode1: selectedOption.value,
-                            }))
-                          }
-                          options={categorycode1}
-                          placeholder="Select an option"
-                        />
-                      </FormGroup>
-                    </Col>
+                        <Col sm="6">
+                          <Label>Contact No *</Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="seller_contactno"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="seller_contactno"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Email Address *</Label>
+                          <FormGroup>
+                            <Field
+                              type="email"
+                              name="seller_email"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="seller_email"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label>Sub Category</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="categorycode2"
-                          value={subCategory.find(
-                            (option) => option.value === formData.categorycode2
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              categorycode2: selectedOption.value,
-                            }))
-                          }
-                          options={subCategory}
-                          placeholder="Select an option"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-            {/* Item Information*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Item Information
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>ID</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="id"
-                          value={formData.asset_id}
-                          disabled
-                        />
-                      </FormGroup>
-                    </Col>
+                        <Col sm="6">
+                          <Label>Location *</Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="seller_location"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="seller_location"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+                {/* Category Detail*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize",
+                        }}
+                      >
+                        Category
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Category</Label>
+                          <FormGroup>
+                            <Select
+                              name="categorycode1"
+                              options={categorycode1}
+                              value={categorycode1.find(
+                                (option) =>
+                                  option.value === values.categorycode1
+                              )}
+                              onChange={(selectedOption) =>
+                                setFieldValue(
+                                  "categorycode1",
+                                  selectedOption.value
+                                )
+                              }
+                            />
+                            <ErrorMessage
+                              name="categorycode1"
+                              component="div"
+                              className="text-danger"
+                            />
 
-                    <Col sm="6">
-                      <Label>Name *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="asset_name"
-                          value={formData.asset_name}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              asset_name: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Description</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="description"
-                          value={formData.description}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              description: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+                            {/* <Select
+                              className="react-select primary"
+                              classNamePrefix="react-select"
+                              name="categorycode1"
+                              value={categorycode1.find(
+                                (option) =>
+                                  option.value === formData.categorycode1
+                              )}
+                              onChange={(selectedOption) =>
+                                setFormData((prevState) => ({
+                                  ...prevState,
+                                  categorycode1: selectedOption.value,
+                                }))
+                              }
+                              options={categorycode1}
+                              placeholder="Select an option"
+                              required
+                            /> */}
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <FormGroup>
-                        <DateRangePicker
-                          label="Forecasted Availability*"
-                          name="availablility_range"
-                          labelType="NonFloating"
-                          selectedDate={formData.available_from}
-                          onChange={handleDate}
-                          mode="single"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Condition *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="asset_condition"
-                          value={conditionOptions.find(
-                            (option) =>
-                              option.value === formData.asset_condition
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              asset_condition: selectedOption.value,
-                            }))
-                          }
-                          options={conditionOptions}
-                          placeholder="Select an option"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="6">
-                      <Label>Quantity *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="quantity"
-                          value={formData.quantity}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              quantity: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Location *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="asset_location"
-                          value={formData.asset_location}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              asset_location: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
+                        <Col sm="6">
+                          <Label>Sub Category</Label>
+                          <FormGroup>
+                            <Select
+                              name="categorycode2"
+                              options={subCategory}
+                              value={subCategory.find(
+                                (option) =>
+                                  option.value === values.categorycode2
+                              )}
+                              onChange={(selectedOption) =>
+                                setFieldValue(
+                                  "categorycode2",
+                                  selectedOption.value
+                                )
+                              }
+                            />
+                            <ErrorMessage
+                              name="categorycode2"
+                              component="div"
+                              className="text-danger"
+                            />
+                            {/* <Select
+                              className="react-select primary"
+                              classNamePrefix="react-select"
+                              name="categorycode2"
+                              value={subCategory.find(
+                                (option) =>
+                                  option.value === formData.categorycode2
+                              )}
+                              onChange={(selectedOption) =>
+                                setFormData((prevState) => ({
+                                  ...prevState,
+                                  categorycode2: selectedOption.value,
+                                }))
+                              }
+                              options={subCategory}
+                              placeholder="Select an option"
+                              required
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+                {/* Item Information*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize", // for Safari
+                        }}
+                      >
+                        Item Information
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label>ID</Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="asset_id"
+                              as={Input}
+                              disabled
+                            />
+                            {/* <Input
+                              type="text"
+                              name="id"
+                              value={formData.id}
+                              required
+                              disabled
+                            /> */}
+                          </FormGroup>
+                        </Col>
 
-                    <Col sm="6">
-                      <Label>Estimated Value *</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="value"
-                          value={formData.value}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              value: e.target.value,
-                            })
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Label sm="8">Other Details</Label>
-                    <Col md="12">
-                      <FormGroup>
-                        <Input
-                          type="textarea"
-                          name="additional_info"
-                          value={formData.additional_info}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              additional_info: e.target.value,
-                            })
-                          }
-                          style={{ width: "100%", height: "100%" }}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-            {/* Upload Images*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Images
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <AttachmentList
-                    attachments={attachments}
-                    attachmentType="images"
-                    showDeleteIcon="true"
-                    onDelete={handleDeleteAttachment}
-                  />
+                        <Col sm="6">
+                          <Label>Name *</Label>
+                          <FormGroup>
+                            <Field type="text" name="asset_name" as={Input} />
+                            <ErrorMessage
+                              name="asset_name"
+                              component="div"
+                              className="text-danger"
+                            />
+                            {/* <Input
+                              type="text"
+                              name="asset_name"
+                              value={formData.asset_name}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  asset_name: e.target.value,
+                                })
+                              }
+                              required
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Description</Label>
+                          <FormGroup>
+                            <Field type="text" name="description" as={Input} />
+                            <ErrorMessage
+                              name="description"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-                  <FileUpload
-                    name="files[]"
-                    multiple
-                    accept="image/*"
-                    onSelect={onUploadImages}
-                    chooseLabel={
-                      <span>
-                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
-                        Attach
-                      </span>
-                    }
-                    maxFileSize={2000000}
-                    className="custom-file-upload"
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-            {/* Upload Documents*/}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Documents
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <AttachmentList
-                    attachments={attachments}
-                    attachmentType="docs"
-                    showDeleteIcon="true"
-                    onDelete={handleDeleteAttachment}
-                  />
+                        <Col sm="6">
+                          <FormGroup>
+                            <DateRangePicker
+                              label="Forecasted Availability*"
+                              name="available_from"
+                              labelType="NonFloating"
+                              selectedDate={values.available_from}
+                              onChange={(date) =>
+                                setFieldValue("available_from", date)
+                              }
+                              mode="single"
+                            />
+                            <ErrorMessage
+                              name="available_from"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Condition *</Label>
+                          <FormGroup>
+                            <Select
+                              name="asset_condition"
+                              options={conditionOptions}
+                              value={conditionOptions.find(
+                                (option) =>
+                                  option.value === values.asset_condition
+                              )}
+                              onChange={(selectedOption) =>
+                                setFieldValue(
+                                  "asset_condition",
+                                  selectedOption.value
+                                )
+                              }
+                            />
+                            <ErrorMessage
+                              name="asset_condition"
+                              component="div"
+                              className="text-danger"
+                            />
 
-                  <FileUpload
-                    name="docs[]"
-                    multiple
-                    accept=".pdf, .doc, .docx, .odt, .txt"
-                    maxFileSize={2000000}
-                    onSelect={onUploadDocs}
-                    className="custom-file-upload"
-                    chooseLabel={
-                      <span>
-                        <RiAttachment2 className="me-1" /> {/* Add the icon */}
-                        Attach
-                      </span>
-                    }
-                    customUpload
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-            {/* Set Asset Status */}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Item Status
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Status *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="statuscode"
-                          value={inventoryStatusOptions.find(
-                            (option) => option.value === formData.statuscode
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              statuscode: selectedOption.value,
-                            }))
-                          }
-                          options={inventoryStatusOptions}
-                          placeholder="Select an option"
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                            {/* <Select
+                              className="react-select primary"
+                              classNamePrefix="react-select"
+                              name="asset_condition"
+                              value={conditionOptions.find(
+                                (option) =>
+                                  option.value === formData.asset_condition
+                              )}
+                              onChange={(selectedOption) =>
+                                setFormData((prevState) => ({
+                                  ...prevState,
+                                  asset_condition: selectedOption.value,
+                                }))
+                              }
+                              options={conditionOptions}
+                              placeholder="Select an option"
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                        <Col sm="6">
+                          <Label>Quantity *</Label>
+                          <FormGroup>
+                            <Field type="text" name="quantity" as={Input} />
+                            <ErrorMessage
+                              name="quantity"
+                              component="div"
+                              className="text-danger"
+                            />
+                            {/* <Input
+                              type="text"
+                              name="quantity"
+                              value={formData.quantity}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  quantity: e.target.value,
+                                })
+                              }
+                              required
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Location *</Label>
+                          <FormGroup>
+                            <Field
+                              type="text"
+                              name="asset_location"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="asset_location"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
 
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              className="buttonClose"
-              color="primary"
-              onClick={() => window.history.back()}
-              style={{ visibility: "visible", opacity: 1 }}
-            >
-              Close
-            </Button>
-            <Button
-              className="buttonClose"
-              color="primary"
-              onClick={handleFormSubmission}
-              style={{ visibility: "visible", opacity: 1 }}
-            >
-              Update
-            </Button>
-          </div>
-        </Form>
+                        <Col sm="6">
+                          <Label>Estimated Value *</Label>
+                          <FormGroup>
+                            <Field type="text" name="value" as={Input} />
+                            <ErrorMessage
+                              name="value"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Label sm="8">Other Details</Label>
+                        <Col md="12">
+                          <FormGroup>
+                            <Field
+                              type="textarea"
+                              name="additional_info"
+                              as={Input}
+                            />
+                            <ErrorMessage
+                              name="additional_info"
+                              component="div"
+                              className="text-danger"
+                            />
+                            {/* <Input
+                              type="textarea"
+                              name="additional_info"
+                              value={formData.additional_info}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  additional_info: e.target.value,
+                                })
+                              }
+                              style={{ width: "100%", height: "100%" }}
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+                {/* Upload Images*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize", // for Safari
+                        }}
+                      >
+                        Images
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <AttachmentList
+                        attachments={attachments}
+                        attachmentType="images"
+                        showDeleteIcon="true"
+                        onDelete={handleDeleteAttachment}
+                      />
+
+                      <FileUpload
+                        name="files[]"
+                        multiple
+                        accept="image/*"
+                        chooseLabel={
+                          <span>
+                            <RiAttachment2 className="me-1" />{" "}
+                            {/* Add the icon */}
+                            Attach
+                          </span>
+                        }
+                        onSelect={onUploadImages}
+                        onRemove={deleteImage}
+                        maxFileSize={2000000}
+                        className="custom-file-upload"
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+                {/* Upload Documents*/}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize", // for Safari
+                        }}
+                      >
+                        Documents
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <AttachmentList
+                        attachments={attachments}
+                        attachmentType="docs"
+                        showDeleteIcon="true"
+                        onDelete={handleDeleteAttachment}
+                      />
+
+                      <FileUpload
+                        name="docs[]"
+                        multiple
+                        accept=".pdf, .doc, .docx, .odt, .txt"
+                        maxFileSize={2000000}
+                        chooseLabel={
+                          <span>
+                            <RiAttachment2 className="me-1" />{" "}
+                            {/* Add the icon */}
+                            Attach
+                          </span>
+                        }
+                        onSelect={onUploadDocs}
+                        onRemove={deleteDocs}
+                        className="custom-file-upload"
+                        customUpload
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+                {/* Set Asset Status */}
+                <Col md="12">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle
+                        tag="h6"
+                        style={{
+                          color: "rgb(82,203,206)",
+                          fontWeight: "bold",
+                          textTransform: "capitalize",
+                          WebkitTextTransform: "capitalize", // for Safari
+                        }}
+                      >
+                        Item Status
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <Row>
+                        <Col sm="6">
+                          <Label>Status *</Label>
+                          <FormGroup>
+                            <Select
+                              name="statuscode"
+                              options={inventoryStatusOptions}
+                              value={inventoryStatusOptions.find(
+                                (option) => option.value === values.statuscode
+                              )}
+                              onChange={(selectedOption) =>
+                                setFieldValue(
+                                  "statuscode",
+                                  selectedOption.value
+                                )
+                              }
+                            />
+                            <ErrorMessage
+                              name="statuscode"
+                              component="div"
+                              className="text-danger"
+                            />
+                            {/* <Select
+                              className="react-select primary"
+                              classNamePrefix="react-select"
+                              name="statuscode"
+                              value={inventoryStatusOptions.find(
+                                (option) => option.value === formData.statuscode
+                              )}
+                              onChange={(selectedOption) =>
+                                setFormData((prevState) => ({
+                                  ...prevState,
+                                  statuscode: selectedOption.value,
+                                }))
+                              }
+                              options={inventoryStatusOptions}
+                              placeholder="Select an option"
+                              required
+                            /> */}
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+              {alert}
+
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  className="buttonClose"
+                  color="primary"
+                  type="button"
+                  onClick={() => navigate("/admin/inventory")}
+                  style={{ visibility: "visible", opacity: 1 }}
+                >
+                  Close
+                </Button>
+                <Button color="primary" type="submit">
+                  Save
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );

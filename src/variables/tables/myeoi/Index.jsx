@@ -6,7 +6,7 @@ const useColumns = () => {
   return useMemo(
     () => [
       {
-        Header: "Submission Date",
+        Header: "Submitted On",
         isSortable: true,
         accessor: "submission_date_formatted",
         width: "1%",

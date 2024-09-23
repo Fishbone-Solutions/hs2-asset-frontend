@@ -35,7 +35,7 @@ import { RiAttachment2 } from "react-icons/ri";
 import { ImageType } from "variables/common";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
-  initialValues,
+  initialInventoryValues,
   inventorySchema,
 } from "variables/Validations/InventorySchema";
 import moment from "moment";
@@ -246,7 +246,7 @@ const Create = () => {
         />
         {loader ? <FullPageLoader /> : ""}
         <Formik
-          initialValues={initialValues}
+          initialValues={initialInventoryValues}
           validationSchema={inventorySchema}
           onSubmit={handleFormSubmission}
           //validate={handleValidationFailure}
@@ -541,7 +541,7 @@ const Create = () => {
                               options={conditionOptions}
                               value={conditionOptions.find(
                                 (option) =>
-                                  option.value === values.categorycode1
+                                  option.value === values.asset_condition
                               )}
                               onChange={(selectedOption) =>
                                 setFieldValue(
@@ -555,24 +555,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-
-                            {/* <Select
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="asset_condition"
-                              value={conditionOptions.find(
-                                (option) =>
-                                  option.value === formData.asset_condition
-                              )}
-                              onChange={(selectedOption) =>
-                                setFormData((prevState) => ({
-                                  ...prevState,
-                                  asset_condition: selectedOption.value,
-                                }))
-                              }
-                              options={conditionOptions}
-                              placeholder="Select an option"
-                            /> */}
                           </FormGroup>
                         </Col>
                         <Col sm="6">
@@ -584,18 +566,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Input
-                              type="text"
-                              name="quantity"
-                              value={formData.quantity}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  quantity: e.target.value,
-                                })
-                              }
-                              required
-                            /> */}
                           </FormGroup>
                         </Col>
                       </Row>
@@ -642,18 +612,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Input
-                              type="textarea"
-                              name="additional_info"
-                              value={formData.additional_info}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  additional_info: e.target.value,
-                                })
-                              }
-                              style={{ width: "100%", height: "100%" }}
-                            /> */}
                           </FormGroup>
                         </Col>
                       </Row>
@@ -683,9 +641,7 @@ const Create = () => {
                         accept="image/*"
                         chooseLabel={
                           <span>
-                            <RiAttachment2 className="me-1" />{" "}
-                            {/* Add the icon */}
-                            Attach
+                            <RiAttachment2 className="me-1" /> Attach
                           </span>
                         }
                         onSelect={onUploadImages}
@@ -772,23 +728,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Select
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="statuscode"
-                              value={inventoryStatusOptions.find(
-                                (option) => option.value === formData.statuscode
-                              )}
-                              onChange={(selectedOption) =>
-                                setFormData((prevState) => ({
-                                  ...prevState,
-                                  statuscode: selectedOption.value,
-                                }))
-                              }
-                              options={inventoryStatusOptions}
-                              placeholder="Select an option"
-                              required
-                            /> */}
                           </FormGroup>
                         </Col>
                       </Row>

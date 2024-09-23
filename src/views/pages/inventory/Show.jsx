@@ -219,7 +219,7 @@ const Show = () => {
                           classNamePrefix="react-select"
                           name="categorycode2"
                           value={subCategory.find(
-                            (option) => option.value === formData.categorycode1
+                            (option) => option.value === formData.categorycode2
                           )}
                           onChange={(selectedOption) =>
                             setFormData((prevState) => ({

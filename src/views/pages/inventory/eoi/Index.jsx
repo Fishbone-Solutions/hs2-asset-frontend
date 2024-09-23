@@ -159,7 +159,9 @@ const Index = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Availability</Label>
+                      <Label style={{ color: "#36454F" }}>
+                        Forecasted Availability
+                      </Label>
                       <FormGroup>
                         <Input
                           type="text"

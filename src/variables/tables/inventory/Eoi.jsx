@@ -10,7 +10,7 @@ const useColumns = (handleDelete) => {
         Header: "Submission Date",
         isSortable: true,
         accessor: "submission_date_formatted",
-        width: "1.5%",
+        width: "2.3%",
       },
       {
         Header: "EoI. No",
@@ -18,7 +18,7 @@ const useColumns = (handleDelete) => {
         defaultSort: true, // Indicates this column should be the default sort
         defaultSortDesc: true, // Indicates the sort direction (descending)
         accessor: "id",
-        width: "0.9%",
+        width: "1.4%",
       },
       {
         Header: "Contact Person",
@@ -32,6 +32,47 @@ const useColumns = (handleDelete) => {
         accessor: "organization",
         width: "6%",
       },
+      {
+        Header: "Approval",
+        isSortable: true,
+        accessor: "approval_status",
+        width: "6%",
+        Cell: ({ row }) => {
+          const statusCode = row.original.approval_status;
+          const statusStyles = {
+            REJECTED: { bgColor: "bg-danger", textColor: "text-white" }, // Red for sold items
+            APPROVAL: {
+              bgColor: "bg-success", // Green for live items
+              textColor: "text-white",
+              icon: "path/to/live-icon.png", // Optional icon
+            },
+            PENDING: { bgColor: "bg-info", textColor: "text-white" }, // Blue for listings
+          };
+          const style = statusStyles[statusCode] || {
+            bgColor: "bg-secondary",
+            textColor: "text-white",
+          };
+
+          return (
+            <span
+              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+            >
+              {style.icon && (
+                <>
+                  <img
+                    src={style.icon}
+                    width="15px"
+                    alt="status icon"
+                    className="me-1 align-middle"
+                  />
+                </>
+              )}
+              {statusCode}
+            </span>
+          );
+        },
+      },
+
       {
         Header: "Status",
         accessor: "eoi_status",
@@ -74,6 +115,7 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-danger", // Red for unavailable sold items
               textColor: "text-white",
             },
+            REJECTED: { bgColor: "bg-danger", textColor: "text-white" },
           };
 
           const style = statusStyles[statusCode] || {

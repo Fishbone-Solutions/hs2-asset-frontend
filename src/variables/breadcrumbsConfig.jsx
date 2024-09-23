@@ -42,16 +42,16 @@ const breadcrumbConfig = {
   ],
   exchangeEoiSubmission: [
     { label: "Exchange", to: "/admin/exchange" },
-    { label: "EoI Submission", to: "#" },
+    { label: "EOI Submission", to: "#" },
   ],
   approvalRequests: [{ label: "Approvals Requests", to: "#" }],
   showApprovalRequests: [
     { label: "Approvals Requests", to: "/admin/approvals/requests" },
     { label: "View Details" },
   ],
-  myEoi: [{ label: "My EoI", to: "#" }],
+  myEoi: [{ label: "My EOI", to: "#" }],
   myEoiShow: (inventoryId, eoiId) => [
-    { label: "My EoI", to: "/admin/myeoi" },
+    { label: "My EOI", to: "/admin/myeoi" },
     {
       label: "Edit Details",
       to: `/admin/myeoi/${inventoryId}/eois/edit/${eoiId}`,
@@ -59,7 +59,7 @@ const breadcrumbConfig = {
     { label: "View Item Details", to: "#" },
   ],
   myEoiEdit: [
-    { label: "My EoI", to: "/admin/myeoi" },
+    { label: "My EOI", to: "/admin/myeoi" },
     { label: "Edit Details", to: "#" },
   ],
   bulkImport: [{ label: "Bulk Import", to: "#" }],
