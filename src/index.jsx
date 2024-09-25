@@ -8,8 +8,7 @@ import {
 import AdminLayout from "layouts/Admin"; // Adjust the import based on your file structure
 import AuthLayout from "layouts/Auth"; // Adjust the import based on your file structure
 import "bootstrap/dist/css/bootstrap.css";
-
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // This includes Popper
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "assets/scss/paper-dashboard.scss";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -35,14 +34,6 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  useEffect(() => {
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new window.bootstrap.Tooltip(tooltipTriggerEl); // Use Bootstrap's Tooltip
-    });
-  }, []);
   return <RouterProvider router={router} />;
 };
 

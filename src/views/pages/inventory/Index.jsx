@@ -25,6 +25,7 @@ import { ImStatsBars } from "react-icons/im";
 import PieChart from "components/Common/PieChart";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import moment from "moment";
+import { Tooltip } from "bootstrap";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -295,6 +296,15 @@ const Index = () => {
     });
   };
 
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new window.bootstrap.Tooltip(tooltipTriggerEl); // Use Bootstrap's Tooltip
+    });
+  }, []);
+
   return (
     <>
       <div className="content">
@@ -323,10 +333,11 @@ const Index = () => {
                       className="icon-btn"
                     />
                   </div>
-                  <div
-                    onClick={openModal}
+                  <button
+                    type="button"
+                    data-bs-target="#exampleModal"
                     className="mr-2 cursor-pointer"
-                    data-bs-toggle="tooltip"
+                    data-bs-toggle="modal"
                     data-bs-placement="top"
                     title="Inventory Search"
                   >
@@ -335,7 +346,7 @@ const Index = () => {
                       size="2.4em"
                       className="icon-btn"
                     />
-                  </div>
+                  </button>
                   <NavLink to="/admin/inventory/create">
                     <div
                       data-bs-toggle="tooltip"
@@ -381,6 +392,42 @@ const Index = () => {
         </Row>
       </div>
 
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Modal title
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* { filter modal } */}
       <Modal
         isOpen={modalIsOpen}
