@@ -26,14 +26,8 @@
   </head>
   <body>
     <div id="root"></div>
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"
-    ></script>
+
+    <!-- Import map must come before any module scripts -->
     <script type="importmap">
       {
         "imports": {
@@ -42,11 +36,30 @@
         }
       }
     </script>
+
+    <!-- Ionicons -->
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Bootstrap Popover Initialization -->
     <script type="module">
       import * as bootstrap from "bootstrap";
 
-      new bootstrap.Popover(document.getElementById("popoverButton"));
+      document.addEventListener("DOMContentLoaded", function () {
+        const popoverTrigger = document.getElementById("popoverButton");
+        if (popoverTrigger) {
+          new bootstrap.Popover(popoverTrigger);
+        }
+      });
     </script>
+
+    <!-- Main React Application -->
     <script type="module" src="/src/index.jsx"></script>
 
     <!--
