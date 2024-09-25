@@ -24,6 +24,7 @@ import { inventoryStatusOptions } from "variables/common";
 import { ImStatsBars } from "react-icons/im";
 import PieChart from "components/Common/PieChart";
 import { FullPageLoader } from "components/Common/ComponentLoader";
+import moment from "moment";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -71,7 +72,7 @@ const Index = () => {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [graphData, setGraphData] = useState([]);
-
+  const [appliedFilters, setAppliedFilters] = useState([]);
   const getValueOrDefault = (value) => (value ? value : "-1");
 
   const fetchInventory = async () => {
@@ -151,6 +152,32 @@ const Index = () => {
 
   useEffect(() => {
     fetchInventory();
+    const filters = [];
+    if (filterFormData.id)
+      filters.push({ label: ` ${filterFormData.id}`, key: "id" });
+    if (filterFormData.asset_name)
+      filters.push({
+        label: `${filterFormData.asset_name}`,
+        key: "asset_name",
+      });
+    if (filterFormData.entry_date_from && filterFormData.entry_date_to)
+      filters.push({
+        label: `Entry: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
+        key: ["entry_date_from", "entry_date_to"],
+      });
+    if (filterFormData.available_from)
+      filters.push({
+        label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
+        key: ["available_from", "available_to"],
+      });
+    if (filterFormData.status)
+      filters.push({
+        label: `${filterFormData.status.label}`,
+        key: "status",
+      });
+
+    setAppliedFilters(filters);
+    console.log("applied filter", appliedFilters, filterFormData);
   }, [filterFormData, refreshData]);
 
   const handleFilter = () => {
@@ -165,19 +192,6 @@ const Index = () => {
       entry_date_to: rangeDatesEntry.endDate,
       statuscode: filterDataState.statuscode,
     }));
-  };
-
-  const getColorForStatus = (status) => {
-    switch (status) {
-      case "Live":
-        return "#E38627";
-      case "Listing":
-        return "#C13C37";
-      case "Sold":
-        return "#6A2135";
-      default:
-        return "#000000"; // Default color if no match
-    }
   };
 
   const showPieChartInventory = async () => {
@@ -229,8 +243,8 @@ const Index = () => {
   const handleEntryDate = (startDate, endDate) => {
     setRangeDatesEntry((prevState) => ({
       ...prevState,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: moment(startDate).format("DD/MM/YYYY"),
+      endDate: moment(endDate).format("DD/MM/YYYY"),
     }));
 
     setClearDateBoolean(false);
@@ -239,8 +253,8 @@ const Index = () => {
   const handleAvailablilityDate = (startDate, endDate) => {
     setRangeDatesAvailablility((prevState) => ({
       ...prevState,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: moment(startDate).format("DD/MM/YYYY"),
+      endDate: moment(endDate).format("DD/MM/YYYY"),
     }));
     setClearDateBoolean(false);
   };
@@ -251,6 +265,34 @@ const Index = () => {
       statuscode: selectedOption.value,
     }));
     setClearDateBoolean(false);
+  };
+
+  const handleRemoveFilter = (filterKeys) => {
+    // If filterKeys is not an array, convert it into an array
+    const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+
+    // Update the filter form state
+    setFilterFormDate((prev) => {
+      const updatedState = { ...prev };
+      keys.forEach((key) => {
+        updatedState[key] = key === "status" ? null : ""; // Handle special cases like 'status'
+      });
+      return updatedState;
+    });
+
+    // Remove the filter(s) from the applied filters array
+    setAppliedFilters((prevFilters) =>
+      prevFilters.filter((filter) => !keys.includes(filter.key))
+    );
+
+    // Update filter data state
+    setFilterDataState((prev) => {
+      const updatedState = { ...prev };
+      keys.forEach((key) => {
+        updatedState[key] = ""; // Reset the field in filterDataState
+      });
+      return updatedState;
+    });
   };
 
   return (
@@ -307,6 +349,24 @@ const Index = () => {
                       />
                     </div>
                   </NavLink>
+                </div>
+                <div className="applied-filters">
+                  {appliedFilters.length > 0 &&
+                    appliedFilters.map((filter) => (
+                      <div
+                        key={filter.key}
+                        className="filter-tag badge text-black rounded-pill"
+                      >
+                        {filter.label}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFilter(filter.key)}
+                          className="btn text-black p-0 ms-2 "
+                        >
+                          <i className="p-1 rounded-circle  fa fa-times"></i>
+                        </button>
+                      </div>
+                    ))}
                 </div>
 
                 <ReactTable
@@ -414,8 +474,12 @@ const Index = () => {
                         <Col sm="6">
                           <FormGroup>
                             <DateRangePicker
-                              label="Availablility Range"
+                              label="Availability Range"
                               clearDates={clearDateBoolean}
+                              selectedRange={[
+                                filterFormData.available_from, // Start date
+                                filterFormData.available_to, // End date
+                              ]}
                               onChange={handleAvailablilityDate}
                             />
                           </FormGroup>

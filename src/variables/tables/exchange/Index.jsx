@@ -13,18 +13,18 @@ const useColumns = () => {
         accessor: "asset_id",
         width: "2%",
       },
-      {
-        Header: "Category",
-        isSortable: true,
-        accessor: "categorycode1",
-        width: "8%",
-      },
-      {
-        Header: "Sub Category",
-        isSortable: true,
-        accessor: "categorycode2",
-        width: "8%",
-      },
+      // {
+      //   Header: "Category",
+      //   isSortable: true,
+      //   accessor: "categorycode1",
+      //   width: "8%",
+      // },
+      // {
+      //   Header: "Sub Category",
+      //   isSortable: true,
+      //   accessor: "categorycode2",
+      //   width: "8%",
+      // },
 
       {
         Header: "Name",
@@ -35,7 +35,13 @@ const useColumns = () => {
       {
         Header: "Description",
         accessor: "description",
-        width: "16%",
+        width: "18%",
+      },
+      {
+        Header: "Condition",
+        accessor: "asset_condition",
+        isSortable: true,
+        width: "4%",
       },
       {
         Header: "Seller",
@@ -48,6 +54,20 @@ const useColumns = () => {
         isSortable: true,
         accessor: "available_from",
         width: "1%",
+      },
+      {
+        Header: "Location",
+        isSortable: true,
+        accessor: "asset_location",
+        width: "6%",
+        Cell: ({ row }) => (
+          <span
+            className="d-inline-block text-truncate"
+            style={{ maxWidth: "130px" }}
+          >
+            {row.original.asset_location}
+          </span>
+        ),
       },
       {
         Header: "Actions",

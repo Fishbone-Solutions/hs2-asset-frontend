@@ -27,6 +27,9 @@ export const initialInventoryValues = {
   contract_no: "",
   purchase_price: "",
   sold_value: "Pending",
+  city: "",
+  area: "",
+  post_code: "",
 };
 
 // Validation schema using Yup
@@ -64,4 +67,7 @@ export const inventorySchema = Yup.object({
   id: Yup.string().nullable(),
   sold_value: Yup.string().nullable(),
   additional_info: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  area: Yup.string().required("Area is required"),
+  post_code: Yup.string().required("Post-Code is required"),
 });

@@ -79,6 +79,9 @@ const Create = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
+        } else if (key === "asset_location") {
+          value =
+            values["city"] + "%" + values["area"] + "%" + values["post_code"];
         }
 
         // Append the value (formatted or not) to the formDataWithFiles object
@@ -422,24 +425,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Select
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="categorycode2"
-                              value={subCategory.find(
-                                (option) =>
-                                  option.value === formData.categorycode2
-                              )}
-                              onChange={(selectedOption) =>
-                                setFormData((prevState) => ({
-                                  ...prevState,
-                                  categorycode2: selectedOption.value,
-                                }))
-                              }
-                              options={subCategory}
-                              placeholder="Select an option"
-                              required
-                            /> */}
                           </FormGroup>
                         </Col>
                       </Row>
@@ -554,19 +539,64 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label className="required">Location </Label>
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              name="asset_location"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="asset_location"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
+                          {/* Single Label for the Entire Section */}
+                          <Label className="required">Location</Label>
+
+                          <Row>
+                            {/* City Field */}
+                            <Col sm="3 pr-0">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  name="city"
+                                  placeholder="City"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="city"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+
+                            {/* Area Field */}
+                            <Col sm="6">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  placeholder="Area"
+                                  name="area"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="area"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+
+                            {/* Post Code Field */}
+                            <Col sm="3 pl-0">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  placeholder="Post Code"
+                                  name="post_code"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="post_code"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
                         </Col>
                       </Row>
                       <Row>

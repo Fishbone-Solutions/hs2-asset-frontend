@@ -25,6 +25,7 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import { approvalStatusOptions } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
+import { FcUndo } from "react-icons/fc";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -526,6 +527,11 @@ const Edit = () => {
                     }}
                   >
                     {"EoI Status"}
+                    <span className="float-right">
+                      <Button className="btn btn-danger p-1 position-absolute top-0 end-1">
+                        <FcUndo size="2em" />
+                      </Button>
+                    </span>
                   </CardTitle>
                 </CardHeader>
 

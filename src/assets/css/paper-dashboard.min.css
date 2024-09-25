@@ -3977,9 +3977,9 @@ body .fc {
 .show > .fc button.dropdown-toggle,
 .show > .fc button.dropdown-toggle:focus,
 .show > .fc button.dropdown-toggle:hover {
-  background-color: #403d39 !important;
-  color: #fff !important;
-  box-shadow: none !important;
+  background-color: #403d39;
+  color: #fff;
+  box-shadow: none;
 }
 .fc button:not([data-action]):hover {
   box-shadow: none;
@@ -5149,9 +5149,9 @@ a.fc-more:hover {
 .show > .navbar .navbar-nav > a.btn.dropdown-toggle,
 .show > .navbar .navbar-nav > a.btn.dropdown-toggle:focus,
 .show > .navbar .navbar-nav > a.btn.dropdown-toggle:hover {
-  background-color: #403d39 !important;
-  color: #fff !important;
-  box-shadow: none !important;
+  background-color: #403d39;
+  color: #fff;
+  box-shadow: none;
 }
 .btn:not([data-action]):hover,
 .navbar .navbar-nav > a.btn:not([data-action]):hover {
@@ -6182,7 +6182,7 @@ fieldset[disabled] .btn-neutral.active {
 .btn-neutral.btn-default:focus,
 .btn-neutral.btn-default:active,
 .btn-neutral.btn-default:active:focus {
-  color: #403d39 !important;
+  color: #403d39;
 }
 .btn-neutral.active,
 .btn-neutral:active,
@@ -17770,9 +17770,9 @@ button.rbc-input::-moz-focus-inner {
 .show > .rbc-toolbar button.dropdown-toggle,
 .show > .rbc-toolbar button.dropdown-toggle:focus,
 .show > .rbc-toolbar button.dropdown-toggle:hover {
-  background-color: #403d39 !important;
-  color: #fff !important;
-  box-shadow: none !important;
+  background-color: #403d39;
+  color: #fff;
+  box-shadow: none;
 }
 .rbc-toolbar button:not([data-action]):hover {
   box-shadow: none;

@@ -48,32 +48,37 @@ const DateRangePicker = ({
     onChange(null, null); // Notify parent about clearing the date range
   };
 
-  // Update state when selectedDate or selectedRange props change
   useEffect(() => {
     if (mode === "range" && selectedRange) {
       const [start, end] = selectedRange;
-      // Only update if different from current state to avoid overriding user input
+      console.log(start, end);
+
+      // Parse the start and end dates with proper format validation
+      const parsedStart = moment(start, "DD/MM/YYYY", true);
+      const parsedEnd = moment(end, "DD/MM/YYYY", true);
+
+      // Check if both dates are valid
+      const isStartValid = parsedStart.isValid();
+      const isEndValid = parsedEnd.isValid();
+
+      // Only update state if the parsed dates are valid and different from the current state
       if (
-        !startDate ||
-        !moment(startDate).isSame(moment(start, "dd MMM yy")) ||
-        !endDate ||
-        !moment(endDate).isSame(moment(end, "dd MMM yy"))
+        (!startDate || !moment(startDate).isSame(parsedStart)) &&
+        isStartValid
       ) {
-        setStartDate(
-          moment(start, "dd MMM yy", true).isValid()
-            ? moment(start, "dd MMM yy").toDate()
-            : null
-        );
-        setEndDate(
-          moment(end, "dd MMM yy", true).isValid()
-            ? moment(end, "dd MMM yy").toDate()
-            : null
-        );
+        console.log("Updating startDate");
+        setStartDate(parsedStart.toDate());
+      }
+
+      if ((!endDate || !moment(endDate).isSame(parsedEnd)) && isEndValid) {
+        console.log("Updating endDate");
+        setEndDate(parsedEnd.toDate());
       }
     } else if (
       selectedDate &&
       (!startDate || !moment(startDate).isSame(moment(selectedDate)))
     ) {
+      console.log("Updating single date mode");
       setStartDate(selectedDate);
     }
   }, [selectedDate, selectedRange, mode, startDate, endDate]);

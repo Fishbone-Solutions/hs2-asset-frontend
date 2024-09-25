@@ -36,7 +36,7 @@ import { DocumentType } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 import moment from "moment";
 import { RiAttachment2 } from "react-icons/ri";
-import { ErrorMessage, Field, Formik, Form } from "formik";
+import { ErrorMessage, Field, Formik, Form, useFormikContext } from "formik";
 import {
   initialInventoryValues,
   inventorySchema,
@@ -64,6 +64,15 @@ const Edit = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
+      const [city, area, post_code] =
+        res.appRespData[0].asset_location.split("%");
+      setFormData((prev) => ({
+        ...prev, // Spread existing properties
+        city,
+        area,
+        post_code,
+      }));
+      console.log(formData);
 
       const resAttachment = await EndPointService.getAttachmentByAssetId(
         headers,
@@ -106,6 +115,9 @@ const Edit = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
+        } else if (key === "asset_location") {
+          value =
+            values["city"] + "%" + values["area"] + "%" + values["post_code"];
         }
 
         // Append the value (formatted or not) to the formDataWithFiles object
@@ -154,6 +166,7 @@ const Edit = () => {
   useEffect(() => {
     console.log("useEffect");
     fetchInventoryById();
+    console.log(formData);
   }, []);
 
   const onUploadImages = (event) => {
@@ -526,19 +539,64 @@ const Edit = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label className="required">Location </Label>
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              name="asset_location"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="asset_location"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
+                          {/* Single Label for the Entire Section */}
+                          <Label className="required">Location</Label>
+
+                          <Row>
+                            {/* City Field */}
+                            <Col sm="3 pr-0">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  name="city"
+                                  placeholder="City"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="city"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+
+                            {/* Area Field */}
+                            <Col sm="6">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  placeholder="Area"
+                                  name="area"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="area"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+
+                            {/* Post Code Field */}
+                            <Col sm="3 pl-0">
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  placeholder="Post Code"
+                                  name="post_code"
+                                  as={Input}
+                                  className="form-control"
+                                />
+                                <ErrorMessage
+                                  name="post_code"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
+                            </Col>
+                          </Row>
                         </Col>
                       </Row>
                       <Row>

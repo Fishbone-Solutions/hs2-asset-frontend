@@ -64,6 +64,7 @@ const Index = () => {
     available_from: null,
     available_to: null,
     statuscode: null,
+    location: null,
   });
 
   const [filterDataState, setFilterDataState] = useState({
@@ -72,6 +73,7 @@ const Index = () => {
     statuscode: null,
     category: null,
     subCategory: null,
+    location: null,
   });
 
   const getValueOrDefault = (value) => (value ? value : "-1");
@@ -90,6 +92,7 @@ const Index = () => {
           filterFormData.available_from
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+        fltr_location: getValueOrDefault(filterFormData.location),
       });
 
       const res = await EndPointService.getExchange(headers, params);
@@ -128,6 +131,7 @@ const Index = () => {
       available_to: "",
       category: "",
       subCategory: "",
+      location: "",
     }));
     setFilterDataState({
       id: "",
@@ -135,6 +139,7 @@ const Index = () => {
       statuscode: "",
       category: "",
       subCategory: "",
+      location: "",
     });
 
     setClearDateBoolean(true);
@@ -149,6 +154,7 @@ const Index = () => {
       available_to: rangeDates.endDate,
       category: filterDataState.category,
       subCategory: filterDataState.subCategory,
+      location: filterDataState.location,
     }));
   };
 
@@ -396,6 +402,25 @@ const Index = () => {
                               onChange={handleDate}
                               clearDates={clearDateBoolean}
                             />
+                          </FormGroup>
+                        </Col>
+
+                        <Col sm="6">
+                          <FormGroup floating>
+                            <Input
+                              id="location"
+                              name="name"
+                              value={filterDataState.location}
+                              onChange={(e) =>
+                                setFilterDataState((previousState) => ({
+                                  ...previousState,
+                                  location: e.target.value,
+                                }))
+                              }
+                              placeholder="location"
+                              type="text"
+                            />
+                            <Label for="assetName">Location</Label>
                           </FormGroup>
                         </Col>
                       </Row>

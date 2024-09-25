@@ -898,3 +898,39 @@ label.required::after {
 .datepicker-input[disabled] {
   background-color: rgba(227, 227, 227, 0.4784313725);
 }
+
+//tag appearing
+
+.applied-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  border-color: transparent;
+  padding: 2px;
+}
+
+.filter-tag.badge.text-black.rounded-pill {
+  border: 1px solid transparent;
+  padding-left: 10px;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+.filter-tag > button.btn:hover {
+  background-color: transparent !important;
+  color: #000 !important;
+}
+
+.filter-tag button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  margin: 1px 1px;
+}
