@@ -15,7 +15,6 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { GlobalProvider } from "./GlobalState";
 import ErrorComponent from "./ErrorBoundary";
-import { Tooltip } from "bootstrap";
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
@@ -41,7 +40,7 @@ const App = () => {
       '[data-bs-toggle="tooltip"]'
     );
     tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new Tooltip(tooltipTriggerEl);
+      new window.bootstrap.Tooltip(tooltipTriggerEl); // Use Bootstrap's Tooltip
     });
   }, []);
   return <RouterProvider router={router} />;
