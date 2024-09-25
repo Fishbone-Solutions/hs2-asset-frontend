@@ -30,6 +30,7 @@ import { subCategory } from "variables/common";
 import { conditionOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
+import { formatLocation } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
