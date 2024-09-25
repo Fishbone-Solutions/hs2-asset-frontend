@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import AdminLayout from "layouts/Admin"; // Adjust the import based on your file structure
 import AuthLayout from "layouts/Auth"; // Adjust the import based on your file structure
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js"; // This includes Popper.js as well
 import "assets/scss/paper-dashboard.scss";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
