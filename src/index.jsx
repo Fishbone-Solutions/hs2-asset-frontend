@@ -13,6 +13,7 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { GlobalProvider } from "./GlobalState";
 import ErrorComponent from "./ErrorBoundary";
+import { Tooltip } from "bootstrap";
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
   return <RouterProvider router={router} />;
 };
 
