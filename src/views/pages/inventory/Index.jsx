@@ -301,7 +301,7 @@ const Index = () => {
       '[data-bs-toggle="tooltip"]'
     );
     tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new window.bootstrap.Tooltip(tooltipTriggerEl); // Use Bootstrap's Tooltip
+      new Tooltip(tooltipTriggerEl);
     });
   }, []);
 
