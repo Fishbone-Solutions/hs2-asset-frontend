@@ -358,7 +358,7 @@ const Show = () => {
                         <Input
                           type="text"
                           name="asset_location"
-                          value={formData.asset_location}
+                          value={formatLocation(formData.asset_location)}
                           readOnly="true"
                         />
                       </FormGroup>
