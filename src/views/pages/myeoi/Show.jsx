@@ -21,6 +21,7 @@ import { FullPageLoader } from "components/Common/ComponentLoader";
 import { GlobalContext } from "@/GlobalState";
 import { subCategory, conditionOptions, categorycode1 } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
+import { formatLocation } from "variables/common";
 
 const Show = () => {
   const { inventoryId } = useParams();
@@ -345,7 +346,7 @@ const Show = () => {
                           <Input
                             type="text"
                             name="asset_location"
-                            value={formData.asset_location}
+                            value={formatLocation(formData.asset_location)}
                             readOnly
                           />
                         </FormGroup>

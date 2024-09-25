@@ -31,6 +31,7 @@ import { inventoryStatusOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
 import { conditionOptions } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
+import { formatLocation } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
@@ -359,7 +360,7 @@ const Show = () => {
                         <Input
                           type="text"
                           name="asset_location"
-                          value={formData.asset_location}
+                          value={formatLocation(formData.asset_location)}
                           readOnly="true"
                         />
                       </FormGroup>

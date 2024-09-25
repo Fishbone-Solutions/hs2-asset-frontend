@@ -77,6 +77,11 @@ export const myEoIUpdateoptions = [
   { value: "WITHDRAWN", label: "Withdrawn" },
 ];
 
+export const formatLocation = (data) => {
+  // Split the string by the '%' character
+  return data.replace(/%/g, " ").trim();
+};
+
 export const ImageType = [
   ".png",
   ".jpeg",

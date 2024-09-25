@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
+import { formatLocation } from "variables/common";
 const useColumns = () => {
   return useMemo(
     () => [
@@ -64,8 +65,11 @@ const useColumns = () => {
           <span
             className="d-inline-block text-truncate"
             style={{ maxWidth: "130px" }}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title={formatLocation(row.original.asset_location)}
           >
-            {row.original.asset_location}
+            {formatLocation(row.original.asset_location)}
           </span>
         ),
       },
