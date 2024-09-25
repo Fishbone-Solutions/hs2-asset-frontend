@@ -19,25 +19,13 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
     />
 
     <title>HS2 Exchange</title>
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- Import map must come before any module scripts -->
-    <script type="importmap">
-      {
-        "imports": {
-          "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
-          "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.esm.min.js"
-        }
-      }
-    </script>
-
-    <!-- Ionicons -->
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"
@@ -46,20 +34,6 @@
       nomodule
       src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"
     ></script>
-
-    <!-- Bootstrap Popover Initialization -->
-    <script type="module">
-      import * as bootstrap from "bootstrap";
-
-      document.addEventListener("DOMContentLoaded", function () {
-        const popoverTrigger = document.getElementById("popoverButton");
-        if (popoverTrigger) {
-          new bootstrap.Popover(popoverTrigger);
-        }
-      });
-    </script>
-
-    <!-- Main React Application -->
     <script type="module" src="/src/index.jsx"></script>
 
     <!--
