@@ -386,18 +386,15 @@ const Index = () => {
       <ModalComponent
         modalId="filter-modal"
         title={
-          <span>
-            <i
-              className="fa fa-filter me-2 p-1"
-              style={{
-                fontSize: "0.9em",
-                backgroundColor: "#52CBCE",
-                border: "2px solid #52CBCE",
-                borderRadius: "15%",
-              }}
-            ></i>
-            Filter
-          </span>
+          <h6 className="text-white m-0 d-flex align-items-center">
+                        <IoSearchSharp
+                          width="30"
+                          height="30"
+                          size="1.4rem"
+                          className="me-2"
+                        />
+                        Filter
+                      </h6>
         }
         content={
           <Row>
