@@ -163,12 +163,12 @@ const Index = () => {
         label: `${filterFormData.asset_name}`,
         key: "asset_name",
       });
-    if (filterFormData.entry_date_from && filterFormData.entry_date_to)
+    if ((filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null) && (filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null))
       filters.push({
         label: `Entry: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
         key: ["entry_date_from", "entry_date_to"],
       });
-    if (filterFormData.available_from)
+    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null))
       filters.push({
         label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
@@ -353,7 +353,7 @@ const Index = () => {
                   </NavLink>
                 </div>
                 <div className="applied-filters">
-                  {appliedFilters.length > 0 &&
+                  {appliedFilters && appliedFilters.length > 0 &&
                     appliedFilters.map((filter) => (
                       <div
                         key={filter.key}
