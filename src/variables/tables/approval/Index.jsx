@@ -3,23 +3,21 @@ import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FaStamp } from "react-icons/fa";
 
-const useColumns = (handleDelete) => {
-  return useMemo(
-    () => [
+const useColumns = (data, handleDelete) => {
+  return useMemo(() => {
+    const baseColumns = [
       {
         Header: "Requested On",
         isSortable: true,
-        defaultSort: true, // Indicates this column should be the default sort
-        defaultSortDesc: true, // Indicates the sort direction (descending)
+        defaultSort: true,
+        defaultSortDesc: true,
         accessor: "request_date_formatted",
         width: "8%",
-        Cell: ({ row }) => {
-          return (
-            <span>
-              {row.original.request_date_formatted} {row.original.request_time}
-            </span>
-          );
-        },
+        Cell: ({ row }) => (
+          <span>
+            {row.original.request_date_formatted} {row.original.request_time}
+          </span>
+        ),
       },
       {
         Header: "Eoi Id",
@@ -77,15 +75,33 @@ const useColumns = (handleDelete) => {
               >
                 <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>
               </Button>
-            ) : (
-              ""
-            )}
+            ) : null}
           </div>
         ),
       },
-    ],
-    []
-  );
+    ];
+
+    // Check if any rows have status "Approved" or "Rejected"
+    const hasSpecialStatus = data.some(
+      (row) => row.request_status === "Processed"
+    );
+
+    // Conditionally add the extra column if any row has the desired status
+    if (hasSpecialStatus) {
+      baseColumns.splice(5, 0, {
+        Header: "Processed On", // New column header
+        accessor: "extra",
+        width: "5%",
+        Cell: ({ row }) => {
+          return <span>
+          {row.original.processing_date_formatted} {row.original.processing_time_formatted}
+        </span>
+        },
+      });
+    }
+
+    return baseColumns;
+  }, [data, handleDelete]); // Add dependencies
 };
 
 export default useColumns;

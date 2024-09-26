@@ -228,6 +228,18 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
+
+                    <Col sm="6">
+                      <Label>Current Status</Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="id"
+                          value={dataState.eoi_status}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>
@@ -532,14 +544,36 @@ const Show = () => {
                   className="btn btn-success success-btn"
                   color="primary"
                   style={{ visibility: "visible", opacity: 1 }}
-                  onClick={() => handleRequestApprovalOrRejected("APPROVED")}
+                  onClick={() => {
+                    showAlert({
+                      title: `Are you sure you want to approve it ?`,
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmText: "Yes",
+                      onCancel: hideAlert,
+                      onConfirm: () => {
+                        handleRequestApprovalOrRejected("APPROVED");
+                      },
+                    });
+                  }}
                 >
                   Approve
                 </Button>
                 <Button
                   className="btn btn-danger danger-btn"
                   color="secondary"
-                  onClick={() => handleRequestApprovalOrRejected("REJECTED")}
+                  onClick={() => {
+                    showAlert({
+                      title: `Are you sure you want to reject it ?`,
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmText: "Yes",
+                      onCancel: hideAlert,
+                      onConfirm: () => {
+                        handleRequestApprovalOrRejected("REJECTED");
+                      },
+                    });
+                  }}
                   style={{ visibility: "visible", opacity: 1 }}
                 >
                   Reject

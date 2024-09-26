@@ -144,7 +144,7 @@ const Index = () => {
                   <Row>
                     <ReactTable
                       data={dataState}
-                      columns={TableColumn(handleDelete)}
+                      columns={TableColumn(dataState, handleDelete)}
                       isLoading={loader}
                       className="-striped -highlight primary-pagination "
                     />

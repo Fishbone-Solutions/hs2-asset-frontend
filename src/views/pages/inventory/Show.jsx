@@ -34,7 +34,7 @@ import AttachmentList from "components/Common/AttachmentList";
 import { formatLocation } from "variables/common";
 
 const Show = () => {
-  const { id } = useParams();
+  const { id, requestId } = useParams();
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
@@ -523,6 +523,8 @@ const Show = () => {
               </Card>
             </Col>
             {/* Set Asset Status */}
+            
+            {requestId === undefined ? (
             <Col md="12">
               <Card>
                 <CardHeader>
@@ -565,8 +567,10 @@ const Show = () => {
                     </Col>
                   </Row>
                 </CardBody>
+              
               </Card>
             </Col>
+              ) : ''}
           </Row>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

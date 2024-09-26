@@ -589,10 +589,11 @@ const Edit = () => {
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
                             isdisabled:
-                              dataState.approval_status === "PENDING" &&
+                              dataState.approval_status !== "APPROVED" &&
                               (option.value === "PAYMENT-SENT" ||
                                 option.value === "GOODS-RECEIVED"),
                           }))}
+                          isOptionDisabled={(option) => option.isdisabled} // disable an option
                           onChange={handleSelectChange}
                           placeholder="Select an option"
                         />
