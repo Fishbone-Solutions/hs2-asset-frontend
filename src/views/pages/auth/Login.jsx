@@ -88,7 +88,7 @@ function Login() {
             <p
               style={{
                 textAlign: "left",
-                fontSize: "28.3px",
+                fontSize: "29px",
                 color: "white",
                 marginTop: 0,
               }}
