@@ -25,7 +25,6 @@ import { ImStatsBars } from "react-icons/im";
 import PieChart from "components/Common/PieChart";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import moment from "moment";
-import { Tooltip } from "bootstrap";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
