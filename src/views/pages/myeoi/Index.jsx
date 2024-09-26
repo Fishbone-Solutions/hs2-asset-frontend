@@ -20,6 +20,7 @@ import { Form } from "react-router-dom";
 import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/myeoi/Index";
+import ModalComponent from "components/Common/ModalComponent";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -27,8 +28,13 @@ const Index = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
+  const [appliedFilters, setAppliedFilters] = useState([]);
+  const [activeModal, setActiveModal] = useState(null);
+  const openModal = (modalId) => setActiveModal(modalId);
+  const closeModal = () => {
+    console.log("click");
+    setActiveModal(null);
+  };
   const [searchFilter, setSearchFilter] = useState(0);
 
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
@@ -79,10 +85,36 @@ const Index = () => {
 
   useEffect(() => {
     fetchMyEoI();
+    const filters = [];
+    if (filterFormData.id)
+      filters.push({ label: `EOI Id: ${filterFormData.id}`, key: "id" });
+    if (filterFormData.asset_id)
+      filters.push({
+        label: `Asset Id: ${filterFormData.asset_id}`,
+        key: "asset_id",
+      });
+      if (filterFormData.asset_name)
+        filters.push({
+          label: `${filterFormData.asset_name}`,
+          key: "asset_name",
+        });
+    if ((filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null) && (filterFormData.entry_date_to !== '' && filterFormData.entry_date_to !== null))
+      filters.push({
+        label: `submission: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
+        key: ["entry_date_from", "entry_date_to"],
+      });
+
+    setAppliedFilters(filters);
+    console.log("applied filter", appliedFilters, filterFormData);
   }, [searchFilter]);
 
   const handleFilter = () => {
     const updateSearchFilter = searchFilter + 1;
+    setFilterFormData((prevState) => ({
+      ...prevState,
+      entry_date_from: rangeDatesEntry.startDate,
+      entry_date_to: rangeDatesEntry.endDate,
+    }));
     setSearchFilter(updateSearchFilter);
   };
 
@@ -105,6 +137,29 @@ const Index = () => {
     }));
     setClearDateBoolean(false);
   };
+
+  const handleRemoveFilter = (filterKeys) => {
+    // If filterKeys is not an array, convert it into an array
+    const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+    console.log(keys);
+    // Update the filter form state
+    setFilterFormData((prev) => {
+      const updatedState = { ...prev };
+      keys.forEach((key) => {
+        updatedState[key] = key === "status" ? null : ""; // Handle special cases like 'status'
+      });
+      return updatedState;
+    });
+
+    // Remove the filter(s) from the applied filters array
+    setAppliedFilters((prevFilters) =>
+      prevFilters.filter((filter) => !keys.includes(filter.key))
+    );
+    setClearDateBoolean(true);
+    handleFilter();
+ 
+  };
+
   return (
     <>
       <div className="content">
@@ -113,27 +168,39 @@ const Index = () => {
           <Col md="12">
             <Card>
               <CardBody>
-                <Container className="custom-fuild mb-1" fluid>
-                  <Row className="align-items-center">
-                    <Col xs={12} md={12}>
-                      <div className="d-flex justify-content-end align-items-center">
-                        <div className="ms-auto d-inline-flex">
-                          <div
-                            onClick={openModal}
-                            className="icon-style"
-                            style={{ cursor: "pointer" }}
-                          >
-                            <IoSearchSharp
-                              color="white"
-                              size="2.4em"
-                              className="icon-btn"
-                            />
-                          </div>
+                      <div className="float-end d-inline-flex p-2 justify-content-end">
+                        
+                        <div
+                    onClick={() => openModal("filter-modal")}
+                    className="cursor-pointer"
+                    data-bs-placement="top"
+                    title="Inventory Search"
+                  >
+                    <IoSearchSharp
+                      color="white"
+                      size="2.4em"
+                      className="icon-btn"
+                    />
+                  </div>
                         </div>
+                <div className="applied-filters">
+                  {appliedFilters && appliedFilters.length > 0 &&
+                    appliedFilters.map((filter) => (
+                      <div
+                        key={filter.key}
+                        className="filter-tag badge text-black rounded-pill"
+                      >
+                        {filter.label}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFilter(filter.key)}
+                          className="btn text-black p-0 ms-2 "
+                        >
+                          <i className="p-1 rounded-circle  fa fa-times"></i>
+                        </button>
                       </div>
-                    </Col>
-                  </Row>
-                </Container>
+                    ))}
+                </div>
                 <ReactTable
                   data={dataState}
                   columns={TableColumn()}
@@ -145,46 +212,22 @@ const Index = () => {
           </Col>
         </Row>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Filter Modal"
-      >
-        <div className="content2" style={{ overflow: "hidden" }}>
-          <div className="placer">
-            <Form>
-              <Row>
-                <Col md="12">
-                  <Card>
-                    <CardHeader
-                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
-                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
-                    >
-                      <h6 className="text-white m-0 d-flex align-items-center">
-                        <i
-                          className="fa fa-filter me-2 p-1"
-                          style={{
-                            fontSize: "0.9em",
-                            backgroundColor: "#52CBCE",
-                            border: "2px solid #52CBCE",
-                            borderRadius: "15%",
-                          }}
-                        ></i>
+      <ModalComponent
+        modalId="filter-modal"
+        title={
+          <h6 className="text-white m-0 d-flex align-items-center">
+                        <IoSearchSharp
+                          width="30"
+                          height="30"
+                          size="1.4rem"
+                          className="me-2"
+                        />
                         Filter
                       </h6>
-                      <button
-                        type="button"
-                        onClick={closeModal}
-                        aria-label="Close"
-                      >
-                        <i
-                          className="fa fa-times text-red"
-                          style={{ fontSize: "1em" }}
-                        ></i>
-                      </button>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
+        }
+        content={
+          <>
+          <Row>
                         <Col sm="6">
                           <FormGroup floating>
                             <Input
@@ -252,30 +295,17 @@ const Index = () => {
                           </FormGroup>
                         </Col>
                       </Row>
-                      <div className="d-flex justify-content-end gap-1">
-                        <button
-                          className="btn btn-primary px-2 py-2"
-                          onClick={handleClear}
-                          type="button"
-                        >
-                          Clear
-                        </button>
-                        <button
-                          className="btn btn-success submission px-2 py-2"
-                          type="button"
-                          onClick={handleFilter}
-                        >
-                          Filter
-                        </button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        </div>
-      </Modal>
+          </>
+        }
+        showModal={activeModal === "filter-modal"}
+        onCloseCross={closeModal}
+        onClose={handleClear}
+        onSubmit={handleFilter}
+        closeButtonText="Clear"
+        submitButtonText="Filter"
+        closeButtonColor="red" // Dynamic color for close button
+        submitButtonColor="green" // Dynamic color for submit button
+      />
     </>
   );
 };
