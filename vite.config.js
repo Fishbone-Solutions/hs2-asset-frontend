@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import * as Popper from "@popperjs/core";
 import path from "path";
 
 export default defineConfig({

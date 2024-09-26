@@ -304,8 +304,9 @@ const Index = () => {
       (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
     );
 
+    // Cleanup tooltips on unmount
     return () => {
-      tooltips.forEach((tooltip) => tooltip.dispose()); // Clean up on component unmount
+      tooltips.forEach((tooltip) => tooltip.dispose());
     };
   }, []);
   return (
