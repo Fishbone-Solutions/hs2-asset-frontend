@@ -4,9 +4,6 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    include: ["@popperjs/core"],
-  },
   define: {
     "process.env": process.env,
   },

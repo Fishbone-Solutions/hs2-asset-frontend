@@ -262,6 +262,32 @@ const Edit = () => {
     { value: "GOODS-SENT", label: "Goods Sent" },
   ];
 
+  const handleUndoStatus = async () => {
+    try {
+      const res = await EndPointService.inventoryUndoStatus(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      showAlert({
+        title:
+          res.appRespData[0].eoi_undo_last_activity !== -1
+            ? `Undo Current Status`
+            : "Can not undo Status set by seller",
+        type:
+          res.appRespData[0].eoi_undo_last_activity !== -1
+            ? "success"
+            : "error",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate(`/admin/inventory/${inventoryId}/eois/edit/${eoiId}`);
+        },
+      });
+    } catch (e) {}
+  };
+
   return (
     <>
       <div className="content">
@@ -527,9 +553,23 @@ const Edit = () => {
                     }}
                   >
                     {"EoI Status"}
-                    <span className="float-right">
-                      <Button className="btn btn-danger p-1 position-absolute top-0 end-1">
-                        <FcUndo size="2em" />
+                    <span className="float-right p-2">
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          showAlert({
+                            title: `Are you sure?`,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmText: "Yes",
+                            onConfirm: () => {
+                              handleUndoStatus();
+                            },
+                          });
+                        }}
+                        className="undo-icon p-1 top-0 end-0 position-absolute bg-transparent "
+                      >
+                        <FcUndo size="2em" color="red" />
                       </Button>
                     </span>
                   </CardTitle>

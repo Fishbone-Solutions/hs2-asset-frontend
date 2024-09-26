@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import DynamicToast from "components/Common/Toast";
 import { EndPointService } from "@/services/methods";
 import {
@@ -10,7 +10,6 @@ import {
   CardHeader,
   Label,
   FormGroup,
-  Modal,
 } from "reactstrap";
 import { IoSearchSharp, IoAddCircleOutline } from "react-icons/io5";
 import ReactTable from "components/ReactTable/ReactTable";
@@ -25,6 +24,8 @@ import { ImStatsBars } from "react-icons/im";
 import PieChart from "components/Common/PieChart";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import moment from "moment";
+import { Modal } from "bootstrap";
+import ModalComponent from "components/Common/ModalComponent";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -35,9 +36,22 @@ const Index = () => {
   const [toastMessage, setToastMessage] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpenPie, setModalIsOpenPie] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
+  const openModal = (modalId) => setActiveModal(modalId);
+  const closeModal = () => {
+    console.log("click");
+    setActiveModal(null);
+  };
 
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
+  // const modalRef = useRef(null);
+
+  // const openModal = () => {
+  //   const modal = new Modal(modalRef.current);
+  //   modal.show();
+  // };
+
+  // // const openModal = () => setModalIsOpen(true);
+  // const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
   const [refreshData, setRefreshData] = useState(0);
   const [rangeDatesEntry, setRangeDatesEntry] = useState({
@@ -323,11 +337,9 @@ const Index = () => {
                       className="icon-btn"
                     />
                   </div>
-                  <button
-                    type="button"
-                    data-bs-target="#exampleModal"
+                  <div
+                    onClick={() => openModal("filter-modal")}
                     className="mr-2 cursor-pointer"
-                    data-bs-toggle="modal"
                     data-bs-placement="top"
                     title="Inventory Search"
                   >
@@ -336,7 +348,7 @@ const Index = () => {
                       size="2.4em"
                       className="icon-btn"
                     />
-                  </button>
+                  </div>
                   <NavLink to="/admin/inventory/create">
                     <div
                       data-bs-toggle="tooltip"
@@ -382,288 +394,106 @@ const Index = () => {
         </Row>
       </div>
 
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Open Modal
-      </button>
+      <ModalComponent
+        modalId="filter-modal"
+        title={
+          <span>
+            <i
+              className="fa fa-filter me-2 p-1"
+              style={{
+                fontSize: "0.9em",
+                backgroundColor: "#52CBCE",
+                border: "2px solid #52CBCE",
+                borderRadius: "15%",
+              }}
+            ></i>
+            Filter
+          </span>
+        }
+        content={
+          <Row>
+            <Col sm="6">
+              <FormGroup floating>
+                <Input
+                  type="text"
+                  value={filterDataState.id}
+                  onChange={(e) =>
+                    setFilterDataState((previousState) => ({
+                      ...previousState,
+                      id: e.target.value,
+                    }))
+                  }
+                  name="id"
+                  id="id"
+                  placeholder="id"
+                />
+                <Label for="id">ID</Label>
+              </FormGroup>
+            </Col>
+            <Col sm="6">
+              <FormGroup floating>
+                <Input
+                  id="name"
+                  value={filterDataState.asset_name}
+                  onChange={(e) =>
+                    setFilterDataState((previousState) => ({
+                      ...previousState,
+                      asset_name: e.target.value,
+                    }))
+                  }
+                  type="text"
+                  name="asset_name"
+                  placeholder="name"
+                />
+                <Label for="name">Name</Label>
+              </FormGroup>
+            </Col>
 
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">Modal content goes here...</div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+            <Col sm="6">
+              <div className="placer2">
+                <FormGroup>
+                  <DateRangePicker
+                    label="Entry Range"
+                    clearDates={clearDateBoolean}
+                    onChange={handleEntryDate}
+                  />
+                </FormGroup>
+              </div>
+            </Col>
 
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">...</div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* { filter modal } */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Filter Modal"
-      >
-        <div className="content2" style={{ overflow: "hidden" }}>
-          <div className="placer">
-            <Form>
-              <Row>
-                <Col md="12">
-                  <Card>
-                    <CardHeader
-                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
-                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
-                    >
-                      <h6 className="text-white m-0 d-flex align-items-center">
-                        <i
-                          className="fa fa-filter me-2 p-1"
-                          style={{
-                            fontSize: "0.9em",
-                            backgroundColor: "#52CBCE",
-                            border: "2px solid #52CBCE",
-                            borderRadius: "15%",
-                          }}
-                        ></i>
-                        Filter
-                      </h6>
-                      <button
-                        type="button"
-                        onClick={closeModal}
-                        aria-label="Close"
-                      >
-                        <i
-                          className="fa fa-times text-red"
-                          style={{ fontSize: "1em" }}
-                        ></i>
-                      </button>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col sm="6">
-                          <FormGroup floating>
-                            <Input
-                              type="text"
-                              value={filterDataState.id}
-                              onChange={(e) =>
-                                setFilterDataState((previousState) => ({
-                                  ...previousState,
-                                  id: e.target.value,
-                                }))
-                              }
-                              name="id"
-                              id="id"
-                              placeholder="id"
-                            />
-                            <Label for="id">ID</Label>
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <FormGroup floating>
-                            <Input
-                              id="name"
-                              value={filterDataState.asset_name}
-                              onChange={(e) =>
-                                setFilterDataState((previousState) => ({
-                                  ...previousState,
-                                  asset_name: e.target.value,
-                                }))
-                              }
-                              type="text"
-                              name="asset_name"
-                              placeholder="name"
-                            />
-                            <Label for="name">Name</Label>
-                          </FormGroup>
-                        </Col>
+            <Col sm="6">
+              <FormGroup>
+                <DateRangePicker
+                  label="Availability Range"
+                  clearDates={clearDateBoolean}
+                  selectedRange={[
+                    filterFormData.available_from, // Start date
+                    filterFormData.available_to, // End date
+                  ]}
+                  onChange={handleAvailablilityDate}
+                />
+              </FormGroup>
+            </Col>
 
-                        <Col sm="6">
-                          <div className="placer2">
-                            <FormGroup>
-                              <DateRangePicker
-                                label="Entry Range"
-                                clearDates={clearDateBoolean}
-                                onChange={handleEntryDate}
-                              />
-                            </FormGroup>
-                          </div>
-                        </Col>
-
-                        <Col sm="6">
-                          <FormGroup>
-                            <DateRangePicker
-                              label="Availability Range"
-                              clearDates={clearDateBoolean}
-                              selectedRange={[
-                                filterFormData.available_from, // Start date
-                                filterFormData.available_to, // End date
-                              ]}
-                              onChange={handleAvailablilityDate}
-                            />
-                          </FormGroup>
-                        </Col>
-
-                        <Col sm="6">
-                          <FloatingLabelDropdown
-                            label="Status"
-                            options={inventoryStatusOptions}
-                            onChange={handleSelectChange}
-                            clearSelection={clearDateBoolean}
-                          />
-                        </Col>
-                      </Row>
-                      <div className="d-flex justify-content-end gap-1">
-                        <button
-                          className="btn btn-primary px-2 py-2"
-                          type="button"
-                          onClick={handleClear}
-                        >
-                          Clear
-                        </button>
-                        <button
-                          className="btn btn-success submission px-2 py-2"
-                          type="button"
-                          onClick={handleFilter}
-                        >
-                          Filter
-                        </button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        </div>
-      </Modal>
-
-      {/* { filter modal } */}
-      <Modal
-        isOpen={modalIsOpenPie}
-        onRequestClose={closeModal}
-        contentLabel="Filter Modal"
-      >
-        <div className="content2" style={{ overflow: "hidden" }}>
-          <div className="placer">
-            <Form>
-              <Row>
-                <Col md="12">
-                  <Card>
-                    <CardHeader
-                      className="d-flex justify-content-between align-items-center bg-info p-2 card-header-custom"
-                      style={{ height: "32px", backgroundColor: "#52CBCE" }}
-                    >
-                      <h6 className="text-white m-0 d-flex align-items-center">
-                        <i
-                          className="fa fa-filter me-2 p-1"
-                          style={{
-                            fontSize: "0.9em",
-                            backgroundColor: "#52CBCE",
-                            border: "2px solid #52CBCE",
-                            borderRadius: "15%",
-                          }}
-                        ></i>
-                        Filter
-                      </h6>
-                      <button
-                        type="button"
-                        onClick={closeModal}
-                        aria-label="Close"
-                      >
-                        <i
-                          className="fa fa-times text-red"
-                          style={{ fontSize: "1em" }}
-                        ></i>
-                      </button>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col>
-                          <PieChart data={graphData} />
-                        </Col>
-                      </Row>
-                      <div className="d-flex justify-content-end gap-1">
-                        <button
-                          className="btn btn-primary px-2 py-2"
-                          type="button"
-                          onClick={handleClear}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        </div>
-      </Modal>
+            <Col sm="6">
+              <FloatingLabelDropdown
+                label="Status"
+                options={inventoryStatusOptions}
+                onChange={handleSelectChange}
+                clearSelection={clearDateBoolean}
+              />
+            </Col>
+          </Row>
+        }
+        showModal={activeModal === "filter-modal"}
+        onCloseCross={closeModal}
+        onClose={handleClear}
+        onSubmit={handleFilter}
+        closeButtonText="Clear"
+        submitButtonText="Filter"
+        closeButtonColor="red" // Dynamic color for close button
+        submitButtonColor="green" // Dynamic color for submit button
+      />
     </>
   );
 };

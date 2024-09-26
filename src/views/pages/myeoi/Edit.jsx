@@ -27,6 +27,7 @@ import { myEoIUpdateoptions } from "variables/common";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "components/Common/NotificationAlert";
+import { FcUndo } from "react-icons/fc";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -205,6 +206,32 @@ const Edit = () => {
 
   const submitApproval = () => {
     console.log("approval");
+  };
+
+  const handleUndoStatus = async () => {
+    try {
+      const res = await EndPointService.inventoryUndoStatus(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      showAlert({
+        title:
+          res.appRespData[0].eoi_undo_last_activity !== -1
+            ? `Undo Current Status`
+            : "Can not undo Status set by Buyer",
+        type:
+          res.appRespData[0].eoi_undo_last_activity !== -1
+            ? "success"
+            : "error",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          navigate(`/admin/myeoi/${inventoryId}/eois/edit/${eoiId}`);
+        },
+      });
+    } catch (e) {}
   };
 
   return (
@@ -525,6 +552,25 @@ const Edit = () => {
                     }}
                   >
                     Acknowledgement To Seller
+                    <span className="float-right p-2">
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          showAlert({
+                            title: `Are you sure?`,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmText: "Yes",
+                            onConfirm: () => {
+                              handleUndoStatus();
+                            },
+                          });
+                        }}
+                        className="undo-icon p-1 top-0 end-0 position-absolute bg-transparent "
+                      >
+                        <FcUndo size="2em" color="red" />
+                      </Button>
+                    </span>
                   </CardTitle>
                 </CardHeader>
 

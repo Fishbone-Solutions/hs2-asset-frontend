@@ -18,6 +18,8 @@ import {
   Label,
   FormGroup,
   Modal,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
@@ -603,7 +605,16 @@ const Edit = () => {
                         <Col sm="6">
                           <Label className="required">Estimated Value </Label>
                           <FormGroup>
-                            <Field type="text" name="value" as={Input} />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="number"
+                                name="value"
+                                as={Input}
+                                min="0" // Ensures no negative values
+                                step="0.01" // Allows decimal/floating-point values
+                              />
+                            </InputGroup>
                             <ErrorMessage
                               name="value"
                               component="div"
@@ -655,11 +666,16 @@ const Edit = () => {
                         <Col sm="6">
                           <Label>Purcahse Value </Label>
                           <FormGroup>
-                            <Field
-                              type="text"
-                              name="purchase_price"
-                              as={Input}
-                            />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="number"
+                                name="purchase_price"
+                                as={Input}
+                                min="0" // Ensures no negative values
+                                step="0.01" // Allows decimal/floating-point values
+                              />
+                            </InputGroup>
                             <ErrorMessage
                               name="purchase_price"
                               component="div"

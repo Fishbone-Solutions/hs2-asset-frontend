@@ -934,3 +934,20 @@ label.required::after {
   cursor: pointer;
   margin: 1px 1px;
 }
+.undo-icon:hover {
+  background-color: transparent !important;
+}
+.undo-icon {
+  background-color: transparent !important;
+}
+.input-group-text {
+  padding: 0.1rem 0.75rem;
+}
+button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-button-danger {
+  float: left;
+}
+.p-fileupload-row > div {
+  flex: 0 1 auto;
+  width: 27%;
+  margin-top: 11px;
+}

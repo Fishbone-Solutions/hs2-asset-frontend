@@ -36,7 +36,7 @@ const useColumns = (handleDelete) => {
         Header: "Approval",
         isSortable: true,
         accessor: "approval_status",
-        width: "6%",
+        width: "1%",
         Cell: ({ row }) => {
           const statusCode = row.original.approval_status;
           const statusStyles = {

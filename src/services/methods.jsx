@@ -112,6 +112,14 @@ function inventoryStatsAgainOrgainsation(headers = null, queryParams) {
   );
 }
 
+function inventoryUndoStatus(headers = null, inventoryId, eoiId) {
+  return Post(
+    `${endpoints.inventoryUndoStatus(inventoryId, eoiId)}`,
+    headers,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -135,4 +143,5 @@ export const EndPointService = {
   createApprovalRequest,
   deleteApprovalRequest,
   inventoryStatsAgainOrgainsation,
+  inventoryUndoStatus,
 };
