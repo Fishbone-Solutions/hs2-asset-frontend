@@ -77,7 +77,7 @@ const verifyEmail = (value) => {
               marginBottom: -10,
             }}
           >
-            Connecting Buyers & Sellers
+           Supporting Reusability
           </p>
           <p
             style={{
