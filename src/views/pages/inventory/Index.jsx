@@ -296,19 +296,6 @@ const Index = () => {
     });
   };
 
-  useEffect(() => {
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    const tooltips = [...tooltipTriggerList].map(
-      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
-    );
-
-    // Cleanup tooltips on unmount
-    return () => {
-      tooltips.forEach((tooltip) => tooltip.dispose());
-    };
-  }, []);
   return (
     <>
       <div className="content">
