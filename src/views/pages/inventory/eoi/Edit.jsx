@@ -26,6 +26,7 @@ import { approvalStatusOptions } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
 import { FcUndo } from "react-icons/fc";
+import UndoIcon from "components/svg/Undo";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -558,18 +559,19 @@ const Edit = () => {
                         type="button"
                         onClick={() => {
                           showAlert({
-                            title: `Are you sure?`,
+                            title: `Are you sure you wish to Undo current EOI status ?`,
                             type: "warning",
-                            showCancelButton: false,
+                            showCancelButton: true,
                             confirmText: "Yes",
+                            onCancel: hideAlert,
                             onConfirm: () => {
                               handleUndoStatus();
                             },
                           });
                         }}
-                        className="undo-icon p-1 top-0 end-0 position-absolute bg-transparent "
+                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <FcUndo size="2em" color="red" />
+                       <UndoIcon />
                       </Button>
                     </span>
                   </CardTitle>

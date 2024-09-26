@@ -43,16 +43,6 @@ const ModalComponent = ({
     onCloseCross();
   };
 
-  //   const handleClose = () => {
-  //     console.log("Handle close called");
-  //     onClose();
-  //     const modalElement = document.getElementById(modalId);
-  //     const bsModal = Modal.getInstance(modalElement); // Get current modal instance
-  //     if (bsModal) {
-  //       bsModal.hide(); // Hide the modal
-  //       // Manually remove backdrop if necessary
-  //     }
-  //   };
   return (
     <div
       className="modal fade"
@@ -63,7 +53,7 @@ const ModalComponent = ({
     >
       <div className="modal-dialog">
         <div className="modal-content">
-          <div className="modal-header d-flex justify-content-between align-items-center pr-3  card-header-custom card-header">
+          <div className="modal-header d-flex justify-content-between align-items-center pr-3 m-1 card-header-custom card-header">
             <h6
               className="modal-title text-white m-0 d-flex align-items-center"
               id={`${modalId}Label`}

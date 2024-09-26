@@ -557,7 +557,7 @@ const Edit = () => {
                         type="button"
                         onClick={() => {
                           showAlert({
-                            title: `Are you sure?`,
+                            title: `Are you sure you wish to Undo current EOI status ?`,
                             type: "warning",
                             showCancelButton: false,
                             confirmText: "Yes",
