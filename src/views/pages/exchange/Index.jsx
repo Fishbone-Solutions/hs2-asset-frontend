@@ -36,6 +36,7 @@ import SvgSearchPlus from "components/svg/SearchPlus";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
 import { categorycode1 } from "variables/common";
 import { subCategory } from "variables/common";
+import ModalComponent from "components/Common/ModalComponent";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -77,6 +78,7 @@ const Index = () => {
   });
 
   const getValueOrDefault = (value) => (value ? value : "-1");
+  const [activeModal, setActiveModal] = useState(null);
 
   const fetchInventory = async () => {
     try {
@@ -164,12 +166,13 @@ const Index = () => {
     }
   };
 
-  const openModal = () => {
+  const openModal = (modalId) => {
     setModalIsOpen(true);
     if (inputValue.length > 0) {
       setFilterFormDate({ ...filterFormData, asset_name: "" });
       clearInput();
     }
+    setActiveModal(modalId);
   };
 
   const handleInputChange = (e) => {
@@ -199,7 +202,7 @@ const Index = () => {
     setFilterDataState({ ...filterDataState, subCategory: subCategory.value });
     setClearDateBoolean(false);
   };
-  const closeModal = () => setModalIsOpen(false);
+  const closeModal = () => setActiveModal(null);
 
   return (
     <>
@@ -262,7 +265,7 @@ const Index = () => {
                             />
                           </div>
                           <div
-                            onClick={openModal}
+                            onClick={() => openModal('filter-modal')}
                             className="me-2 icon-style"
                             style={{ cursor: "pointer" }}
                             data-bs-toggle="tooltip"
@@ -307,8 +310,123 @@ const Index = () => {
           </Col>
         </Row>
       </div>
+      
+      <ModalComponent
+        modalId="filter-modal"
+        title={
+          <h6 className="text-white m-0 d-flex align-items-center">
+                        <SvgSearchPlus
+                          width="25"
+                          height="25"
+                          className="me-2"
+                        />
+                        Advanced Search
+                      </h6>
+        }
+        content={
+          <>
+          <Row>
+          <Col sm="6">
+            <FormGroup floating>
+              <Input
+                id="id"
+                name="id"
+                value={filterDataState.id}
+                onChange={(e) =>
+                  setFilterDataState((previousState) => ({
+                    ...previousState,
+                    id: e.target.value,
+                  }))
+                }
+                placeholder="ID"
+                type="number"
+              />
+              <Label for="id">ID</Label>
+            </FormGroup>
+          </Col>
 
-      <Modal
+          <Col sm="6">
+            <FormGroup floating>
+              <Input
+                id="assetName"
+                name="name"
+                value={filterDataState.asset_name}
+                onChange={(e) =>
+                  setFilterDataState((previousState) => ({
+                    ...previousState,
+                    asset_name: e.target.value,
+                  }))
+                }
+                placeholder="name"
+                type="text"
+              />
+              <Label for="assetName">Name</Label>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="6">
+            <FloatingLabelDropdown
+              label="Category"
+              options={categorycode1}
+              onChange={handleCategoryChange}
+              clearSelection={clearDateBoolean}
+            />
+          </Col>
+          <Col sm="6">
+            <FloatingLabelDropdown
+              label="Sub-Category"
+              options={subCategory}
+              onChange={handleSubCategoryChange}
+              clearSelection={clearDateBoolean}
+            />
+          </Col>
+
+          <Col sm="6">
+            <FormGroup>
+              <DateRangePicker
+                label="Availability Range"
+                inputName="availablility_range"
+                onChange={handleDate}
+                clearDates={clearDateBoolean}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col sm="6">
+            <FormGroup floating>
+              <Input
+                id="location"
+                name="name"
+                value={filterDataState.location}
+                onChange={(e) =>
+                  setFilterDataState((previousState) => ({
+                    ...previousState,
+                    location: e.target.value,
+                  }))
+                }
+                placeholder="location"
+                type="text"
+              />
+              <Label for="assetName">Location</Label>
+            </FormGroup>
+          </Col>
+        </Row>
+        </>
+        }
+        showModal={activeModal === "filter-modal"}
+        onCloseCross={closeModal}
+        onClose={handleClearClick}
+        onSubmit={handleAdvancedFilter}
+        closeButtonText="Clear"
+        submitButtonText="Filter"
+        closeButtonColor="red" // Dynamic color for close button
+        submitButtonColor="green" // Dynamic color for submit button
+      />
+
+
+
+      {/* <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Filter Modal"
@@ -448,7 +566,7 @@ const Index = () => {
             </Form>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

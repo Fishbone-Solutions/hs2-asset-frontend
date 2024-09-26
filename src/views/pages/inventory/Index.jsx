@@ -34,8 +34,6 @@ const Index = () => {
 
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalIsOpenPie, setModalIsOpenPie] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const openModal = (modalId) => setActiveModal(modalId);
   const closeModal = () => {
@@ -43,15 +41,6 @@ const Index = () => {
     setActiveModal(null);
   };
 
-  // const modalRef = useRef(null);
-
-  // const openModal = () => {
-  //   const modal = new Modal(modalRef.current);
-  //   modal.show();
-  // };
-
-  // // const openModal = () => setModalIsOpen(true);
-  // const closeModal = () => setModalIsOpen(false);
   const { username } = useContext(GlobalContext);
   const [refreshData, setRefreshData] = useState(0);
   const [rangeDatesEntry, setRangeDatesEntry] = useState({
