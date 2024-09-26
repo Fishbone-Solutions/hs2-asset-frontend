@@ -69,7 +69,7 @@ const verifyEmail = (value) => {
     <Container>
       {alert}
       <Row>
-        <Col className="ml-auto mr-auto" lg="4" md="6">
+        <Col className="ml-auto mr-auto width-login" lg="4" md="6">
           <p
             style={{
               textAlign: "right",
@@ -82,7 +82,7 @@ const verifyEmail = (value) => {
           <p
             style={{
               textAlign: "left",
-              fontSize: "28.3px",
+              fontSize: "29px",
               color: "white",
               marginTop: 0,
             }}
