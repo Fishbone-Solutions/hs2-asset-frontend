@@ -300,11 +300,14 @@ const Index = () => {
     const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'
     );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new Tooltip(tooltipTriggerEl);
-    });
-  }, []);
+    const tooltips = [...tooltipTriggerList].map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+    );
 
+    return () => {
+      tooltips.forEach((tooltip) => tooltip.dispose()); // Clean up on component unmount
+    };
+  }, []);
   return (
     <>
       <div className="content">
