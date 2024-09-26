@@ -75,7 +75,7 @@ function Login() {
       <Container>
         {alert}
         <Row>
-          <Col className="ml-auto mr-auto" lg="3" md="6">
+          <Col className="ml-auto mr-auto width-login" lg="4" md="4">
             <p
               style={{
                 textAlign: "right",
