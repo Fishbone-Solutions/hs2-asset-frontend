@@ -26,7 +26,7 @@ export const initialInventoryValues = {
   date_of_purchase: "",
   contract_no: "",
   purchase_price: "",
-  sold_value: "Pending",
+  sold_value: "",
   city: "",
   area: "",
   post_code: "",
