@@ -27,6 +27,7 @@ import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
 import { FcUndo } from "react-icons/fc";
 import UndoIcon from "components/svg/Undo";
+import ModalComponent from "components/Common/ModalComponent";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -41,9 +42,17 @@ const Edit = () => {
   const usersInformation = JSON.parse(sessionStorage.getItem("user"));
   const [approvals, setApprovals] = useState([]);
   const [selectedApproval, setSelectedApproval] = useState(null);
+  const [activeModal, setActiveModal] = useState(null);
+  const openModal = (modalId) => setActiveModal(modalId);
+  const closeModal = () => {
+    console.log("click");
+    setActiveModal(null);
+  };
   // Create a ref to hold the latest params value
   const latestSelectedApprovalRef = useRef(selectedApproval);
   const navigate = useNavigate();
+
+  const [refreshModal, setRefreshModal] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -81,7 +90,7 @@ const Edit = () => {
     console.log("selectedApproval", selectedApproval);
     if (selectedApproval != null) {
       latestSelectedApprovalRef.current = selectedApproval;
-      handleApprove();
+      setRefreshModal(refreshModal+1);
     }
   }, [selectedApproval]);
 
@@ -178,7 +187,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/inventory/${inventoryId}/eois/edit/${eoiId}`);
+          navigate(`/admin/eois/inventory/${inventoryId}`);
         },
       });
 
@@ -217,9 +226,9 @@ const Edit = () => {
         <span className="d-flex flex-wrap justify-content-left text-black mt-2">
           {selectedApproverDetails ? (
             <>
-              <div className="sweet-alert-content">
+              <div className="sweet-alert-content w-full">
                 Email: {selectedApproverDetails.email}
-              </div>
+              </div><br />
               <div className="sweet-alert-content">
                 Contact: {selectedApproverDetails.contact_no}
               </div>
@@ -232,24 +241,24 @@ const Edit = () => {
     );
   };
 
-  const handleApprove = () => {
-    showAlert({
-      customHeader: (
-        <header class="py-2 mb-4 border-bottom sweet-alert-header">
-          <div class="container d-flex flex-wrap justify-content-left">
-            <span class="fs-6 text-white">REQUEST APPROVAL</span>
-          </div>
-        </header>
-      ),
-      confirmText: "Send Request",
-      onConfirm: async () => {
-        await approvalRequest(); // No need to pass params, we'll use the ref
-      },
-      onCancel: hideAlert,
-      showCancelButton: true,
-      content: <ApproverSelectionContent />, // Use functional component here
-    });
-  };
+  // const handleApprove = () => {
+  //   showAlert({
+  //     customHeader: (
+  //       <header class="py-2 mb-4 border-bottom sweet-alert-header">
+  //         <div class="container d-flex flex-wrap justify-content-left">
+  //           <span class="fs-6 text-white">REQUEST APPROVAL</span>
+  //         </div>
+  //       </header>
+  //     ),
+  //     confirmText: "Send Request",
+  //     onConfirm: async () => {
+  //       await approvalRequest(); // No need to pass params, we'll use the ref
+  //     },
+  //     onCancel: hideAlert,
+  //     showCancelButton: true,
+  //     content: <ApproverSelectionContent />, // Use functional component here
+  //   });
+  // };
 
   const submitApproval = () => {
     console.log("approval");
@@ -273,8 +282,8 @@ const Edit = () => {
       showAlert({
         title:
           res.appRespData[0].eoi_undo_last_activity !== -1
-            ? `Undo Current Status`
-            : "Can not undo Status set by seller",
+            ? `Current Status reverted`
+            : "Can not Undo Status. The Status was set by the Buyer",
         type:
           res.appRespData[0].eoi_undo_last_activity !== -1
             ? "success"
@@ -610,7 +619,7 @@ const Edit = () => {
           </Row>
           {alert}
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button color="primary" onClick={handleApprove} type="button">
+            <Button color="primary" onClick={() => openModal('approval-modal')} type="button">
               REQUEST APPROVAL
             </Button>
             <Button
@@ -631,6 +640,32 @@ const Edit = () => {
           </div>
         </Form>
       </div>
+
+      <ModalComponent
+        
+        modalId="approval-modal"
+        title={
+          <h6 className="text-white m-0 d-flex align-items-center">
+                        
+                        APPROVE REQUEST
+                      </h6>
+        }
+        content={
+          <ApproverSelectionContent key={refreshModal} />
+        }
+        showModal={activeModal === "approval-modal"}
+        onCloseCross={closeModal}
+        onSubmit={() => {showAlert({
+          title: "Are you sure?",
+          type: "warning",
+          onConfirm: () => approvalRequest(),
+          onCancel: hideAlert,
+        })}}
+        closeButtonText="Cancel"
+        submitButtonText="Send Request"
+        closeButtonColor="red" // Dynamic color for close button
+        submitButtonColor="green" // Dynamic color for submit button
+      />
     </>
   );
 };

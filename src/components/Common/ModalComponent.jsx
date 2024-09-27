@@ -43,6 +43,10 @@ const ModalComponent = ({
     onCloseCross();
   };
 
+  const handleCancel = () => {
+    onClose();
+  }
+
   return (
     <div
       className="modal fade"
@@ -72,7 +76,7 @@ const ModalComponent = ({
             <button
               type="button"
               className="btn btn-primary px-2 py-2"
-              onClick={onClose}
+              onClick={handleCancel}
               style={{
                 backgroundColor: closeButtonColor,
                 borderColor: closeButtonColor,

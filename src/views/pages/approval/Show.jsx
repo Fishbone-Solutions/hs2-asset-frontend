@@ -24,6 +24,7 @@ import ActivityTable from "components/Common/EoiTrackingHistory";
 import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ModalComponent from "components/Common/ModalComponent";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -37,6 +38,18 @@ const Show = () => {
   const headers = { user_id: sessionStorage.getItem("username") };
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const [updateInput, setUpdateInput] = useState(0);
+  const [activeModal, setActiveModal] = useState(null);
+  const openModal = (modalId) => setActiveModal(modalId);
+  const closeModal = () => {
+    const modalElement = document.getElementById(activeModal);
+    modalElement.classList.remove("show");
+    modalElement.style.display = "none"; // Hides the modal
+    const backdropElement = document.querySelector(".modal-backdrop");
+    if (backdropElement) {
+      backdropElement.remove();
+    }
+    setActiveModal(null);
+  };
 
   const navigate = useNavigate();
   const [params, setParams] = useState({
@@ -105,43 +118,44 @@ const Show = () => {
       approval_status: type,
       approval_ref_no: "",
     }));
+    openModal('approval-modal');
 
-    showAlert({
-      customHeader: (
-        <header class="py-2 mb-4 border-bottom sweet-alert-header">
-          <div class="container d-flex flex-wrap justify-content-left">
-            <span class="fs-6 text-white">{type} REQUEST</span>
-          </div>
-        </header>
-      ),
-      confirmText: type === "APPROVED" ? "APPROVE" : "REJECT",
-      //title: type === "APPROVED" ? "APPROVAL" : type,
-      //type: "info",
-      onConfirm: async () => {
-        await approvalRequest(type); // No need to pass params, we'll use the ref
-      },
-      onCancel: hideAlert,
-      showCancelButton: true,
-      content: (
-        <div className="d-flex flex-wrap justify-content-left text-black mt-2">
-          <label className="" htmlFor="">
-            {type === "APPROVED"
-              ? `Enter CEMAR Ref No to Approve this request`
-              : `Enter reason of Rejection`}
-          </label>
-          <input
-            type="text"
-            key={updateInput} // Forcing re-render when state changes
-            className="form-control"
-            value={params.approval_ref_no} // Binding to params state
-            onChange={handleModalInput} // Calling handler directly
-            placeholder={
-              type === "APPROVED" ? `CEMAR Ref No` : `Reason of Rejection`
-            }
-          />
-        </div>
-      ),
-    });
+    // showAlert({
+    //   customHeader: (
+    //     <header class="py-2 mb-4 border-bottom sweet-alert-header">
+    //       <div class="container d-flex flex-wrap justify-content-left">
+    //         <span class="fs-6 text-white">{type} REQUEST</span>
+    //       </div>
+    //     </header>
+    //   ),
+    //   confirmText: type === "APPROVED" ? "APPROVE" : "REJECT",
+    //   //title: type === "APPROVED" ? "APPROVAL" : type,
+    //   //type: "info",
+    //   onConfirm: async () => {
+    //     await approvalRequest(type); // No need to pass params, we'll use the ref
+    //   },
+    //   onCancel: hideAlert,
+    //   showCancelButton: true,
+    //   content: (
+    //     <div className="d-flex flex-wrap justify-content-left text-black mt-2">
+    //       <label className="" htmlFor="">
+    //         {type === "APPROVED"
+    //           ? `Enter CEMAR Ref No to Approve this request`
+    //           : `Enter reason of Rejection`}
+    //       </label>
+    //       <input
+    //         type="text"
+    //         key={updateInput} // Forcing re-render when state changes
+    //         className="form-control"
+    //         value={params.approval_ref_no} // Binding to params state
+    //         onChange={handleModalInput} // Calling handler directly
+    //         placeholder={
+    //           type === "APPROVED" ? `CEMAR Ref No` : `Reason of Rejection`
+    //         }
+    //       />
+    //     </div>
+    //   ),
+    // });
   };
 
   // Approval request function that uses the ref to get the latest params
@@ -538,51 +552,81 @@ const Show = () => {
             >
               CLOSE
             </Button>
-            {dataState.approval_status === "PENDING" && (
               <>
                 <Button
                   className="btn btn-success success-btn"
                   color="primary"
                   style={{ visibility: "visible", opacity: 1 }}
-                  onClick={() => {
-                    showAlert({
-                      title: `Are you sure you want to approve it ?`,
-                      type: "warning",
-                      showCancelButton: true,
-                      confirmText: "Yes",
-                      onCancel: hideAlert,
-                      onConfirm: () => {
-                        handleRequestApprovalOrRejected("APPROVED");
-                      },
-                    });
-                  }}
+                  onClick={() => handleRequestApprovalOrRejected("APPROVED")}
+                 
                 >
                   Approve
                 </Button>
                 <Button
                   className="btn btn-danger danger-btn"
                   color="secondary"
-                  onClick={() => {
-                    showAlert({
-                      title: `Are you sure you want to reject it ?`,
-                      type: "warning",
-                      showCancelButton: true,
-                      confirmText: "Yes",
-                      onCancel: hideAlert,
-                      onConfirm: () => {
-                        handleRequestApprovalOrRejected("REJECTED");
-                      },
-                    });
+                  onClick={() => {handleRequestApprovalOrRejected("REJECTED")
+                    // showAlert({
+                    //   title: `Are you sure you want to reject it ?`,
+                    //   type: "warning",
+                    //   showCancelButton: true,
+                    //   confirmText: "Yes",
+                    //   onCancel: hideAlert,
+                    //   onConfirm: () => {
+                    //     handleRequestApprovalOrRejected("REJECTED");
+                    //   },
+                    // });
                   }}
                   style={{ visibility: "visible", opacity: 1 }}
                 >
                   Reject
                 </Button>
               </>
-            )}
           </div>
         </Form>
       </div>
+
+      <ModalComponent
+        modalId="approval-modal"
+        title={
+          <h6 className="text-white m-0 d-flex align-items-center">
+                        
+                        {params.approval_status} REQUEST
+                      </h6>
+        }
+        content={
+          <div className="d-flex flex-wrap justify-content-left text-black mt-2">
+          <label className="" htmlFor="">
+            {params.approval_status === "APPROVED"
+              ? `Enter CEMAR Ref No to Approve this request`
+              : `Enter reason of Rejection`}
+          </label>
+          <input
+            type="text"
+            key={updateInput} // Forcing re-render when state changes
+            className="form-control"
+            value={params.approval_ref_no} // Binding to params state
+            onChange={handleModalInput} // Calling handler directly
+            placeholder={
+              params.approval_status === "APPROVED" ? `CEMAR Ref No` : `Reason of Rejection`
+            }
+          />
+        </div>
+        }
+        showModal={activeModal === "approval-modal"}
+        onCloseCross={closeModal}
+        onSubmit={() => {showAlert({
+          title: "Are you sure?",
+          type: "warning",
+          onConfirm: () => approvalRequest(params.approval_status),
+          onCancel: hideAlert,
+        })}}
+        onClose={closeModal}
+        closeButtonText="Cancel"
+        submitButtonText={ params.approval_status  === "APPROVED" ? "APPROVE" : "REJECT"}
+        closeButtonColor="red" // Dynamic color for close button
+        submitButtonColor="green" // Dynamic color for submit button
+      />
     </>
   );
 };
