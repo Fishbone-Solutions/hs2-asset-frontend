@@ -11,6 +11,8 @@ import Select from "react-select";
 import "./ReactTableMod.scss";
 import { Loader } from "components/Common/ComponentLoader";
 
+import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+
 const Table = ({ columns, data, isLoading }) => {
   const [numberOfRows, setNumberOfRows] = useState({
     value: 10,
@@ -20,6 +22,8 @@ const Table = ({ columns, data, isLoading }) => {
     value: 0,
     label: "Page 1",
   });
+
+ 
 
   const defaultColumn = useMemo(() => ({ width: 100 }), []);
 
@@ -82,6 +86,15 @@ const Table = ({ columns, data, isLoading }) => {
       label: `Page ${key + 1}`,
     })
   );
+
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, [page]);
 
   return (
     <div className="-striped -highlight primary-pagination">
