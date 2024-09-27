@@ -9,8 +9,10 @@ export const itemStatusOptions = [
 export const orderStatusOptions = [
   { value: "EOI-SUBMITTED", label: "EOI Submitted" },
   { value: "IN-NEGOTIATION", label: "In Negotiation" },
+  { value: "PROCESSING", label: "Processing"},
   { value: "PAYMENT-RECEIVED", label: "Payment Received" },
   { value: "GOODS-SENT", label: "Goods Sent" },
+  { value: "NOT-PROCEEDING", label: "Not Proceeding"},
 ];
 
 export const approvalStatusOptions = [
@@ -20,8 +22,9 @@ export const approvalStatusOptions = [
 ];
 
 export const inventoryStatusOptions = [
-  { value: "Live", label: "Live" },
+  
   { value: "Listing", label: "Listing" },
+  { value: "Live", label: "Live" },
   { value: "Sold", label: "Sold" },
 ];
 

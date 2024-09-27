@@ -179,11 +179,20 @@ const Edit = () => {
 
     setLoader(true);
     try {
-      console.log("Submitting with params:", latestParams);
       const res = await EndPointService.createApprovalRequest(
         headers,
         eoiId,
         latestParams
+      );
+
+      const requestBody = {
+        eoi_status: 'PROCESSING',
+      };
+      const respone = await EndPointService.eoiUpdateStatus(
+        headers,
+        inventoryId,
+        eoiId,
+        requestBody
       );
 
       showAlert({
@@ -273,9 +282,11 @@ const Edit = () => {
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
+    { value: "PROCESSING", label: "Processing" },
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
+    { value: "NOT-PROCEEDING", label: "Not Proceeding"},
   ];
 
   const handleUndoStatus = async () => {
