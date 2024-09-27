@@ -329,6 +329,7 @@ const Index = () => {
                   <div
                     onClick={() => openModal("filter-modal")}
                     className="mr-2 cursor-pointer"
+                    data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Inventory Search"
                   >

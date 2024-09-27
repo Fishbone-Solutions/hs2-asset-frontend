@@ -64,7 +64,7 @@ const useColumns = () => {
         Cell: ({ row }) => (
           <span
             className="d-inline-block text-truncate"
-            style={{ maxWidth: "130px" }}
+            style={{ maxWidth: "130px", cursor: "pointer" }}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title={formatLocation(row.original.asset_location)}

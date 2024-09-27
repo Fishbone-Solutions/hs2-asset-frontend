@@ -36,12 +36,18 @@ const router = createBrowserRouter([
 
 const App = () => {
   useEffect(() => {
+    // Initialize tooltips
     const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'
     );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new Tooltip(tooltipTriggerEl);
-    });
+    const tooltips = Array.from(tooltipTriggerList).map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+    );
+
+    // Cleanup tooltips on unmount
+    return () => {
+      tooltips.forEach((tooltip) => tooltip.dispose());
+    };
   }, []);
   return <RouterProvider router={router} />;
 };

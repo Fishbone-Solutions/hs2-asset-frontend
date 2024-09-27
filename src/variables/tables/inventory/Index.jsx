@@ -93,6 +93,7 @@ const useColumns = (handleDelete) => {
           <div className="action-buttons">
             <Link to={`/admin/inventory/show/${row.original.asset_id}`}>
               <Button
+              type="button"
                 className="btn-icon btn-simple"
                 color="info"
                 size="sm"
@@ -106,6 +107,7 @@ const useColumns = (handleDelete) => {
 
             <Link to={`/admin/inventory/edit/${row.original.asset_id}`}>
               <Button
+              type="button"
                 className="btn-icon btn-simple"
                 color="success"
                 size="sm"
@@ -118,6 +120,7 @@ const useColumns = (handleDelete) => {
             </Link>
             <Link to={`/admin/eois/inventory/${row.original.asset_id}`}>
               <Button
+              type="button"
                 className="btn-icon btn-simple"
                 color="secondary"
                 size="sm"
@@ -129,6 +132,7 @@ const useColumns = (handleDelete) => {
               </Button>
             </Link>
             <Button
+            type="button"
               className="btn-icon btn-simple"
               color="danger"
               size="sm"
