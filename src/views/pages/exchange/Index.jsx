@@ -37,6 +37,7 @@ import RefreshComponetIcon from "components/svg/RefreshComponet";
 import { categorycode1 } from "variables/common";
 import { subCategory } from "variables/common";
 import ModalComponent from "components/Common/ModalComponent";
+import moment from "moment";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -50,6 +51,8 @@ const Index = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
+  
+  const [appliedFilters, setAppliedFilters] = useState([]);
 
   const headers = { user_id: sessionStorage.getItem("username") };
   const [rangeDates, setRangeDates] = useState({
@@ -112,13 +115,50 @@ const Index = () => {
 
   useEffect(() => {
     fetchInventory();
+    const filters = [];
+    if (filterFormData.id)
+      filters.push({ label: ` ${filterFormData.id}`, key: "id" });
+    if (filterFormData.asset_name)
+      filters.push({
+        label: `${filterFormData.asset_name}`,
+        key: "asset_name",
+      });
+    if (filterFormData.location)
+        filters.push({
+          label: `${filterFormData.location}`,
+          key: "location",
+        });
+    if (filterFormData.category)
+          filters.push({
+            label: `${filterFormData.category}`,
+            key: "category",
+          });
+      if (filterFormData.subCategory)
+            filters.push({
+              label: `${filterFormData.subCategory}`,
+              key: "subCategory",
+            });
+   
+    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null))
+      filters.push({
+        label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
+        key: ["available_from", "available_to"],
+      });
+    if (filterFormData.status)
+      filters.push({
+        label: `${filterFormData.status.label}`,
+        key: "status",
+      });
+
+    setAppliedFilters(filters);
+    console.log("applied filter", appliedFilters, filterFormData);
   }, [filterFormData]);
 
   const handleDate = (startDate, endDate) => {
     setRangeDates((prevState) => ({
       ...prevState,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: moment(startDate).format("DD/MM/YYYY"),
+      endDate: moment(endDate).format("DD/MM/YYYY"),
     }));
 
     setClearDateBoolean(false);
@@ -203,6 +243,34 @@ const Index = () => {
     setClearDateBoolean(false);
   };
   const closeModal = () => setActiveModal(null);
+
+  const handleRemoveFilter = (filterKeys) => {
+    // If filterKeys is not an array, convert it into an array
+    const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+
+    // Update the filter form state
+    setFilterFormDate((prev) => {
+      const updatedState = { ...prev };
+      keys.forEach((key) => {
+        updatedState[key] = key === "status" ? null : ""; // Handle special cases like 'status'
+      });
+      return updatedState;
+    });
+
+    // Remove the filter(s) from the applied filters array
+    setAppliedFilters((prevFilters) =>
+      prevFilters.filter((filter) => !keys.includes(filter.key))
+    );
+
+    // Update filter data state
+    setFilterDataState((prev) => {
+      const updatedState = { ...prev };
+      keys.forEach((key) => {
+        updatedState[key] = ""; // Reset the field in filterDataState
+      });
+      return updatedState;
+    });
+  };
 
   return (
     <>
@@ -299,6 +367,25 @@ const Index = () => {
                     </Col>
                   </Row>
                 </Container>
+                <div className="applied-filters">
+                  {appliedFilters && appliedFilters.length > 0 &&
+                    appliedFilters.map((filter) => (
+                      <div
+                        key={filter.key}
+                        className="filter-tag badge text-black rounded-pill"
+                      >
+                        {filter.label}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveFilter(filter.key)}
+                          className="btn text-black p-0 ms-2 "
+                        >
+                          <i className="p-1 rounded-circle  fa fa-times"></i>
+                        </button>
+                      </div>
+                    ))}
+                </div>
+
                 <ReactTable
                   data={dataState}
                   columns={TableColumn()}
