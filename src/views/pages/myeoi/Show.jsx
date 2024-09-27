@@ -12,6 +12,8 @@ import {
   CardTitle,
   Label,
   FormGroup,
+  InputGroupText,
+  InputGroup,
 } from "reactstrap";
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
@@ -356,12 +358,15 @@ const Show = () => {
                       <Col sm="6">
                         <Label>Estimated Value *</Label>
                         <FormGroup>
+                        <InputGroup>
+                        <InputGroupText>£</InputGroupText>
                           <Input
                             type="text"
                             name="value"
                             value={formData.value}
                             readOnly
                           />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                     </Row>

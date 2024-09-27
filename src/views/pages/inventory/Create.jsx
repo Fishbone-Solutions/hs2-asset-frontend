@@ -697,11 +697,14 @@ const Create = () => {
                         <Col sm="6">
                           <Label>Residual Forcast Value </Label>
                           <FormGroup>
+                          <InputGroup>
+                          <InputGroupText>£</InputGroupText>
                             <Field
-                              type="text"
+                              type="number"
                               name="residual_forcast_value"
                               as={Input}
                             />
+                            </InputGroup>
                             <ErrorMessage
                               name="residual_forcast_value"
                               component="div"
@@ -714,7 +717,10 @@ const Create = () => {
                         <Col sm="6">
                           <Label>Sold Value </Label>
                           <FormGroup>
-                            <Field type="text" name="sold_value" as={Input} />
+                          <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                            <Field type="number" name="sold_value" disabled as={Input} />
+                            </InputGroup>
                             <ErrorMessage
                               name="sold_value"
                               component="div"

@@ -57,7 +57,7 @@ export const inventorySchema = Yup.object({
   date_of_purchase: Yup.string().nullable(),
   contract_no: Yup.string()
     .matches(
-      /^[a-zA-Z0-9\/\\]+$/,
+      /^[a-zA-Z0-9\/\\\-]+$/,
       "Must be only alphanumeric and alphanbatic characters and / \\"
     )
     .nullable(),

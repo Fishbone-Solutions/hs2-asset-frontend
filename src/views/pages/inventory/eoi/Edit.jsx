@@ -45,7 +45,13 @@ const Edit = () => {
   const [activeModal, setActiveModal] = useState(null);
   const openModal = (modalId) => setActiveModal(modalId);
   const closeModal = () => {
-    console.log("click");
+    const modalElement = document.getElementById(activeModal);
+    modalElement.classList.remove("show");
+    modalElement.style.display = "none"; // Hides the modal
+    const backdropElement = document.querySelector(".modal-backdrop");
+    if (backdropElement) {
+      backdropElement.remove();
+    }
     setActiveModal(null);
   };
   // Create a ref to hold the latest params value
@@ -281,11 +287,11 @@ const Edit = () => {
       );
       showAlert({
         title:
-          res.appRespData[0].eoi_undo_last_activity !== -1
+          res.appRespData[0].eoi_undo_last_activity === 1
             ? `Current Status reverted`
-            : "Can not Undo Status. The Status was set by the Buyer",
+            : res.appRespData[0].eoi_undo_last_activity === -1 ? "Can not Undo Status. The Status was set by the Seller" : 'No previous status available',
         type:
-          res.appRespData[0].eoi_undo_last_activity !== -1
+          res.appRespData[0].eoi_undo_last_activity === 1
             ? "success"
             : "error",
         showCancelButton: false,
@@ -655,6 +661,7 @@ const Edit = () => {
         }
         showModal={activeModal === "approval-modal"}
         onCloseCross={closeModal}
+        onClose={closeModal}
         onSubmit={() => {showAlert({
           title: "Are you sure?",
           type: "warning",

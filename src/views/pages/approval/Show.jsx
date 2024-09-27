@@ -591,7 +591,7 @@ const Show = () => {
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
                         
-                        {params.approval_status} REQUEST
+                        { params.approval_status  === "APPROVED" ? "APPROVE" : "REJECT"} REQUEST
                       </h6>
         }
         content={

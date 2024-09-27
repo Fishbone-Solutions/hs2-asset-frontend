@@ -86,7 +86,7 @@ function AdminNavbar(props) {
         <Container fluid>
           <div className="navbar-wrapper d-flex align-items-center">
             {breadcrumbIcon && (
-              <span className="breadcrumb-icon">{breadcrumbIcon}</span>
+              <span className="breadcrumb-icon mr-2">{breadcrumbIcon}</span>
             )}
             <span
               className="breadcrumb-text"

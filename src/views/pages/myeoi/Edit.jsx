@@ -18,6 +18,8 @@ import {
   Form,
   Modal,
   Tooltip as ReactstrapTooltip,
+  InputGroupText,
+  InputGroup,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -28,6 +30,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "components/Common/NotificationAlert";
 import { FcUndo } from "react-icons/fc";
+import UndoIcon from "components/svg/Undo";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -217,11 +220,11 @@ const Edit = () => {
       );
       showAlert({
         title:
-          res.appRespData[0].eoi_undo_last_activity !== -1
+          res.appRespData[0].eoi_undo_last_activity === 1
             ? `Current Status reverted`
-            : "Can not Undo Status. The Status was set by the Seller",
+            : res.appRespData[0].eoi_undo_last_activity === -1 ? "Can not Undo Status. The Status was set by the Seller" : 'No previous status available',
         type:
-          res.appRespData[0].eoi_undo_last_activity !== -1
+          res.appRespData[0].eoi_undo_last_activity === 1
             ? "success"
             : "error",
         showCancelButton: false,
@@ -553,23 +556,25 @@ const Edit = () => {
                   >
                     Acknowledgement To Seller
                     <span className="float-right p-2">
-                      <Button
+                    <Button
                         type="button"
                         onClick={() => {
                           showAlert({
                             title: `Are you sure you wish to Undo current EOI status ?`,
                             type: "warning",
-                            showCancelButton: false,
+                            showCancelButton: true,
                             confirmText: "Yes",
+                            onCancel: hideAlert,
                             onConfirm: () => {
                               handleUndoStatus();
                             },
                           });
                         }}
-                        className="undo-icon p-1 top-0 end-0 position-absolute bg-transparent "
+                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <FcUndo size="2em" color="red" />
+                       <UndoIcon />
                       </Button>
+                      
                     </span>
                   </CardTitle>
                 </CardHeader>

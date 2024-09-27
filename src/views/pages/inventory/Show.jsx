@@ -19,6 +19,9 @@ import {
   Label,
   FormGroup,
   Modal,
+  
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
@@ -370,12 +373,17 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Estimated Value *</Label>
                       <FormGroup>
+                      <InputGroup>
+                      <InputGroupText>£</InputGroupText>
                         <Input
-                          type="text"
+                          type="number"
                           name="value"
                           value={formData.value}
+                          min="0" // Ensures no negative values
+                                step="0.01" // Allows decimal/floating-point values
                           readOnly="true"
                         />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                     <Col sm="6">
@@ -409,12 +417,15 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Purcahse Value </Label>
                       <FormGroup>
+                      <InputGroup>
+                      <InputGroupText>£</InputGroupText>
                         <Input
                           type="text"
                           name="purchase_price"
                           value={formData.purchase_price}
                           readOnly
                         />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -433,12 +444,15 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Residual Forcast Value </Label>
                       <FormGroup>
+                      <InputGroup>
+                      <InputGroupText>£</InputGroupText>
                         <Input
                           type="text"
                           value={formData.residual_forecast_value}
                           name="residual_forecast_value"
                           readOnly
                         />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -446,12 +460,15 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Sold Value </Label>
                       <FormGroup>
+                      <InputGroup>
+                      <InputGroupText>£</InputGroupText>
                         <Input
                           type="text"
                           value={formData.sold_value}
                           name="sold_value"
                           readOnly
                         />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>

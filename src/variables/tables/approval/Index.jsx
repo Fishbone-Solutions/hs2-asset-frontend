@@ -57,7 +57,7 @@ const useColumns = (data, handleDelete) => {
                 size="sm"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title="Tooltip on top"
+                title="View Request"
               >
                 {row.original.request_status === "Pending" ? (
                   <FaStamp size="1.4em" />
@@ -71,6 +71,9 @@ const useColumns = (data, handleDelete) => {
                 className="btn-icon btn-simple"
                 color="danger"
                 size="sm"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Delete Request"
                 onClick={() => handleDelete(row.original.request_id)}
               >
                 <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>
