@@ -43,7 +43,7 @@ function AdminNavbar(props) {
 
   const matchPathWithParams = (route, pathname) => {
     const routeRegex = new RegExp(
-      "^" + route.pathName.replace(/:\w+/g, "[^/\\-]+") + "$"
+      "^" + route.pathName.replace(/:\w+/g, "[^/]+") + "$"
     );
     return routeRegex.test(pathname);
   };
