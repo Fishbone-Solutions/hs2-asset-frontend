@@ -262,6 +262,19 @@ const Edit = () => {
     }));
   };
 
+  const handleSoldToast = (selectedStatus) => {
+    if(selectedStatus === 'Sold') {
+      showAlert({
+        title: "Please enter the Sold Value.",
+        type: "info",
+        showCancelButton: false,
+        confirmText: 'ok',
+        onConfirm: () => hideAlert(),
+      });
+    }
+    
+  }
+
   return (
     <>
       <div className="content">
@@ -278,7 +291,7 @@ const Edit = () => {
           onSubmit={handleFormSubmission}
           enableReinitialize={true}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, isValid }) => (
             <Form>
               <Row>
                 {/* Asset Seller Detail*/}
@@ -720,7 +733,7 @@ const Edit = () => {
                           <FormGroup>
                           <InputGroup>
                           <InputGroupText>£</InputGroupText>
-                            <Field type="text" name="sold_value" disabled as={Input} />
+                            <Field type="text" name="sold_value"  disabled={values.statuscode !== "Sold"}  as={Input} />
                             </InputGroup>
                             <ErrorMessage
                               name="sold_value"
@@ -864,11 +877,14 @@ const Edit = () => {
                               value={inventoryStatusOptions.find(
                                 (option) => option.value === values.statuscode
                               )}
-                              onChange={(selectedOption) =>
+                              onChange={(selectedOption) => {
                                 setFieldValue(
                                   "statuscode",
                                   selectedOption.value
-                                )
+                                );
+                                handleSoldToast(selectedOption.value);
+                              }
+
                               }
                             />
                             <ErrorMessage
@@ -885,7 +901,6 @@ const Edit = () => {
                 </Col>
               </Row>
               {alert}
-
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button
                   className="buttonClose"
@@ -896,7 +911,7 @@ const Edit = () => {
                 >
                   Close
                 </Button>
-                <Button color="primary" type="submit">
+                <Button color="primary"   type="submit">
                   Save
                 </Button>
               </div>

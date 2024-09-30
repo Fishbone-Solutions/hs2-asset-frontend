@@ -27,17 +27,14 @@ export const initialInventoryValues = {
   date_of_purchase: "",
   contract_no: "",
   purchase_price: "",
-  sold_value: "",
-  city: "",
-  area: "",
-  post_code: "",
+  sold_value: null, // Initial value as null
 };
 
 // Validation schema using Yup
-export const inventorySchema = Yup.object({
+export const inventorySchema = Yup.object().shape({
   seller_title: Yup.string()
     .required("Seller Title is required")
-    .max(50, "No Longer than 50 character"),
+    .max(50, "No longer than 50 characters"),
   seller_contactno: Yup.string().required("Contact number is required"),
   seller_email: Yup.string()
     .email("Invalid email")
@@ -59,14 +56,25 @@ export const inventorySchema = Yup.object({
   contract_no: Yup.string()
     .matches(
       /^[a-zA-Z0-9\/\\\-]+$/,
-      "Must be only alphanumeric and alphanbatic characters and / \\"
+      "Must be only alphanumeric characters and / \\"
     )
     .nullable(),
   purchase_price: Yup.string().nullable(),
   code: Yup.string().nullable(), // Optional
   entrydate_formatted: Yup.string().nullable(), // Optional
   id: Yup.string().nullable(),
-  sold_value: Yup.string().nullable(),
+
+  // Conditional validation for sold_value
+  sold_value: Yup.number()
+  .nullable()
+  .when("statuscode", {
+    is: (val) => val === 'Sold', // Use a function here
+    then:(schema) => schema
+      .required("Sold value is required")
+      .min(1, "Sold value must be greater than 0"),
+    otherwise: (schema)=> schema.nullable(),
+  }),
+
   additional_info: Yup.string().nullable(),
   asset_location_city: Yup.string().required("City is required"),
   asset_location: Yup.string().required("Area is required"),

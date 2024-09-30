@@ -117,12 +117,12 @@ const Create = () => {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-            Item {values.asset_name} added
+             {values.asset_name} Item added
           </h6>
         ),
         content: (
           <h6 className="success-sweet-content-color">
-            Asset ID = {res.appRespData.asset_id}
+            Item ID = {res.appRespData.asset_id}
           </h6>
         ),
         type: "success",

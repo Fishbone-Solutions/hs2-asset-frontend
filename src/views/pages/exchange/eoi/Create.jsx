@@ -135,7 +135,7 @@ const Create = () => {
                           WebkitTextTransform: "capitalize",
                         }}
                       >
-                        Asset Reference
+                        Item Referene
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
@@ -270,7 +270,7 @@ const Create = () => {
                         </Col>
                         <Col sm="6">
                           <Label className="required">
-                            Item Delivery Location
+                          Item Delivery Address
                           </Label>
                           <FormGroup>
                             <Field

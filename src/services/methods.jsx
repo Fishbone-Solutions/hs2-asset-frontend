@@ -58,8 +58,8 @@ function createEoi(headers = null, inventory_id, params) {
   return Post(`${endpoints.createEoi(inventory_id)}`, params, headers);
 }
 
-function deleteEoiById(headers, inventory_id, eoi_id) {
-  return Post(`${endpoints.deleteEoi(inventory_id, eoi_id)}`, headers);
+function deleteEoiById(headers, inventory_id, eoi_id, params = null) {
+  return Post(`${endpoints.deleteEoi(inventory_id, eoi_id)}`, params , headers);
 }
 
 function getExchange(headers = null, params = null) {

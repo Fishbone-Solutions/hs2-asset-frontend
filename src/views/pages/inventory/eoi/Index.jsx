@@ -69,7 +69,7 @@ const Index = () => {
   const successDelete = async (assetId, eoiNo) => {
     try {
       setLoader(true);
-      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo);
+      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, { user_type: 'SELLER'});
       showAlert({
         title: "Deleted!",
         content: `EoI ${eoiNo} has been deleted successfully`,

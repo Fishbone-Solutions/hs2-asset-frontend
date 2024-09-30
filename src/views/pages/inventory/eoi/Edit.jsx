@@ -282,7 +282,6 @@ const Edit = () => {
   var options = [
     { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
-    { value: "PROCESSING", label: "Processing" },
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
@@ -620,7 +619,7 @@ const Edit = () => {
                           options={options.map((option) => ({
                             ...option,
                             isdisabled:
-                              dataState.approval_status === "PENDING" || dataState.approval_status === "REJECTED" &&
+                              (dataState.approval_status === "PENDING" || dataState.approval_status === "REJECTED") &&
                               (option.value === "PAYMENT-RECEIVED" ||
                                 option.value === "GOODS-SENT" ||
                                 option.value === "PAYMENT-REQUESTED"),
