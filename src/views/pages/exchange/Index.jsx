@@ -51,6 +51,7 @@ const Index = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
+  const [cities, setCities] = useState([]);
   
   const [appliedFilters, setAppliedFilters] = useState([]);
 
@@ -68,6 +69,7 @@ const Index = () => {
     available_from: null,
     available_to: null,
     statuscode: null,
+    city: null,
     location: null,
   });
 
@@ -77,11 +79,23 @@ const Index = () => {
     statuscode: null,
     category: null,
     subCategory: null,
+    city: null,
     location: null,
   });
 
   const getValueOrDefault = (value) => (value ? value : "-1");
   const [activeModal, setActiveModal] = useState(null);
+
+  
+  const fetchCityData = async () => {
+    try {
+      const res = await EndPointService.getCityData();
+      console.log('city', res);
+      setCities(res.appRespData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const fetchInventory = async () => {
     try {
@@ -97,6 +111,7 @@ const Index = () => {
           filterFormData.available_from
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+        fltr_city: getValueOrDefault(filterFormData.city),
         fltr_location: getValueOrDefault(filterFormData.location),
       });
 
@@ -115,6 +130,7 @@ const Index = () => {
 
   useEffect(() => {
     fetchInventory();
+    fetchCityData();
     const filters = [];
     if (filterFormData.id)
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
@@ -196,6 +212,7 @@ const Index = () => {
       available_to: rangeDates.endDate,
       category: filterDataState.category,
       subCategory: filterDataState.subCategory,
+      city: filterDataState.city,
       location: filterDataState.location,
     }));
   };
@@ -240,6 +257,11 @@ const Index = () => {
   const handleSubCategoryChange = (subCategory) => {
     console.log(subCategory);
     setFilterDataState({ ...filterDataState, subCategory: subCategory.value });
+    setClearDateBoolean(false);
+  };
+
+  const handleCityChange = (city) => {
+    setFilterDataState({ ...filterDataState, city: city.value });
     setClearDateBoolean(false);
   };
   const closeModal = () => setActiveModal(null);
@@ -479,6 +501,21 @@ const Index = () => {
               />
             </FormGroup>
           </Col>
+              
+          <Col sm="6">
+          <FormGroup>
+          <FloatingLabelDropdown
+              label="City"
+              options={cities.map((city) => ({
+                value: city.code,
+                label: city.name
+              }))}
+              onChange={handleCityChange}
+              clearSelection={clearDateBoolean}
+            />
+                              </FormGroup>
+                            </Col>
+
 
           <Col sm="6">
             <FormGroup floating>

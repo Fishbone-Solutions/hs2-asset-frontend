@@ -55,6 +55,7 @@ const Create = () => {
   const [files, setFiles] = useState([]);
 
   const [docs, setDocs] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
@@ -67,6 +68,20 @@ const Create = () => {
       onCancel: hideAlert,
     });
   };
+
+  const fetchCityData = async () => {
+    try {
+      const res = await EndPointService.getCityData();
+      console.log('city', res);
+      setCities(res.appRespData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    fetchCityData();
+  }, []);
 
   const successSubmit = async (values) => {
     try {
@@ -81,10 +96,7 @@ const Create = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
-        } else if (key === "asset_location") {
-          value =
-            values["city"] + "%" + values["area"] + "%" + values["post_code"];
-        }
+        } 
 
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
@@ -384,24 +396,7 @@ const Create = () => {
                               className="text-danger"
                             />
 
-                            {/* <Select
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="categorycode1"
-                              value={categorycode1.find(
-                                (option) =>
-                                  option.value === formData.categorycode1
-                              )}
-                              onChange={(selectedOption) =>
-                                setFormData((prevState) => ({
-                                  ...prevState,
-                                  categorycode1: selectedOption.value,
-                                }))
-                              }
-                              options={categorycode1}
-                              placeholder="Select an option"
-                              required
-                            /> */}
+                      
                           </FormGroup>
                         </Col>
 
@@ -546,30 +541,41 @@ const Create = () => {
 
                           <Row>
                             {/* City Field */}
-                            <Col sm="3 pr-0">
-                              <FormGroup>
-                                <Field
-                                  type="text"
-                                  name="city"
-                                  placeholder="City"
-                                  as={Input}
-                                  className="form-control"
-                                />
-                                <ErrorMessage
-                                  name="city"
-                                  component="div"
-                                  className="text-danger"
-                                />
-                              </FormGroup>
+                            <Col sm="4 pr-0">
+
+                            <FormGroup>
+                            <Select
+                              name="statuscode"
+                              options={cities.map((city) => ({
+                                value: city.code,
+                                label: city.name
+                              }))}
+                              value={cities.find(
+                                (city) => city.value === values.asset_location_city
+                              )}
+                              onChange={(selectedOption) =>
+                                setFieldValue(
+                                  "asset_location_city",
+                                  selectedOption.value
+                                )
+                              }
+                            />
+                            <ErrorMessage
+                              name="asset_location_city"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                             
                             </Col>
 
                             {/* Area Field */}
-                            <Col sm="6">
+                            <Col sm="8">
                               <FormGroup>
                                 <Field
                                   type="text"
-                                  placeholder="Area"
-                                  name="area"
+                                  placeholder="Area and Street"
+                                  name="asset_location"
                                   as={Input}
                                   className="form-control"
                                 />
@@ -581,23 +587,7 @@ const Create = () => {
                               </FormGroup>
                             </Col>
 
-                            {/* Post Code Field */}
-                            <Col sm="3 pl-0">
-                              <FormGroup>
-                                <Field
-                                  type="text"
-                                  placeholder="Post Code"
-                                  name="post_code"
-                                  as={Input}
-                                  className="form-control"
-                                />
-                                <ErrorMessage
-                                  name="post_code"
-                                  component="div"
-                                  className="text-danger"
-                                />
-                              </FormGroup>
-                            </Col>
+                           
                           </Row>
                         </Col>
                       </Row>
@@ -701,12 +691,12 @@ const Create = () => {
                           <InputGroupText>£</InputGroupText>
                             <Field
                               type="number"
-                              name="residual_forcast_value"
+                              name="residual_forecast_value"
                               as={Input}
                             />
                             </InputGroup>
                             <ErrorMessage
-                              name="residual_forcast_value"
+                              name="residual_forecast_value"
                               component="div"
                               className="text-danger"
                             />

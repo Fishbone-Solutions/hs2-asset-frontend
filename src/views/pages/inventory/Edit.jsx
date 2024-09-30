@@ -59,6 +59,7 @@ const Edit = () => {
   const [docs, setDocs] = useState([]);
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialInventoryValues);
+  const [cities, setCities] = useState([]);
 
   const fetchInventoryById = async () => {
     try {
@@ -66,14 +67,7 @@ const Edit = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
-      const [city, area, post_code] =
-        res.appRespData[0].asset_location.split("%");
-      setFormData((prev) => ({
-        ...prev, // Spread existing properties
-        city,
-        area,
-        post_code,
-      }));
+      
       console.log(formData);
 
       const resAttachment = await EndPointService.getAttachmentByAssetId(
@@ -89,6 +83,15 @@ const Edit = () => {
       setLoader(false);
     }
   };
+
+  const fetchCityData = async () => {
+    try {
+      const res = await EndPointService.getCityData();
+      setCities(res.appRespData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
@@ -117,10 +120,7 @@ const Edit = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
-        } else if (key === "asset_location") {
-          value =
-            values["city"] + "%" + values["area"] + "%" + values["post_code"];
-        }
+        } 
 
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
@@ -168,6 +168,7 @@ const Edit = () => {
   useEffect(() => {
     console.log("useEffect");
     fetchInventoryById();
+    fetchCityData();
     console.log(formData);
   }, []);
 
@@ -546,58 +547,56 @@ const Edit = () => {
 
                           <Row>
                             {/* City Field */}
-                            <Col sm="3 pr-0">
+                            <Col sm="4 pr-0">
+
                               <FormGroup>
-                                <Field
-                                  type="text"
-                                  name="city"
-                                  placeholder="City"
-                                  as={Input}
-                                  className="form-control"
-                                />
-                                <ErrorMessage
-                                  name="city"
-                                  component="div"
-                                  className="text-danger"
-                                />
+                              <Select
+                                name="statuscode"
+                                options={cities.map((city) => ({
+                                  value: city.code,
+                                  label: city.name
+                                }))}
+                                value={cities.find(
+                                  (city) => city.code === values.asset_location_city
+                                ) ? {
+                                  value: values.asset_location_city,
+                                  label: cities.find((city) => city.code === values.asset_location_city).name
+                                } : null}
+                                
+                                onChange={(selectedOption) =>
+                                  setFieldValue(
+                                    "asset_location_city",
+                                    selectedOption.value
+                                  )
+                                }
+                              />
+                              <ErrorMessage
+                                name="asset_location_city"
+                                component="div"
+                                className="text-danger"
+                              />
                               </FormGroup>
                             </Col>
 
                             {/* Area Field */}
-                            <Col sm="6">
+                            <Col sm="8">
                               <FormGroup>
                                 <Field
                                   type="text"
                                   placeholder="Area"
-                                  name="area"
+                                  name="asset_location"
                                   as={Input}
                                   className="form-control"
                                 />
                                 <ErrorMessage
-                                  name="area"
+                                  name="asset_location"
                                   component="div"
                                   className="text-danger"
                                 />
                               </FormGroup>
                             </Col>
 
-                            {/* Post Code Field */}
-                            <Col sm="3 pl-0">
-                              <FormGroup>
-                                <Field
-                                  type="text"
-                                  placeholder="Post Code"
-                                  name="post_code"
-                                  as={Input}
-                                  className="form-control"
-                                />
-                                <ErrorMessage
-                                  name="post_code"
-                                  component="div"
-                                  className="text-danger"
-                                />
-                              </FormGroup>
-                            </Col>
+                           
                           </Row>
                         </Col>
                       </Row>
@@ -877,23 +876,7 @@ const Edit = () => {
                               component="div"
                               className="text-danger"
                             />
-                            {/* <Select
-                              className="react-select primary"
-                              classNamePrefix="react-select"
-                              name="statuscode"
-                              value={inventoryStatusOptions.find(
-                                (option) => option.value === formData.statuscode
-                              )}
-                              onChange={(selectedOption) =>
-                                setFormData((prevState) => ({
-                                  ...prevState,
-                                  statuscode: selectedOption.value,
-                                }))
-                              }
-                              options={inventoryStatusOptions}
-                              placeholder="Select an option"
-                              required
-                            /> */}
+                       
                           </FormGroup>
                         </Col>
                       </Row>

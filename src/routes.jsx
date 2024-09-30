@@ -58,7 +58,19 @@ import Register from "./views/pages/auth/Register";
 import Breadcrumb from "components/Common/Breadcrumb";
 import breadcrumbConfig from "variables/breadcrumbsConfig";
 import { CgProfile } from "react-icons/cg";
+import NotAuthorized from "views/pages/NotAuthorized";
 
+const hasPermission = (module_slug, permission_type) => {
+  const user = sessionStorage.getItem("user");
+  if (user) {
+    const permissions = JSON.parse(user).user_permissions; // Adjust this if the structure is different
+    return permissions.some(permission => 
+      permission.permission_slug === module_slug && 
+      permission.permission_value.includes(permission_type)
+    );
+  }
+  return false;
+};
 const routes = [
   {
     path: "/user-profile",
@@ -84,6 +96,7 @@ const routes = [
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventory} />,
     layout: "/admin",
+    hidden: !hasPermission('inventory', 'View'),
   },
   {
     path: "/inventory/create",
@@ -189,6 +202,7 @@ const routes = [
       <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
+    hidden: false,
   },
   {
     path: "/exchange/show/:id",
@@ -245,6 +259,7 @@ const routes = [
       <HiRectangleStack size="2em" color="white" style={{ float: "left" }} />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.bulkImport} />,
+    hidden: false,
   },
 
   {
@@ -254,9 +269,10 @@ const routes = [
     component: <W1 />,
     layout: "/admin",
     icon: <BsMegaphoneFill size="2.5em" style={{ float: "left" }} />,
+    hidden: false,
   },
   {
-    path: "/approvals/requests",
+    path: "/approval-requests",
     pathName: "/admin/approvals/requests",
     name: "Approval Requests",
     component: <Approval />,
@@ -268,6 +284,7 @@ const routes = [
     breadcrumbComponent: (
       <Breadcrumb items={breadcrumbConfig.approvalRequests} />
     ),
+    hidden: !hasPermission('approval-requests', 'View'),
   },
   {
     path: "/approval/request/show/:eoiId/:inventoryId/:requestId",
@@ -324,6 +341,7 @@ const routes = [
       />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
+    hidden: false,
   },
   {
     path: "/myeoi/:inventoryId/show/:eoiId",
@@ -484,6 +502,11 @@ const routes = [
     ],
   },
   {
+    path: "/not-authorized",
+    component: <NotAuthorized />,
+    layout: "/auth",
+  },
+  {
     path: "/login",
     component: <Login />,
     layout: "/auth",
@@ -494,5 +517,14 @@ const routes = [
     layout: "/auth",
   },
 ];
+
+// Set hidden property for routes that require permission checks
+routes.forEach(route => {
+  if (route.hidden === undefined) {
+    route.hidden = !hasPermission(route.path.split('/')[1], 'View'); // Example check
+  }
+});
+
+console.log('routes', routes);
 
 export default routes;

@@ -407,12 +407,12 @@ const Edit = () => {
                           }
                           type="text"
                           name="approval_status"
-                          value={dataState.approval_status}
+                          value={dataState.approval_status === 'PENDING' ? 'Not Requested' : dataState.approval_status}
                           readOnly
                         />
                       </FormGroup>
                     </Col>
-
+                    {dataState.approval_status !== 'PENDING' ? (
                     <Col sm="6">
                       <Label>
                         {dataState.approval_status == "APPROVED"
@@ -428,6 +428,7 @@ const Edit = () => {
                         />
                       </FormGroup>
                     </Col>
+                    ) : ''}
                   </Row>
                 </CardBody>
               </Card>
@@ -619,7 +620,7 @@ const Edit = () => {
                           options={options.map((option) => ({
                             ...option,
                             isdisabled:
-                              dataState.approval_status === "PENDING" &&
+                              dataState.approval_status === "PENDING" || dataState.approval_status === "REJECTED" &&
                               (option.value === "PAYMENT-RECEIVED" ||
                                 option.value === "GOODS-SENT" ||
                                 option.value === "PAYMENT-REQUESTED"),

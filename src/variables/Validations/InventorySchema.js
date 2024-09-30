@@ -12,6 +12,7 @@ export const initialInventoryValues = {
   asset_condition: "",
   quantity: "",
   asset_location: "",
+  asset_location_city: "",
   value: "",
   additional_info: "",
   available_from: "",
@@ -67,7 +68,6 @@ export const inventorySchema = Yup.object({
   id: Yup.string().nullable(),
   sold_value: Yup.string().nullable(),
   additional_info: Yup.string().nullable(),
-  city: Yup.string().required("City is required"),
-  area: Yup.string().required("Area is required"),
-  post_code: Yup.string().required("Post-Code is required"),
+  asset_location_city: Yup.string().required("City is required"),
+  asset_location: Yup.string().required("Area is required"),
 });

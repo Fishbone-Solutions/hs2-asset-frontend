@@ -120,6 +120,10 @@ function inventoryUndoStatus(headers = null, inventoryId, eoiId) {
   );
 }
 
+function getCityData(headers = null) {
+  return Get(`${endpoints.getCityData()}`, headers);
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -144,4 +148,5 @@ export const EndPointService = {
   deleteApprovalRequest,
   inventoryStatsAgainOrgainsation,
   inventoryUndoStatus,
+  getCityData,
 };
