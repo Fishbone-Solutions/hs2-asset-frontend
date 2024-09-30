@@ -108,7 +108,7 @@ function Login() {
                 Exchange Platform
               </span>
             </p>
-            <Form action="" className="form" method="">
+            <Form >
               <Card className="card-login">
                 <CardHeader>
                   <div
@@ -161,7 +161,7 @@ function Login() {
                     block
                     className="btn-round mb-3"
                     color="primary"
-                    type="submit"
+                    type="button"
                     onClick={handleLogin}
                     style={{ backgroundColor: "rgb(82,203,206)" }}
                   >
