@@ -117,6 +117,16 @@ const Index = () => {
     try {
       setLoader(true);
       const res = await EndPointService.deleteInventoryById(id);
+      if(res.appRespData[0].asset_delete === -2) {
+        showAlert({
+          title: "Can not delete this Asset",
+          content: `This Asset is being broadcasted Live`,
+          type: "error",
+          showCancelButton: false,
+          confirmText: "ok",
+          onConfirm: hideAlert,
+        });
+      } else {
       showAlert({
         title: "Deleted!",
         content: `Asset ID ${id} has been deleted successfully`,
@@ -126,6 +136,7 @@ const Index = () => {
         onConfirm: hideAlert,
       });
       setRefreshData(refreshData + 1);
+    }
       setLoader(false);
     } catch (e) {
       setToastType("error");

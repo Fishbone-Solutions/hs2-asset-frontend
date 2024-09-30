@@ -70,6 +70,7 @@ const Index = () => {
     available_to: null,
     statuscode: null,
     city: null,
+    cityName: null,
     location: null,
   });
 
@@ -80,6 +81,7 @@ const Index = () => {
     category: null,
     subCategory: null,
     city: null,
+    cityName: null,
     location: null,
   });
 
@@ -111,7 +113,7 @@ const Index = () => {
           filterFormData.available_from
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
-        fltr_city: getValueOrDefault(filterFormData.city),
+        fltr_location_city: getValueOrDefault(filterFormData.city),
         fltr_location: getValueOrDefault(filterFormData.location),
       });
 
@@ -131,6 +133,7 @@ const Index = () => {
   useEffect(() => {
     fetchInventory();
     fetchCityData();
+    console.log(filterDataState);
     const filters = [];
     if (filterFormData.id)
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
@@ -139,16 +142,17 @@ const Index = () => {
         label: `${filterFormData.asset_name}`,
         key: "asset_name",
       });
+    if (filterFormData.city)
+        filters.push({
+          label: `${filterFormData.cityName}`,
+          key: "city",
+        });
     if (filterFormData.location)
         filters.push({
           label: `${filterFormData.location}`,
           key: "location",
         });
-    if (filterFormData.city)
-          filters.push({
-            label: `${filterFormData.city}`,
-            key: "city",
-          });
+    
     if (filterFormData.category)
           filters.push({
             label: `${filterFormData.category}`,
@@ -194,6 +198,7 @@ const Index = () => {
       available_to: "",
       category: "",
       subCategory: "",
+      city: "",
       location: "",
     }));
     setFilterDataState({
@@ -202,6 +207,8 @@ const Index = () => {
       statuscode: "",
       category: "",
       subCategory: "",
+      city: "",
+      cityName: "",
       location: "",
     });
 
@@ -218,6 +225,7 @@ const Index = () => {
       category: filterDataState.category,
       subCategory: filterDataState.subCategory,
       city: filterDataState.city,
+      cityName: filterDataState.cityName,
       location: filterDataState.location,
     }));
   };
@@ -266,7 +274,9 @@ const Index = () => {
   };
 
   const handleCityChange = (city) => {
-    setFilterDataState({ ...filterDataState, city: city.value });
+    console.log(city);
+    setFilterDataState({ ...filterDataState, city: city.value, cityName: city.label });
+    console.log('city data filteration',filterDataState);
     setClearDateBoolean(false);
   };
   const closeModal = () => setActiveModal(null);
@@ -510,7 +520,7 @@ const Index = () => {
           <Col sm="6">
           <FormGroup>
           <FloatingLabelDropdown
-              label="City"
+              label="Location-City"
               options={cities.map((city) => ({
                 value: city.code,
                 label: city.name
@@ -537,7 +547,7 @@ const Index = () => {
                 placeholder="location"
                 type="text"
               />
-              <Label for="assetName">Location</Label>
+              <Label for="assetName">Location-Area</Label>
             </FormGroup>
           </Col>
         </Row>

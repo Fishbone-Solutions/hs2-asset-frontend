@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
-const useColumns = () => {
+const useColumns = (handleDelete) => {
   return useMemo(
     () => [
       {
@@ -112,11 +112,23 @@ const useColumns = () => {
                 <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
+            <Button
+            type="button"
+              className="btn-icon btn-simple"
+              color="danger"
+              size="sm"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Delete EOI"
+              onClick={() => handleDelete(row.original.asset_id, row.original.id)}
+            >
+              <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>
+            </Button>
           </div>
         ),
       },
     ],
-    []
+    [handleDelete]
   );
 };
 

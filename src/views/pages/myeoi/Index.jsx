@@ -21,6 +21,7 @@ import DateRangePicker from "components/Common/DateRangePicker";
 import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/myeoi/Index";
 import ModalComponent from "components/Common/ModalComponent";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -31,6 +32,9 @@ const Index = () => {
   const [appliedFilters, setAppliedFilters] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
   const openModal = (modalId) => setActiveModal(modalId);
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+  const [refreshData, setRefreshData] = useState(0);
+  const headers = { user_id: sessionStorage.getItem("username") };
   const closeModal = () => {
     console.log("click");
     setActiveModal(null);
@@ -60,13 +64,13 @@ const Index = () => {
   const fetchMyEoI = async () => {
     try {
       setLoader(true);
-      const headers = { user_id: sessionStorage.getItem("username") };
+      
       const params = new URLSearchParams({
         fltr_eoi_id: getValueOrDefault(filterFormData.id),
         fltr_item_id: getValueOrDefault(filterFormData.asset_id),
         fltr_item_name: getValueOrDefault(filterFormData.asset_name),
         fItr_from_subDate: getValueOrDefault(filterFormData.entry_date_from),
-        fItr_to_subDate: getValueOrDefault(filterFormData.entry_date_to),
+        fItr_to_subDate: getValueOrDefault(filterFormData.entry_date_to)
       });
 
       const res = await EndPointService.getMyEoI(
@@ -106,7 +110,7 @@ const Index = () => {
 
     setAppliedFilters(filters);
     console.log("applied filter", appliedFilters, filterFormData);
-  }, [searchFilter]);
+  }, [searchFilter, refreshData]);
 
   const handleFilter = () => {
     const updateSearchFilter = searchFilter + 1;
@@ -160,10 +164,44 @@ const Index = () => {
  
   };
 
+  const handleDelete = (assetId, eoino) => {
+    console.log("handleDelete", assetId, eoino);
+    showAlert({
+      title: "Are you sure?",
+      content: "You will not be able to recover this item",
+      type: "warning",
+      onConfirm: () => successDelete(assetId, eoino),
+      onCancel: hideAlert,
+    });
+  };
+
+  const successDelete = async (assetId, eoiNo) => {
+    try {
+      setLoader(true);
+      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, { user_type: 'BUYER'});
+      showAlert({
+        title: "Deleted!",
+        content: `EoI ${eoiNo} has been deleted successfully`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "ok",
+        onConfirm: hideAlert,
+      });
+      setRefreshData(refreshData + 1);
+      setLoader(false);
+    } catch (e) {
+      console.log(e);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+
   return (
     <>
       <div className="content">
         {toastType && <DynamicToast type={toastType} message={toastMessage} />}
+        {alert}
         <Row>
           <Col md="12">
             <Card>
@@ -203,7 +241,7 @@ const Index = () => {
                 </div>
                 <ReactTable
                   data={dataState}
-                  columns={TableColumn()}
+                  columns={TableColumn(handleDelete)}
                   isLoading={loader}
                   className="-striped -highlight primary-pagination mt-2"
                 />
