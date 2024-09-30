@@ -120,12 +120,14 @@ const Edit = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
-        } 
+        } else if (key === 'sold_value' && value === "null") {
+          value = '';
+        }
+
 
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
       });
-
       files.forEach((file) => {
         formDataWithFiles.append("files[]", file);
       });

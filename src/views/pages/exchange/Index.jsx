@@ -164,7 +164,7 @@ const Index = () => {
               key: "subCategory",
             });
    
-    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null))
+    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null) && (filterFormData.available_to !== undefined && filterFormData.available_from !== undefined))
       filters.push({
         label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
@@ -220,8 +220,8 @@ const Index = () => {
       ...prevState,
       id: filterDataState.id,
       asset_name: filterDataState.asset_name,
-      available_from: rangeDates.startDate,
-      available_to: rangeDates.endDate,
+      available_from: moment(rangeDates.startDate, "DD/MM/YYYY", true).isValid() ? rangeDates.startDate : '',
+      available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid ?  rangeDates.endDate : '',
       category: filterDataState.category,
       subCategory: filterDataState.subCategory,
       city: filterDataState.city,

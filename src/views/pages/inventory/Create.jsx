@@ -117,7 +117,7 @@ const Create = () => {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-             {values.asset_name} Item added
+             Item '{values.asset_name}' added to inventory.
           </h6>
         ),
         content: (

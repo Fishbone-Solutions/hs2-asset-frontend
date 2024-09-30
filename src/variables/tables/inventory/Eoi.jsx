@@ -67,7 +67,7 @@ const useColumns = (handleDelete) => {
                   />
                 </>
               )}
-              {statusCode}
+              {statusCode === 'PENDING' ? 'Not-Requested' : statusCode}
             </span>
           );
         },

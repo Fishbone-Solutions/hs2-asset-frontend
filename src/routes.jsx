@@ -273,7 +273,7 @@ const routes = [
   },
   {
     path: "/approval-requests",
-    pathName: "/admin/approvals/requests",
+    pathName: "/admin/approval-requests",
     name: "Approval Requests",
     component: <Approval />,
     layout: "/admin",
