@@ -18,7 +18,8 @@ import {
 import { GlobalContext } from "@/GlobalState";
 import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
-const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
+const BACKEND_ADDRESS = "https://api.lhs2-dev.fishbonesolutions.co.uk"
+
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -138,6 +139,10 @@ const BulkImport = () => {
         setToastType("success");
         setToastMessage(response.data.message || "Bulk Import Successful");
         setModalIsOpen("Bulk Import Successful")
+        setLoader(false);
+        window.location.reload();
+
+
         // Handle response as needed
       } catch (error) {
         setToastType("error");
