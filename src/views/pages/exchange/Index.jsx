@@ -144,6 +144,11 @@ const Index = () => {
           label: `${filterFormData.location}`,
           key: "location",
         });
+    if (filterFormData.city)
+          filters.push({
+            label: `${filterFormData.city}`,
+            key: "city",
+          });
     if (filterFormData.category)
           filters.push({
             label: `${filterFormData.category}`,
