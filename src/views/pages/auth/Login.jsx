@@ -24,6 +24,7 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import { GlobalContext } from "@/GlobalState";
 import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
+import { useAlert } from "components/Common/NotificationAlert";
 
 
 
@@ -32,8 +33,9 @@ function Login() {
   const usernames = [];
   const [password, setPassword] = useState("");
   const [error, setErrorMessage] = useState("");
-  const [alert, setAlert] = useState("");
+  // const [alert, setAlert] = useState("");
   const navigate = useNavigate();
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -45,29 +47,37 @@ function Login() {
     if (password === "admin") {
       navigate("/admin/inventory");
     } else {
-      setAlert(
-        <ReactBSAlert
-          danger
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Wrong Username or Password"
-          onConfirm={() => hideAlert()}
-          onCancel={() => hideAlert()}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        />,
-      );
+      showAlert({
+        title: "Wrong Username or Password",
+        content: "",
+        type: "error",
+        confirmText: 'ok',
+        showCancelButton: false,
+        onConfirm: hideAlert,
+      });
+      // setAlert(
+      //   <ReactBSAlert
+      //     danger
+      //     style={{ display: "block", marginTop: "-100px" }}
+      //     title="Wrong Username or Password"
+      //     onConfirm={() => hideAlert()}
+      //     onCancel={() => hideAlert()}
+      //     confirmBtnBsStyle="info"
+      //     btnSize=""
+      //   />,
+      // );
     }
   };
-  const hideAlert = () => {
-    setAlert(null);
-  };
+  // const hideAlert = () => {
+  //   setAlert(null);
+  // };
 
-  React.useEffect(() => {
-    document.body.classList.toggle("login-page");
-    return function cleanup() {
-      document.body.classList.toggle("login-page");
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   document.body.classList.toggle("login-page");
+  //   return function cleanup() {
+  //     document.body.classList.toggle("login-page");
+  //   };
+  // }, []);
 
   return (
     <div className="login-page">
