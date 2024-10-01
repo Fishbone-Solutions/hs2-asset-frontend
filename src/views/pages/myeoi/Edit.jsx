@@ -237,6 +237,13 @@ const Edit = () => {
     } catch (e) {}
   };
 
+  const isMyEoiStatusEnabled = (approvalStatus, eoiStatus) => {
+    if((approvalStatus !== "APPROVED" || approvalStatus === "REJECTED") && (eoiStatus !== 'EOI-SUBMITTED' && eoiStatus !== 'IN-NEGOTIATION' && eoiStatus !== 'PROCESSING')){
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <div className="content">
@@ -596,7 +603,7 @@ const Edit = () => {
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
                             isdisabled:
-                              dataState.approval_status !== "APPROVED" &&
+                            ((dataState.eoi_status === 'EOI-SUBMITTED' ||  dataState.eoi_status === 'IN-NEGOTIATION' ||  dataState.eoi_status === 'PROCESSING')) &&
                               (option.value === "PAYMENT-SENT" ||
                                 option.value === "GOODS-RECEIVED"),
                           }))}
