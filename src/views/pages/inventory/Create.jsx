@@ -175,7 +175,7 @@ const Create = () => {
     // Remove the image from the state
     const updatedImages = files.filter((_, index) => index !== imageIndex);
     // Update the state and re-trigger the onUploadImages to handle the updated list
-    setFiles(updatedImages);
+    setDocs(updatedImages);
     // Optional: you can call onUploadImages again if necessary for further processing
   };
 
