@@ -5,6 +5,7 @@ import BulkImport from "views/pages/BulkImport";
 const breadcrumbConfig = {
   profile: [{ label: "My Profile", to: "#" }],
   inventory: [{ label: "Inventory", to: "#" }],
+  itemRequest: [{ label: "Item Request", to: "#" }],
   inventoryCreate: [
     { label: "Inventory", to: "/admin/inventory" },
     { label: "Create", to: "#" },

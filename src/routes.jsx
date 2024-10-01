@@ -271,6 +271,10 @@ const routes = [
     component: <ItemRequest />,
     layout: "/admin",
     icon: <BsMegaphoneFill size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <BsMegaphoneFill size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.itemRequest} />,
     permissionSlug: 'items-request',
   },
   {
