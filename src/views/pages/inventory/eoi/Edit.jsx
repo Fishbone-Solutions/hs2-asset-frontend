@@ -308,7 +308,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/inventory/${inventoryId}/eois/edit/${eoiId}`);
+          navigate(`/admin/eois/inventory/${inventoryId}`);
         },
       });
     } catch (e) {}
@@ -412,7 +412,7 @@ const Edit = () => {
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== 'PENDING' ? (
+                    {dataState.approval_status !== 'Not Requested' && dataState.approval_status !== 'Requested' ? (
                     <Col sm="6">
                       <Label>
                         {dataState.approval_status == "APPROVED"
