@@ -70,8 +70,7 @@ export const inventorySchema = Yup.object().shape({
   .when("statuscode", {
     is: (val) => val === 'Sold', // Use a function here
     then:(schema) => schema
-      .required("Sold value is required")
-      .min(1, "Sold value must be greater than 0"),
+      .required("Sold value is required"),
     otherwise: (schema)=> schema.nullable(),
   }),
 
