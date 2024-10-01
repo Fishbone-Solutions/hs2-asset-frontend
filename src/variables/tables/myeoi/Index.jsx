@@ -58,14 +58,28 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-success",
               textColor: "text-white",
             },
-            "PAYMENT-SENT": { bgColor: "bg-dark", textColor: "text-white" },
-            "PAYMENT-RECEIVED": {
-              bgColor: "bg-danger",
+            "APPROVAL-REQUEST": {
+              bgColor: "bg-purple",
               textColor: "text-white",
             },
-            "GOODS-SENT": { bgColor: "bg-warning", textColor: "text-white" },
+            
+            "PAYMENT-SENT": { bgColor: "bg-warning-dark", textColor: "text-white" },
+            "PAYMENT-RECEIVED": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
+            "PAYMENT-REQUESTED": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
+            "PROCESSING": {
+              bgColor: "bg-processing",
+              textColor: "text-white",
+            },
+            
+            "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
             "GOODS-RECEIVED": {
-              bgColor: "bg-warning",
+              bgColor: "bg-lime",
               textColor: "text-white",
             },
             "UNAVAILABLE-SOLD": {

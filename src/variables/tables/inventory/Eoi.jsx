@@ -79,42 +79,46 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => {
           const statusCode = row.original.eoi_status;
           const statusStyles = {
-            SOLD: { bgColor: "bg-danger", textColor: "text-white" }, // Red for sold items
+            SOLD: { bgColor: "bg-danger", textColor: "text-white" },
             LIVE: {
-              bgColor: "bg-success", // Green for live items
+              bgColor: "bg-success",
               textColor: "text-white",
-              icon: "path/to/live-icon.png", // Optional icon
+              icon: "path/to/live-icon.png",
             },
-            LISTING: { bgColor: "bg-info", textColor: "text-white" }, // Blue for listings
-            "EOI-SUBMITTED": {
-              bgColor: "bg-primary-dark",
-              textColor: "text-white",
-            }, // Turquoise
+            LISTING: { bgColor: "bg-info", textColor: "text-white" },
+            "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
             "IN-NEGOTIATION": {
-              bgColor: "bg-info", // Light blue
+              bgColor: "bg-success",
               textColor: "text-white",
             },
-            "PAYMENT-SENT": {
+            "APPROVAL-REQUEST": {
+              bgColor: "bg-purple",
+              textColor: "text-white",
+            },
+            
+            "PAYMENT-SENT": { bgColor: "bg-warning-dark", textColor: "text-white" },
+            "PAYMENT-RECEIVED": {
               bgColor: "bg-warning-dark",
               textColor: "text-white",
-            }, // Dark orange
-            "PAYMENT-RECEIVED": {
-              bgColor: "bg-warning-light", // Yellow
+            },
+            "PAYMENT-REQUESTED": {
+              bgColor: "bg-warning-dark",
               textColor: "text-white",
             },
-            "GOODS-SENT": {
-              bgColor: "bg-success-light",
+            "PROCESSING": {
+              bgColor: "bg-processing",
               textColor: "text-white",
-            }, // Light green
+            },
+            
+            "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
             "GOODS-RECEIVED": {
-              bgColor: "bg-lime", // Bright lime green
+              bgColor: "bg-lime",
               textColor: "text-white",
             },
             "UNAVAILABLE-SOLD": {
-              bgColor: "bg-danger", // Red for unavailable sold items
+              bgColor: "bg-danger",
               textColor: "text-white",
             },
-            REJECTED: { bgColor: "bg-danger", textColor: "text-white" },
           };
 
           const style = statusStyles[statusCode] || {
