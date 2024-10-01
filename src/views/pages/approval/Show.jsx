@@ -247,6 +247,7 @@ const Show = () => {
                       <Label>Current Status</Label>
                       <FormGroup>
                         <Input
+                        className="bg-current-status"
                           type="text"
                           name="id"
                           value={dataState.eoi_status}
