@@ -39,6 +39,7 @@ function Login() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();  // Prevent the form submission
       // Handle Enter key press event here
       handleLogin();
     }
@@ -48,8 +49,8 @@ function Login() {
       navigate("/admin/inventory");
     } else {
       showAlert({
-        title: "Wrong Username or Password",
-        content: "",
+        title: <h6 className="success-sweet-title">"Unable to grant access."</h6> ,
+        content: "Invalid Username or Password. Please try again",
         type: "error",
         confirmText: 'ok',
         showCancelButton: false,
@@ -72,12 +73,12 @@ function Login() {
   //   setAlert(null);
   // };
 
-  // React.useEffect(() => {
-  //   document.body.classList.toggle("login-page");
-  //   return function cleanup() {
-  //     document.body.classList.toggle("login-page");
-  //   };
-  // }, []);
+  React.useEffect(() => {
+    document.body.classList.toggle("login-page");
+    return function cleanup() {
+      document.body.classList.toggle("login-page");
+    };
+  }, []);
 
   return (
     <div className="login-page">
@@ -108,7 +109,7 @@ function Login() {
                 Exchange Platform
               </span>
             </p>
-            <Form >
+            <Form onSubmit={(e) => e.preventDefault()}>
               <Card className="card-login">
                 <CardHeader>
                   <div
@@ -148,6 +149,7 @@ function Login() {
                       autoComplete="off"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      onKeyPress={handleKeyPress} // Add this line
                     />
                   </InputGroup>
                   {error && (
