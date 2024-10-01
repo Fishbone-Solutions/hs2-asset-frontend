@@ -735,7 +735,7 @@ const Edit = () => {
                           <FormGroup>
                           <InputGroup>
                           <InputGroupText>£</InputGroupText>
-                            <Field type="text" name="sold_value"  disabled={values.statuscode !== "Sold"}  as={Input} />
+                            <Field type="text" name="sold_value" value={values.sold_value === 'null' ? '': values.sold_value}  disabled={values.statuscode !== "Sold"}  as={Input} />
                             </InputGroup>
                             <ErrorMessage
                               name="sold_value"
