@@ -39,7 +39,7 @@ function UserProfile() {
   const fetchData = async () => {
     setLoader(true);
     try {
-      const res = await EndPointService.getUserProfile(headers, sessionStorage.getItem("username"));
+      const res = await EndPointService.getUserInformation(headers, sessionStorage.getItem("username"));
       setDataState(res.appRespData[0]);
       setLoader(false);
     } catch(e) {

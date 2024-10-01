@@ -179,7 +179,7 @@ const Index = () => {
         label: `Entry: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
         key: ["entry_date_from", "entry_date_to"],
       });
-    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null))
+      if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null) && (filterFormData.available_to !== undefined && filterFormData.available_from !== undefined))
       filters.push({
         label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
@@ -200,10 +200,10 @@ const Index = () => {
       ...prevState,
       id: filterDataState.id,
       asset_name: filterDataState.asset_name,
-      available_from: rangeDatesAvailablility.startDate,
-      available_to: rangeDatesAvailablility.endDate,
-      entry_date_from: rangeDatesEntry.startDate,
-      entry_date_to: rangeDatesEntry.endDate,
+      available_from: moment(rangeDatesAvailablility.startDate, "DD/MM/YYYY", true).isValid() ? rangeDatesAvailablility.startDate : '',
+      available_to: moment(rangeDatesAvailablility.endDate, "DD/MM/YYYY", true).isValid() ? rangeDatesAvailablility.endDate : '',
+      entry_date_from: moment(rangeDatesEntry.startDate, "DD/MM/YYYY", true).isValid() ? rangeDatesEntry.startDate  : '',
+      entry_date_to:  moment(rangeDatesEntry.endDate, "DD/MM/YYYY", true).isValid() ? rangeDatesEntry.endDate  : '',
       statuscode: filterDataState.statuscode,
     }));
   };

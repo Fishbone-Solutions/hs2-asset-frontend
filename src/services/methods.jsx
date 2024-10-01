@@ -124,10 +124,6 @@ function getCityData(headers = null) {
   return Get(`${endpoints.getCityData()}`, headers);
 }
 
-function getUserProfile(headers = null, username) {
-  return Get(`${endpoints.userProfile(username)}`, headers);
-}
-
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -153,5 +149,4 @@ export const EndPointService = {
   inventoryStatsAgainOrgainsation,
   inventoryUndoStatus,
   getCityData,
-  getUserProfile,
 };
