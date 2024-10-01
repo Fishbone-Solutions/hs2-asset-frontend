@@ -619,7 +619,7 @@ const Edit = () => {
                           options={options.map((option) => ({
                             ...option,
                             isdisabled:
-                              (dataState.approval_status === "PENDING" || dataState.approval_status === "REJECTED") &&
+                              (dataState.approval_status !== "APPROVED" || dataState.approval_status === "REJECTED") &&
                               (option.value === "PAYMENT-RECEIVED" ||
                                 option.value === "GOODS-SENT" ||
                                 option.value === "PAYMENT-REQUESTED"),

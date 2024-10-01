@@ -57,12 +57,12 @@ const useColumns = (data, handleDelete) => {
                 size="sm"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title="View Request"
+                title="Process Request"
               >
                 {row.original.request_status === "Pending" ? (
                   <FaStamp size="1.4em" />
                 ) : (
-                  <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
+                  <i className="fa fa-eye" style={{ fontSize: "0.9em" }}></i>
                 )}
               </Button>
             </Link>
