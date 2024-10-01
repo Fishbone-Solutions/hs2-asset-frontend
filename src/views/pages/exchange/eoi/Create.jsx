@@ -77,8 +77,8 @@ const Create = () => {
       console.log(res);
       setLoader(false);
       showAlert({
-        title: `Expression of Interest for '${formData.asset_name}' submitted to Seller`,
-        content: `Reference No: ${res.appRespData[0].eoi_add}`,
+        title: <p class="sweet-title-size">Expression of Interest submitted for <br/>'{formData.asset_name}'</p>,
+        content:  <h6 className="success-sweet-content-color">Reference No: {res.appRespData[0].eoi_add}</h6>,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

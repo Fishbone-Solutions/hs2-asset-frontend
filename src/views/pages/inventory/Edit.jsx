@@ -147,11 +147,11 @@ const Edit = () => {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-            Item {formData.asset_name} updated{" "}
+            Item '{formData.asset_name}' updated
           </h6>
         ),
         content: (
-          <h6 className="success-sweet-content-color">Asset ID = {id}</h6>
+          <h6 className="success-sweet-content-color">Item ID = {id}</h6>
         ),
         type: "success",
         showCancelButton: false,

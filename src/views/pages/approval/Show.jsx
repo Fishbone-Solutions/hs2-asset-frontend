@@ -178,7 +178,7 @@ const Show = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate("/admin/approvals/requests");
+          navigate("/admin/approval-requests");
         },
       });
 

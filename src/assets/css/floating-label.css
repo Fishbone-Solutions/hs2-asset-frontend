@@ -8,6 +8,8 @@
 }
 .form-floating > label {
   padding: 0.5rem 0.7rem !important;
+  color: #999;
+  font-size: 13px;
 }
 
 /**
@@ -16,12 +18,11 @@ Dropdown floating Label
 /* FloatingLabelDropdown.css */
 .floating-label-select {
   position: relative;
-  margin-top: 5px; /* Adjust as necessary */
 }
 
 .floating-label {
   position: absolute;
-  top: 0.9rem !important;
+  top: 0.9rem;
   left: 10px;
   transform: translateY(-50%);
   transition: 0.2s ease all;

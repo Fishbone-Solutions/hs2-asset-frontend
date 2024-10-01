@@ -109,8 +109,8 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Acknowledgement Status updated`,
-        content: `Eoi ID = ${eoiId}`,
+        title: <h6 className="success-sweet-title">Acknowledgement Status updated</h6>,
+        content:  <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -191,7 +191,7 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: `Buyer details updated`,
+        title: <h6 className="success-sweet-title">Buyer details updated</h6>,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
