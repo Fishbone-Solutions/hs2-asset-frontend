@@ -41,10 +41,9 @@ const useColumns = (handleDelete) => {
           const statusCode = row.original.approval_status;
           const statusStyles = {
             REJECTED: { bgColor: "bg-danger", textColor: "text-white" }, // Red for sold items
-            APPROVAL: {
+            APPROVED: {
               bgColor: "bg-success", // Green for live items
               textColor: "text-white",
-              icon: "path/to/live-icon.png", // Optional icon
             },
             PENDING: { bgColor: "bg-info", textColor: "text-white" }, // Blue for listings
           };

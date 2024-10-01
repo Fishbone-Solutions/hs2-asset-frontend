@@ -9,16 +9,18 @@ const getBadgeClass = (activity) => {
       return "badge bg-info"; // Light Blue
     case "APPROVAL-REQUEST":
       return "badge bg-purple"; // Dark Purple
+    case "PROCESSING":
+      return "badge bg-processing";
     case "APPROVED":
       return "badge bg-purple"; // Light Green
     case "PAYMENT-REQUESTED":
-      return "badge bg-warning"; // Light Orange
+      return "badge bg-warning-dark"; // Light Orange
     case "PAYMENT-SENT":
       return "badge bg-warning-dark"; // Darker Orange
     case "PAYMENT-RECEIVED":
       return "badge bg-warning-light"; // Yellow
     case "GOODS-SENT":
-      return "badge bg-success"; // Light Green
+      return "badge bg-lime"; // Light Green
     case "GOODS-RECEIVED":
       return "badge bg-lime"; // Bright Lime Green
     default:

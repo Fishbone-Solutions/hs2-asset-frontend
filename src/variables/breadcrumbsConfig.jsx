@@ -46,7 +46,7 @@ const breadcrumbConfig = {
   ],
   approvalRequests: [{ label: "Approvals Requests", to: "#" }],
   showApprovalRequestsInventory: (eoiId, id, requestId) => [
-    { label: "Approvals Requests", to: "/admin/approvals/requests" },
+    { label: "Approvals Requests", to: "/admin/approval-requests" },
     {
       label: "View Details",
       to: `/admin/approval/request/show/${eoiId}/${id}/${requestId}`,
@@ -54,7 +54,7 @@ const breadcrumbConfig = {
     { label: "Item Details" },
   ],
   showApprovalRequests: [
-    { label: "Approvals Requests", to: "/admin/approvals/requests" },
+    { label: "Approvals Requests", to: "/admin/approval-requests" },
     { label: "View Details" },
   ],
   myEoi: [{ label: "My EOI", to: "#" }],
