@@ -76,5 +76,5 @@ export const inventorySchema = Yup.object().shape({
 
   additional_info: Yup.string().nullable(),
   asset_location_city: Yup.string().required("City is required"),
-  asset_location: Yup.string().required("Area is required"),
+  asset_location: Yup.string().required("Area, Street and postcode is required"),
 });

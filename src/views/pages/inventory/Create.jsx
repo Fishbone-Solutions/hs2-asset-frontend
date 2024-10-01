@@ -470,7 +470,7 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Description</Label>
+                          <Label className="required">Description</Label>
                           <FormGroup>
                             <Field type="text" name="description" as={Input} />
                             <ErrorMessage
@@ -574,13 +574,13 @@ const Create = () => {
                               <FormGroup>
                                 <Field
                                   type="text"
-                                  placeholder="Area and Street"
+                                  placeholder="Area, Street and postcode"
                                   name="asset_location"
                                   as={Input}
                                   className="form-control"
                                 />
                                 <ErrorMessage
-                                  name="area"
+                                  name="asset_location"
                                   component="div"
                                   className="text-danger"
                                 />
