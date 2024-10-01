@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { GlobalContext } from "../../GlobalState";
 import BACKEND_ADDRESS from "../components/serverAddress";
@@ -16,51 +16,48 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { EndPointService } from "@/services/methods";
+import DynamicToast from "components/Common/Toast";
+import { FullPageLoader } from "components/Common/ComponentLoader";
 
 function UserProfile() {
-  const [dataState, setDataState] = React.useState({});
+  const [loader, setLoader] = useState(false);
+  const [toastType, setToastType] = useState(null);
+  const [toastMessage, setToastMessage] = useState("");
   const { username } = useContext(GlobalContext);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [dataState, setDataState] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
   const camelCaseWithSpaces = (text) => {
     return text
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   };
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("token", "x8F!@p01,*MH");
-      myHeaders.append("user_id", username); // Add user_id to headers
 
-      const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
+  const headers = { user_id: sessionStorage.getItem("username") };
 
-      try {
-        const response = await fetch(
-          `${BACKEND_ADDRESS}/users/${username}`,
-          requestOptions,
-        );
-        const result = await response.json();
-        setDataState(result.appRespData[0]);
-        console.log(dataState.firstname);
-      } catch (error) {
-        setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
-        );
-        console.error(error);
-      }
-    };
+  const fetchData = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.getUserProfile(headers, sessionStorage.getItem("username"));
+      setDataState(res.appRespData[0]);
+      setLoader(false);
+    } catch(e) {
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  }
 
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [])
+
   return (
     <>
       <div className="content">
+      {toastType && <DynamicToast type={toastType} message={toastMessage} />}
+      {loader && <FullPageLoader />}
         <Row>
           <Col md="12">
             <Card>
