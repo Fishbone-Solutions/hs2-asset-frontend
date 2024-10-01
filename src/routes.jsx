@@ -96,7 +96,20 @@ const routes = [
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventory} />,
     layout: "/admin",
-    hidden: !hasPermission('inventory', 'View'),
+    permissionSlug: 'inventory',
+  },
+  {
+    path: "/exchange",
+    pathName: "/admin/exchange",
+    name: "Exchange Register ",
+    component: <Exchange />,
+    icon: <FaCubesStacked size="2.5em" style={{ float: "left" }} />,
+    breadcrumbIcon: (
+      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
+    ),
+    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
+    layout: "/admin",
+    permissionSlug: 'exchange-register',
   },
   {
     path: "/inventory/create",
@@ -191,19 +204,7 @@ const routes = [
     hidden: true,
   },
 
-  {
-    path: "/exchange",
-    pathName: "/admin/exchange",
-    name: "Exchange Register ",
-    component: <Exchange />,
-    layout: "/admin",
-    icon: <FaCubesStacked size="2.5em" style={{ float: "left" }} />,
-    breadcrumbIcon: (
-      <FaCubesStacked size="2em" color="white" style={{ float: "left" }} />
-    ),
-    breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
-    hidden: false,
-  },
+
   {
     path: "/exchange/show/:id",
     pathName: "/admin/exchange/show/:id",
@@ -259,7 +260,7 @@ const routes = [
       <HiRectangleStack size="2em" color="white" style={{ float: "left" }} />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.bulkImport} />,
-    hidden: false,
+    permissionSlug: 'bulk-import',
   },
 
   {
@@ -269,7 +270,7 @@ const routes = [
     component: <W1 />,
     layout: "/admin",
     icon: <BsMegaphoneFill size="2.5em" style={{ float: "left" }} />,
-    hidden: false,
+    permissionSlug: 'items-request',
   },
   {
     path: "/approval-requests",
@@ -284,7 +285,7 @@ const routes = [
     breadcrumbComponent: (
       <Breadcrumb items={breadcrumbConfig.approvalRequests} />
     ),
-    hidden: !hasPermission('approval-requests', 'View'),
+    permissionSlug: 'approval-requests',
   },
   {
     path: "/approval/request/show/:eoiId/:inventoryId/:requestId",
@@ -341,7 +342,7 @@ const routes = [
       />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
-    hidden: false,
+    permissionSlug: 'my-eoi',
   },
   {
     path: "/myeoi/:inventoryId/show/:eoiId",
@@ -518,13 +519,5 @@ const routes = [
   },
 ];
 
-// Set hidden property for routes that require permission checks
-routes.forEach(route => {
-  if (route.hidden === undefined) {
-    route.hidden = !hasPermission(route.path.split('/')[1], 'View'); // Example check
-  }
-});
-
-console.log('routes', routes);
 
 export default routes;

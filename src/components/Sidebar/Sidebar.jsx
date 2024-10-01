@@ -19,6 +19,17 @@ const getQueryParams = () => {
     mode: params.get("mode"),
   };
 };
+const hasPermission = (module_slug, permission_type) => {
+  const user = sessionStorage.getItem("user");
+  if (user) {
+    const permissions = JSON.parse(user).user_permissions; // Adjust this if the structure is different
+    return permissions.some(permission => 
+      permission.permission_slug === module_slug && 
+      permission.permission_value.includes(permission_type)
+    );
+  }
+  return false;
+};
 
 function Sidebar(props) {
   const [openAvatar, setOpenAvatar] = React.useState(false);
@@ -57,28 +68,33 @@ function Sidebar(props) {
 
   // Create sidebar links
   const createLinks = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.hidden) {
-        return null; // Skip hidden routes
-      }
-      if (prop.redirect) {
+    return routes.map((prop, index) => {
+      // Skip hidden and redirect routes
+      if (prop.hidden || prop.redirect) {
         return null;
       }
+  
+      // Handle collapsible routes
       if (prop.collapse) {
-        var st = {};
-        st[prop["state"]] = !collapseStates[prop.state];
+        const collapseKey = prop["state"];
+        const st = {};
+        st[collapseKey] = !collapseStates[collapseKey];
+  
         return (
           <li
             className={getCollapseInitialState(prop.views) ? "active" : ""}
-            key={key}
+            key={`${prop.state}-${index}`} // Ensure unique key
           >
             <a
               href="#pablo"
               data-toggle="collapse"
-              aria-expanded={collapseStates[prop.state]}
+              aria-expanded={collapseStates[collapseKey]}
               onClick={(e) => {
                 e.preventDefault();
-                setCollapseStates(st);
+                setCollapseStates((prevState) => ({
+                  ...prevState,
+                  [collapseKey]: !prevState[collapseKey],
+                }));
               }}
             >
               {prop.icon !== undefined ? (
@@ -99,30 +115,43 @@ function Sidebar(props) {
                 </>
               )}
             </a>
-            <Collapse isOpen={collapseStates[prop.state]}>
+            <Collapse isOpen={collapseStates[collapseKey]}>
               <ul className="nav">{createLinks(prop.views)}</ul>
             </Collapse>
           </li>
         );
+      } else {
+        // Handle non-collapsible routes
+        const hasPermissionToView = hasPermission(prop.permissionSlug, "View");
+  
+        if (hasPermissionToView) {
+          return (
+            <li
+              className={activeRoute(prop.layout + prop.path)}
+              key={`${prop.path}-${index}`} // Ensure unique key for non-collapsible routes
+            >
+              <Link to={prop.layout + prop.path}>
+                {prop.icon !== undefined ? (
+                  <>
+                    {prop.icon} <p className="ml-5 menu-name">{prop.name}</p>
+                  </>
+                ) : (
+                  <>
+                    <span className="sidebar-mini-icon">{prop.mini}</span>
+                    <span className="sidebar-normal">{prop.name}</span>
+                  </>
+                )}
+              </Link>
+            </li>
+          );
+        } else {
+          return null; // If no permission, return null to exclude the route
+        }
       }
-      return (
-        <li className={activeRoute(prop.layout + prop.path)} key={key}>
-          <Link to={prop.layout + prop.path}>
-            {prop.icon !== undefined ? (
-              <>
-                {prop.icon} <p className="ml-5 menu-name">{prop.name}</p>
-              </>
-            ) : (
-              <>
-                <span className="sidebar-mini-icon">{prop.mini}</span>
-                <span className="sidebar-normal">{prop.name}</span>
-              </>
-            )}
-          </Link>
-        </li>
-      );
     });
   };
+  
+  
 
   // Check if the route is active
   const activeRoute = (routeName) => {
