@@ -51,6 +51,7 @@ const Index = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
+  const [clearCityBoolean, setClearCityBoolean] = useState(false);
   const [cities, setCities] = useState([]);
   
   const [appliedFilters, setAppliedFilters] = useState([]);
@@ -213,6 +214,7 @@ const Index = () => {
     });
 
     setClearDateBoolean(true);
+    setClearCityBoolean(true);
   };
 
   const handleAdvancedFilter = () => {
@@ -277,13 +279,17 @@ const Index = () => {
     console.log(city);
     setFilterDataState({ ...filterDataState, city: city.value, cityName: city.label });
     console.log('city data filteration',filterDataState);
-    setClearDateBoolean(false);
+    setClearCityBoolean(false);
   };
   const closeModal = () => setActiveModal(null);
 
   const handleRemoveFilter = (filterKeys) => {
     // If filterKeys is not an array, convert it into an array
     const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+
+    if(!Array.isArray(filterKeys) && filterKeys === 'city') {
+      setClearCityBoolean(true);
+    }
 
     // Update the filter form state
     setFilterFormDate((prev) => {
@@ -526,7 +532,7 @@ const Index = () => {
                 label: city.name
               }))}
               onChange={handleCityChange}
-              clearSelection={clearDateBoolean}
+              clearSelection={clearCityBoolean}
             />
                               </FormGroup>
                             </Col>
