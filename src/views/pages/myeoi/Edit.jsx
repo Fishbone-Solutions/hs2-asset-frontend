@@ -588,7 +588,7 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          isDisabled={dataState.approval_status === 'NOT-PROCEEDING' || dataState.eoi_status === 'WITHDRAWN'} 
+                          isDisabled={dataState.eoi_status === 'NOT-PROCEEDING' || dataState.eoi_status === 'WITHDRAWN'} 
                           value={myEoIUpdateoptions.find(
                             (option) => option.value === dataState.eoi_status
                           )}
