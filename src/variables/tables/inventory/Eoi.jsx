@@ -88,7 +88,7 @@ const useColumns = (handleDelete) => {
             LISTING: { bgColor: "bg-info", textColor: "text-white" },
             "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
             "IN-NEGOTIATION": {
-              bgColor: "bg-success",
+              bgColor: "bg-info",
               textColor: "text-white",
             },
             "APPROVAL-REQUEST": {
