@@ -56,7 +56,7 @@ export const inventorySchema = Yup.object().shape({
   contract_no: Yup.string()
     .matches(
       /^[a-zA-Z0-9\/\\\-]+$/,
-      "Must be only alphanumeric characters and / \\"
+      "Must be only alphanumeric characters and / \\ pattern is [ABC]-[123]/[EA]"
     )
     .nullable(),
   purchase_price: Yup.string().nullable(),
@@ -67,11 +67,11 @@ export const inventorySchema = Yup.object().shape({
   // Conditional validation for sold_value
   sold_value: Yup.number()
   .nullable()
+  .transform((value, originalValue) => originalValue === 'null' ? null : value)
   .when("statuscode", {
     is: (val) => val === 'Sold', // Use a function here
-    then:(schema) => schema
-      .required("Sold value is required"),
-    otherwise: (schema)=> schema.nullable(),
+    then: (schema) => schema.required("Sold value is required"),
+    otherwise: (schema) => schema.nullable(),
   }),
 
   additional_info: Yup.string().nullable(),
