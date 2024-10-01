@@ -25,6 +25,7 @@ import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModalComponent from "components/Common/ModalComponent";
+import { useSearchParams } from "react-router-dom";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -40,6 +41,9 @@ const Show = () => {
   const [updateInput, setUpdateInput] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const openModal = (modalId) => setActiveModal(modalId);
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("status"); // "approved"
+  console.log('status', status);
   const closeModal = () => {
     const modalElement = document.getElementById(activeModal);
     modalElement.classList.remove("show");
@@ -553,6 +557,8 @@ const Show = () => {
             >
               CLOSE
             </Button>
+            
+            {(status !== 'Processed') ? (
               <>
                 <Button
                   className="btn btn-success success-btn"
@@ -567,22 +573,14 @@ const Show = () => {
                   className="btn btn-danger danger-btn"
                   color="secondary"
                   onClick={() => {handleRequestApprovalOrRejected("REJECTED")
-                    // showAlert({
-                    //   title: `Are you sure you want to reject it ?`,
-                    //   type: "warning",
-                    //   showCancelButton: true,
-                    //   confirmText: "Yes",
-                    //   onCancel: hideAlert,
-                    //   onConfirm: () => {
-                    //     handleRequestApprovalOrRejected("REJECTED");
-                    //   },
-                    // });
                   }}
                   style={{ visibility: "visible", opacity: 1 }}
                 >
                   Reject
                 </Button>
+              
               </>
+              ) : '' }
           </div>
         </Form>
       </div>

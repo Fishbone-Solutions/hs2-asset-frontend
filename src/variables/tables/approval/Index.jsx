@@ -49,7 +49,7 @@ const useColumns = (data, handleDelete) => {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <Link
-              to={`/admin/approval/request/show/${row.original.eoi_id}/${row.original.asset_id}/${row.original.request_id}`}
+              to={`/admin/approval/request/show/${row.original.eoi_id}/${row.original.asset_id}/${row.original.request_id}?status=${row.original.request_status}`}
             >
               <Button
                 className="btn-icon btn-simple"
