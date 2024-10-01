@@ -149,20 +149,31 @@ const Show = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <Col sm="6">
+                  <Col sm="6">
                       <Label>Approval Status</Label>
                       <FormGroup>
                         <Input
+                          className={
+                            dataState.approval_status == "APPROVED"
+                              ? "custom-approval-field"
+                              : dataState.approval_status == "REJECTED"
+                                ? "custom-approval-field-rejected"
+                                : ""
+                          }
                           type="text"
                           name="approval_status"
-                          value={dataState.approval_status}
+                          value={dataState.approval_status === 'PENDING' ? 'Not Requested' : dataState.approval_status}
                           readOnly
                         />
                       </FormGroup>
                     </Col>
-
+                    {dataState.approval_status !== 'Not Requested' && dataState.approval_status !== 'Requested' ? (
                     <Col sm="6">
-                      <Label>CEMAR Ref No</Label>
+                      <Label>
+                        {dataState.approval_status == "APPROVED"
+                          ? "CEMAR Ref No"
+                          : "Rejection Reason"}
+                      </Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -172,6 +183,7 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
+                    ) : ''}
                   </Row>
                 </CardBody>
               </Card>
