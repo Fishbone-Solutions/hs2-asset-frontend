@@ -93,7 +93,6 @@ export const ImageType = [
   ".bmp",
   ".tiff",
   ".svg",
-  ".webp",
   ".ico",
   ".heic",
   ".heif",

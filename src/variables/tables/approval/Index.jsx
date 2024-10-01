@@ -57,7 +57,7 @@ const useColumns = (data, handleDelete) => {
                 size="sm"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title="Process Request"
+                title={row.original.request_status === "Pending" ? "Process Request" : 'View Details'}
               >
                 {row.original.request_status === "Pending" ? (
                   <FaStamp size="1.4em" />
