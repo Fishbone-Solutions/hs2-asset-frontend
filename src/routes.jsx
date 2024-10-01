@@ -59,6 +59,7 @@ import Breadcrumb from "components/Common/Breadcrumb";
 import breadcrumbConfig from "variables/breadcrumbsConfig";
 import { CgProfile } from "react-icons/cg";
 import NotAuthorized from "views/pages/NotAuthorized";
+import ItemRequest from "views/pages/item_request";
 
 const hasPermission = (module_slug, permission_type) => {
   const user = sessionStorage.getItem("user");
@@ -264,10 +265,10 @@ const routes = [
   },
 
   {
-    path: "/itemsrequests",
-    pathName: "/admin/w1",
+    path: "/items-requests",
+    pathName: "/admin/items-requests",
     name: "Item Requests",
-    component: <W1 />,
+    component: <ItemRequest />,
     layout: "/admin",
     icon: <BsMegaphoneFill size="2.5em" style={{ float: "left" }} />,
     permissionSlug: 'items-request',
