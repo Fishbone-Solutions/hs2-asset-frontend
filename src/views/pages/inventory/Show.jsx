@@ -504,7 +504,7 @@ const Show = () => {
                       <InputGroupText>£</InputGroupText>
                         <Input
                           type="text"
-                          value={formData.sold_value}
+                          value={formData.sold_value === "null" ? '' : formData.sold_value}
                           name="sold_value"
                           readOnly
                         />
