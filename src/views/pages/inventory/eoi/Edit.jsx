@@ -665,26 +665,31 @@ const Edit = () => {
                             name="negotiated_val"
                             value={negotiatedValue}
                             onChange={(e) => setNegotiatedValue(e.target.value)}
+                            disabled={dataState.approval_status == "APPROVED"}
                           />
                         </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>
                   <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button
-                      color="primary"
-                      type="button"
-                      onClick={() =>
-                        showAlert({
-                          title: "Are you sure?",
-                          type: "warning",
-                          onConfirm: () => handleNegotiatedValue(),
-                          onCancel: hideAlert,
-                        })
-                      }
-                    >
-                      update
-                    </Button>
+                    {dataState.approval_status !== "APPROVED" ? (
+                      <Button
+                        color="primary"
+                        type="button"
+                        onClick={() =>
+                          showAlert({
+                            title: "Are you sure?",
+                            type: "warning",
+                            onConfirm: () => handleNegotiatedValue(),
+                            onCancel: hideAlert,
+                          })
+                        }
+                      >
+                        update
+                      </Button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </CardBody>
               </Card>
