@@ -57,7 +57,11 @@ const useColumns = (data, handleDelete) => {
                 size="sm"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title={row.original.request_status === "Pending" ? "Process Request" : 'View Request'}
+                title={
+                  row.original.request_status === "Pending"
+                    ? "Process Request"
+                    : "View Request"
+                }
               >
                 {row.original.request_status === "Pending" ? (
                   <FaStamp size="1.4em" />
@@ -92,13 +96,56 @@ const useColumns = (data, handleDelete) => {
     // Conditionally add the extra column if any row has the desired status
     if (hasSpecialStatus) {
       baseColumns.splice(5, 0, {
+        Header: "Status",
+        isSortable: true,
+        accessor: "approval_status",
+        width: "1%",
+        Cell: ({ row }) => {
+          const statusCode = row.original.approval_status;
+          const statusStyles = {
+            REJECTED: { bgColor: "bg-danger", textColor: "text-white" }, // Red for sold items
+            APPROVED: {
+              bgColor: "bg-success", // Green for live items
+              textColor: "text-white",
+            },
+            PENDING: { bgColor: "bg-info", textColor: "text-white" }, // Blue for listings
+          };
+          const style = statusStyles[statusCode] || {
+            bgColor: "bg-secondary",
+            textColor: "text-white",
+          };
+
+          return (
+            <span
+              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+            >
+              {style.icon && (
+                <>
+                  <img
+                    src={style.icon}
+                    width="15px"
+                    alt="status icon"
+                    className="me-1 align-middle"
+                  />
+                </>
+              )}
+              {statusCode === "PENDING" ? "Not-Requested" : statusCode}
+            </span>
+          );
+        },
+      });
+
+      baseColumns.splice(6, 0, {
         Header: "Processed On", // New column header
         accessor: "extra",
         width: "5%",
         Cell: ({ row }) => {
-          return <span>
-          {row.original.processing_date_formatted} {row.original.processing_time_formatted}
-        </span>
+          return (
+            <span>
+              {row.original.processing_date_formatted}{" "}
+              {row.original.processing_time_formatted}
+            </span>
+          );
         },
       });
     }
