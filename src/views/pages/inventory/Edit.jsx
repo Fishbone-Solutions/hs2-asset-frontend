@@ -266,7 +266,7 @@ const Edit = () => {
   const handleSoldToast = (selectedStatus) => {
     if (selectedStatus === "Sold") {
       showAlert({
-        title: "Please review and if required update the Sold Value",
+        title: "Please enter the final Sold Value.",
         type: "info",
         showCancelButton: false,
         confirmText: "ok",
