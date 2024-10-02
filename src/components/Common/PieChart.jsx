@@ -7,6 +7,17 @@ ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels); // Register the 
 
 const PieChart = ({ data }) => {
   console.log("data", data);
+
+  // Mapping of labels to specific colors
+  const colorMapping = {
+    "Listing": "#51bcda",
+    "Live": "#da2727",
+    "Sold": "#6bd098",
+  };
+
+  // Default color if a label doesn't match
+  const defaultColor = "#cccccc";
+
   // Prepare data for the Pie chart based on the prop data
   const labels = data.map((item) => item.status);
   const totals = data.map((item) => item.total);
@@ -18,22 +29,8 @@ const PieChart = ({ data }) => {
       {
         label: "# of Votes",
         data: totals,
-        backgroundColor: [
-          "#51bcda",
-          "#da2727",
-          "#6bd098",
-          "#616161",
-          "#7e7e7e",
-          "#969696",
-        ],
-        borderColor: [
-          "#51bcda",
-          "#da2727",
-          "#6bd098",
-          "#4bc0c0",
-          "#9966ff",
-          "#ff9f40",
-        ],
+        backgroundColor: labels.map(label => colorMapping[label] || defaultColor), // Set background color based on the label
+        borderColor: labels.map(label => colorMapping[label] || defaultColor), // Set border color based on the label
         borderWidth: 1,
       },
     ],
