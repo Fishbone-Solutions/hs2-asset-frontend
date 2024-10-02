@@ -19,7 +19,6 @@ import {
   Label,
   FormGroup,
   Modal,
-  
   InputGroup,
   InputGroupText,
 } from "reactstrap";
@@ -93,7 +92,7 @@ const Show = () => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
   useEffect(() => {
     console.log("useEffect");
     fetchInventoryById();
@@ -367,62 +366,67 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                          {/* Single Label for the Entire Section */}
-                          <Label className="required">Location</Label>
+                      {/* Single Label for the Entire Section */}
+                      <Label className="required">Location</Label>
 
-                          <Row>
-                            {/* City Field */}
-                            <Col sm="4 pr-0">
-
-                              <FormGroup>
-                              <Select
-                                name="statuscode"
-                                options={cities.map((city) => ({
-                                  value: city.code,
-                                  label: city.name
-                                }))}
-                                value={cities.find(
-                                  (city) => city.code === formData.asset_location_city
-                                ) ? {
-                                  value: formData.asset_location_city,
-                                  label: cities.find((city) => city.code === formData.asset_location_city).name
-                                } : null}
-                                isDisabled={true}
-                              />
-                              
-                              </FormGroup>
-                            </Col>
-
-                            {/* Area Field */}
-                            <Col sm="8">
-                              <FormGroup>
-                              <Input
-                          type="text"
-                          name="asset_location"
-                          value={formatLocation(formData.asset_location)}
-                          readOnly="true"
-                        />
-                              </FormGroup>
-                            </Col>
-
-                           
-                          </Row>
+                      <Row>
+                        {/* City Field */}
+                        <Col sm="4 pr-0">
+                          <FormGroup>
+                            <Select
+                              name="statuscode"
+                              options={cities.map((city) => ({
+                                value: city.code,
+                                label: city.name,
+                              }))}
+                              value={
+                                cities.find(
+                                  (city) =>
+                                    city.code === formData.asset_location_city
+                                )
+                                  ? {
+                                      value: formData.asset_location_city,
+                                      label: cities.find(
+                                        (city) =>
+                                          city.code ===
+                                          formData.asset_location_city
+                                      ).name,
+                                    }
+                                  : null
+                              }
+                              isDisabled={true}
+                            />
+                          </FormGroup>
                         </Col>
+
+                        {/* Area Field */}
+                        <Col sm="8">
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="asset_location"
+                              value={formatLocation(formData.asset_location)}
+                              readOnly="true"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
                       <Label>Estimated Value *</Label>
                       <FormGroup>
-                      <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                        <Input
-                          type="number"
-                          name="value"
-                          value={formData.value}
-                          min="0" // Ensures no negative values
-                                step="0.01" // Allows decimal/floating-point values
-                          readOnly="true"
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="number"
+                            name="value"
+                            value={formData.value}
+                            min="0" // Ensures no negative values
+                            step="0.01" // Allows decimal/floating-point values
+                            readOnly="true"
+                          />
                         </InputGroup>
                       </FormGroup>
                     </Col>
@@ -457,14 +461,14 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Purcahse Value </Label>
                       <FormGroup>
-                      <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                        <Input
-                          type="text"
-                          name="purchase_price"
-                          value={formData.purchase_price}
-                          readOnly
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="text"
+                            name="purchase_price"
+                            value={formData.purchase_price}
+                            readOnly
+                          />
                         </InputGroup>
                       </FormGroup>
                     </Col>
@@ -484,14 +488,14 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Residual Forcast Value </Label>
                       <FormGroup>
-                      <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                        <Input
-                          type="text"
-                          value={formData.residual_forecast_value}
-                          name="residual_forecast_value"
-                          readOnly
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="text"
+                            value={formData.residual_forecast_value}
+                            name="residual_forecast_value"
+                            readOnly
+                          />
                         </InputGroup>
                       </FormGroup>
                     </Col>
@@ -500,14 +504,18 @@ const Show = () => {
                     <Col sm="6">
                       <Label>Sold Value </Label>
                       <FormGroup>
-                      <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                        <Input
-                          type="text"
-                          value={formData.sold_value === "null" ? '' : formData.sold_value}
-                          name="sold_value"
-                          readOnly
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="text"
+                            value={
+                              formData.sold_value === "null"
+                                ? ""
+                                : formData.sold_value
+                            }
+                            name="sold_value"
+                            readOnly
+                          />
                         </InputGroup>
                       </FormGroup>
                     </Col>
@@ -580,54 +588,55 @@ const Show = () => {
               </Card>
             </Col>
             {/* Set Asset Status */}
-            
+
             {requestId === undefined ? (
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Item Status
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Status *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="statuscode"
-                          value={inventoryStatusOptions.find(
-                            (option) => option.value === formData.statuscode
-                          )}
-                          onChange={(selectedOption) =>
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              statuscode: selectedOption.value,
-                            }))
-                          }
-                          options={inventoryStatusOptions}
-                          placeholder="Select an option"
-                          isDisabled="true"
-                          required
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              
-              </Card>
-            </Col>
-              ) : ''}
+              <Col md="12">
+                <Card>
+                  <CardHeader>
+                    <CardTitle
+                      tag="h6"
+                      style={{
+                        color: "rgb(82,203,206)",
+                        fontWeight: "bold",
+                        textTransform: "capitalize",
+                        WebkitTextTransform: "capitalize", // for Safari
+                      }}
+                    >
+                      Item Status
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col sm="6">
+                        <Label>Status *</Label>
+                        <FormGroup>
+                          <Select
+                            className="react-select primary"
+                            classNamePrefix="react-select"
+                            name="statuscode"
+                            value={inventoryStatusOptions.find(
+                              (option) => option.value === formData.statuscode
+                            )}
+                            onChange={(selectedOption) =>
+                              setFormData((prevState) => ({
+                                ...prevState,
+                                statuscode: selectedOption.value,
+                              }))
+                            }
+                            options={inventoryStatusOptions}
+                            placeholder="Select an option"
+                            isDisabled="true"
+                            required
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

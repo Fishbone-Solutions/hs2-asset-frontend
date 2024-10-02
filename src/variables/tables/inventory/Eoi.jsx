@@ -66,7 +66,7 @@ const useColumns = (handleDelete) => {
                   />
                 </>
               )}
-              {statusCode === 'PENDING' ? 'Not-Requested' : statusCode}
+              {statusCode === "PENDING" ? "Not-Requested" : statusCode}
             </span>
           );
         },
@@ -95,8 +95,11 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-purple",
               textColor: "text-white",
             },
-            
-            "PAYMENT-SENT": { bgColor: "bg-warning-dark", textColor: "text-white" },
+
+            "PAYMENT-SENT": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
             "PAYMENT-RECEIVED": {
               bgColor: "bg-warning-dark",
               textColor: "text-white",
@@ -105,11 +108,11 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-warning-dark",
               textColor: "text-white",
             },
-            "PROCESSING": {
+            PROCESSING: {
               bgColor: "bg-processing",
               textColor: "text-white",
             },
-            
+
             "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
             "GOODS-RECEIVED": {
               bgColor: "bg-lime",

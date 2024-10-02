@@ -119,7 +119,7 @@ const Show = () => {
                       <Label>Current Status</Label>
                       <FormGroup>
                         <Input
-                        className="bg-current-status"
+                          className="bg-current-status"
                           type="text"
                           name="id"
                           value={dataState.eoi_status}
@@ -149,7 +149,7 @@ const Show = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                  <Col sm="6">
+                    <Col sm="6">
                       <Label>Approval Status</Label>
                       <FormGroup>
                         <Input
@@ -162,28 +162,35 @@ const Show = () => {
                           }
                           type="text"
                           name="approval_status"
-                          value={dataState.approval_status === 'PENDING' ? 'Not Requested' : dataState.approval_status}
+                          value={
+                            dataState.approval_status === "PENDING"
+                              ? "Not Requested"
+                              : dataState.approval_status
+                          }
                           readOnly
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== 'Not Requested' && dataState.approval_status !== 'Requested' ? (
-                    <Col sm="6">
-                      <Label>
-                        {dataState.approval_status == "APPROVED"
-                          ? "CEMAR Ref No"
-                          : "Rejection Reason"}
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="approval_ref_no" // Corrected name field
-                          value={dataState.approval_ref_no}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
-                    ) : ''}
+                    {dataState.approval_status !== "Not Requested" &&
+                    dataState.approval_status !== "Requested" ? (
+                      <Col sm="6">
+                        <Label>
+                          {dataState.approval_status == "APPROVED"
+                            ? "CEMAR Ref No"
+                            : "Rejection Reason"}
+                        </Label>
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            name="approval_ref_no" // Corrected name field
+                            value={dataState.approval_ref_no}
+                            readOnly
+                          />
+                        </FormGroup>
+                      </Col>
+                    ) : (
+                      ""
+                    )}
                   </Row>
                 </CardBody>
               </Card>

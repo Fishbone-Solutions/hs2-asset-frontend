@@ -72,12 +72,12 @@ const Create = () => {
   const fetchCityData = async () => {
     try {
       const res = await EndPointService.getCityData();
-      console.log('city', res);
+      console.log("city", res);
       setCities(res.appRespData);
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     fetchCityData();
@@ -96,7 +96,7 @@ const Create = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
-        } 
+        }
 
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
@@ -117,7 +117,7 @@ const Create = () => {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-             Item '{values.asset_name}' added to inventory
+            Item '{values.asset_name}' added to inventory
           </h6>
         ),
         content: (
@@ -395,8 +395,6 @@ const Create = () => {
                               component="div"
                               className="text-danger"
                             />
-
-                      
                           </FormGroup>
                         </Col>
 
@@ -542,31 +540,30 @@ const Create = () => {
                           <Row>
                             {/* City Field */}
                             <Col sm="4 pr-0">
-
-                            <FormGroup>
-                            <Select
-                              name="statuscode"
-                              options={cities.map((city) => ({
-                                value: city.code,
-                                label: city.name
-                              }))}
-                              value={cities.find(
-                                (city) => city.value === values.asset_location_city
-                              )}
-                              onChange={(selectedOption) =>
-                                setFieldValue(
-                                  "asset_location_city",
-                                  selectedOption.value
-                                )
-                              }
-                            />
-                            <ErrorMessage
-                              name="asset_location_city"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                             
+                              <FormGroup>
+                                <Select
+                                  name="statuscode"
+                                  options={cities.map((city) => ({
+                                    value: city.code,
+                                    label: city.name,
+                                  }))}
+                                  value={cities.find(
+                                    (city) =>
+                                      city.value === values.asset_location_city
+                                  )}
+                                  onChange={(selectedOption) =>
+                                    setFieldValue(
+                                      "asset_location_city",
+                                      selectedOption.value
+                                    )
+                                  }
+                                />
+                                <ErrorMessage
+                                  name="asset_location_city"
+                                  component="div"
+                                  className="text-danger"
+                                />
+                              </FormGroup>
                             </Col>
 
                             {/* Area Field */}
@@ -586,8 +583,6 @@ const Create = () => {
                                 />
                               </FormGroup>
                             </Col>
-
-                           
                           </Row>
                         </Col>
                       </Row>
@@ -687,13 +682,13 @@ const Create = () => {
                         <Col sm="6">
                           <Label>Residual Forcast Value </Label>
                           <FormGroup>
-                          <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                            <Field
-                              type="number"
-                              name="residual_forecast_value"
-                              as={Input}
-                            />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="number"
+                                name="residual_forecast_value"
+                                as={Input}
+                              />
                             </InputGroup>
                             <ErrorMessage
                               name="residual_forecast_value"
@@ -707,9 +702,14 @@ const Create = () => {
                         <Col sm="6">
                           <Label>Sold Value </Label>
                           <FormGroup>
-                          <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                            <Field type="number" name="sold_value" disabled as={Input} />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="number"
+                                name="sold_value"
+                                disabled
+                                as={Input}
+                              />
                             </InputGroup>
                             <ErrorMessage
                               name="sold_value"

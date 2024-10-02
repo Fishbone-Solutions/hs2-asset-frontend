@@ -43,7 +43,7 @@ const Show = () => {
   const openModal = (modalId) => setActiveModal(modalId);
   const [searchParams] = useSearchParams();
   const status = searchParams.get("status"); // "approved"
-  console.log('status', status);
+  console.log("status", status);
   const closeModal = () => {
     const modalElement = document.getElementById(activeModal);
     modalElement.classList.remove("show");
@@ -122,7 +122,7 @@ const Show = () => {
       approval_status: type,
       approval_ref_no: "",
     }));
-    openModal('approval-modal');
+    openModal("approval-modal");
 
     // showAlert({
     //   customHeader: (
@@ -251,7 +251,7 @@ const Show = () => {
                       <Label>Current Status</Label>
                       <FormGroup>
                         <Input
-                        className="bg-current-status"
+                          className="bg-current-status"
                           type="text"
                           name="id"
                           value={dataState.eoi_status}
@@ -346,7 +346,7 @@ const Show = () => {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                  <Col sm="6">
+                    <Col sm="6">
                       <Label>Approval Status</Label>
                       <FormGroup>
                         <Input
@@ -359,28 +359,35 @@ const Show = () => {
                           }
                           type="text"
                           name="approval_status"
-                          value={dataState.approval_status === 'PENDING' ? 'Not Requested' : dataState.approval_status}
+                          value={
+                            dataState.approval_status === "PENDING"
+                              ? "Not Requested"
+                              : dataState.approval_status
+                          }
                           readOnly
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== 'Not Requested' && dataState.approval_status !== 'Requested' ? (
-                    <Col sm="6">
-                      <Label>
-                        {dataState.approval_status == "APPROVED"
-                          ? "CEMAR Ref No"
-                          : "Rejection Reason"}
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="approval_ref_no" // Corrected name field
-                          value={dataState.approval_ref_no}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
-                    ) : ''}
+                    {dataState.approval_status !== "Not Requested" &&
+                    dataState.approval_status !== "Requested" ? (
+                      <Col sm="6">
+                        <Label>
+                          {dataState.approval_status == "APPROVED"
+                            ? "CEMAR Ref No"
+                            : "Rejection Reason"}
+                        </Label>
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            name="approval_ref_no" // Corrected name field
+                            value={dataState.approval_ref_no}
+                            readOnly
+                          />
+                        </FormGroup>
+                      </Col>
+                    ) : (
+                      ""
+                    )}
                   </Row>
                 </CardBody>
               </Card>
@@ -529,30 +536,31 @@ const Show = () => {
             >
               CLOSE
             </Button>
-            
-            {(status !== 'Processed') ? (
+
+            {status !== "Processed" ? (
               <>
                 <Button
                   className="btn btn-success success-btn"
                   color="primary"
                   style={{ visibility: "visible", opacity: 1 }}
                   onClick={() => handleRequestApprovalOrRejected("APPROVED")}
-                 
                 >
                   Approve
                 </Button>
                 <Button
                   className="btn btn-danger danger-btn"
                   color="secondary"
-                  onClick={() => {handleRequestApprovalOrRejected("REJECTED")
+                  onClick={() => {
+                    handleRequestApprovalOrRejected("REJECTED");
                   }}
                   style={{ visibility: "visible", opacity: 1 }}
                 >
                   Reject
                 </Button>
-              
               </>
-              ) : '' }
+            ) : (
+              ""
+            )}
           </div>
         </Form>
       </div>
@@ -561,40 +569,46 @@ const Show = () => {
         modalId="approval-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-                        
-                        { params.approval_status  === "APPROVED" ? "APPROVE" : "REJECT"} REQUEST
-                      </h6>
+            {params.approval_status === "APPROVED" ? "APPROVE" : "REJECT"}{" "}
+            REQUEST
+          </h6>
         }
         content={
           <div className="d-flex flex-wrap justify-content-left text-black mt-2">
-          <label className="" htmlFor="">
-            {params.approval_status === "APPROVED"
-              ? `Enter CEMAR Ref No to Approve this request`
-              : `Enter reason of Rejection`}
-          </label>
-          <input
-            type="text"
-            key={updateInput} // Forcing re-render when state changes
-            className="form-control"
-            value={params.approval_ref_no} // Binding to params state
-            onChange={handleModalInput} // Calling handler directly
-            placeholder={
-              params.approval_status === "APPROVED" ? `CEMAR Ref No` : `Reason of Rejection`
-            }
-          />
-        </div>
+            <label className="" htmlFor="">
+              {params.approval_status === "APPROVED"
+                ? `Enter CEMAR Ref No to Approve this request`
+                : `Enter reason of Rejection`}
+            </label>
+            <input
+              type="text"
+              key={updateInput} // Forcing re-render when state changes
+              className="form-control"
+              value={params.approval_ref_no} // Binding to params state
+              onChange={handleModalInput} // Calling handler directly
+              placeholder={
+                params.approval_status === "APPROVED"
+                  ? `CEMAR Ref No`
+                  : `Reason of Rejection`
+              }
+            />
+          </div>
         }
         showModal={activeModal === "approval-modal"}
         onCloseCross={closeModal}
-        onSubmit={() => {showAlert({
-          title: "Are you sure?",
-          type: "warning",
-          onConfirm: () => approvalRequest(params.approval_status),
-          onCancel: hideAlert,
-        })}}
+        onSubmit={() => {
+          showAlert({
+            title: "Are you sure?",
+            type: "warning",
+            onConfirm: () => approvalRequest(params.approval_status),
+            onCancel: hideAlert,
+          });
+        }}
         onClose={closeModal}
         closeButtonText="Cancel"
-        submitButtonText={ params.approval_status  === "APPROVED" ? "APPROVE" : "REJECT"}
+        submitButtonText={
+          params.approval_status === "APPROVED" ? "APPROVE" : "REJECT"
+        }
         closeButtonColor="red" // Dynamic color for close button
         submitButtonColor="green" // Dynamic color for submit button
       />

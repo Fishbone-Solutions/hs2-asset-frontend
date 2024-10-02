@@ -62,8 +62,11 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-purple",
               textColor: "text-white",
             },
-            
-            "PAYMENT-SENT": { bgColor: "bg-warning-dark", textColor: "text-white" },
+
+            "PAYMENT-SENT": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
             "PAYMENT-RECEIVED": {
               bgColor: "bg-warning-dark",
               textColor: "text-white",
@@ -72,11 +75,11 @@ const useColumns = (handleDelete) => {
               bgColor: "bg-warning-dark",
               textColor: "text-white",
             },
-            "PROCESSING": {
+            PROCESSING: {
               bgColor: "bg-processing",
               textColor: "text-white",
             },
-            
+
             "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
             "GOODS-RECEIVED": {
               bgColor: "bg-lime",
@@ -127,14 +130,16 @@ const useColumns = (handleDelete) => {
               </Button>
             </Link>
             <Button
-            type="button"
+              type="button"
               className="btn-icon btn-simple"
               color="danger"
               size="sm"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="Delete EOI"
-              onClick={() => handleDelete(row.original.asset_id, row.original.id)}
+              onClick={() =>
+                handleDelete(row.original.asset_id, row.original.id)
+              }
             >
               <i className="fa fa-times" style={{ fontSize: "0.9em" }}></i>
             </Button>

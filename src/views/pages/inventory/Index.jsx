@@ -117,7 +117,7 @@ const Index = () => {
     try {
       setLoader(true);
       const res = await EndPointService.deleteInventoryById(id);
-      if(res.appRespData[0].asset_delete === -2) {
+      if (res.appRespData[0].asset_delete === -2) {
         showAlert({
           title: "Can not delete this Asset",
           content: `This Asset is being broadcasted Live`,
@@ -127,16 +127,16 @@ const Index = () => {
           onConfirm: hideAlert,
         });
       } else {
-      showAlert({
-        title: "Deleted!",
-        content: `Asset ID ${id} has been deleted successfully`,
-        type: "success",
-        showCancelButton: false,
-        confirmText: "ok",
-        onConfirm: hideAlert,
-      });
-      setRefreshData(refreshData + 1);
-    }
+        showAlert({
+          title: "Deleted!",
+          content: `Asset ID ${id} has been deleted successfully`,
+          type: "success",
+          showCancelButton: false,
+          confirmText: "ok",
+          onConfirm: hideAlert,
+        });
+        setRefreshData(refreshData + 1);
+      }
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -174,14 +174,26 @@ const Index = () => {
         label: `${filterFormData.asset_name}`,
         key: "asset_name",
       });
-    if ((filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null) && (filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null))
+    if (
+      filterFormData.entry_date_from !== "" &&
+      filterFormData.entry_date_from !== null &&
+      filterFormData.entry_date_from !== "" &&
+      filterFormData.entry_date_from !== null
+    )
       filters.push({
-        label: `Entry: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
+        label: `Entry: ${filterFormData.entry_date_from} - ${filterFormData.entry_date_to}`,
         key: ["entry_date_from", "entry_date_to"],
       });
-      if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null) && (filterFormData.available_to !== undefined && filterFormData.available_from !== undefined))
+    if (
+      filterFormData.available_from !== "" &&
+      filterFormData.available_from !== null &&
+      filterFormData.available_to !== "" &&
+      filterFormData.available_to !== null &&
+      filterFormData.available_to !== undefined &&
+      filterFormData.available_from !== undefined
+    )
       filters.push({
-        label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
+        label: `Availablility: ${filterFormData.available_from} - ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
       });
     if (filterFormData.status)
@@ -200,10 +212,34 @@ const Index = () => {
       ...prevState,
       id: filterDataState.id,
       asset_name: filterDataState.asset_name,
-      available_from: moment(rangeDatesAvailablility.startDate, "DD/MM/YYYY", true).isValid() ? rangeDatesAvailablility.startDate : '',
-      available_to: moment(rangeDatesAvailablility.endDate, "DD/MM/YYYY", true).isValid() ? rangeDatesAvailablility.endDate : '',
-      entry_date_from: moment(rangeDatesEntry.startDate, "DD/MM/YYYY", true).isValid() ? rangeDatesEntry.startDate  : '',
-      entry_date_to:  moment(rangeDatesEntry.endDate, "DD/MM/YYYY", true).isValid() ? rangeDatesEntry.endDate  : '',
+      available_from: moment(
+        rangeDatesAvailablility.startDate,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? rangeDatesAvailablility.startDate
+        : "",
+      available_to: moment(
+        rangeDatesAvailablility.endDate,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? rangeDatesAvailablility.endDate
+        : "",
+      entry_date_from: moment(
+        rangeDatesEntry.startDate,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? rangeDatesEntry.startDate
+        : "",
+      entry_date_to: moment(
+        rangeDatesEntry.endDate,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? rangeDatesEntry.endDate
+        : "",
       statuscode: filterDataState.statuscode,
     }));
   };
@@ -365,7 +401,8 @@ const Index = () => {
                   </NavLink>
                 </div>
                 <div className="applied-filters">
-                  {appliedFilters && appliedFilters.length > 0 &&
+                  {appliedFilters &&
+                    appliedFilters.length > 0 &&
                     appliedFilters.map((filter) => (
                       <div
                         key={filter.key}
@@ -399,14 +436,14 @@ const Index = () => {
         modalId="filter-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-                        <IoSearchSharp
-                          width="30"
-                          height="30"
-                          size="1.4rem"
-                          className="me-2"
-                        />
-                        Filter
-                      </h6>
+            <IoSearchSharp
+              width="30"
+              height="30"
+              size="1.4rem"
+              className="me-2"
+            />
+            Filter
+          </h6>
         }
         content={
           <Row>

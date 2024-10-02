@@ -91,7 +91,7 @@ const Show = () => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   useEffect(() => {
     fetchInventoryById();
@@ -366,60 +366,65 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                          {/* Single Label for the Entire Section */}
-                          <Label className="required">Location</Label>
+                      {/* Single Label for the Entire Section */}
+                      <Label className="required">Location</Label>
 
-                          <Row>
-                            {/* City Field */}
-                            <Col sm="4 pr-0">
-
-                              <FormGroup>
-                              <Select
-                                name="statuscode"
-                                options={cities.map((city) => ({
-                                  value: city.code,
-                                  label: city.name
-                                }))}
-                                value={cities.find(
-                                  (city) => city.code === formData.asset_location_city
-                                ) ? {
-                                  value: formData.asset_location_city,
-                                  label: cities.find((city) => city.code === formData.asset_location_city).name
-                                } : null}
-                                isDisabled={true}
-                              />
-                              
-                              </FormGroup>
-                            </Col>
-
-                            {/* Area Field */}
-                            <Col sm="8">
-                              <FormGroup>
-                              <Input
-                          type="text"
-                          name="asset_location"
-                          value={formatLocation(formData.asset_location)}
-                          readOnly="true"
-                        />
-                              </FormGroup>
-                            </Col>
-
-                           
-                          </Row>
+                      <Row>
+                        {/* City Field */}
+                        <Col sm="4 pr-0">
+                          <FormGroup>
+                            <Select
+                              name="statuscode"
+                              options={cities.map((city) => ({
+                                value: city.code,
+                                label: city.name,
+                              }))}
+                              value={
+                                cities.find(
+                                  (city) =>
+                                    city.code === formData.asset_location_city
+                                )
+                                  ? {
+                                      value: formData.asset_location_city,
+                                      label: cities.find(
+                                        (city) =>
+                                          city.code ===
+                                          formData.asset_location_city
+                                      ).name,
+                                    }
+                                  : null
+                              }
+                              isDisabled={true}
+                            />
+                          </FormGroup>
                         </Col>
+
+                        {/* Area Field */}
+                        <Col sm="8">
+                          <FormGroup>
+                            <Input
+                              type="text"
+                              name="asset_location"
+                              value={formatLocation(formData.asset_location)}
+                              readOnly="true"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
                       <Label>Estimated Value *</Label>
                       <FormGroup>
-                      <InputGroup>
-                      <InputGroupText>£</InputGroupText>
-                        <Input
-                          type="text"
-                          name="value"
-                          value={formData.value}
-                          readOnly="true"
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="text"
+                            name="value"
+                            value={formData.value}
+                            readOnly="true"
+                          />
                         </InputGroup>
                       </FormGroup>
                     </Col>

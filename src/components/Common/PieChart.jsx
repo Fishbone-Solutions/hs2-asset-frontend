@@ -10,9 +10,9 @@ const PieChart = ({ data }) => {
 
   // Mapping of labels to specific colors
   const colorMapping = {
-    "Listing": "#51bcda",
-    "Live": "#da2727",
-    "Sold": "#6bd098",
+    Listing: "#51bcda",
+    Live: "#da2727",
+    Sold: "#6bd098",
   };
 
   // Default color if a label doesn't match
@@ -29,8 +29,10 @@ const PieChart = ({ data }) => {
       {
         label: "# of Votes",
         data: totals,
-        backgroundColor: labels.map(label => colorMapping[label] || defaultColor), // Set background color based on the label
-        borderColor: labels.map(label => colorMapping[label] || defaultColor), // Set border color based on the label
+        backgroundColor: labels.map(
+          (label) => colorMapping[label] || defaultColor
+        ), // Set background color based on the label
+        borderColor: labels.map((label) => colorMapping[label] || defaultColor), // Set border color based on the label
         borderWidth: 1,
       },
     ],

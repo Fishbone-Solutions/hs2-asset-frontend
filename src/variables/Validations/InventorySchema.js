@@ -66,15 +66,19 @@ export const inventorySchema = Yup.object().shape({
 
   // Conditional validation for sold_value
   sold_value: Yup.number()
-  .nullable()
-  .transform((value, originalValue) => originalValue === 'null' ? null : value)
-  .when("statuscode", {
-    is: (val) => val === 'Sold', // Use a function here
-    then: (schema) => schema.required("Sold value is required"),
-    otherwise: (schema) => schema.nullable(),
-  }),
+    .nullable()
+    .transform((value, originalValue) =>
+      originalValue === "null" ? null : value
+    )
+    .when("statuscode", {
+      is: (val) => val === "Sold", // Use a function here
+      then: (schema) => schema.required("Sold value is required"),
+      otherwise: (schema) => schema.nullable(),
+    }),
 
   additional_info: Yup.string().nullable(),
   asset_location_city: Yup.string().required("City is required"),
-  asset_location: Yup.string().required("Area, Street and postcode is required"),
+  asset_location: Yup.string().required(
+    "Area, Street and postcode is required"
+  ),
 });

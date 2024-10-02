@@ -53,7 +53,7 @@ const Index = () => {
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
   const [clearCityBoolean, setClearCityBoolean] = useState(false);
   const [cities, setCities] = useState([]);
-  
+
   const [appliedFilters, setAppliedFilters] = useState([]);
 
   const headers = { user_id: sessionStorage.getItem("username") };
@@ -89,16 +89,15 @@ const Index = () => {
   const getValueOrDefault = (value) => (value ? value : "-1");
   const [activeModal, setActiveModal] = useState(null);
 
-  
   const fetchCityData = async () => {
     try {
       const res = await EndPointService.getCityData();
-      console.log('city', res);
+      console.log("city", res);
       setCities(res.appRespData);
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const fetchInventory = async () => {
     try {
@@ -144,30 +143,37 @@ const Index = () => {
         key: "asset_name",
       });
     if (filterFormData.city)
-        filters.push({
-          label: `${filterFormData.cityName}`,
-          key: "city",
-        });
-    if (filterFormData.location)
-        filters.push({
-          label: `${filterFormData.location}`,
-          key: "location",
-        });
-    
-    if (filterFormData.category)
-          filters.push({
-            label: `${filterFormData.category}`,
-            key: "category",
-          });
-      if (filterFormData.subCategory)
-            filters.push({
-              label: `${filterFormData.subCategory}`,
-              key: "subCategory",
-            });
-   
-    if ((filterFormData.available_from !== '' && filterFormData.available_from !== null ) && (filterFormData.available_to !== '' && filterFormData.available_to !== null) && (filterFormData.available_to !== undefined && filterFormData.available_from !== undefined))
       filters.push({
-        label: `Availablility: ${filterFormData.available_from} ${filterFormData.available_to}`,
+        label: `${filterFormData.cityName}`,
+        key: "city",
+      });
+    if (filterFormData.location)
+      filters.push({
+        label: `${filterFormData.location}`,
+        key: "location",
+      });
+
+    if (filterFormData.category)
+      filters.push({
+        label: `${filterFormData.category}`,
+        key: "category",
+      });
+    if (filterFormData.subCategory)
+      filters.push({
+        label: `${filterFormData.subCategory}`,
+        key: "subCategory",
+      });
+
+    if (
+      filterFormData.available_from !== "" &&
+      filterFormData.available_from !== null &&
+      filterFormData.available_to !== "" &&
+      filterFormData.available_to !== null &&
+      filterFormData.available_to !== undefined &&
+      filterFormData.available_from !== undefined
+    )
+      filters.push({
+        label: `Availablility: ${filterFormData.available_from} - ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
       });
     if (filterFormData.status)
@@ -222,8 +228,12 @@ const Index = () => {
       ...prevState,
       id: filterDataState.id,
       asset_name: filterDataState.asset_name,
-      available_from: moment(rangeDates.startDate, "DD/MM/YYYY", true).isValid() ? rangeDates.startDate : '',
-      available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid ?  rangeDates.endDate : '',
+      available_from: moment(rangeDates.startDate, "DD/MM/YYYY", true).isValid()
+        ? rangeDates.startDate
+        : "",
+      available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid
+        ? rangeDates.endDate
+        : "",
       category: filterDataState.category,
       subCategory: filterDataState.subCategory,
       city: filterDataState.city,
@@ -277,8 +287,12 @@ const Index = () => {
 
   const handleCityChange = (city) => {
     console.log(city);
-    setFilterDataState({ ...filterDataState, city: city.value, cityName: city.label });
-    console.log('city data filteration',filterDataState);
+    setFilterDataState({
+      ...filterDataState,
+      city: city.value,
+      cityName: city.label,
+    });
+    console.log("city data filteration", filterDataState);
     setClearCityBoolean(false);
   };
   const closeModal = () => setActiveModal(null);
@@ -287,7 +301,7 @@ const Index = () => {
     // If filterKeys is not an array, convert it into an array
     const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
 
-    if(!Array.isArray(filterKeys) && filterKeys === 'city') {
+    if (!Array.isArray(filterKeys) && filterKeys === "city") {
       setClearCityBoolean(true);
     }
 
@@ -376,7 +390,7 @@ const Index = () => {
                             />
                           </div>
                           <div
-                            onClick={() => openModal('filter-modal')}
+                            onClick={() => openModal("filter-modal")}
                             className="me-2 icon-style"
                             style={{ cursor: "pointer" }}
                             data-bs-toggle="tooltip"
@@ -411,7 +425,8 @@ const Index = () => {
                   </Row>
                 </Container>
                 <div className="applied-filters">
-                  {appliedFilters && appliedFilters.length > 0 &&
+                  {appliedFilters &&
+                    appliedFilters.length > 0 &&
                     appliedFilters.map((filter) => (
                       <div
                         key={filter.key}
@@ -440,124 +455,119 @@ const Index = () => {
           </Col>
         </Row>
       </div>
-      
+
       <ModalComponent
         modalId="filter-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-                        <SvgSearchPlus
-                          width="25"
-                          height="25"
-                          className="me-2"
-                        />
-                        Advanced Search
-                      </h6>
+            <SvgSearchPlus width="25" height="25" className="me-2" />
+            Advanced Search
+          </h6>
         }
         content={
           <>
-          <Row>
-          <Col sm="6">
-            <FormGroup floating>
-              <Input
-                id="id"
-                name="id"
-                value={filterDataState.id}
-                onChange={(e) =>
-                  setFilterDataState((previousState) => ({
-                    ...previousState,
-                    id: e.target.value,
-                  }))
-                }
-                placeholder="ID"
-                type="number"
-              />
-              <Label for="id">ID</Label>
-            </FormGroup>
-          </Col>
+            <Row>
+              <Col sm="6">
+                <FormGroup floating>
+                  <Input
+                    id="id"
+                    name="id"
+                    value={filterDataState.id}
+                    onChange={(e) =>
+                      setFilterDataState((previousState) => ({
+                        ...previousState,
+                        id: e.target.value,
+                      }))
+                    }
+                    placeholder="ID"
+                    type="number"
+                  />
+                  <Label for="id">ID</Label>
+                </FormGroup>
+              </Col>
 
-          <Col sm="6">
-            <FormGroup floating>
-              <Input
-                id="assetName"
-                name="name"
-                value={filterDataState.asset_name}
-                onChange={(e) =>
-                  setFilterDataState((previousState) => ({
-                    ...previousState,
-                    asset_name: e.target.value,
-                  }))
-                }
-                placeholder="name"
-                type="text"
-              />
-              <Label for="assetName">Name</Label>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm="6">
-            <FloatingLabelDropdown
-              label="Category"
-              options={categorycode1}
-              onChange={handleCategoryChange}
-              clearSelection={clearDateBoolean}
-            />
-          </Col>
-          <Col sm="6">
-            <FloatingLabelDropdown
-              label="Sub-Category"
-              options={subCategory}
-              onChange={handleSubCategoryChange}
-              clearSelection={clearDateBoolean}
-            />
-          </Col>
+              <Col sm="6">
+                <FormGroup floating>
+                  <Input
+                    id="assetName"
+                    name="name"
+                    value={filterDataState.asset_name}
+                    onChange={(e) =>
+                      setFilterDataState((previousState) => ({
+                        ...previousState,
+                        asset_name: e.target.value,
+                      }))
+                    }
+                    placeholder="name"
+                    type="text"
+                  />
+                  <Label for="assetName">Name</Label>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="6">
+                <FloatingLabelDropdown
+                  label="Category"
+                  options={categorycode1}
+                  onChange={handleCategoryChange}
+                  clearSelection={clearDateBoolean}
+                />
+              </Col>
+              <Col sm="6">
+                <FloatingLabelDropdown
+                  label="Sub-Category"
+                  options={subCategory}
+                  onChange={handleSubCategoryChange}
+                  clearSelection={clearDateBoolean}
+                />
+              </Col>
 
-          <Col sm="6">
-            <FormGroup>
-              <DateRangePicker
-                label="Availability Range"
-                inputName="availablility_range"
-                onChange={handleDate}
-                clearDates={clearDateBoolean}
-              />
-            </FormGroup>
-          </Col>
-              
-          <Col sm="6">
-          <FormGroup>
-          <FloatingLabelDropdown
-              label="Location-City"
-              options={cities.map((city) => ({
-                value: city.code,
-                label: city.name
-              }))}
-              onChange={handleCityChange}
-              clearSelection={clearCityBoolean}
-            />
-                              </FormGroup>
-                            </Col>
+              <Col sm="6">
+                <FormGroup>
+                  <DateRangePicker
+                    label="Availability Range"
+                    inputName="availablility_range"
+                    onChange={handleDate}
+                    clearDates={clearDateBoolean}
+                  />
+                </FormGroup>
+              </Col>
 
+              <Col sm="6">
+                <FormGroup>
+                  <FloatingLabelDropdown
+                    label="Location-City"
+                    options={cities.map((city) => ({
+                      value: city.code,
+                      label: city.name,
+                    }))}
+                    onChange={handleCityChange}
+                    clearSelection={clearCityBoolean}
+                  />
+                </FormGroup>
+              </Col>
 
-          <Col sm="6">
-            <FormGroup floating>
-              <Input
-                id="location"
-                name="name"
-                value={filterDataState.location}
-                onChange={(e) =>
-                  setFilterDataState((previousState) => ({
-                    ...previousState,
-                    location: e.target.value,
-                  }))
-                }
-                placeholder="location"
-                type="text"
-              />
-              <Label for="assetName">Location-Area</Label>
-            </FormGroup>
-          </Col>
-        </Row>
-        </>
+              <Col sm="6">
+                <FormGroup floating>
+                  <Input
+                    id="location"
+                    name="name"
+                    value={filterDataState.location}
+                    onChange={(e) =>
+                      setFilterDataState((previousState) => ({
+                        ...previousState,
+                        location: e.target.value,
+                      }))
+                    }
+                    placeholder="location"
+                    type="text"
+                  />
+                  <Label for="assetName">Location-Area</Label>
+                </FormGroup>
+              </Col>
+            </Row>
+          </>
         }
         showModal={activeModal === "filter-modal"}
         onCloseCross={closeModal}
@@ -568,8 +578,6 @@ const Index = () => {
         closeButtonColor="red" // Dynamic color for close button
         submitButtonColor="green" // Dynamic color for submit button
       />
-
-
 
       {/* <Modal
         isOpen={modalIsOpen}

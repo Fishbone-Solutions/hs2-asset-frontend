@@ -39,25 +39,28 @@ function UserProfile() {
   const fetchData = async () => {
     setLoader(true);
     try {
-      const res = await EndPointService.getUserInformation(headers, sessionStorage.getItem("username"));
+      const res = await EndPointService.getUserInformation(
+        headers,
+        sessionStorage.getItem("username")
+      );
       setDataState(res.appRespData[0]);
       setLoader(false);
-    } catch(e) {
+    } catch (e) {
       setToastType("error");
       setToastMessage(e.appRespMessage);
       setLoader(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
 
   return (
     <>
       <div className="content">
-      {toastType && <DynamicToast type={toastType} message={toastMessage} />}
-      {loader && <FullPageLoader />}
+        {toastType && <DynamicToast type={toastType} message={toastMessage} />}
+        {loader && <FullPageLoader />}
         <Row>
           <Col md="12">
             <Card>

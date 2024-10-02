@@ -67,7 +67,7 @@ const Edit = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
-      
+
       console.log(formData);
 
       const resAttachment = await EndPointService.getAttachmentByAssetId(
@@ -91,7 +91,7 @@ const Edit = () => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
@@ -120,10 +120,9 @@ const Edit = () => {
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
           value = moment(value).format("DD/MM/YYYY");
-        } else if (key === 'sold_value' && value === "null") {
-          value = '';
+        } else if (key === "sold_value" && value === "null") {
+          value = "";
         }
-
 
         // Append the value (formatted or not) to the formDataWithFiles object
         formDataWithFiles.append(key, value);
@@ -265,17 +264,16 @@ const Edit = () => {
   };
 
   const handleSoldToast = (selectedStatus) => {
-    if(selectedStatus === 'Sold') {
+    if (selectedStatus === "Sold") {
       showAlert({
         title: "Please enter the Sold Value.",
         type: "info",
         showCancelButton: false,
-        confirmText: 'ok',
+        confirmText: "ok",
         onConfirm: () => hideAlert(),
       });
     }
-    
-  }
+  };
 
   return (
     <>
@@ -563,33 +561,40 @@ const Edit = () => {
                           <Row>
                             {/* City Field */}
                             <Col sm="4 pr-0">
-
                               <FormGroup>
-                              <Select
-                                name="statuscode"
-                                options={cities.map((city) => ({
-                                  value: city.code,
-                                  label: city.name
-                                }))}
-                                value={cities.find(
-                                  (city) => city.code === values.asset_location_city
-                                ) ? {
-                                  value: values.asset_location_city,
-                                  label: cities.find((city) => city.code === values.asset_location_city).name
-                                } : null}
-                                
-                                onChange={(selectedOption) =>
-                                  setFieldValue(
-                                    "asset_location_city",
-                                    selectedOption.value
-                                  )
-                                }
-                              />
-                              <ErrorMessage
-                                name="asset_location_city"
-                                component="div"
-                                className="text-danger"
-                              />
+                                <Select
+                                  name="statuscode"
+                                  options={cities.map((city) => ({
+                                    value: city.code,
+                                    label: city.name,
+                                  }))}
+                                  value={
+                                    cities.find(
+                                      (city) =>
+                                        city.code === values.asset_location_city
+                                    )
+                                      ? {
+                                          value: values.asset_location_city,
+                                          label: cities.find(
+                                            (city) =>
+                                              city.code ===
+                                              values.asset_location_city
+                                          ).name,
+                                        }
+                                      : null
+                                  }
+                                  onChange={(selectedOption) =>
+                                    setFieldValue(
+                                      "asset_location_city",
+                                      selectedOption.value
+                                    )
+                                  }
+                                />
+                                <ErrorMessage
+                                  name="asset_location_city"
+                                  component="div"
+                                  className="text-danger"
+                                />
                               </FormGroup>
                             </Col>
 
@@ -610,8 +615,6 @@ const Edit = () => {
                                 />
                               </FormGroup>
                             </Col>
-
-                           
                           </Row>
                         </Col>
                       </Row>
@@ -713,13 +716,13 @@ const Edit = () => {
                         <Col sm="6">
                           <Label>Residual Forcast Value </Label>
                           <FormGroup>
-                          <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                            <Field
-                              type="number"
-                              name="residual_forecast_value"
-                              as={Input}
-                            />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="number"
+                                name="residual_forecast_value"
+                                as={Input}
+                              />
                             </InputGroup>
                             <ErrorMessage
                               name="residual_forecast_value"
@@ -733,9 +736,19 @@ const Edit = () => {
                         <Col sm="6">
                           <Label>Sold Value </Label>
                           <FormGroup>
-                          <InputGroup>
-                          <InputGroupText>£</InputGroupText>
-                            <Field type="text" name="sold_value" value={values.sold_value === 'null' ? '' : values.sold_value}  disabled={values.statuscode !== "Sold"}  as={Input} />
+                            <InputGroup>
+                              <InputGroupText>£</InputGroupText>
+                              <Field
+                                type="text"
+                                name="sold_value"
+                                value={
+                                  values.sold_value === "null"
+                                    ? ""
+                                    : values.sold_value
+                                }
+                                disabled={values.statuscode !== "Sold"}
+                                as={Input}
+                              />
                             </InputGroup>
                             <ErrorMessage
                               name="sold_value"
@@ -885,16 +898,13 @@ const Edit = () => {
                                   selectedOption.value
                                 );
                                 handleSoldToast(selectedOption.value);
-                              }
-
-                              }
+                              }}
                             />
                             <ErrorMessage
                               name="statuscode"
                               component="div"
                               className="text-danger"
                             />
-                       
                           </FormGroup>
                         </Col>
                       </Row>
@@ -913,7 +923,7 @@ const Edit = () => {
                 >
                   Close
                 </Button>
-                <Button color="primary"   type="submit">
+                <Button color="primary" type="submit">
                   Save
                 </Button>
               </div>
