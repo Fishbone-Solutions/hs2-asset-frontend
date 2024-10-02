@@ -199,7 +199,7 @@ const AttachmentList = ({
         </>
       ) : (
         <>
-          <p>No attachments!</p>
+          <p>No attachments</p>
         </>
       )}
     </div>

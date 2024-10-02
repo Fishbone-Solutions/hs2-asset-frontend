@@ -40,7 +40,7 @@ const Show = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
-
+  const [cities, setCities] = useState([]);
   const [attachments, setAttachments] = useState([]);
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
@@ -84,8 +84,18 @@ const Show = () => {
     }
   };
 
+  const fetchCityData = async () => {
+    try {
+      const res = await EndPointService.getCityData();
+      setCities(res.appRespData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     fetchInventoryById();
+    fetchCityData();
   }, []);
 
   return (
@@ -356,16 +366,47 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label>Location *</Label>
-                      <FormGroup>
-                        <Input
+                          {/* Single Label for the Entire Section */}
+                          <Label className="required">Location</Label>
+
+                          <Row>
+                            {/* City Field */}
+                            <Col sm="4 pr-0">
+
+                              <FormGroup>
+                              <Select
+                                name="statuscode"
+                                options={cities.map((city) => ({
+                                  value: city.code,
+                                  label: city.name
+                                }))}
+                                value={cities.find(
+                                  (city) => city.code === formData.asset_location_city
+                                ) ? {
+                                  value: formData.asset_location_city,
+                                  label: cities.find((city) => city.code === formData.asset_location_city).name
+                                } : null}
+                                isDisabled={true}
+                              />
+                              
+                              </FormGroup>
+                            </Col>
+
+                            {/* Area Field */}
+                            <Col sm="8">
+                              <FormGroup>
+                              <Input
                           type="text"
                           name="asset_location"
                           value={formatLocation(formData.asset_location)}
                           readOnly="true"
                         />
-                      </FormGroup>
-                    </Col>
+                              </FormGroup>
+                            </Col>
+
+                           
+                          </Row>
+                        </Col>
                   </Row>
                   <Row>
                     <Col sm="6">
