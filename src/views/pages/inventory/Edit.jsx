@@ -266,7 +266,7 @@ const Edit = () => {
   const handleSoldToast = (selectedStatus) => {
     if (selectedStatus === "Sold") {
       showAlert({
-        title: "Please enter the Sold Value.",
+        title: "Please review and if required update the Sold Value",
         type: "info",
         showCancelButton: false,
         confirmText: "ok",
@@ -489,7 +489,7 @@ const Edit = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Description</Label>
+                          <Label className="required">Description</Label>
                           <FormGroup>
                             <Field type="text" name="description" as={Input} />
                             <ErrorMessage
@@ -791,7 +791,11 @@ const Edit = () => {
                           WebkitTextTransform: "capitalize", // for Safari
                         }}
                       >
-                        Images
+                        Images (
+                        <span className="text-danger">
+                          Max 5, Upto 2MB each
+                        </span>
+                        )
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
@@ -834,7 +838,11 @@ const Edit = () => {
                           WebkitTextTransform: "capitalize", // for Safari
                         }}
                       >
-                        Documents
+                        Documents (
+                        <span className="text-danger">
+                          Max 3, Upto 2MB each
+                        </span>
+                        )
                       </CardTitle>
                     </CardHeader>
                     <CardBody>

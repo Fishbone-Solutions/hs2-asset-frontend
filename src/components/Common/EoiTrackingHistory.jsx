@@ -53,7 +53,7 @@ const ActivityTable = ({ activities }) => {
                 <td>{activity.activity_time}</td>
                 <td>
                   <span className={getBadgeClass(activity.activity)}>
-                    {activity.activity}
+                    {formatApprovalString(activity.activity)}
                   </span>
                 </td>
                 <td>{activity.activity_by}</td>

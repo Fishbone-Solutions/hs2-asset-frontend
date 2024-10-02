@@ -13,7 +13,7 @@ const useColumns = (handleDelete) => {
       },
 
       {
-        Header: "EoI. No",
+        Header: "EOI No.",
         isSortable: true,
         defaultSort: true, // Indicates this column should be the default sort
         defaultSortDesc: true, // Indicates the sort direction (descending)
@@ -125,7 +125,14 @@ const useColumns = (handleDelete) => {
             <Link
               to={`/admin/myeoi/${row.original.asset_id}/eois/edit/${row.original.id}`}
             >
-              <Button className="btn-icon btn-simple" color="success" size="sm">
+              <Button
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Edit EOI"
+                className="btn-icon btn-simple"
+                color="success"
+                size="sm"
+              >
                 <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>

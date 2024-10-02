@@ -9,10 +9,10 @@ export const itemStatusOptions = [
 export const orderStatusOptions = [
   { value: "EOI-SUBMITTED", label: "EOI Submitted" },
   { value: "IN-NEGOTIATION", label: "In Negotiation" },
-  { value: "PROCESSING", label: "Processing"},
+  { value: "PROCESSING", label: "Processing" },
   { value: "PAYMENT-RECEIVED", label: "Payment Received" },
   { value: "GOODS-SENT", label: "Goods Sent" },
-  { value: "NOT-PROCEEDING", label: "Not Proceeding"},
+  { value: "NOT-PROCEEDING", label: "Not Proceeding" },
 ];
 
 export const approvalStatusOptions = [
@@ -22,7 +22,6 @@ export const approvalStatusOptions = [
 ];
 
 export const inventoryStatusOptions = [
-  
   { value: "Listing", label: "Listing" },
   { value: "Live", label: "Live" },
   { value: "Sold", label: "Sold" },
@@ -83,6 +82,10 @@ export const myEoIUpdateoptions = [
 export const formatLocation = (data) => {
   // Split the string by the '%' character
   return data.replace(/%/g, " ").trim();
+};
+
+export const formatApprovalString = (input) => {
+  return input.split(" @").join(" @<br/>").replace(/,/g, "<br/>");
 };
 
 export const ImageType = [

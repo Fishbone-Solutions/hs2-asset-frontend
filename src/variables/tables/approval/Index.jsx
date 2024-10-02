@@ -12,7 +12,7 @@ const useColumns = (data, handleDelete) => {
         defaultSort: true,
         defaultSortDesc: true,
         accessor: "request_date_formatted",
-        width: "8%",
+        width: "4%",
         Cell: ({ row }) => (
           <span>
             {row.original.request_date_formatted} {row.original.request_time}
@@ -20,7 +20,7 @@ const useColumns = (data, handleDelete) => {
         ),
       },
       {
-        Header: "Eoi Id",
+        Header: "EOI Id",
         isSortable: true,
         accessor: "eoi_id",
         width: "2%",

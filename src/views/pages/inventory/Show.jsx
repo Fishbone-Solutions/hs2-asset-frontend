@@ -129,7 +129,7 @@ const Show = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Seller Title *</Label>
+                      <Label className="required">Seller Title</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -141,7 +141,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Contact No *</Label>
+                      <Label className="required">Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -154,7 +154,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label>Email Address *</Label>
+                      <Label className="required">Email Address</Label>
                       <FormGroup
                         className={`has-label ${formData.seller_email}`}
                       >
@@ -168,7 +168,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Location *</Label>
+                      <Label className="required">Location</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -201,7 +201,7 @@ const Show = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Category</Label>
+                      <Label className="required">Category</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -224,7 +224,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Sub Category</Label>
+                      <Label className="required">Sub Category</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -295,7 +295,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label>Name *</Label>
+                      <Label className="required">Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -306,7 +306,7 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label>Description</Label>
+                      <Label className="required">Description</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -319,7 +319,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label>Condition *</Label>
+                      <Label className="required">Condition</Label>
                       <FormGroup>
                         <Select
                           className="react-select primary"
@@ -342,7 +342,7 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label>Maintenance Requirements *</Label>
+                      <Label>Maintenance Requirements</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -355,7 +355,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label>Quantity *</Label>
+                      <Label className="required">Quantity</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -415,7 +415,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label>Estimated Value *</Label>
+                      <Label className="required">Estimated Value</Label>
                       <FormGroup>
                         <InputGroup>
                           <InputGroupText>£</InputGroupText>
@@ -608,7 +608,7 @@ const Show = () => {
                   <CardBody>
                     <Row>
                       <Col sm="6">
-                        <Label>Status *</Label>
+                        <Label className="required">Status</Label>
                         <FormGroup>
                           <Select
                             className="react-select primary"

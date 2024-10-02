@@ -21,13 +21,11 @@ import {
 import Select from "react-select";
 import moment from "moment";
 import ActivityTable from "components/Common/EoiTrackingHistory";
-import ReactBSAlert from "react-bootstrap-sweetalert";
-import { approvalStatusOptions } from "variables/common";
 import { useAlert } from "components/Common/NotificationAlert";
 import { useNavigate } from "react-router-dom";
-import { FcUndo } from "react-icons/fc";
 import UndoIcon from "components/svg/Undo";
 import ModalComponent from "components/Common/ModalComponent";
+import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -87,6 +85,21 @@ const Edit = () => {
   };
 
   useEffect(() => {
+    // Initialize tooltips
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    const tooltips = Array.from(tooltipTriggerList).map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+    );
+
+    // Cleanup tooltips on unmount
+    return () => {
+      tooltips.forEach((tooltip) => tooltip.dispose());
+    };
+  }, []);
+
+  useEffect(() => {
     fetchData();
     fetchApprovals();
   }, []);
@@ -96,7 +109,7 @@ const Edit = () => {
     console.log("selectedApproval", selectedApproval);
     if (selectedApproval != null) {
       latestSelectedApprovalRef.current = selectedApproval;
-      setRefreshModal(refreshModal+1);
+      setRefreshModal(refreshModal + 1);
     }
   }, [selectedApproval]);
 
@@ -186,7 +199,7 @@ const Edit = () => {
       );
 
       const requestBody = {
-        eoi_status: 'PROCESSING',
+        eoi_status: "PROCESSING",
       };
       const respone = await EndPointService.eoiUpdateStatus(
         headers,
@@ -243,7 +256,8 @@ const Edit = () => {
             <>
               <div className="sweet-alert-content w-full">
                 Email: {selectedApproverDetails.email}
-              </div><br />
+              </div>
+              <br />
               <div className="sweet-alert-content">
                 Contact: {selectedApproverDetails.contact_no}
               </div>
@@ -285,7 +299,7 @@ const Edit = () => {
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
-    { value: "NOT-PROCEEDING", label: "Not Proceeding"},
+    { value: "NOT-PROCEEDING", label: "Not Proceeding" },
   ];
 
   const handleUndoStatus = async () => {
@@ -299,11 +313,11 @@ const Edit = () => {
         title:
           res.appRespData[0].eoi_undo_last_activity === 1
             ? `Current Status reverted`
-            : res.appRespData[0].eoi_undo_last_activity === -1 ? "Can not Undo Status. The Status was set by the Buyer" : 'No previous status available',
+            : res.appRespData[0].eoi_undo_last_activity === -1
+              ? "Can not Undo Status. The Status was set by the Buyer"
+              : "No previous status available",
         type:
-          res.appRespData[0].eoi_undo_last_activity === 1
-            ? "success"
-            : "error",
+          res.appRespData[0].eoi_undo_last_activity === 1 ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -364,7 +378,7 @@ const Edit = () => {
                       <Label>Current Status</Label>
                       <FormGroup>
                         <Input
-                        className="bg-current-status"
+                          className="bg-current-status"
                           type="text"
                           name="id"
                           value={dataState.eoi_status}
@@ -407,28 +421,35 @@ const Edit = () => {
                           }
                           type="text"
                           name="approval_status"
-                          value={dataState.approval_status === 'PENDING' ? 'Not Requested' : dataState.approval_status}
+                          value={
+                            dataState.approval_status === "PENDING"
+                              ? "Not Requested"
+                              : dataState.approval_status
+                          }
                           readOnly
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== 'Not Requested' && dataState.approval_status !== 'Requested' ? (
-                    <Col sm="6">
-                      <Label>
-                        {dataState.approval_status == "APPROVED"
-                          ? "CEMAR Ref No"
-                          : "Rejection Reason"}
-                      </Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="approval_ref_no" // Corrected name field
-                          value={dataState.approval_ref_no}
-                          readOnly
-                        />
-                      </FormGroup>
-                    </Col>
-                    ) : ''}
+                    {dataState.approval_status !== "Not Requested" &&
+                    dataState.approval_status !== "Requested" ? (
+                      <Col sm="6">
+                        <Label>
+                          {dataState.approval_status == "APPROVED"
+                            ? "CEMAR Ref No"
+                            : "Rejection Reason"}
+                        </Label>
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            name="approval_ref_no" // Corrected name field
+                            value={dataState.approval_ref_no}
+                            readOnly
+                          />
+                        </FormGroup>
+                      </Col>
+                    ) : (
+                      ""
+                    )}
                   </Row>
                 </CardBody>
               </Card>
@@ -584,6 +605,9 @@ const Edit = () => {
                     <span className="float-right p-2">
                       <Button
                         type="button"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        title="Undo Current Status"
                         onClick={() => {
                           showAlert({
                             title: `Are you sure you wish to Undo current EOI status ?`,
@@ -598,7 +622,7 @@ const Edit = () => {
                         }}
                         className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                       <UndoIcon />
+                        <UndoIcon />
                       </Button>
                     </span>
                   </CardTitle>
@@ -620,7 +644,8 @@ const Edit = () => {
                           options={options.map((option) => ({
                             ...option,
                             isdisabled:
-                              (dataState.approval_status !== "APPROVED" || dataState.approval_status === "REJECTED") &&
+                              (dataState.approval_status !== "APPROVED" ||
+                                dataState.approval_status === "REJECTED") &&
                               (option.value === "PAYMENT-RECEIVED" ||
                                 option.value === "GOODS-SENT" ||
                                 option.value === "PAYMENT-REQUESTED"),
@@ -637,7 +662,11 @@ const Edit = () => {
           </Row>
           {alert}
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button color="primary" onClick={() => openModal('approval-modal')} type="button">
+            <Button
+              color="primary"
+              onClick={() => openModal("approval-modal")}
+              type="button"
+            >
               REQUEST APPROVAL
             </Button>
             <Button
@@ -660,26 +689,24 @@ const Edit = () => {
       </div>
 
       <ModalComponent
-        
         modalId="approval-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-                        
-                        APPROVE REQUEST
-                      </h6>
+            APPROVE REQUEST
+          </h6>
         }
-        content={
-          <ApproverSelectionContent key={refreshModal} />
-        }
+        content={<ApproverSelectionContent key={refreshModal} />}
         showModal={activeModal === "approval-modal"}
         onCloseCross={closeModal}
         onClose={closeModal}
-        onSubmit={() => {showAlert({
-          title: "Are you sure?",
-          type: "warning",
-          onConfirm: () => approvalRequest(),
-          onCancel: hideAlert,
-        })}}
+        onSubmit={() => {
+          showAlert({
+            title: "Are you sure?",
+            type: "warning",
+            onConfirm: () => approvalRequest(),
+            onCancel: hideAlert,
+          });
+        }}
         closeButtonText="Cancel"
         submitButtonText="Send Request"
         closeButtonColor="red" // Dynamic color for close button

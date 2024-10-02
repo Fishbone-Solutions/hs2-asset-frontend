@@ -16,10 +16,6 @@ import {
   Label,
   FormGroup,
   Form,
-  Modal,
-  Tooltip as ReactstrapTooltip,
-  InputGroupText,
-  InputGroup,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -29,8 +25,9 @@ import { myEoIUpdateoptions } from "variables/common";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "components/Common/NotificationAlert";
-import { FcUndo } from "react-icons/fc";
 import UndoIcon from "components/svg/Undo";
+
+import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -42,12 +39,9 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
   const headers = { user_id: sessionStorage.getItem("username") };
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const navigate = useNavigate();
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
-
-  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   const fetchData = async () => {
     try {
@@ -72,6 +66,21 @@ const Edit = () => {
       setLoader(false);
     }
   };
+
+  useEffect(() => {
+    // Initialize tooltips
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    const tooltips = Array.from(tooltipTriggerList).map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+    );
+
+    // Cleanup tooltips on unmount
+    return () => {
+      tooltips.forEach((tooltip) => tooltip.dispose());
+    };
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -109,8 +118,14 @@ const Edit = () => {
 
       setLoader(false);
       showAlert({
-        title: <h6 className="success-sweet-title">Acknowledgement Status updated</h6>,
-        content:  <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>,
+        title: (
+          <h6 className="success-sweet-title">
+            Acknowledgement Status updated
+          </h6>
+        ),
+        content: (
+          <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -222,11 +237,11 @@ const Edit = () => {
         title:
           res.appRespData[0].eoi_undo_last_activity === 1
             ? `Current Status reverted`
-            : res.appRespData[0].eoi_undo_last_activity === -1 ? "Can not Undo Status. The Status was set by the Seller" : 'No previous status available',
+            : res.appRespData[0].eoi_undo_last_activity === -1
+              ? "Can not Undo Status. The Status was set by the Seller"
+              : "No previous status available",
         type:
-          res.appRespData[0].eoi_undo_last_activity === 1
-            ? "success"
-            : "error",
+          res.appRespData[0].eoi_undo_last_activity === 1 ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -238,11 +253,16 @@ const Edit = () => {
   };
 
   const isMyEoiStatusEnabled = (approvalStatus, eoiStatus) => {
-    if((approvalStatus !== "APPROVED" || approvalStatus === "REJECTED") && (eoiStatus !== 'EOI-SUBMITTED' && eoiStatus !== 'IN-NEGOTIATION' && eoiStatus !== 'PROCESSING')){
+    if (
+      (approvalStatus !== "APPROVED" || approvalStatus === "REJECTED") &&
+      eoiStatus !== "EOI-SUBMITTED" &&
+      eoiStatus !== "IN-NEGOTIATION" &&
+      eoiStatus !== "PROCESSING"
+    ) {
       return true;
     }
     return false;
-  }
+  };
 
   return (
     <>
@@ -295,7 +315,7 @@ const Edit = () => {
                       <Label>Current Status</Label>
                       <FormGroup>
                         <Input
-                        className="bg-current-status"
+                          className="bg-current-status"
                           type="text"
                           name="id"
                           value={dataState.eoi_status}
@@ -564,8 +584,11 @@ const Edit = () => {
                   >
                     Acknowledgement To Seller
                     <span className="float-right p-2">
-                    <Button
+                      <Button
                         type="button"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        title="Undo Current Status"
                         onClick={() => {
                           showAlert({
                             title: `Are you sure you wish to Undo current EOI status ?`,
@@ -580,9 +603,8 @@ const Edit = () => {
                         }}
                         className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                       <UndoIcon />
+                        <UndoIcon />
                       </Button>
-                      
                     </span>
                   </CardTitle>
                 </CardHeader>
@@ -596,14 +618,19 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          isDisabled={dataState.eoi_status === 'NOT-PROCEEDING' || dataState.eoi_status === 'WITHDRAWN'} 
+                          isDisabled={
+                            dataState.eoi_status === "NOT-PROCEEDING" ||
+                            dataState.eoi_status === "WITHDRAWN"
+                          }
                           value={myEoIUpdateoptions.find(
                             (option) => option.value === dataState.eoi_status
                           )}
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
                             isdisabled:
-                            ((dataState.eoi_status === 'EOI-SUBMITTED' ||  dataState.eoi_status === 'IN-NEGOTIATION' ||  dataState.eoi_status === 'PROCESSING')) &&
+                              (dataState.eoi_status === "EOI-SUBMITTED" ||
+                                dataState.eoi_status === "IN-NEGOTIATION" ||
+                                dataState.eoi_status === "PROCESSING") &&
                               (option.value === "PAYMENT-SENT" ||
                                 option.value === "GOODS-RECEIVED"),
                           }))}
