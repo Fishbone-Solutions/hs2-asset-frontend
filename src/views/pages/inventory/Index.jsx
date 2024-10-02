@@ -71,6 +71,8 @@ const Index = () => {
     user_id: sessionStorage.getItem("username") ?? username,
   };
 
+  const [clearStatusBoolean, setClearStatusBoolean] = useState(false);
+
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -196,10 +198,10 @@ const Index = () => {
         label: `Availablility: ${filterFormData.available_from} - ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
       });
-    if (filterFormData.status)
+    if (filterFormData.statuscode)
       filters.push({
-        label: `${filterFormData.status.label}`,
-        key: "status",
+        label: `${filterFormData.statuscode}`,
+        key: "statuscode",
       });
 
     setAppliedFilters(filters);
@@ -320,6 +322,10 @@ const Index = () => {
   const handleRemoveFilter = (filterKeys) => {
     // If filterKeys is not an array, convert it into an array
     const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+
+    if (!Array.isArray(filterKeys) && filterKeys === "statuscode") {
+      setClearStatusBoolean(true);
+    }
 
     // Update the filter form state
     setFilterFormDate((prev) => {
@@ -515,7 +521,7 @@ const Index = () => {
                 label="Status"
                 options={inventoryStatusOptions}
                 onChange={handleSelectChange}
-                clearSelection={clearDateBoolean}
+                clearSelection={clearStatusBoolean}
               />
             </Col>
           </Row>
