@@ -85,7 +85,7 @@ export const formatLocation = (data) => {
 };
 
 export const formatApprovalString = (input) => {
-  return input.split("@").join(" <br/>").replace(/,/g, "<br/>");
+  return input.split("%").join(" <br/>").replace(/,/g, "<br/>");
 };
 
 export const ImageType = [

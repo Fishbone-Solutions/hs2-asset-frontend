@@ -41,9 +41,24 @@ const ActivityTable = ({ activities }) => {
                 color: "white",
               }}
             >
-              <th className="py-2 rt-th rt-resizable-header">Date</th>
-              <th className="py-2 rt-th rt-resizable-header">Time</th>
-              <th className="py-2 rt-th rt-resizable-header">Activity</th>
+              <th
+                style={{ width: "200px" }}
+                className="py-2 rt-th rt-resizable-header"
+              >
+                Date
+              </th>
+              <th
+                style={{ width: "100px" }}
+                className="py-2 rt-th rt-resizable-header"
+              >
+                Time
+              </th>
+              <th
+                style={{ width: "300px" }}
+                className="py-2 rt-th rt-resizable-header"
+              >
+                Activity
+              </th>
               <th className="py-2 rt-th rt-resizable-header">Initiator</th>
             </tr>
           </thead>

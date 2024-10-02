@@ -817,7 +817,7 @@ header.sweet-alert-header {
 }
 .sweet-alert-content {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   display: contents;
 }
 .nav-pills:not(.flex-column) .nav-item:first-child .nav-link {
@@ -870,7 +870,7 @@ header.sweet-alert-header {
   background-color: #6366f1 !important;
 }
 .bg-current-status {
-  background-color:#51cbce54 !important;
+  background-color: #51cbce54 !important;
 }
 
 /* Custom Tooltip Styles */
@@ -966,5 +966,8 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
   width: 29%;
 }
 .sweet-title-size {
-  font-size: 1.2rem!important;
+  font-size: 1.2rem !important;
+}
+.upload-image-notification {
+  font-size: 0.8rem;
 }

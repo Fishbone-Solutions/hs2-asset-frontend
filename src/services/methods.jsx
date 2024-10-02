@@ -124,6 +124,14 @@ function getCityData(headers = null) {
   return Get(`${endpoints.getCityData()}`, headers);
 }
 
+function negotiatedValueUpdate(headers = null, inventoryId, eoiId, params) {
+  return Post(
+    `${endpoints.negotiatedValueUpdate(inventoryId, eoiId)}`,
+    params,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -149,4 +157,5 @@ export const EndPointService = {
   inventoryStatsAgainOrgainsation,
   inventoryUndoStatus,
   getCityData,
+  negotiatedValueUpdate,
 };

@@ -40,8 +40,21 @@ const Edit = () => {
   const usersInformation = JSON.parse(sessionStorage.getItem("user"));
   const [approvals, setApprovals] = useState([]);
   const [selectedApproval, setSelectedApproval] = useState(null);
+  const [negotiatedValue, setNegotiatedValue] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
-  const openModal = (modalId) => setActiveModal(modalId);
+  const openModal = (modalId) => {
+    console.log(dataState.negotiated_value, negotiatedValue);
+    if (dataState.negotiated_value === null && negotiatedValue === null) {
+      showAlert({
+        title: "Please update negotiated value before sending the request",
+        type: "info",
+        onConfirm: hideAlert,
+        showCancelButton: false,
+      });
+    } else {
+      setActiveModal(modalId);
+    }
+  };
   const closeModal = () => {
     const modalElement = document.getElementById(activeModal);
     modalElement.classList.remove("show");
@@ -57,6 +70,7 @@ const Edit = () => {
   const navigate = useNavigate();
 
   const [refreshModal, setRefreshModal] = useState(0);
+  const [refreshMainComponent, setRefreshMainComponent] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -71,7 +85,7 @@ const Edit = () => {
         inventoryId,
         eoiId
       );
-
+      setNegotiatedValue(res.appRespData[0].negotiated_value);
       setDataState(res.appRespData[0]);
       setActivities(resEoiActivities.appRespData);
 
@@ -102,7 +116,7 @@ const Edit = () => {
   useEffect(() => {
     fetchData();
     fetchApprovals();
-  }, []);
+  }, [refreshMainComponent]);
 
   // Update the ref whenever the params state changes
   useEffect(() => {
@@ -326,6 +340,35 @@ const Edit = () => {
         },
       });
     } catch (e) {}
+  };
+
+  const handleNegotiatedValue = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.negotiatedValueUpdate(
+        headers,
+        inventoryId,
+        eoiId,
+        {
+          negotiated_value: negotiatedValue,
+        }
+      );
+      setLoader(false);
+      setRefreshMainComponent(refreshMainComponent + 1);
+      showAlert({
+        title: `Negotiated value Updated`,
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+        },
+      });
+    } catch (e) {
+      setLoader(false);
+      setToastType("error");
+      setToastMessage(e.appRespMessage);
+    }
   };
 
   return (
@@ -584,6 +627,56 @@ const Edit = () => {
                       </FormGroup>
                     </Col>
                   </Row>
+                </CardBody>
+              </Card>
+            </Col>
+
+            {/* negotiated form*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    Negotiation
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Negotiated Value</Label>
+                      <FormGroup>
+                        <Input
+                          type="number"
+                          name="negotiated_val"
+                          value={negotiatedValue}
+                          onChange={(e) => setNegotiatedValue(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      color="primary"
+                      type="button"
+                      onClick={() =>
+                        showAlert({
+                          title: "Are you sure?",
+                          type: "warning",
+                          onConfirm: () => handleNegotiatedValue(),
+                          onCancel: hideAlert,
+                        })
+                      }
+                    >
+                      update
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Col>

@@ -525,6 +525,40 @@ const Show = () => {
                 </CardBody>
               </Card>
             </Col>
+
+            {/* negotiated form*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    Negotiation
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Negotiated Value</Label>
+                      <FormGroup>
+                        <Input
+                          type="number"
+                          name="negotiated_val"
+                          value={dataState.negotiated_value}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
           </Row>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

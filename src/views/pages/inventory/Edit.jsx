@@ -791,11 +791,10 @@ const Edit = () => {
                           WebkitTextTransform: "capitalize", // for Safari
                         }}
                       >
-                        Images (
-                        <span className="text-danger">
-                          Max 5, Upto 2MB each
+                        Images{" "}
+                        <span className="upload-image-notification text-danger">
+                          (Max 5, Upto 2MB each)
                         </span>
-                        )
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
@@ -838,11 +837,10 @@ const Edit = () => {
                           WebkitTextTransform: "capitalize", // for Safari
                         }}
                       >
-                        Documents (
-                        <span className="text-danger">
-                          Max 3, Upto 2MB each
+                        Documents{" "}
+                        <span className="upload-image-notification text-danger">
+                          (Max 3, Upto 2MB each)
                         </span>
-                        )
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
