@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { formatApprovalString } from "variables/common";
 
 const getBadgeClass = (activity) => {
   switch (activity) {
@@ -53,7 +54,12 @@ const ActivityTable = ({ activities }) => {
                 <td>{activity.activity_time}</td>
                 <td>
                   <span className={getBadgeClass(activity.activity)}>
-                    {formatApprovalString(activity.activity)}
+                    <div
+                      className="flex text-start"
+                      dangerouslySetInnerHTML={{
+                        __html: formatApprovalString(activity.activity),
+                      }} // Render HTML
+                    />
                   </span>
                 </td>
                 <td>{activity.activity_by}</td>
