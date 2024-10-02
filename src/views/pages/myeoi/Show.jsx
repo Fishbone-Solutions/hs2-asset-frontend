@@ -483,6 +483,7 @@ const Show = () => {
                   </CardBody>
                 </Card>
               </Col>
+
               {/* Set Asset Status */}
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <Button

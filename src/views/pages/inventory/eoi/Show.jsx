@@ -17,6 +17,8 @@ import {
   FormGroup,
   Form,
   Modal,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -322,6 +324,43 @@ const Show = () => {
                           value={dataState.contact_time_preference}
                           readOnly
                         />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+
+            {/* negotiated form*/}
+            <Col md="12">
+              <Card>
+                <CardHeader>
+                  <CardTitle
+                    tag="h6"
+                    style={{
+                      color: "rgb(82,203,206)",
+                      fontWeight: "bold",
+                      textTransform: "capitalize",
+                      WebkitTextTransform: "capitalize", // for Safari
+                    }}
+                  >
+                    Negotiated Value
+                  </CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <Label>Value</Label>
+                      <FormGroup>
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="number"
+                            name="negotiated_val"
+                            value={dataState.negotiated_value}
+                            readOnly
+                          />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>

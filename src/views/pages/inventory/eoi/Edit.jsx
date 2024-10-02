@@ -17,6 +17,8 @@ import {
   FormGroup,
   Form,
   Modal,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -46,7 +48,11 @@ const Edit = () => {
     console.log(dataState.negotiated_value, negotiatedValue);
     if (dataState.negotiated_value === null && negotiatedValue === null) {
       showAlert({
-        title: "Please update negotiated value before sending the request",
+        title: (
+          <h6 className="success-sweet-title">
+            Please update negotiated value before sending the request
+          </h6>
+        ),
         type: "info",
         onConfirm: hideAlert,
         showCancelButton: false,
@@ -644,20 +650,23 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    Negotiation
+                    Negotiated Value
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Negotiated Value</Label>
+                      <Label>Value</Label>
                       <FormGroup>
-                        <Input
-                          type="number"
-                          name="negotiated_val"
-                          value={negotiatedValue}
-                          onChange={(e) => setNegotiatedValue(e.target.value)}
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="number"
+                            name="negotiated_val"
+                            value={negotiatedValue}
+                            onChange={(e) => setNegotiatedValue(e.target.value)}
+                          />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>

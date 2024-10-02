@@ -17,6 +17,8 @@ import {
   FormGroup,
   Form,
   Modal,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import Select from "react-select";
 import moment from "moment";
@@ -539,20 +541,23 @@ const Show = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    Negotiation
+                    Negotiated Value
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Negotiated Value</Label>
+                      <Label>Value</Label>
                       <FormGroup>
-                        <Input
-                          type="number"
-                          name="negotiated_val"
-                          value={dataState.negotiated_value}
-                          readOnly
-                        />
+                        <InputGroup>
+                          <InputGroupText>£</InputGroupText>
+                          <Input
+                            type="number"
+                            name="negotiated_val"
+                            value={dataState.negotiated_value}
+                            readOnly
+                          />
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>
