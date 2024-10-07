@@ -963,11 +963,94 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
   border: none;
 }
 .width-login {
-  width: 29%;
+  width: 100%; /* Default for small screens */
 }
+
+.supporting-text {
+  text-align: right;
+  color: #52cbce;
+  margin-bottom: -10px;
+}
+
+.platform-title {
+  text-align: left;
+  font-size: 23.9px; /* Default for smaller screens */
+  color: white;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.platform-title span:first-child {
+  color: #52cbce; /* Color for HS2 */
+}
+
 .sweet-title-size {
   font-size: 1.2rem !important;
 }
 .upload-image-notification {
   font-size: 0.8rem;
+}
+
+@media (min-width: 375px) {
+  /* Tablets and up */
+  .width-login {
+    width: 90%;
+  }
+
+  .platform-title {
+    font-size: 25.3px; /* Tablets and up */
+  }
+}
+
+@media (min-width: 425px) {
+  /* Tablets and up */
+  .width-login {
+    width: 90%;
+  }
+
+  .platform-title {
+    font-size: 29px; /* Tablets and up */
+  }
+}
+
+@media (min-width: 768px) {
+  /* Tablets and up */
+  .width-login {
+    width: 52%;
+  }
+
+  .platform-title {
+    font-size: 28.3px; /* Tablets and up */
+  }
+}
+
+@media (min-width: 992px) {
+  /* Larger devices */
+  .width-login {
+    width: 50%;
+  }
+
+  .platform-title {
+    font-size: 34px; /* Desktops and up */
+  }
+}
+@media (min-width: 1024px) {
+  /* Larger devices */
+  .width-login {
+    width: 37%;
+  }
+
+  .platform-title {
+    font-size: 26.7px; /* Desktops and up */
+  }
+}
+@media (min-width: 1200px) {
+  /* Extra large screens */
+  .width-login {
+    width: 29%;
+  }
+
+  .platform-title {
+    font-size: 29px; /* Large screens */
+  }
 }

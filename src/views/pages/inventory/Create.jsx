@@ -647,7 +647,7 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Purcahse Value </Label>
+                          <Label>Purchase Value </Label>
                           <FormGroup>
                             <InputGroup>
                               <InputGroupText>£</InputGroupText>

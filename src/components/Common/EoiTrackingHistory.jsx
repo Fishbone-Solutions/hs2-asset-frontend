@@ -42,7 +42,7 @@ const ActivityTable = ({ activities }) => {
               }}
             >
               <th
-                style={{ width: "200px" }}
+                style={{ width: "100px" }}
                 className="py-2 rt-th rt-resizable-header"
               >
                 Date

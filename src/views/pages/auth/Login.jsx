@@ -26,8 +26,6 @@ import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import { useAlert } from "components/Common/NotificationAlert";
 
-
-
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
   const usernames = [];
@@ -39,7 +37,7 @@ function Login() {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();  // Prevent the form submission
+      e.preventDefault(); // Prevent the form submission
       // Handle Enter key press event here
       handleLogin();
     }
@@ -49,10 +47,10 @@ function Login() {
       navigate("/admin/inventory");
     } else {
       showAlert({
-        title: <h6 className="success-sweet-title">"Unable to grant access."</h6> ,
+        title: <h6 className="success-sweet-title">Unable to grant access</h6>,
         content: "Invalid Username or Password. Please try again",
         type: "error",
-        confirmText: 'ok',
+        confirmText: "ok",
         showCancelButton: false,
         onConfirm: hideAlert,
       });
@@ -82,32 +80,15 @@ function Login() {
 
   return (
     <div className="login-page">
+      {alert}
       <AuthNavbar></AuthNavbar>
       <Container>
-        {alert}
         <Row>
-          <Col className="ml-auto mr-auto width-login" lg="4" md="4">
-            <p
-              style={{
-                textAlign: "right",
-                color: "#52CBCE",
-                marginBottom: -10,
-              }}
-            >
-             Supporting Reusability
-            </p>
-            <p
-              style={{
-                textAlign: "left",
-                fontSize: "29px",
-                color: "white",
-                marginTop: 0,
-              }}
-            >
-              <span style={{ color: "#52CBCE", fontWeight: "bold" }}>HS2 </span>
-              <span style={{ color: "white", fontWeight: "bold" }}>
-                Exchange Platform
-              </span>
+          <Col className="ml-auto mr-auto width-login" lg="4" md="6" sm="12">
+            <p className="supporting-text">Supporting Reusability</p>
+            <p className="platform-title">
+              <span>HS2 </span>
+              <span>Exchange Platform</span>
             </p>
             <Form onSubmit={(e) => e.preventDefault()}>
               <Card className="card-login">
@@ -130,7 +111,7 @@ function Login() {
                 <CardBody>
                   <InputGroup>
                     <InputGroupText>
-                     <IoPersonOutline size="1.2em" />
+                      <IoPersonOutline size="1.2em" />
                     </InputGroupText>
                     <Input
                       placeholder="Username"
@@ -179,10 +160,7 @@ function Login() {
         </Row>
       </Container>
       <Footer></Footer>
-      <div
-        className="full-page-background"
-     
-      />
+      <div className="full-page-background" />
     </div>
   );
 }

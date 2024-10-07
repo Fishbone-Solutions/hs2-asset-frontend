@@ -41,6 +41,8 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const { inventoryId, eoiId } = useParams();
   const headers = { user_id: sessionStorage.getItem("username") };
+  const [refreshMainComponent, setRefreshMainComponent] = useState(0);
+
   const navigate = useNavigate();
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
@@ -86,7 +88,7 @@ const Edit = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refreshMainComponent]);
 
   const handleSelectChange = (selectedOption) => {
     setDataState((prevState) => ({
@@ -248,7 +250,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/myeoi/${inventoryId}/eois/edit/${eoiId}`);
+          setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
     } catch (e) {}

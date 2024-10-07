@@ -279,7 +279,7 @@ const RequestEquipment = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Equipment Name</Label>
+                      <Label className="required">Equipment Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -292,7 +292,7 @@ const RequestEquipment = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Quantity</Label>
+                      <Label className="required">Quantity</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -310,6 +310,7 @@ const RequestEquipment = () => {
                       <FormGroup>
                         <DateRangePicker
                           label="Required By"
+                          requireLabel={true}
                           inputName="availablility_range"
                           labelType="non-float"
                           onChange={handleDate}
@@ -319,7 +320,7 @@ const RequestEquipment = () => {
                     </Col>
 
                     <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>
+                      <Label className="required">
                         Please let us know in the box below what is it that you
                         are looking for
                       </Label>
@@ -331,7 +332,6 @@ const RequestEquipment = () => {
                           name="additional_info"
                           value={formData.additional_info}
                           onChange={handleChange}
-                          style={{ width: "100%", height: "100%" }}
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -360,7 +360,7 @@ const RequestEquipment = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Name</Label>
+                      <Label className="required">Name</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -374,7 +374,7 @@ const RequestEquipment = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Company</Label>
+                      <Label className="required">Company</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -388,7 +388,7 @@ const RequestEquipment = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Contact No</Label>
+                      <Label className="required">Contact No</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -398,7 +398,7 @@ const RequestEquipment = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Email Address</Label>
+                      <Label className="required">Email Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -408,7 +408,7 @@ const RequestEquipment = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>Buyer Address</Label>
+                      <Label className="required">Buyer Address</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -418,9 +418,7 @@ const RequestEquipment = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
-                        Item Delivery Location
-                      </Label>
+                      <Label className="required">Item Delivery Location</Label>
                       <FormGroup>
                         <Input
                           type="text"
@@ -430,7 +428,7 @@ const RequestEquipment = () => {
                       </FormGroup>
                     </Col>
                     <Col sm="6">
-                      <Label style={{ color: "#36454F" }}>
+                      <Label className="required">
                         Preferred Contact Timings
                       </Label>
                       <FormGroup>

@@ -44,9 +44,17 @@ const Edit = () => {
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [negotiatedValue, setNegotiatedValue] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
+  // Create a ref to hold the latest params value
+  const latestSelectedApprovalRef = useRef(selectedApproval);
+  const navigate = useNavigate();
+  const [refreshModal, setRefreshModal] = useState(0);
+  const [refreshMainComponent, setRefreshMainComponent] = useState(0);
+
   const openModal = (modalId) => {
     console.log(dataState.negotiated_value, negotiatedValue);
-    if (dataState.negotiated_value === null && negotiatedValue === null) {
+    if (dataState.negotiated_value !== null && negotiatedValue !== null) {
+      setActiveModal(modalId);
+    } else {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
@@ -57,8 +65,6 @@ const Edit = () => {
         onConfirm: hideAlert,
         showCancelButton: false,
       });
-    } else {
-      setActiveModal(modalId);
     }
   };
   const closeModal = () => {
@@ -71,12 +77,6 @@ const Edit = () => {
     }
     setActiveModal(null);
   };
-  // Create a ref to hold the latest params value
-  const latestSelectedApprovalRef = useRef(selectedApproval);
-  const navigate = useNavigate();
-
-  const [refreshModal, setRefreshModal] = useState(0);
-  const [refreshMainComponent, setRefreshMainComponent] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -341,8 +341,8 @@ const Edit = () => {
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
+          setRefreshMainComponent(refreshMainComponent + 1);
           hideAlert();
-          navigate(`/admin/eois/inventory/${inventoryId}`);
         },
       });
     } catch (e) {}
@@ -744,9 +744,9 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          value={options.find(
-                            (option) => option.value === dataState.eoi_status
-                          )}
+                          // value={options.find(
+                          //   (option) => option.value === dataState.eoi_status
+                          // )}
                           onChange={handleSelectChange}
                           options={options.map((option) => ({
                             ...option,
