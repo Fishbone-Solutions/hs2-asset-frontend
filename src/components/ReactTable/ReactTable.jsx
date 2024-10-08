@@ -13,17 +13,26 @@ import { Loader } from "components/Common/ComponentLoader";
 
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
-const Table = ({ columns, data, isLoading }) => {
+const Table = ({
+  columns,
+  data,
+  isLoading,
+  totalRowCount,
+  pageSizeParent,
+  pageNumberParent,
+  setPageSizeParent,
+  setPageNumberParent,
+  setDirection,
+  manualPagination = false, // Boolean to control local vs server-side pagination
+}) => {
   const [numberOfRows, setNumberOfRows] = useState({
-    value: 10,
-    label: "10 rows",
+    value: pageSizeParent || 10,
+    label: `${pageSizeParent || 10} rows`,
   });
   const [pageSelect, handlePageSelect] = useState({
-    value: 0,
-    label: "Page 1",
+    value: pageNumberParent ? pageNumberParent - 1 : 0,
+    label: `Page ${pageNumberParent || 1}`,
   });
-
- 
 
   const defaultColumn = useMemo(() => ({ width: 100 }), []);
 
@@ -47,16 +56,18 @@ const Table = ({ columns, data, isLoading }) => {
     prepareRow,
     nextPage,
     previousPage,
-    canPreviousPage,
+    canPreviousPage: localCanPreviousPage,
     canNextPage,
     setPageSize,
+    pageCount,
   } = useTable(
     {
       columns,
       data,
       defaultColumn,
       initialState: {
-        pageIndex: 0,
+        pageIndex: pageNumberParent ? pageNumberParent - 1 : 0,
+        pageSize: pageSizeParent || 10,
         sortBy: [
           {
             id: defaultSortId,
@@ -64,6 +75,10 @@ const Table = ({ columns, data, isLoading }) => {
           },
         ],
       },
+      manualPagination,
+      pageCount: manualPagination
+        ? Math.ceil(totalRowCount / pageSizeParent)
+        : undefined,
     },
     useSortBy,
     usePagination,
@@ -79,8 +94,13 @@ const Table = ({ columns, data, isLoading }) => {
     []
   );
 
+  // Create page select data based on the total number of pages
   const pageSelectData = Array.from(
-    { length: pageOptions.length },
+    {
+      length: manualPagination
+        ? Math.ceil(totalRowCount / numberOfRows.value)
+        : pageOptions.length,
+    },
     (_, key) => ({
       value: key,
       label: `Page ${key + 1}`,
@@ -101,6 +121,26 @@ const Table = ({ columns, data, isLoading }) => {
       tooltips.forEach((tooltip) => tooltip.dispose());
     };
   }, [page]);
+
+  const handleRowChange = (value) => {
+    setPageSize(value.value); // Local table page size update
+    setPageSizeParent(value.value); // Update the parent component's page size
+    setNumberOfRows(value);
+    gotoPage(0); // Reset to page 1 when changing the row count
+    handlePageSelect({ value: 0, label: "Page 1" }); // Update page select to page 1
+    setPageNumberParent(1); // Update parent with page 1
+  };
+
+  // Can previous page logic should check whether the pageIndex is greater than 0
+  const canPreviousPage = manualPagination
+    ? pageNumberParent > 1 // In manual/server-side pagination
+    : localCanPreviousPage; // In local pagination
+
+  const handlePageChange = (newPage) => {
+    gotoPage(newPage);
+    handlePageSelect({ value: newPage, label: `Page ${newPage + 1}` });
+    setPageNumberParent(newPage + 1); // Update parent with 1-based page number
+  };
 
   return (
     <div className="-striped -highlight primary-pagination">
@@ -196,8 +236,15 @@ const Table = ({ columns, data, isLoading }) => {
             <div className="-previous">
               <button
                 type="button"
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
+                onClick={() => {
+                  previousPage();
+                  setDirection("b");
+
+                  // Update pageSelect state and parent component state
+                  const newPage = pageIndex - 1;
+                  handlePageChange(newPage); // Scroll to top inside handlePageChange
+                }}
+                disabled={!canPreviousPage} // Check updated canPreviousPage logic
                 className="-btn"
               >
                 Previous
@@ -213,8 +260,7 @@ const Table = ({ columns, data, isLoading }) => {
                       name="pageSelect"
                       value={pageSelect}
                       onChange={(value) => {
-                        gotoPage(value.value);
-                        handlePageSelect(value);
+                        handlePageChange(value.value); // Scroll to top inside handlePageChange
                       }}
                       options={pageSelectData}
                       placeholder="Choose Page"
@@ -226,10 +272,7 @@ const Table = ({ columns, data, isLoading }) => {
                       classNamePrefix="react-select"
                       name="numberOfRows"
                       value={numberOfRows}
-                      onChange={(value) => {
-                        setPageSize(value.value);
-                        setNumberOfRows(value);
-                      }}
+                      onChange={handleRowChange} // Scroll to top inside handleRowChange
                       options={rowsOptions}
                       placeholder="Choose Rows"
                     />
@@ -240,7 +283,14 @@ const Table = ({ columns, data, isLoading }) => {
             <div className="-next">
               <button
                 type="button"
-                onClick={() => nextPage()}
+                onClick={() => {
+                  nextPage();
+                  setDirection("f");
+
+                  // Update pageSelect state and parent component state
+                  const newPage = pageIndex + 1;
+                  handlePageChange(newPage); // Scroll to top inside handlePageChange
+                }}
                 disabled={!canNextPage}
                 className="-btn"
               >

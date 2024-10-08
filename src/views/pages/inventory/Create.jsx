@@ -680,7 +680,7 @@ const Create = () => {
                           </FormGroup>
                         </Col>
                         <Col sm="6">
-                          <Label>Residual Forcast Value </Label>
+                          <Label>Residual Forecast Value </Label>
                           <FormGroup>
                             <InputGroup>
                               <InputGroupText>£</InputGroupText>

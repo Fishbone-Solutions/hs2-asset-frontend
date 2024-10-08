@@ -380,7 +380,7 @@ const Index = () => {
                             style={{ cursor: "pointer" }}
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
-                            title="Refresh Gird"
+                            title="Refresh & Clear Filters"
                           >
                             <RefreshComponetIcon
                               width="30"

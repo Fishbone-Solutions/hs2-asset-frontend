@@ -7,6 +7,7 @@ const RefreshComponetIcon = (props) => (
     height={props.height}
     viewBox="0 0 512 512"
     style={{ padding: "4px" }}
+    className={props.className}
   >
     <path
       fill="#ffffff"
