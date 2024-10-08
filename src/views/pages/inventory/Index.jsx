@@ -26,6 +26,7 @@ import { FullPageLoader } from "components/Common/ComponentLoader";
 import moment from "moment";
 import { Modal } from "bootstrap";
 import ModalComponent from "components/Common/ModalComponent";
+import RefreshComponetIcon from "components/svg/RefreshComponet";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -35,6 +36,9 @@ const Index = () => {
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const [activeModal, setActiveModal] = useState(null);
+  const [cursorRowNo, setCursorRowNo] = useState(0);
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [totalNumberOfRow, setTotalNumberOfRow] = useState(10);
   const openModal = (modalId) => setActiveModal(modalId);
   const closeModal = () => {
     console.log("click");
@@ -59,6 +63,8 @@ const Index = () => {
     available_from: null,
     available_to: null,
     statuscode: null,
+    cursor_row_no: 0,
+    page_size: 10,
   });
 
   const [filterDataState, setFilterDataState] = useState({
@@ -94,9 +100,21 @@ const Index = () => {
           filterFormData.available_from
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+        cursor_row_no: filterFormData.cursor_row_no,
+        page_size: filterFormData.page_size,
       });
       const res = await EndPointService.getInventory(headers, params);
+
       setDataState(res.appRespData);
+      console.log(
+        res.appRespData,
+        res.appRespData.length,
+        res.appRespData[res.appRespData.length - 1].row_no
+      );
+      setCursorRowNo(res.appRespData[res.appRespData.length - 1].row_no);
+      setTotalNumberOfRow(
+        res.appRespData[res.appRespData.length - 1].row_count
+      );
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -243,7 +261,9 @@ const Index = () => {
         ? rangeDatesEntry.endDate
         : "",
       statuscode: filterDataState.statuscode,
+      cursor_row_no: 0,
     }));
+    setCurrentPageNumber(1);
   };
 
   const showPieChartInventory = async () => {
@@ -351,6 +371,47 @@ const Index = () => {
     });
   };
 
+  const setDirection = (direction) => {
+    console.log(direction);
+    if (direction === "f") {
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: cursorRowNo,
+      }));
+    } else {
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: cursorRowNo - filterFormData.page_size * 2,
+      }));
+    }
+  };
+
+  const setPageSize = (pageSize) => {
+    setFilterFormDate((prev) => ({
+      ...prev,
+      page_size: pageSize,
+    }));
+  };
+
+  const setPageNumber = (pageNumber) => {
+    console.log(pageNumber);
+    setCurrentPageNumber(pageNumber);
+    setFilterFormDate((prev) => ({
+      ...prev,
+      cursor_row_no: filterFormData.page_size * pageNumber,
+    }));
+  };
+
+  const handleRefreshComponet = () => {
+    setRefreshData(refreshData + 1);
+    setCurrentPageNumber(1);
+    setFilterFormDate((prev) => ({
+      ...prev,
+      cursor_row_no: 0,
+    }));
+    handleClear();
+  };
+
   return (
     <>
       <div className="content">
@@ -366,6 +427,36 @@ const Index = () => {
             <Card>
               <CardBody>
                 <div className="float-end d-inline-flex p-2 justify-content-end">
+                  <div
+                    onClick={handleRefreshComponet}
+                    className="mr-2 cursor-pointer"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Refresh & Clear Filters"
+                  >
+                    <RefreshComponetIcon
+                      width="34"
+                      height="34"
+                      color="white"
+                      size="2.4em"
+                      className="icon-btn"
+                    />
+                  </div>
+                  {/* <div
+                    onClick={handleRefreshComponet}
+                    className="me-2 icon-style"
+                    style={{ cursor: "pointer" }}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Refresh Gird"
+                  >
+                    <RefreshComponetIcon
+                      width="30"
+                      height="30"
+                      color="white"
+                      size="2.4em"
+                    />
+                  </div> */}
                   <div
                     onClick={showPieChartInventory}
                     className="mr-2 cursor-pointer"
@@ -430,7 +521,14 @@ const Index = () => {
                   data={dataState}
                   columns={TableColumn(handleDelete)}
                   isLoading={loader}
+                  pageSizeParent={filterFormData.page_size}
+                  totalRowCount={totalNumberOfRow}
+                  pageNumberParent={currentPageNumber}
+                  setPageSizeParent={setPageSize} // Updates parent state with new page size
+                  setPageNumberParent={setPageNumber} // Updates parent with current page number
+                  setDirection={setDirection} // Pass function to set direction
                   className="-striped -highlight primary-pagination mt-2"
+                  manualPagination={true}
                 />
               </CardBody>
             </Card>
