@@ -53,6 +53,9 @@ const Index = () => {
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
   const [clearCityBoolean, setClearCityBoolean] = useState(false);
   const [cities, setCities] = useState([]);
+  const [cursorRowNo, setCursorRowNo] = useState(0);
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [totalNumberOfRow, setTotalNumberOfRow] = useState(10);
 
   const [appliedFilters, setAppliedFilters] = useState([]);
 
@@ -73,6 +76,8 @@ const Index = () => {
     city: null,
     cityName: null,
     location: null,
+    cursor_row_no: 0,
+    page_size: 10,
   });
 
   const [filterDataState, setFilterDataState] = useState({
@@ -115,10 +120,25 @@ const Index = () => {
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
         fltr_location_city: getValueOrDefault(filterFormData.city),
         fltr_location: getValueOrDefault(filterFormData.location),
+        cursor_row_no: filterFormData.cursor_row_no,
+        page_size: filterFormData.page_size,
       });
 
       const res = await EndPointService.getExchange(headers, params);
       setDataState(res.appRespData);
+
+      if (res.appRespData.length > 0) {
+        console.log(
+          res.appRespData,
+          res.appRespData.length,
+          res.appRespData[res.appRespData.length - 1].row_no
+        );
+        setCursorRowNo(res.appRespData[res.appRespData.length - 1].row_no);
+        setTotalNumberOfRow(
+          res.appRespData[res.appRespData.length - 1].row_count
+        );
+      }
+
       setLoader(false);
     } catch (e) {
       console.log(e);
@@ -207,6 +227,8 @@ const Index = () => {
       subCategory: "",
       city: "",
       location: "",
+      cursor_row_no: 0,
+      page_size: 10,
     }));
     setFilterDataState({
       id: "",
@@ -270,6 +292,11 @@ const Index = () => {
   const handleRefreshComponet = () => {
     const refreshUpdateData = refreshData + 1;
     setRefreshData(refreshUpdateData);
+    setCurrentPageNumber(1);
+    setFilterFormDate((prev) => ({
+      ...prev,
+      cursor_row_no: 0,
+    }));
     clearInput();
   };
 
@@ -328,6 +355,50 @@ const Index = () => {
       return updatedState;
     });
   };
+
+  const setDirection = (direction) => {
+    console.log(direction);
+    if (direction === "f") {
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: cursorRowNo,
+      }));
+    } else {
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: cursorRowNo - filterFormData.page_size * 2,
+      }));
+    }
+  };
+
+  const setPageSize = (pageSize) => {
+    console.log();
+    setFilterFormDate((prev) => ({
+      ...prev,
+      page_size: pageSize,
+    }));
+  };
+
+  const setPageNumber = (pageNumber) => {
+    console.log(pageNumber);
+    if (pageNumber !== currentPageNumber) {
+      setCurrentPageNumber(pageNumber);
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: filterFormData.page_size * pageNumber,
+      }));
+    }
+  };
+
+  // const handleRefreshComponet = () => {
+  //   setRefreshData(refreshData + 1);
+  //   setCurrentPageNumber(1);
+  //   setFilterFormDate((prev) => ({
+  //     ...prev,
+  //     cursor_row_no: 0,
+  //   }));
+  //   handleClear();
+  // };
 
   return (
     <>
@@ -448,7 +519,14 @@ const Index = () => {
                   data={dataState}
                   columns={TableColumn()}
                   isLoading={loader}
-                  className="-striped -highlight primary-pagination "
+                  pageSizeParent={filterFormData.page_size}
+                  totalRowCount={totalNumberOfRow}
+                  pageNumberParent={currentPageNumber}
+                  setPageSizeParent={setPageSize} // Updates parent state with new page size
+                  setPageNumberParent={setPageNumber} // Updates parent with current page number
+                  setDirection={setDirection} // Pass function to set direction
+                  className="-striped -highlight primary-pagination mt-2"
+                  manualPagination={true}
                 />
               </CardBody>
             </Card>
