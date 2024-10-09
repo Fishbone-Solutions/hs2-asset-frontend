@@ -106,6 +106,7 @@ const Index = () => {
       const res = await EndPointService.getInventory(headers, params);
 
       setDataState(res.appRespData);
+<<<<<<< Updated upstream
       console.log(
         res.appRespData,
         res.appRespData.length,
@@ -115,6 +116,19 @@ const Index = () => {
       setTotalNumberOfRow(
         res.appRespData[res.appRespData.length - 1].row_count
       );
+=======
+      if (res.appRespData.length > 0) {
+        console.log(
+          res.appRespData,
+          res.appRespData.length,
+          res.appRespData[res.appRespData.length - 1].row_no
+        );
+        setCursorRowNo(res.appRespData[res.appRespData.length - 1].row_no);
+        setTotalNumberOfRow(
+          res.appRespData[res.appRespData.length - 1].row_count
+        );
+      }
+>>>>>>> Stashed changes
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -395,11 +409,21 @@ const Index = () => {
 
   const setPageNumber = (pageNumber) => {
     console.log(pageNumber);
+<<<<<<< Updated upstream
     setCurrentPageNumber(pageNumber);
     setFilterFormDate((prev) => ({
       ...prev,
       cursor_row_no: filterFormData.page_size * pageNumber,
     }));
+=======
+    if (pageNumber !== currentPageNumber) {
+      setCurrentPageNumber(pageNumber);
+      setFilterFormDate((prev) => ({
+        ...prev,
+        cursor_row_no: filterFormData.page_size * pageNumber,
+      }));
+    }
+>>>>>>> Stashed changes
   };
 
   const handleRefreshComponet = () => {
