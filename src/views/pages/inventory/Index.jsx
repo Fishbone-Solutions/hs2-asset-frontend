@@ -409,13 +409,6 @@ const Index = () => {
 
   const setPageNumber = (pageNumber) => {
     console.log(pageNumber);
-<<<<<<< Updated upstream
-    setCurrentPageNumber(pageNumber);
-    setFilterFormDate((prev) => ({
-      ...prev,
-      cursor_row_no: filterFormData.page_size * pageNumber,
-    }));
-=======
     if (pageNumber !== currentPageNumber) {
       setCurrentPageNumber(pageNumber);
       setFilterFormDate((prev) => ({
@@ -423,7 +416,6 @@ const Index = () => {
         cursor_row_no: filterFormData.page_size * pageNumber,
       }));
     }
->>>>>>> Stashed changes
   };
 
   const handleRefreshComponet = () => {
