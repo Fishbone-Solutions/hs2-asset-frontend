@@ -331,7 +331,7 @@ const Edit = () => {
       );
       showAlert({
         title:
-          res.appRespData[0].eoi_undo_last_activity === 1
+          res.appRespData[0].eoi_undo_last_activity > 0
             ? `Current Status reverted`
             : res.appRespData[0].eoi_undo_last_activity === -1
               ? "Can not Undo Status. The Status was set by the Buyer"
