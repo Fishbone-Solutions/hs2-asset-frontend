@@ -385,7 +385,8 @@ const Index = () => {
       setCurrentPageNumber(pageNumber);
       setFilterFormDate((prev) => ({
         ...prev,
-        cursor_row_no: filterFormData.page_size * pageNumber,
+        cursor_row_no:
+          filterFormData.page_size * pageNumber - filterFormData.page_size,
       }));
     }
   };
