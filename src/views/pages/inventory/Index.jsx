@@ -84,6 +84,7 @@ const Index = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [graphData, setGraphData] = useState([]);
   const [appliedFilters, setAppliedFilters] = useState([]);
+  const [directionPagination, setDirectionPagination] = useState("");
   const getValueOrDefault = (value) => (value ? value : "-1");
 
   const fetchInventory = async () => {
@@ -396,13 +397,21 @@ const Index = () => {
   };
 
   const setPageNumber = (pageNumber) => {
-    console.log(pageNumber);
+    console.log(
+      "change page",
+      currentPageNumber,
+      pageNumber,
+      directionPagination
+    );
     if (pageNumber !== currentPageNumber) {
       setCurrentPageNumber(pageNumber);
       setFilterFormDate((prev) => ({
         ...prev,
-        cursor_row_no: filterFormData.page_size * pageNumber,
+        cursor_row_no:
+          filterFormData.page_size * pageNumber - filterFormData.page_size,
       }));
+    } else {
+      setDirectionPagination(null);
     }
   };
 
