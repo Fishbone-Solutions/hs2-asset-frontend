@@ -339,7 +339,7 @@ const Edit = () => {
                 ? "Can not undo Status at this stage"
                 : "No previous status available",
         type:
-          res.appRespData[0].eoi_undo_last_activity === 1 ? "success" : "error",
+          res.appRespData[0].eoi_undo_last_activity > 0 ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
