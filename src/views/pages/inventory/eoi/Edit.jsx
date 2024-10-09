@@ -335,7 +335,9 @@ const Edit = () => {
             ? `Current Status reverted`
             : res.appRespData[0].eoi_undo_last_activity === -1
               ? "Can not Undo Status. The Status was set by the Buyer"
-              : "No previous status available",
+              : res.appRespData[0].eoi_undo_last_activity === -2
+                ? "Can not undo Status at this stage"
+                : "No previous status available",
         type:
           res.appRespData[0].eoi_undo_last_activity === 1 ? "success" : "error",
         showCancelButton: false,
