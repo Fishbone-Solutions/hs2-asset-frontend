@@ -20,6 +20,7 @@ import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
 
+
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -81,7 +82,7 @@ const BulkImport = () => {
     event,
     maxFiles = 1,
     allowedExtensions = [selectedOption],
-    maxSize = 2000000
+    maxSize = 9000000
   ) => {
     const files = event.files;
 
