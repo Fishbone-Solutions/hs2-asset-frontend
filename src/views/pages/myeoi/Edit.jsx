@@ -99,7 +99,7 @@ const Edit = () => {
     event.preventDefault();
     if (updateStatus === null || updateStatus === "") {
       showAlert({
-        title: "Please choose an EoI Status to update",
+        title: "Please choose an Acknowledgement Status to update",
         confirmText: "ok",
         onConfirm: hideAlert,
         type: "warning",
