@@ -254,6 +254,13 @@ const Edit = () => {
       (approver) => approver.user_id === latestSelectedApprovalRef.current
     );
 
+    if (
+      latestSelectedApprovalRef.current !== null &&
+      latestSelectedApprovalRef.current !== ""
+    ) {
+      setValidationError(false);
+    }
+
     return (
       <div className="popup-sweet-alert">
         <Select
@@ -319,7 +326,6 @@ const Edit = () => {
   };
 
   var options = [
-    { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },

@@ -101,7 +101,7 @@ const useColumns = () => {
                 size="sm"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title="EOI Submission"
+                title="Submit EOI"
               >
                 <SvgFilePlus />
               </Button>
