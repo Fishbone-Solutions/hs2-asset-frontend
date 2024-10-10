@@ -50,6 +50,7 @@ const Edit = () => {
   const [refreshModal, setRefreshModal] = useState(0);
   const [refreshMainComponent, setRefreshMainComponent] = useState(0);
   const [validationError, setValidationError] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null);
 
   const openModal = (modalId) => {
     console.log(dataState.negotiated_value, negotiatedValue);
@@ -135,32 +136,40 @@ const Edit = () => {
   }, [selectedApproval]);
 
   const handleSelectChange = (selectedOption) => {
-    setDataState((prevState) => ({
-      ...prevState,
-      eoi_status: selectedOption.value,
-    }));
+    setUpdateStatus(selectedOption.value);
   };
 
   const handleFormSubmission = async (event) => {
-    console.log("edit", event);
+    console.log("edit", event, updateStatus);
     event.preventDefault();
-    showAlert({
-      title: "Are you sure?",
-      confirmText: "Yes",
-      onConfirm: async () => {
-        await handleSubmit(); // No need to pass params, we'll use the ref
-      },
-      type: "warning",
-      onCancel: hideAlert,
-      showCancelButton: true,
-    });
+    if (updateStatus === null || updateStatus === "") {
+      showAlert({
+        title: "Please choose an EoI Status to update",
+        confirmText: "ok",
+        onConfirm: hideAlert,
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: false,
+      });
+    } else {
+      showAlert({
+        title: "Are you sure?",
+        confirmText: "Yes",
+        onConfirm: async () => {
+          await handleSubmit(); // No need to pass params, we'll use the ref
+        },
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: true,
+      });
+    }
   };
 
   const handleSubmit = async () => {
     setLoader(true);
     try {
       const requestBody = {
-        eoi_status: dataState.eoi_status,
+        eoi_status: updateStatus,
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -175,7 +184,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/eois/inventory/${inventoryId}`);
+          setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
       setLoader(false);
@@ -756,9 +765,6 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          // value={options.find(
-                          //   (option) => option.value === dataState.eoi_status
-                          // )}
                           onChange={handleSelectChange}
                           options={options.map((option) => ({
                             ...option,
@@ -793,7 +799,7 @@ const Edit = () => {
               type="button"
               onClick={handleFormSubmission}
             >
-              SAVE
+              update
             </Button>
             <Button
               className="buttonClose"

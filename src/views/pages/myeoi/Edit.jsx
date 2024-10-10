@@ -42,6 +42,7 @@ const Edit = () => {
   const { inventoryId, eoiId } = useParams();
   const headers = { user_id: sessionStorage.getItem("username") };
   const [refreshMainComponent, setRefreshMainComponent] = useState(0);
+  const [updateStatus, setUpdateStatus] = useState(null);
 
   const navigate = useNavigate();
 
@@ -91,27 +92,35 @@ const Edit = () => {
   }, [refreshMainComponent]);
 
   const handleSelectChange = (selectedOption) => {
-    setDataState((prevState) => ({
-      ...prevState,
-      eoi_status: selectedOption.value,
-    }));
+    setUpdateStatus(selectedOption.value);
   };
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
-    showAlert({
-      title: "Are you sure?",
-      type: "warning",
-      onConfirm: () => handleSubmit(),
-      onCancel: hideAlert,
-    });
+    if (updateStatus === null || updateStatus === "") {
+      showAlert({
+        title: "Please choose an EoI Status to update",
+        confirmText: "ok",
+        onConfirm: hideAlert,
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: false,
+      });
+    } else {
+      showAlert({
+        title: "Are you sure?",
+        type: "warning",
+        onConfirm: () => handleSubmit(),
+        onCancel: hideAlert,
+      });
+    }
   };
 
   const handleSubmit = async () => {
     setLoader(true);
     try {
       const requestBody = {
-        eoi_status: dataState.eoi_status,
+        eoi_status: updateStatus,
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -135,7 +144,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate("/admin/myeoi");
+          setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
     } catch (e) {
@@ -256,18 +265,6 @@ const Edit = () => {
         },
       });
     } catch (e) {}
-  };
-
-  const isMyEoiStatusEnabled = (approvalStatus, eoiStatus) => {
-    if (
-      (approvalStatus !== "APPROVED" || approvalStatus === "REJECTED") &&
-      eoiStatus !== "EOI-SUBMITTED" &&
-      eoiStatus !== "IN-NEGOTIATION" &&
-      eoiStatus !== "PROCESSING"
-    ) {
-      return true;
-    }
-    return false;
   };
 
   return (
@@ -661,13 +658,6 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          isDisabled={
-                            dataState.eoi_status === "NOT-PROCEEDING" ||
-                            dataState.eoi_status === "WITHDRAWN"
-                          }
-                          value={myEoIUpdateoptions.find(
-                            (option) => option.value === dataState.eoi_status
-                          )}
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
                             isdisabled:
