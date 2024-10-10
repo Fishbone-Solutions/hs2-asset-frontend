@@ -49,6 +49,7 @@ const Edit = () => {
   const navigate = useNavigate();
   const [refreshModal, setRefreshModal] = useState(0);
   const [refreshMainComponent, setRefreshMainComponent] = useState(0);
+  const [validationError, setValidationError] = useState(false);
 
   const openModal = (modalId) => {
     console.log(dataState.negotiated_value, negotiatedValue);
@@ -270,6 +271,10 @@ const Edit = () => {
           }}
           onChange={handleSelectChangeApproval}
         />
+        {/* Show validation error if no approver is selected */}
+        {validationError && (
+          <div className="text-danger mt-1">Please select an approver.</div>
+        )}
         {/* Dynamically show the selected approver's details */}
         <span className="d-flex flex-wrap justify-content-left text-black mt-2">
           {selectedApproverDetails ? (
@@ -808,12 +813,17 @@ const Edit = () => {
         onCloseCross={closeModal}
         onClose={closeModal}
         onSubmit={() => {
-          showAlert({
-            title: "Are you sure?",
-            type: "warning",
-            onConfirm: () => approvalRequest(),
-            onCancel: hideAlert,
-          });
+          if (latestSelectedApprovalRef.current === null) {
+            setValidationError(true);
+          } else {
+            setValidationError(false);
+            showAlert({
+              title: "Are you sure?",
+              type: "warning",
+              onConfirm: () => approvalRequest(),
+              onCancel: hideAlert,
+            });
+          }
         }}
         closeButtonText="Cancel"
         submitButtonText="Send Request"
