@@ -813,7 +813,10 @@ const Edit = () => {
         onCloseCross={closeModal}
         onClose={closeModal}
         onSubmit={() => {
-          if (latestSelectedApprovalRef.current === null) {
+          if (
+            latestSelectedApprovalRef.current === null ||
+            latestSelectedApprovalRef.current === ""
+          ) {
             setValidationError(true);
           } else {
             setValidationError(false);
