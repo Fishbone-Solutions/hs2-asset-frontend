@@ -51,6 +51,8 @@ const BulkImport = () => {
         files.forEach((file) => {
           formData.append('file', file);
         });
+        const user_id = localStorage.getItem("username");
+        formData.append('user_id', user_id);
 
         const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/parse`, formData, {
           headers: {
@@ -128,6 +130,9 @@ const BulkImport = () => {
       uploadedFiles.forEach((file) => {
         formData.append('file', file);
       });
+      const user_id = localStorage.getItem("username");
+      formData.append('user_id', user_id);
+
 
       try {
         setLoader(true);
