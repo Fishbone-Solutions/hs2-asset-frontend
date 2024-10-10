@@ -132,6 +132,15 @@ function negotiatedValueUpdate(headers = null, inventoryId, eoiId, params) {
   );
 }
 
+function parse(headers = null, formData) {
+  return PostWithMultiPart(`${endpoints.parse()}`, formData, headers);
+}
+
+function ingest(headers = null, formData) {
+  return PostWithMultiPart(`${endpoints.ingest()}`, formData, headers);
+}
+
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -158,4 +167,6 @@ export const EndPointService = {
   inventoryUndoStatus,
   getCityData,
   negotiatedValueUpdate,
+  parse,
+  ingest
 };

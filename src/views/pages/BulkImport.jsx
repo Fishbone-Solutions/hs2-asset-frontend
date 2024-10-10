@@ -16,10 +16,8 @@ import {
   Button,
 } from "reactstrap";
 import { GlobalContext } from "@/GlobalState";
-import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
-const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
-
+import { EndPointService } from "services/EndPointService"; // Import the service here
 
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -54,11 +52,8 @@ const BulkImport = () => {
         });
         formData.append('user_id', username);
 
-        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/parse`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // Call the parse function from the service
+        const response = await EndPointService.parse(null, formData);
 
         setToastType("success");
         setToastMessage(response.data.message || "File uploaded successfully!");
@@ -134,19 +129,14 @@ const BulkImport = () => {
 
       try {
         setLoader(true);
-        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/ingest`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // Call the ingest function from the service
+        const response = await EndPointService.ingest(null, formData);
         setToastType("success");
         setToastMessage(response.data.message || "Bulk Import Successful");
         setModalIsOpen("Bulk Import Successful")
         setLoader(false);
         window.location.reload();
 
-
-        // Handle response as needed
       } catch (error) {
         setToastType("error");
         setToastMessage(error.response?.data?.message || "Bulk Import failed.");
