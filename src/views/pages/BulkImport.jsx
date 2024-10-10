@@ -18,7 +18,7 @@ import {
 import { GlobalContext } from "@/GlobalState";
 import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
-const BACKEND_ADDRESS = "https://api.lhs2-dev.fishbonesolutions.co.uk"
+const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
 
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
