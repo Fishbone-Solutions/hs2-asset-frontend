@@ -30,6 +30,7 @@ import ModalComponent from "components/Common/ModalComponent";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import WarningIcon from "components/svg/Warning";
 import { getStatusMessage } from "variables/common";
+import NudgeSvgIcon from "components/svg/Nudge";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -364,6 +365,28 @@ const Edit = () => {
     { value: "GOODS-SENT", label: "Goods Sent" },
     { value: "NOT-PROCEEDING", label: "Not Proceeding" },
   ];
+
+  const handleNudge = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.sentNudgeRequest(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      setLoader(false);
+      showAlert({
+        title: "Nudge sent to Seller",
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          setRefreshMainComponent(refreshMainComponent + 1);
+        },
+      });
+    } catch (e) {}
+  };
 
   const handleUndoStatus = async () => {
     try {
@@ -754,27 +777,58 @@ const Edit = () => {
                   >
                     {"EoI Status"}
                     <span className="float-right p-2">
-                      <Button
-                        type="button"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        title="Undo Current Status"
-                        onClick={() => {
-                          showAlert({
-                            title: `Are you sure you wish to Undo current EOI status ?`,
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmText: "Yes",
-                            onCancel: hideAlert,
-                            onConfirm: () => {
-                              handleUndoStatus();
-                            },
-                          });
+                      <div
+                        className="button-container"
+                        style={{
+                          display: "flex",
+                          gap: "2px",
+                          marginTop: "-33px",
                         }}
-                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <UndoIcon />
-                      </Button>
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Undo Current Status"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to Undo current EOI status?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleUndoStatus();
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <UndoIcon />
+                        </Button>
+
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Nudge Buyer for response"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to nudge the buyer?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleNudge(); // replace with appropriate nudge action
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <NudgeSvgIcon />
+                        </Button>
+                      </div>
                     </span>
                   </CardTitle>
                 </CardHeader>
