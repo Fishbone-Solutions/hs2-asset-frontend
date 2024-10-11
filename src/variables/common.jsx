@@ -145,7 +145,9 @@ export const getStatusMessage = (statusCode, type) => {
     case -20:
       return `Can not update to new Status. Awaiting for ${type} to respond to your current status`;
     case -30:
-      return "You can not update to this Status at this stage";
+      return type === "Buyer"
+        ? "Can not stop proceeding at this stage"
+        : "Can not Withdraw EOI at this stage";
     case -40:
       return "Can not continue. Approval is required to proceed further";
     default:
