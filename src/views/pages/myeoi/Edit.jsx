@@ -32,6 +32,7 @@ import UndoIcon from "components/svg/Undo";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import { getStatusMessage } from "variables/common";
 import WarningIcon from "components/svg/Warning";
+import NudgeSvgIcon from "components/svg/Nudge";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -288,6 +289,27 @@ const Edit = () => {
     } catch (e) {}
   };
 
+  const handleNudge = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.sentNudgeRequest(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      setLoader(false);
+      showAlert({
+        title: "Nudge sent to Seller",
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          setRefreshMainComponent(refreshMainComponent + 1);
+        },
+      });
+    } catch (e) {}
+  };
   return (
     <>
       <div className="content">
@@ -645,27 +667,58 @@ const Edit = () => {
                   >
                     Acknowledgement To Seller
                     <span className="float-right p-2">
-                      <Button
-                        type="button"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        title="Undo Current Status"
-                        onClick={() => {
-                          showAlert({
-                            title: `Are you sure you wish to Undo current EOI status ?`,
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmText: "Yes",
-                            onCancel: hideAlert,
-                            onConfirm: () => {
-                              handleUndoStatus();
-                            },
-                          });
+                      <div
+                        className="button-container"
+                        style={{
+                          display: "flex",
+                          gap: "2px",
+                          marginTop: "-33px",
                         }}
-                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <UndoIcon />
-                      </Button>
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Undo Current Status"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to Undo current EOI status?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleUndoStatus();
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <UndoIcon />
+                        </Button>
+
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Nudge Seller for response"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to nudge the seller?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleNudge(); // replace with appropriate nudge action
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <NudgeSvgIcon />
+                        </Button>
+                      </div>
                     </span>
                   </CardTitle>
                 </CardHeader>
@@ -681,14 +734,7 @@ const Edit = () => {
                           name="eoi_status"
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
-                            // isdisabled:
-                            //   (dataState.eoi_status === "EOI-SUBMITTED" ||
-                            //     dataState.eoi_status === "IN-NEGOTIATION" ||
-                            //     dataState.eoi_status === "PROCESSING") &&
-                            //   (option.value === "PAYMENT-SENT" ||
-                            //     option.value === "GOODS-RECEIVED"),
                           }))}
-                          //isOptionDisabled={(option) => option.isdisabled} // disable an option
                           onChange={handleSelectChange}
                           placeholder="Select an option"
                         />

@@ -132,6 +132,14 @@ function negotiatedValueUpdate(headers = null, inventoryId, eoiId, params) {
   );
 }
 
+function sentNudgeRequest(headers = null, inventoryId, eoiId) {
+  return Post(
+    `${endpoints.sentNudgeRequest(inventoryId, eoiId)}`,
+    headers,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -158,4 +166,5 @@ export const EndPointService = {
   inventoryUndoStatus,
   getCityData,
   negotiatedValueUpdate,
+  sentNudgeRequest,
 };
