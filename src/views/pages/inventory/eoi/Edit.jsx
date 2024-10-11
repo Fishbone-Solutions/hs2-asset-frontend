@@ -28,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 import UndoIcon from "components/svg/Undo";
 import ModalComponent from "components/Common/ModalComponent";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import WarningIcon from "components/svg/Warning";
+import { getStatusMessage } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -153,7 +155,16 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: "Are you sure?",
+        title: (
+          <h6 className="warning-alert">
+            <WarningIcon width="60px" height="60px" />
+            <span className="text-danger">
+              The status you are about to set will instantly become visible to
+              the Buyer, enabling the Buyer to react immediately
+            </span>
+          </h6>
+        ),
+        content: <h3>Are you sure?</h3>,
         confirmText: "Yes",
         onConfirm: async () => {
           await handleSubmit(); // No need to pass params, we'll use the ref
@@ -170,6 +181,7 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: updateStatus,
+        source_module: "INVENTORY",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -177,9 +189,18 @@ const Edit = () => {
         eoiId,
         requestBody
       );
+      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const isSuccess = statusCode > 0;
       showAlert({
-        title: `EOI status updated`,
-        type: "success",
+        title: (
+          <h6 className="success-sweet-title">
+            {isSuccess ? `EOI status updated` : getStatusMessage(statusCode)}
+          </h6>
+        ),
+        content: isSuccess ? (
+          <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
+        ) : null, // Only show content for success cases
+        type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -768,14 +789,14 @@ const Edit = () => {
                           onChange={handleSelectChange}
                           options={options.map((option) => ({
                             ...option,
-                            isdisabled:
-                              (dataState.approval_status !== "APPROVED" ||
-                                dataState.approval_status === "REJECTED") &&
-                              (option.value === "PAYMENT-RECEIVED" ||
-                                option.value === "GOODS-SENT" ||
-                                option.value === "PAYMENT-REQUESTED"),
+                            // isdisabled:
+                            //   (dataState.approval_status !== "APPROVED" ||
+                            //     dataState.approval_status === "REJECTED") &&
+                            //   (option.value === "PAYMENT-RECEIVED" ||
+                            //     option.value === "GOODS-SENT" ||
+                            //     option.value === "PAYMENT-REQUESTED"),
                           }))}
-                          isOptionDisabled={(option) => option.isdisabled} // disable an option
+                          //isOptionDisabled={(option) => option.isdisabled} // disable an option
                           placeholder="Select an option"
                         />
                       </FormGroup>
