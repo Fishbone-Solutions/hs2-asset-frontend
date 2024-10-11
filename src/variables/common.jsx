@@ -137,3 +137,20 @@ export const DocumentType = [
   ".mobi", // Mobipocket eBook
   ".tex", // LaTeX Document
 ];
+
+export const getStatusMessage = (statusCode) => {
+  switch (statusCode) {
+    case -10:
+      return "Can not update to new Status. Awaiting for Buyer to respond to your current status.";
+    case -20:
+      return "Can not update to new Status. Awaiting for Seller to respond to your current status.";
+    case -30:
+      return "You can not update to this Status at this stage.";
+    case -40:
+      return "Can not continue. Approval is required to proceed further.";
+    default:
+      return statusCode > 0
+        ? "Acknowledgement Status updated"
+        : "Invalid status code.";
+  }
+};

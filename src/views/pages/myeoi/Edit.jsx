@@ -30,6 +30,8 @@ import { useAlert } from "components/Common/NotificationAlert";
 import UndoIcon from "components/svg/Undo";
 
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import { getStatusMessage } from "variables/common";
+import WarningIcon from "components/svg/Warning";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -108,7 +110,16 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: "Are you sure?",
+        title: (
+          <h6 className="warning-alert">
+            <WarningIcon width="60px" height="60px" />
+            <span className="text-danger">
+              The status you are about to set will instantly become visible to
+              the Buyer, enabling the Buyer to react immediately
+            </span>
+          </h6>
+        ),
+        content: <h3>Are you sure?</h3>,
         type: "warning",
         onConfirm: () => handleSubmit(),
         onCancel: hideAlert,
@@ -121,6 +132,7 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: updateStatus,
+        source_module: "EOI",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -129,17 +141,26 @@ const Edit = () => {
         requestBody
       );
 
+      //       -10 = Can not update to new Status. Awaiting for Buyer to respond to your current status.
+      // -20 = Can not update to new Status. Awaiting for Seller to respond to your current status.
+      // -30 = You can not update to this Status at this stage.
+      // -40 = Can not continue. Approval is required to proceed further.
+      // > 0 = success
+      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const isSuccess = statusCode > 0;
       setLoader(false);
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-            Acknowledgement Status updated
+            {isSuccess
+              ? `Acknowledgement Status updated`
+              : getStatusMessage(statusCode)}
           </h6>
         ),
-        content: (
+        content: isSuccess ? (
           <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
-        ),
-        type: "success",
+        ) : null, // Only show content for success cases
+        type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -660,14 +681,14 @@ const Edit = () => {
                           name="eoi_status"
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
-                            isdisabled:
-                              (dataState.eoi_status === "EOI-SUBMITTED" ||
-                                dataState.eoi_status === "IN-NEGOTIATION" ||
-                                dataState.eoi_status === "PROCESSING") &&
-                              (option.value === "PAYMENT-SENT" ||
-                                option.value === "GOODS-RECEIVED"),
+                            // isdisabled:
+                            //   (dataState.eoi_status === "EOI-SUBMITTED" ||
+                            //     dataState.eoi_status === "IN-NEGOTIATION" ||
+                            //     dataState.eoi_status === "PROCESSING") &&
+                            //   (option.value === "PAYMENT-SENT" ||
+                            //     option.value === "GOODS-RECEIVED"),
                           }))}
-                          isOptionDisabled={(option) => option.isdisabled} // disable an option
+                          //isOptionDisabled={(option) => option.isdisabled} // disable an option
                           onChange={handleSelectChange}
                           placeholder="Select an option"
                         />
