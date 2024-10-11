@@ -194,7 +194,9 @@ const Edit = () => {
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-            {isSuccess ? `EOI status updated` : getStatusMessage(statusCode)}
+            {isSuccess
+              ? `EOI status updated`
+              : getStatusMessage(statusCode, "Buyer")}
           </h6>
         ),
         content: isSuccess ? (

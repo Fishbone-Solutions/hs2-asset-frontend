@@ -132,7 +132,7 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: updateStatus,
-        source_module: "EOI",
+        source_module: "MYEOI",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -154,7 +154,7 @@ const Edit = () => {
           <h6 className="success-sweet-title">
             {isSuccess
               ? `Acknowledgement Status updated`
-              : getStatusMessage(statusCode)}
+              : getStatusMessage(statusCode, "Seller")}
           </h6>
         ),
         content: isSuccess ? (
