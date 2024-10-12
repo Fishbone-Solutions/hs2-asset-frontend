@@ -20,8 +20,8 @@ serviceProvider.interceptors.request.use(
     // Retrieve the token from localStorage
     //const token = localStorage.getItem("authToken");
     const token = "x8F!@p01,*MH";
-    const user_id = localStorage.getItem("username");
-    console.log("username", user_id);
+    // const user_id = sessionStorage.getItem("username");
+    // console.log("username", user_id);
 
     // If the token exists, set it in the Authorization header
     if (token) {

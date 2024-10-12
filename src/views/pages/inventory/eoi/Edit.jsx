@@ -53,6 +53,8 @@ const Edit = () => {
   const navigate = useNavigate();
   const [refreshModal, setRefreshModal] = useState(0);
   const [refreshMainComponent, setRefreshMainComponent] = useState(0);
+  const [validationError, setValidationError] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null);
 
   const openModal = (modalId) => {
     console.log(dataState.negotiated_value, negotiatedValue);
@@ -138,32 +140,50 @@ const Edit = () => {
   }, [selectedApproval]);
 
   const handleSelectChange = (selectedOption) => {
-    setDataState((prevState) => ({
-      ...prevState,
-      eoi_status: selectedOption.value,
-    }));
+    setUpdateStatus(selectedOption.value);
   };
 
   const handleFormSubmission = async (event) => {
-    console.log("edit", event);
+    console.log("edit", event, updateStatus);
     event.preventDefault();
-    showAlert({
-      title: "Are you sure?",
-      confirmText: "Yes",
-      onConfirm: async () => {
-        await handleSubmit(); // No need to pass params, we'll use the ref
-      },
-      type: "warning",
-      onCancel: hideAlert,
-      showCancelButton: true,
-    });
+    if (updateStatus === null || updateStatus === "") {
+      showAlert({
+        title: "Please choose an EoI Status to update",
+        confirmText: "ok",
+        onConfirm: hideAlert,
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: false,
+      });
+    } else {
+      showAlert({
+        title: (
+          <h6 className="warning-alert">
+            <WarningIcon width="60px" height="60px" />
+            <span className="text-danger">
+              The status you are about to set will instantly become visible to
+              the Buyer, enabling the Buyer to react immediately
+            </span>
+          </h6>
+        ),
+        content: <h3>Are you sure?</h3>,
+        confirmText: "Yes",
+        onConfirm: async () => {
+          await handleSubmit(); // No need to pass params, we'll use the ref
+        },
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: true,
+      });
+    }
   };
 
   const handleSubmit = async () => {
     setLoader(true);
     try {
       const requestBody = {
-        eoi_status: dataState.eoi_status,
+        eoi_status: updateStatus,
+        source_module: "INVENTORY",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -171,14 +191,25 @@ const Edit = () => {
         eoiId,
         requestBody
       );
+      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const isSuccess = statusCode > 0;
       showAlert({
-        title: `EOI status updated`,
-        type: "success",
+        title: (
+          <h6 className="success-sweet-title">
+            {isSuccess
+              ? `EOI status updated`
+              : getStatusMessage(statusCode, "Buyer")}
+          </h6>
+        ),
+        content: isSuccess ? (
+          <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
+        ) : null, // Only show content for success cases
+        type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/eois/inventory/${inventoryId}`);
+          setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
       setLoader(false);
@@ -257,6 +288,13 @@ const Edit = () => {
       (approver) => approver.user_id === latestSelectedApprovalRef.current
     );
 
+    if (
+      latestSelectedApprovalRef.current !== null &&
+      latestSelectedApprovalRef.current !== ""
+    ) {
+      setValidationError(false);
+    }
+
     return (
       <div className="popup-sweet-alert">
         <Select
@@ -274,6 +312,10 @@ const Edit = () => {
           }}
           onChange={handleSelectChangeApproval}
         />
+        {/* Show validation error if no approver is selected */}
+        {validationError && (
+          <div className="text-danger mt-1">Please select an approver.</div>
+        )}
         {/* Dynamically show the selected approver's details */}
         <span className="d-flex flex-wrap justify-content-left text-black mt-2">
           {selectedApproverDetails ? (
@@ -318,13 +360,34 @@ const Edit = () => {
   };
 
   var options = [
-    { value: "EOI-SUBMITTED", label: "EOI Submitted" },
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
     { value: "PAYMENT-RECEIVED", label: "Payment Received" },
     { value: "GOODS-SENT", label: "Goods Sent" },
     { value: "NOT-PROCEEDING", label: "Not Proceeding" },
   ];
+
+  const handleNudge = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.sentNudgeRequest(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      setLoader(false);
+      showAlert({
+        title: "Nudge sent to Seller",
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          setRefreshMainComponent(refreshMainComponent + 1);
+        },
+      });
+    } catch (e) {}
+  };
 
   const handleUndoStatus = async () => {
     try {
@@ -485,26 +548,25 @@ const Edit = () => {
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== "Not Requested" &&
-                    dataState.approval_status !== "Requested" ? (
-                      <Col sm="6">
-                        <Label>
-                          {dataState.approval_status == "APPROVED"
-                            ? "CEMAR Ref No"
+
+                    <Col sm="6">
+                      <Label>
+                        {dataState.approval_status == "APPROVED"
+                          ? "CEMAR Ref No"
+                          : dataState.approval_status === "Not Requested" ||
+                              dataState.approval_status === "Requested"
+                            ? "CEMAR Ref No Or Rejection Reason"
                             : "Rejection Reason"}
-                        </Label>
-                        <FormGroup>
-                          <Input
-                            type="text"
-                            name="approval_ref_no" // Corrected name field
-                            value={dataState.approval_ref_no}
-                            readOnly
-                          />
-                        </FormGroup>
-                      </Col>
-                    ) : (
-                      ""
-                    )}
+                      </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="approval_ref_no" // Corrected name field
+                          value={dataState.approval_ref_no}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>
@@ -716,27 +778,58 @@ const Edit = () => {
                   >
                     {"EoI Status"}
                     <span className="float-right p-2">
-                      <Button
-                        type="button"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        title="Undo Current Status"
-                        onClick={() => {
-                          showAlert({
-                            title: `Are you sure you wish to Undo current EOI status ?`,
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmText: "Yes",
-                            onCancel: hideAlert,
-                            onConfirm: () => {
-                              handleUndoStatus();
-                            },
-                          });
+                      <div
+                        className="button-container"
+                        style={{
+                          display: "flex",
+                          gap: "2px",
+                          marginTop: "-33px",
                         }}
-                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <UndoIcon />
-                      </Button>
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Undo Current Status"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to Undo current EOI status?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleUndoStatus();
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <UndoIcon />
+                        </Button>
+
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Nudge Buyer for response"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to nudge the buyer?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleNudge(); // replace with appropriate nudge action
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <NudgeSvgIcon />
+                        </Button>
+                      </div>
                     </span>
                   </CardTitle>
                 </CardHeader>
@@ -750,20 +843,17 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
-                          // value={options.find(
-                          //   (option) => option.value === dataState.eoi_status
-                          // )}
                           onChange={handleSelectChange}
                           options={options.map((option) => ({
                             ...option,
-                            isdisabled:
-                              (dataState.approval_status !== "APPROVED" ||
-                                dataState.approval_status === "REJECTED") &&
-                              (option.value === "PAYMENT-RECEIVED" ||
-                                option.value === "GOODS-SENT" ||
-                                option.value === "PAYMENT-REQUESTED"),
+                            // isdisabled:
+                            //   (dataState.approval_status !== "APPROVED" ||
+                            //     dataState.approval_status === "REJECTED") &&
+                            //   (option.value === "PAYMENT-RECEIVED" ||
+                            //     option.value === "GOODS-SENT" ||
+                            //     option.value === "PAYMENT-REQUESTED"),
                           }))}
-                          isOptionDisabled={(option) => option.isdisabled} // disable an option
+                          //isOptionDisabled={(option) => option.isdisabled} // disable an option
                           placeholder="Select an option"
                         />
                       </FormGroup>
@@ -787,7 +877,7 @@ const Edit = () => {
               type="button"
               onClick={handleFormSubmission}
             >
-              SAVE
+              update
             </Button>
             <Button
               className="buttonClose"
@@ -813,12 +903,20 @@ const Edit = () => {
         onCloseCross={closeModal}
         onClose={closeModal}
         onSubmit={() => {
-          showAlert({
-            title: "Are you sure?",
-            type: "warning",
-            onConfirm: () => approvalRequest(),
-            onCancel: hideAlert,
-          });
+          if (
+            latestSelectedApprovalRef.current === null ||
+            latestSelectedApprovalRef.current === ""
+          ) {
+            setValidationError(true);
+          } else {
+            setValidationError(false);
+            showAlert({
+              title: "Are you sure?",
+              type: "warning",
+              onConfirm: () => approvalRequest(),
+              onCancel: hideAlert,
+            });
+          }
         }}
         closeButtonText="Cancel"
         submitButtonText="Send Request"

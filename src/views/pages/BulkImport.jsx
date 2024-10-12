@@ -18,7 +18,8 @@ import {
 import { GlobalContext } from "@/GlobalState";
 import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
-const BACKEND_ADDRESS = "https://api.lhs2-dev.fishbonesolutions.co.uk"
+const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
+
 
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -51,6 +52,7 @@ const BulkImport = () => {
         files.forEach((file) => {
           formData.append('file', file);
         });
+        formData.append('user_id', username);
 
         const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/parse`, formData, {
           headers: {
@@ -79,7 +81,7 @@ const BulkImport = () => {
     event,
     maxFiles = 1,
     allowedExtensions = [selectedOption],
-    maxSize = 2000000
+    maxSize = 9000000
   ) => {
     const files = event.files;
 
@@ -128,6 +130,7 @@ const BulkImport = () => {
       uploadedFiles.forEach((file) => {
         formData.append('file', file);
       });
+      formData.append('user_id', username);
 
       try {
         setLoader(true);
