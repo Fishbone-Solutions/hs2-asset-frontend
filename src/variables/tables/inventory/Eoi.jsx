@@ -73,11 +73,87 @@ const useColumns = (handleDelete) => {
       },
 
       {
-        Header: "Status",
-        accessor: "eoi_status",
+        Header: "Buyer Status",
+        accessor: "buyer_eoi_status",
         width: "0.5%",
         Cell: ({ row }) => {
-          const statusCode = row.original.eoi_status;
+          const statusCode = row.original.buyer_eoi_status;
+          const statusStyles = {
+            SOLD: { bgColor: "bg-danger", textColor: "text-white" },
+            LIVE: {
+              bgColor: "bg-success",
+              textColor: "text-white",
+              icon: "path/to/live-icon.png",
+            },
+            LISTING: { bgColor: "bg-info", textColor: "text-white" },
+            "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
+            "IN-NEGOTIATION": {
+              bgColor: "bg-info",
+              textColor: "text-white",
+            },
+            "APPROVAL-REQUEST": {
+              bgColor: "bg-purple",
+              textColor: "text-white",
+            },
+
+            "PAYMENT-SENT": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
+            "PAYMENT-RECEIVED": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
+            "PAYMENT-REQUESTED": {
+              bgColor: "bg-warning-dark",
+              textColor: "text-white",
+            },
+            PROCESSING: {
+              bgColor: "bg-processing",
+              textColor: "text-white",
+            },
+
+            "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
+            "GOODS-RECEIVED": {
+              bgColor: "bg-lime",
+              textColor: "text-white",
+            },
+            "UNAVAILABLE-SOLD": {
+              bgColor: "bg-danger",
+              textColor: "text-white",
+            },
+          };
+
+          const style = statusStyles[statusCode] || {
+            bgColor: "bg-secondary",
+            textColor: "text-white",
+          };
+
+          return (
+            <span
+              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+            >
+              {style.icon && (
+                <>
+                  <img
+                    src={style.icon}
+                    width="15px"
+                    alt="status icon"
+                    className="me-1 align-middle"
+                  />
+                </>
+              )}
+              {statusCode}
+            </span>
+          );
+        },
+      },
+      {
+        Header: "Seller Status",
+        accessor: "seller_eoi_status",
+        width: "0.5%",
+        Cell: ({ row }) => {
+          const statusCode = row.original.seller_eoi_status;
           const statusStyles = {
             SOLD: { bgColor: "bg-danger", textColor: "text-white" },
             LIVE: {
