@@ -156,3 +156,16 @@ export const getStatusMessage = (statusCode, type) => {
         : "Invalid status code";
   }
 };
+
+export const getUndoStatusMessage = (status, type = null) => {
+  switch (status) {
+    case -1:
+      return `Can not Undo Status. The Status was set by the ${type}`;
+    case -2:
+      return "Can not undo Status at this stage";
+    case 0:
+      return "No previous status available";
+    default:
+      return "Current Status reverted";
+  }
+};

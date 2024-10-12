@@ -112,10 +112,10 @@ function inventoryStatsAgainOrgainsation(headers = null, queryParams) {
   );
 }
 
-function inventoryUndoStatus(headers = null, inventoryId, eoiId) {
+function inventoryUndoStatus(headers = null, inventoryId, eoiId, params) {
   return Post(
     `${endpoints.inventoryUndoStatus(inventoryId, eoiId)}`,
-    headers,
+    params,
     headers
   );
 }
