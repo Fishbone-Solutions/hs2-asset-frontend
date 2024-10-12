@@ -209,6 +209,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
+          setUpdateStatus(null);
           setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
@@ -855,6 +856,11 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
+                          value={
+                            options.find(
+                              (option) => option.value === updateStatus
+                            ) || null
+                          }
                           onChange={handleSelectChange}
                           options={options.map((option) => ({
                             ...option,
