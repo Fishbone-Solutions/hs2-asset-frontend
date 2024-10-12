@@ -30,6 +30,13 @@ import { useAlert } from "components/Common/NotificationAlert";
 import UndoIcon from "components/svg/Undo";
 
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+<<<<<<< Updated upstream
+=======
+import { getStatusMessage } from "variables/common";
+import WarningIcon from "components/svg/Warning";
+import NudgeSvgIcon from "components/svg/Nudge";
+import { getUndoStatusMessage } from "variables/common";
+>>>>>>> Stashed changes
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -120,6 +127,11 @@ const Edit = () => {
         requestBody
       );
 
+<<<<<<< Updated upstream
+=======
+      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const isSuccess = statusCode > 0;
+>>>>>>> Stashed changes
       setLoader(false);
       showAlert({
         title: (
@@ -232,22 +244,22 @@ const Edit = () => {
 
   const handleUndoStatus = async () => {
     try {
+      const requestBody = {
+        source_module: "MYEOI",
+      };
       const res = await EndPointService.inventoryUndoStatus(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        requestBody
       );
+
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity;
+      const isSuccess = undoStatus > 0;
+
       showAlert({
-        title:
-          res.appRespData[0].eoi_undo_last_activity > 0
-            ? `Current Status reverted`
-            : res.appRespData[0].eoi_undo_last_activity === -1
-              ? "Can not Undo Status. The Status was set by the Seller"
-              : res.appRespData[0].eoi_undo_last_activity === -2
-                ? "Can not undo Status at this stage"
-                : "No previous status available",
-        type:
-          res.appRespData[0].eoi_undo_last_activity > 0 ? "success" : "error",
+        title: getUndoStatusMessage(undoStatus, "Seller"),
+        type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -258,17 +270,6 @@ const Edit = () => {
     } catch (e) {}
   };
 
-  const isMyEoiStatusEnabled = (approvalStatus, eoiStatus) => {
-    if (
-      (approvalStatus !== "APPROVED" || approvalStatus === "REJECTED") &&
-      eoiStatus !== "EOI-SUBMITTED" &&
-      eoiStatus !== "IN-NEGOTIATION" &&
-      eoiStatus !== "PROCESSING"
-    ) {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <>

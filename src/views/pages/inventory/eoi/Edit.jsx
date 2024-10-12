@@ -28,6 +28,13 @@ import { useNavigate } from "react-router-dom";
 import UndoIcon from "components/svg/Undo";
 import ModalComponent from "components/Common/ModalComponent";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+<<<<<<< Updated upstream
+=======
+import WarningIcon from "components/svg/Warning";
+import { getStatusMessage } from "variables/common";
+import NudgeSvgIcon from "components/svg/Nudge";
+import { getUndoStatusMessage } from "variables/common";
+>>>>>>> Stashed changes
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -324,27 +331,27 @@ const Edit = () => {
 
   const handleUndoStatus = async () => {
     try {
+      const requestBody = {
+        source_module: "INVENTORY",
+      };
       const res = await EndPointService.inventoryUndoStatus(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        requestBody
       );
+
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity;
+      const isSuccess = undoStatus > 0;
+
       showAlert({
-        title:
-          res.appRespData[0].eoi_undo_last_activity > 0
-            ? `Current Status reverted`
-            : res.appRespData[0].eoi_undo_last_activity === -1
-              ? "Can not Undo Status. The Status was set by the Buyer"
-              : res.appRespData[0].eoi_undo_last_activity === -2
-                ? "Can not undo Status at this stage"
-                : "No previous status available",
-        type:
-          res.appRespData[0].eoi_undo_last_activity > 0 ? "success" : "error",
+        title: getUndoStatusMessage(undoStatus, "Buyer"),
+        type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
-          setRefreshMainComponent(refreshMainComponent + 1);
           hideAlert();
+          setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
     } catch (e) {}
