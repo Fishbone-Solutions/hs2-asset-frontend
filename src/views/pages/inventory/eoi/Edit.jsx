@@ -28,13 +28,10 @@ import { useNavigate } from "react-router-dom";
 import UndoIcon from "components/svg/Undo";
 import ModalComponent from "components/Common/ModalComponent";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
-<<<<<<< Updated upstream
-=======
 import WarningIcon from "components/svg/Warning";
 import { getStatusMessage } from "variables/common";
 import NudgeSvgIcon from "components/svg/Nudge";
 import { getUndoStatusMessage } from "variables/common";
->>>>>>> Stashed changes
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});

@@ -137,8 +137,6 @@ export const DocumentType = [
   ".mobi", // Mobipocket eBook
   ".tex", // LaTeX Document
 ];
-<<<<<<< Updated upstream
-=======
 
 export const getStatusMessage = (statusCode, type) => {
   switch (statusCode) {
@@ -171,4 +169,3 @@ export const getUndoStatusMessage = (status, type = null) => {
       return "Current Status reverted";
   }
 };
->>>>>>> Stashed changes
