@@ -250,13 +250,25 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Current Status</Label>
+                      <Label>Current Buyer Status</Label>
                       <FormGroup>
                         <Input
                           className="bg-current-status"
                           type="text"
                           name="id"
-                          value={dataState.eoi_status}
+                          value={dataState.buyer_eoi_status}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Current Seller Status</Label>
+                      <FormGroup>
+                        <Input
+                          className="bg-current-status"
+                          type="text"
+                          name="id"
+                          value={dataState.seller_eoi_status}
                           readOnly
                         />
                       </FormGroup>
