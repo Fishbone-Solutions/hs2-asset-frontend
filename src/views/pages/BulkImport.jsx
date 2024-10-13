@@ -16,58 +16,92 @@ import {
   Button,
 } from "reactstrap";
 import { GlobalContext } from "@/GlobalState";
-import axios from "axios";
 import { FullPageLoader } from "components/Common/ComponentLoader";
-const BACKEND_ADDRESS = "https://api.hs2.fishbonesolutions.co.uk"
-
+import { EndPointService } from "@/services/methods";
 
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [DataResponse, setData] = useState();
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
-  const [selectedOption, setSelectedOption] = useState('.csv'); // Default value
-  const [fileUploaded, setFileUploaded] = useState(false); // New state to track if a file is uploaded
+  const [selectedOption, setSelectedOption] = useState(".csv"); // Default value
+  const [fileUploaded, setFileUploaded] = useState(false);
   const { username } = useContext(GlobalContext);
-  const [fileFormatVertification ,setFileFormatVerification ] = useState([]);
-  const [totalRecordsFound,setTotalRecordsFound] = useState([]);
-  const [totalRecordsParsed,settotalRecordsParsed] = useState([]);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [fileFormatVerification, setFileFormatVerification] = useState([]);
+  const [totalRecordsFound, setTotalRecordsFound] = useState([]);
+  const [totalRecordsParsed, setTotalRecordsParsed] = useState([]);
+  const [uploadedFile, setUploadedFile] = useState(null); // Single file
+
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    user_id: sessionStorage.getItem("username"),
+  };
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const onUploadDocs = async (event) => {
-    const files = Array.from(event.files);
-    setUploadedFiles(files); // Save files to state
+  const onFileUpload = (event, allowedExtensions = [selectedOption], maxSize = 9000000000) => {
+    const file = event.files[0];
 
-    const checkValidation = onFileUpload({ files }, 1, [selectedOption]);
+    if (!file) {
+      setToastType("error");
+      setToastMessage("No file selected.");
+      return false;
+    }
+
+    // Check file type
+    const fileExtension = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+    if (!allowedExtensions.includes(fileExtension)) {
+      setToastType("error");
+      setToastMessage(`Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`);
+      return false;
+    }
+
+    // Check file size
+    if (file.size > maxSize) {
+      setToastType("error");
+      setToastMessage(`File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`);
+      return false;
+    }
+
+    setUploadedFile(file); // Set the single uploaded file
+    return true;
+  };
+
+  const onUploadDocs = async (event) => {
+    const file = event.files[0];
+    setUploadedFile(file); // Save the file to state
+
+    const checkValidation = onFileUpload({ files: [file] }, [selectedOption]);
     if (checkValidation) {
       try {
         setLoader(true);
         const formData = new FormData();
-        files.forEach((file) => {
-          formData.append('file', file);
-        });
-        formData.append('user_id', username);
+        formData.append("file", file); // Only one file
+        formData.append("user_id", username);
+        setFileUploaded(true); // Ensure this is called on successful upload
 
-        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/parse`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // Call the parse function from the service
+        const response = await EndPointService.parse(headers, formData);
+
+        // Log the response for debugging purposes
+        console.log("Backend response:", response);
+        setData(response);
 
         setToastType("success");
-        setToastMessage(response.data.message || "File uploaded successfully!");
-        setFileUploaded(true);
-        setFileFormatVerification(response.data.file_format_verfication);
-        setTotalRecordsFound(response.data.total_records_found);
-        settotalRecordsParsed(response.data.total_records_found);
+        setToastMessage(response.message || "File uploaded successfully!");
+        setFileFormatVerification(response.file_format_verification);
+        setTotalRecordsFound(response.total_records_found);
+        setTotalRecordsParsed(response.total_records_parsed);
 
       } catch (error) {
+        // Log the error to understand the issue
+        console.error("Error caught during file upload:", error);
+
         setToastType("error");
         setToastMessage(error.response?.data?.message || "File upload failed.");
         setFileUploaded(false);
@@ -77,76 +111,29 @@ const BulkImport = () => {
     }
   };
 
-  const onFileUpload = (
-    event,
-    maxFiles = 1,
-    allowedExtensions = [selectedOption],
-    maxSize = 9000000
-  ) => {
-    const files = event.files;
-
-    if (!files || !Array.isArray(files) || files.length === 0) {
-      setToastType("error");
-      setToastMessage("No files selected.");
-      return false;
-    }
-
-    // Limit number of files
-    if (files.length > maxFiles) {
-      setToastType("error");
-      setToastMessage(`You can only upload a maximum of ${maxFiles} files.`);
-      return false;
-    }
-
-    for (let file of files) {
-      // Check file type
-      const fileExtension = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
-      if (!allowedExtensions.includes(fileExtension)) {
-        setToastType("error");
-        setToastMessage(`Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`);
-        return false;
-      }
-
-      // Check file size
-      if (file.size > maxSize) {
-        setToastType("error");
-        setToastMessage(`File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`);
-        return false;
-      }
-    }
-    return true;
-  };
-
   const handleIngest = async () => {
-    if (!uploadedFiles || uploadedFiles.length === 0) {
+    if (!uploadedFile) {
       setToastType("error");
-      setToastMessage("No files to ingest. Please upload a file first.");
+      setToastMessage("No file to ingest. Please upload a file first.");
       return;
     }
 
-    const checkValidation = onFileUpload({ files: uploadedFiles }, 1, [selectedOption]);
+    const checkValidation = onFileUpload({ files: [uploadedFile] }, [selectedOption]);
     if (checkValidation) {
       const formData = new FormData();
-      uploadedFiles.forEach((file) => {
-        formData.append('file', file);
-      });
-      formData.append('user_id', username);
+      formData.append("file", uploadedFile); // Single file
+      formData.append("user_id", username);
 
       try {
         setLoader(true);
-        const response = await axios.post(`${BACKEND_ADDRESS}/bulkimport/ingest`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // Call the ingest function from the service
+        const response = await EndPointService.ingest(headers, formData);
+        console.log(response);
         setToastType("success");
-        setToastMessage(response.data.message || "Bulk Import Successful");
-        setModalIsOpen("Bulk Import Successful")
+        setToastMessage(response.message || "Bulk Import Successful");
+        setModalIsOpen("Bulk Import Successful");
         setLoader(false);
         window.location.reload();
-
-
-        // Handle response as needed
       } catch (error) {
         setToastType("error");
         setToastMessage(error.response?.data?.message || "Bulk Import failed.");
@@ -236,10 +223,9 @@ const BulkImport = () => {
                   <Row>
                     <Col sm="12">
                       <FileUpload
-                        name="docs[]"
-                        multiple
+                        name="doc"
                         accept=".csv,.xlsx,.xls"
-                        maxFileSize={2000000}
+                        maxFileSize={9000000}
                         onSelect={onUploadDocs}
                         className="custom-file-upload"
                         customUpload
@@ -250,7 +236,6 @@ const BulkImport = () => {
                 </CardBody>
               </Card>
 
-              {/* Conditionally show Progress and Import Results sections */}
               {fileUploaded && (
                 <>
                   <Card>
@@ -297,18 +282,20 @@ const BulkImport = () => {
                     <CardBody>
                       <Row>
                         <Col sm="12">
-                          File Format Verification: {fileFormatVertification}
+                          File Format Verification: {fileFormatVerification}
                           <br />
                           Total Records Found: {totalRecordsFound}
                           <br />
-                          Total Records Successfully Parsed:  {totalRecordsParsed}
+                          Total Records Successfully Parsed: {totalRecordsParsed}
                           <br />
                         </Col>
                         <Col sm="12">
                           Click the button below if you wish to save these records in the database
                         </Col>
                         <Col sm="12">
-                          <Button color="primary"onClick={(event) => handleIngest(event)}>Save to Database</Button>
+                          <Button color="primary" onClick={handleIngest}>
+                            Save to Database
+                          </Button>
                         </Col>
                       </Row>
                     </CardBody>

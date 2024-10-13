@@ -34,6 +34,8 @@ export const endpoints = {
   getCityData: () => `locations/cities`,
   negotiatedValueUpdate: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/values`,
+  parse: () => `/bulkimport/parse`,
+  ingest: () => `/bulkimport/ingest`,
   sentNudgeRequest: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/nudge`,
 };
