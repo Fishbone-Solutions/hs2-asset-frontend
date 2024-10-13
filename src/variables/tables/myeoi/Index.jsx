@@ -42,7 +42,7 @@ const useColumns = (handleDelete) => {
         Header: "Buyer Status",
         isSortable: true,
         accessor: "buyer_eoi_status",
-        width: "0.3%",
+        width: "1.1%",
         Cell: ({ row }) => {
           const statusCode = row.original.buyer_eoi_status;
           const statusStyles = {
@@ -119,7 +119,7 @@ const useColumns = (handleDelete) => {
         Header: "Seller Status",
         isSortable: true,
         accessor: "seller_eoi_status",
-        width: "0.5%",
+        width: "1%",
         Cell: ({ row }) => {
           const statusCode = row.original.seller_eoi_status;
           const statusStyles = {
