@@ -112,10 +112,10 @@ function inventoryStatsAgainOrgainsation(headers = null, queryParams) {
   );
 }
 
-function inventoryUndoStatus(headers = null, inventoryId, eoiId) {
+function inventoryUndoStatus(headers = null, inventoryId, eoiId, params) {
   return Post(
     `${endpoints.inventoryUndoStatus(inventoryId, eoiId)}`,
-    headers,
+    params,
     headers
   );
 }
@@ -140,6 +140,13 @@ function ingest(headers = null, formData) {
   return PostWithMultiPart(`${endpoints.ingest()}`, formData, headers);
 }
 
+function sentNudgeRequest(headers = null, inventoryId, eoiId) {
+  return Post(
+    `${endpoints.sentNudgeRequest(inventoryId, eoiId)}`,
+    headers,
+    headers
+  );
+}
 
 export const EndPointService = {
   getInventory,
@@ -168,5 +175,6 @@ export const EndPointService = {
   getCityData,
   negotiatedValueUpdate,
   parse,
-  ingest
+  ingest,
+  sentNudgeRequest,
 };

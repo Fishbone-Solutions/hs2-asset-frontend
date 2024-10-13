@@ -137,3 +137,35 @@ export const DocumentType = [
   ".mobi", // Mobipocket eBook
   ".tex", // LaTeX Document
 ];
+
+export const getStatusMessage = (statusCode, type) => {
+  switch (statusCode) {
+    case -10:
+      return `Can not update to new Status. Awaiting for ${type} to respond to your current status`;
+    case -20:
+      return `Can not update to new Status. Awaiting for ${type} to respond to your current status`;
+    case -30:
+      return type === "Buyer"
+        ? "Can not stop proceeding at this stage"
+        : "Can not Withdraw EOI at this stage";
+    case -40:
+      return "Can not continue. Approval is required to proceed further";
+    default:
+      return statusCode > 0
+        ? "Acknowledgement Status updated"
+        : "Invalid status code";
+  }
+};
+
+export const getUndoStatusMessage = (status, type = null) => {
+  switch (status) {
+    case -1:
+      return `Can not Undo Status. The Status was set by the ${type}`;
+    case -2:
+      return "Can not undo Status at this stage";
+    case 0:
+      return "No previous status available";
+    default:
+      return "Current Status reverted";
+  }
+};

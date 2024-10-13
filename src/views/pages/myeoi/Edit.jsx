@@ -30,6 +30,10 @@ import { useAlert } from "components/Common/NotificationAlert";
 import UndoIcon from "components/svg/Undo";
 
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import { getStatusMessage } from "variables/common";
+import WarningIcon from "components/svg/Warning";
+import NudgeSvgIcon from "components/svg/Nudge";
+import { getUndoStatusMessage } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -108,7 +112,16 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: "Are you sure?",
+        title: (
+          <h6 className="warning-alert">
+            <WarningIcon width="60px" height="60px" />
+            <span className="text-danger">
+              The status you are about to set will instantly become visible to
+              the Buyer, enabling the Buyer to react immediately
+            </span>
+          </h6>
+        ),
+        content: <h3>Are you sure?</h3>,
         type: "warning",
         onConfirm: () => handleSubmit(),
         onCancel: hideAlert,
@@ -121,6 +134,7 @@ const Edit = () => {
     try {
       const requestBody = {
         eoi_status: updateStatus,
+        source_module: "MYEOI",
       };
       const res = await EndPointService.eoiUpdateStatus(
         headers,
@@ -129,21 +143,26 @@ const Edit = () => {
         requestBody
       );
 
+      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const isSuccess = statusCode > 0;
       setLoader(false);
       showAlert({
         title: (
           <h6 className="success-sweet-title">
-            Acknowledgement Status updated
+            {isSuccess
+              ? `Acknowledgement Status updated`
+              : getStatusMessage(statusCode, "Seller")}
           </h6>
         ),
-        content: (
+        content: isSuccess ? (
           <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
-        ),
-        type: "success",
+        ) : null, // Only show content for success cases
+        type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
+          setUpdateStatus(null);
           setRefreshMainComponent(refreshMainComponent + 1);
         },
       });
@@ -241,22 +260,22 @@ const Edit = () => {
 
   const handleUndoStatus = async () => {
     try {
+      const requestBody = {
+        source_module: "MYEOI",
+      };
       const res = await EndPointService.inventoryUndoStatus(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        requestBody
       );
+
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity_dev;
+      const isSuccess = undoStatus > 0;
+
       showAlert({
-        title:
-          res.appRespData[0].eoi_undo_last_activity > 0
-            ? `Current Status reverted`
-            : res.appRespData[0].eoi_undo_last_activity === -1
-              ? "Can not Undo Status. The Status was set by the Seller"
-              : res.appRespData[0].eoi_undo_last_activity === -2
-                ? "Can not undo Status at this stage"
-                : "No previous status available",
-        type:
-          res.appRespData[0].eoi_undo_last_activity > 0 ? "success" : "error",
+        title: getUndoStatusMessage(undoStatus, "Seller"),
+        type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
         onConfirm: () => {
@@ -267,6 +286,27 @@ const Edit = () => {
     } catch (e) {}
   };
 
+  const handleNudge = async () => {
+    setLoader(true);
+    try {
+      const res = await EndPointService.sentNudgeRequest(
+        headers,
+        inventoryId,
+        eoiId
+      );
+      setLoader(false);
+      showAlert({
+        title: "Nudge sent to Seller",
+        type: "success",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          setRefreshMainComponent(refreshMainComponent + 1);
+        },
+      });
+    } catch (e) {}
+  };
   return (
     <>
       <div className="content">
@@ -315,13 +355,26 @@ const Edit = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Current Status</Label>
+                      <Label>Current Buyer Status</Label>
                       <FormGroup>
                         <Input
                           className="bg-current-status"
                           type="text"
                           name="id"
-                          value={dataState.eoi_status}
+                          value={dataState.buyer_eoi_status}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col sm="6">
+                      <Label>Current Seller Status</Label>
+                      <FormGroup>
+                        <Input
+                          className="bg-current-status"
+                          type="text"
+                          name="id"
+                          value={dataState.seller_eoi_status}
                           readOnly
                         />
                       </FormGroup>
@@ -624,27 +677,58 @@ const Edit = () => {
                   >
                     Acknowledgement To Seller
                     <span className="float-right p-2">
-                      <Button
-                        type="button"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        title="Undo Current Status"
-                        onClick={() => {
-                          showAlert({
-                            title: `Are you sure you wish to Undo current EOI status ?`,
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmText: "Yes",
-                            onCancel: hideAlert,
-                            onConfirm: () => {
-                              handleUndoStatus();
-                            },
-                          });
+                      <div
+                        className="button-container"
+                        style={{
+                          display: "flex",
+                          gap: "2px",
+                          marginTop: "-33px",
                         }}
-                        className="undo-icon p-1 top-0 end-0 mr-3 position-absolute bg-transparent "
                       >
-                        <UndoIcon />
-                      </Button>
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Undo Current Status"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to Undo current EOI status?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleUndoStatus();
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <UndoIcon />
+                        </Button>
+
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Nudge Seller for response"
+                          onClick={() => {
+                            showAlert({
+                              title: `Are you sure you wish to nudge the seller?`,
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmText: "Yes",
+                              onCancel: hideAlert,
+                              onConfirm: () => {
+                                handleNudge(); // replace with appropriate nudge action
+                              },
+                            });
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <NudgeSvgIcon />
+                        </Button>
+                      </div>
                     </span>
                   </CardTitle>
                 </CardHeader>
@@ -658,16 +742,14 @@ const Edit = () => {
                           className="react-select primary"
                           classNamePrefix="react-select"
                           name="eoi_status"
+                          value={
+                            myEoIUpdateoptions.find(
+                              (option) => option.value === updateStatus
+                            ) || null
+                          }
                           options={myEoIUpdateoptions.map((option) => ({
                             ...option,
-                            isdisabled:
-                              (dataState.eoi_status === "EOI-SUBMITTED" ||
-                                dataState.eoi_status === "IN-NEGOTIATION" ||
-                                dataState.eoi_status === "PROCESSING") &&
-                              (option.value === "PAYMENT-SENT" ||
-                                option.value === "GOODS-RECEIVED"),
                           }))}
-                          isOptionDisabled={(option) => option.isdisabled} // disable an option
                           onChange={handleSelectChange}
                           placeholder="Select an option"
                         />

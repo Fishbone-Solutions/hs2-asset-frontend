@@ -250,13 +250,25 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Current Status</Label>
+                      <Label>Current Buyer Status</Label>
                       <FormGroup>
                         <Input
                           className="bg-current-status"
                           type="text"
                           name="id"
-                          value={dataState.eoi_status}
+                          value={dataState.buyer_eoi_status}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col sm="6">
+                      <Label>Current Seller Status</Label>
+                      <FormGroup>
+                        <Input
+                          className="bg-current-status"
+                          type="text"
+                          name="id"
+                          value={dataState.seller_eoi_status}
                           readOnly
                         />
                       </FormGroup>
@@ -370,26 +382,25 @@ const Show = () => {
                         />
                       </FormGroup>
                     </Col>
-                    {dataState.approval_status !== "Not Requested" &&
-                    dataState.approval_status !== "Requested" ? (
-                      <Col sm="6">
-                        <Label>
-                          {dataState.approval_status == "APPROVED"
-                            ? "CEMAR Ref No"
+
+                    <Col sm="6">
+                      <Label>
+                        {dataState.approval_status == "APPROVED"
+                          ? "CEMAR Ref No"
+                          : dataState.approval_status === "Not Requested" ||
+                              dataState.approval_status === "Requested"
+                            ? "CEMAR Ref No Or Rejection Reason"
                             : "Rejection Reason"}
-                        </Label>
-                        <FormGroup>
-                          <Input
-                            type="text"
-                            name="approval_ref_no" // Corrected name field
-                            value={dataState.approval_ref_no}
-                            readOnly
-                          />
-                        </FormGroup>
-                      </Col>
-                    ) : (
-                      ""
-                    )}
+                      </Label>
+                      <FormGroup>
+                        <Input
+                          type="text"
+                          name="approval_ref_no" // Corrected name field
+                          value={dataState.approval_ref_no}
+                          readOnly
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>
