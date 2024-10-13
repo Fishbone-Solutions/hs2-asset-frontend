@@ -256,6 +256,7 @@ const Edit = () => {
 
       const requestBody = {
         eoi_status: "PROCESSING",
+        source_module: "INVENTORY",
       };
       const respone = await EndPointService.eoiUpdateStatus(
         headers,
@@ -378,7 +379,7 @@ const Edit = () => {
       );
       setLoader(false);
       showAlert({
-        title: "Nudge sent to Seller",
+        title: "Nudge sent to Buyer",
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -402,7 +403,7 @@ const Edit = () => {
         requestBody
       );
 
-      const undoStatus = res.appRespData[0].eoi_undo_last_activity;
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity_dev;
       const isSuccess = undoStatus > 0;
 
       showAlert({

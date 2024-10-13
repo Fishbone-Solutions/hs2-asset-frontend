@@ -270,7 +270,7 @@ const Edit = () => {
         requestBody
       );
 
-      const undoStatus = res.appRespData[0].eoi_undo_last_activity;
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity_dev;
       const isSuccess = undoStatus > 0;
 
       showAlert({
