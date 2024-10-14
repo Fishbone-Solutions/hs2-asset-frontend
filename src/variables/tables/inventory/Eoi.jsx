@@ -233,7 +233,11 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <div className="position-relative">
-              <AlertIcon width="16" height="16" className="notify-icon" />
+              {row.original.viewed === false ? (
+                <AlertIcon width="16" height="16" className="notify-icon" />
+              ) : (
+                ""
+              )}
               <Link
                 to={`/admin/inventory/${row.original.asset_id}/eois/show/${row.original.id}`}
               >
