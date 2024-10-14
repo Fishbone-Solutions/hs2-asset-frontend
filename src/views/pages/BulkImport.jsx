@@ -44,6 +44,20 @@ const BulkImport = () => {
     setSelectedOption(event.target.value);
   };
 
+
+  const resetForm = () => {
+    setLoader(false);
+    setFileUploaded(false);
+    setData(null);
+    setToastType(null);
+    setFileFormatVerification([]);
+    setTotalRecordsFound([]);
+    setTotalRecordsParsed([]);
+    setUploadedFile(null); 
+    setSelectedOption(""); // Reset the file format option to default
+  };
+  
+
   const onFileUpload = (event, allowedExtensions = [selectedOption], maxSize = 9000000000) => {
     const file = event.files[0];
 
@@ -129,11 +143,12 @@ const BulkImport = () => {
         // Call the ingest function from the service
         const response = await EndPointService.ingest(headers, formData);
         console.log(response);
-        setToastType("success");
         setToastMessage(response.message || "Bulk Import Successful");
+        setToastType("success");
+
         setModalIsOpen("Bulk Import Successful");
-        setLoader(false);
-        window.location.reload();
+        resetForm();
+
       } catch (error) {
         setToastType("error");
         setToastMessage(error.response?.data?.message || "Bulk Import failed.");
