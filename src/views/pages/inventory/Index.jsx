@@ -421,6 +421,7 @@ const Index = () => {
     setFilterFormDate((prev) => ({
       ...prev,
       cursor_row_no: 0,
+      page_size: 10,
     }));
     handleClear();
   };
@@ -500,7 +501,7 @@ const Index = () => {
                     <div
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
-                      title="Create Inventory"
+                      title="Add New Item"
                     >
                       <IoAddCircleOutline
                         color="white"
@@ -531,6 +532,7 @@ const Index = () => {
                 </div>
 
                 <ReactTable
+                  key={refreshData}
                   data={dataState}
                   columns={TableColumn(handleDelete)}
                   isLoading={loader}
