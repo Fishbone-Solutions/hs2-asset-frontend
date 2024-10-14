@@ -517,6 +517,7 @@ const Index = () => {
                 </div>
 
                 <ReactTable
+                  key={refreshData}
                   data={dataState}
                   columns={TableColumn()}
                   isLoading={loader}

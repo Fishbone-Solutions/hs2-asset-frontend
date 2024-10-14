@@ -12203,6 +12203,8 @@ img {
 .login-page .card-login {
   border-radius: 6px;
   padding-bottom: 0.7rem;
+  background-color: #51cbce4d;
+  box-shadow: 0 6px 10px -4px #00000026;
 }
 .login-page .card-login .btn-wd {
   min-width: 180px;
