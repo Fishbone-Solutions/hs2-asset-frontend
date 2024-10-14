@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 import { IoListSharp } from "react-icons/io5";
 import LiveSvgComponent from "components/svg/LiveSvg";
 import { Link } from "react-router-dom";
+import AlertIcon from "components/svg/AlertIcon";
 
 const useColumns = (handleDelete) => {
   return useMemo(
@@ -83,6 +84,19 @@ const useColumns = (handleDelete) => {
         accessor: "total_eoi",
         width: "1%",
         isSortable: false,
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row.original.total_eoi}
+
+              {row.original.unviewed === true ? (
+                <AlertIcon width="20" height="20" />
+              ) : (
+                ""
+              )}
+            </span>
+          );
+        },
       },
       {
         Header: "Actions",
@@ -93,7 +107,7 @@ const useColumns = (handleDelete) => {
           <div className="action-buttons">
             <Link to={`/admin/inventory/show/${row.original.asset_id}`}>
               <Button
-              type="button"
+                type="button"
                 className="btn-icon btn-simple"
                 color="info"
                 size="sm"
@@ -107,7 +121,7 @@ const useColumns = (handleDelete) => {
 
             <Link to={`/admin/inventory/edit/${row.original.asset_id}`}>
               <Button
-              type="button"
+                type="button"
                 className="btn-icon btn-simple"
                 color="success"
                 size="sm"
@@ -120,7 +134,7 @@ const useColumns = (handleDelete) => {
             </Link>
             <Link to={`/admin/eois/inventory/${row.original.asset_id}`}>
               <Button
-              type="button"
+                type="button"
                 className="btn-icon btn-simple"
                 color="secondary"
                 size="sm"
@@ -132,7 +146,7 @@ const useColumns = (handleDelete) => {
               </Button>
             </Link>
             <Button
-            type="button"
+              type="button"
               className="btn-icon btn-simple"
               color="danger"
               size="sm"

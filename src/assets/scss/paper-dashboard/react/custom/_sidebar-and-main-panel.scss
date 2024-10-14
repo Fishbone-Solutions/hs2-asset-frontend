@@ -851,6 +851,15 @@ header.sweet-alert-header {
   border-radius: 50px;
 }
 
+.notify-icon {
+  position: absolute;
+  top: -3px;
+  right: 0px;
+  background: transparent;
+  z-index: 9;
+  border-radius: 50px;
+}
+
 .bg-purple {
   background-color: #9466b6;
 }
