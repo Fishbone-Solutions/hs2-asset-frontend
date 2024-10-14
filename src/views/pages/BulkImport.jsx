@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import DynamicToast from "components/Common/Toast";
 import { FileUpload } from "primereact/fileupload";
 import {
@@ -15,26 +15,23 @@ import {
   Label,
   Button,
 } from "reactstrap";
-import { GlobalContext } from "@/GlobalState";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { EndPointService } from "@/services/methods";
 
 const BulkImport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [DataResponse, setData] = useState();
+  const  username  = sessionStorage.getItem("username");
+
   const [loader, setLoader] = useState(false);
   const [toastType, setToastType] = useState(null);
   const [toastMessage, setToastMessage] = useState();
   const [selectedOption, setSelectedOption] = useState(".csv"); // Default value
   const [fileUploaded, setFileUploaded] = useState(false);
-  const { username } = useContext(GlobalContext);
   const [fileFormatVerification, setFileFormatVerification] = useState([]);
   const [totalRecordsFound, setTotalRecordsFound] = useState([]);
   const [totalRecordsParsed, setTotalRecordsParsed] = useState([]);
   const [uploadedFile, setUploadedFile] = useState(null); // Single file
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
   const headers = {
     'Content-Type': 'multipart/form-data',
     user_id: sessionStorage.getItem("username"),
