@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { RxCrossCircled } from "react-icons/rx";
+import AlertIcon from "components/svg/AlertIcon";
 
 const useColumns = (handleDelete) => {
   return useMemo(
@@ -231,17 +232,20 @@ const useColumns = (handleDelete) => {
         width: "0.3%",
         Cell: ({ row }) => (
           <div className="action-buttons">
-            <Link
-              to={`/admin/inventory/${row.original.asset_id}/eois/show/${row.original.id}`}
-            >
-              <Button
-                className="btn-icon btn-simple text-info"
-                color="info"
-                size="sm"
+            <div className="position-relative">
+              <AlertIcon width="16" height="16" className="notify-icon" />
+              <Link
+                to={`/admin/inventory/${row.original.asset_id}/eois/show/${row.original.id}`}
               >
-                <i className="fa fa-eye fs-6"></i>
-              </Button>
-            </Link>
+                <Button
+                  className="btn-icon btn-simple text-info"
+                  color="info"
+                  size="sm"
+                >
+                  <i className="fa fa-eye fs-6"></i>
+                </Button>
+              </Link>
+            </div>
             {row.original.eoi_status !== "WITHDRAWN" ? (
               <Link
                 to={`/admin/inventory/${row.original.asset_id}/eois/edit/${row.original.id}`}

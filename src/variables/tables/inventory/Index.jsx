@@ -89,7 +89,11 @@ const useColumns = (handleDelete) => {
             <span>
               {row.original.total_eoi}
 
-              {row.original.unviewed === true ? <AlertIcon /> : ""}
+              {row.original.unviewed === true ? (
+                <AlertIcon width="20" height="20" />
+              ) : (
+                ""
+              )}
             </span>
           );
         },

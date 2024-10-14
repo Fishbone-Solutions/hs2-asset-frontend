@@ -5,8 +5,8 @@ const AlertIcon = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width="20"
-    height="20"
+    width={props.width}
+    height={props.height}
     viewBox="0 0 256 256"
     style={{ enableBackground: "new 0 0 512 512" }}
     {...props}
