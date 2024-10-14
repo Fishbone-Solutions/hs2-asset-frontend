@@ -1061,3 +1061,19 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
   align-items: center;
   line-height: 1.5;
 }
+
+.progress-percentage {
+  position: absolute;
+  width: auto;
+  left: 50%;
+  top: 9px;
+  font-weight: bold;
+}
+
+.custom-parse-button {
+  position: absolute;
+  top: 3%;
+  left: 11%;
+  padding: 9.5px;
+  border-radius: 6px;
+}
