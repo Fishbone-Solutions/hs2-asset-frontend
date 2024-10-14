@@ -4,7 +4,8 @@ export const endpoints = {
   getInventoryById: (id) => `/assets/${id}`,
   updateInventory: (id) => `/assets/${id}`,
   deleteInventory: (id) => `/assets/${id}/-1`,
-  eoiOnbehaveInventory: (inventory_id) => `/assets/${inventory_id}/eoi/-1`,
+  eoiOnbehaveInventory: (inventory_id, query_params) =>
+    `/assets/${inventory_id}/eoi/-1?${query_params}`,
   createEoi: (inventory_id) => `/assets/${inventory_id}/eoi`,
   inventoryBaseEoiDetails: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}`,

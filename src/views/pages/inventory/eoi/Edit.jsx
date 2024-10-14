@@ -191,7 +191,7 @@ const Edit = () => {
         eoiId,
         requestBody
       );
-      const statusCode = res.appRespData[0].eoi_update_status_dev;
+      const statusCode = res.appRespData[0].eoi_update_status;
       const isSuccess = statusCode > 0;
       showAlert({
         title: (
@@ -403,7 +403,7 @@ const Edit = () => {
         requestBody
       );
 
-      const undoStatus = res.appRespData[0].eoi_undo_last_activity_dev;
+      const undoStatus = res.appRespData[0].eoi_undo_last_activity;
       const isSuccess = undoStatus > 0;
 
       showAlert({

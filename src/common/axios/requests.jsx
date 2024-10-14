@@ -5,14 +5,20 @@ export const Get = (path, headers) =>
 
 export const PostWithMultiPart = (
   path,
-  params, // Changed to FormData type
-  headers
+  params, // FormData object
+  headers,
+  onProgress // Optional callback for upload progress
 ) => {
-  // Ensure headers contain 'Content-Type': 'multipart/form-data'
   const config = {
     headers: {
       "Content-Type": "multipart/form-data",
       ...headers,
+    },
+    onUploadProgress: (data) => {
+      if (onProgress) {
+        // Update progress value to reflect the progress bar
+        onProgress(Math.round((100 * data.loaded) / data.total));
+      }
     },
   };
 

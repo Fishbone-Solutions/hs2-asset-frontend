@@ -28,8 +28,11 @@ function deleteInventoryById(id) {
   return Post(`${endpoints.deleteInventory(id)}`);
 }
 
-function eoiOnbehaveInventory(headers = null, inventory_id) {
-  return Get(`${endpoints.eoiOnbehaveInventory(inventory_id)}`, headers);
+function eoiOnbehaveInventory(headers = null, inventory_id, queryParams) {
+  return Get(
+    `${endpoints.eoiOnbehaveInventory(inventory_id, queryParams)}`,
+    headers
+  );
 }
 
 function inventoryBaseEoiDetails(headers = null, inventory_id, eoi_id) {
@@ -132,8 +135,13 @@ function negotiatedValueUpdate(headers = null, inventoryId, eoiId, params) {
   );
 }
 
-function parse(headers = null, formData) {
-  return PostWithMultiPart(`${endpoints.parse()}`, formData, headers);
+function parse(headers = null, formData, onProgress = null) {
+  return PostWithMultiPart(
+    `${endpoints.parse()}`,
+    formData,
+    headers,
+    onProgress
+  );
 }
 
 function ingest(headers = null, formData) {

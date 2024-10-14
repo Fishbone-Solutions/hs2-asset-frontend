@@ -40,8 +40,15 @@ const Index = () => {
       //inventory
       const res = await EndPointService.getInventoryById(headers, id);
       setInventoryData(res.appRespData[0]);
+      const params = new URLSearchParams({
+        source_module: "INVENTORY",
+      });
       //eois
-      const eoiData = await EndPointService.eoiOnbehaveInventory(headers, id);
+      const eoiData = await EndPointService.eoiOnbehaveInventory(
+        headers,
+        id,
+        params
+      );
       setDataState(eoiData.appRespData);
       setLoader(false);
     } catch (e) {
@@ -69,7 +76,9 @@ const Index = () => {
   const successDelete = async (assetId, eoiNo) => {
     try {
       setLoader(true);
-      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, { user_type: 'SELLER'});
+      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, {
+        user_type: "SELLER",
+      });
       showAlert({
         title: "Deleted!",
         content: `EoI ${eoiNo} has been deleted successfully`,
