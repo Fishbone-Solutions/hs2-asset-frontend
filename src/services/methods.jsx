@@ -35,9 +35,9 @@ function eoiOnbehaveInventory(headers = null, inventory_id, queryParams) {
   );
 }
 
-function inventoryBaseEoiDetails(headers = null, inventory_id, eoi_id) {
+function inventoryBaseEoiDetails(headers = null, inventory_id, eoi_id, params) {
   return Get(
-    `${endpoints.inventoryBaseEoiDetails(inventory_id, eoi_id)}`,
+    `${endpoints.inventoryBaseEoiDetails(inventory_id, eoi_id, params)}`,
     headers
   );
 }
