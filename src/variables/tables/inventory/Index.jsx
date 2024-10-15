@@ -86,15 +86,17 @@ const useColumns = (handleDelete) => {
         isSortable: false,
         Cell: ({ row }) => {
           return (
-            <span>
-              {row.original.total_eoi}
+            <div className="position-relative">
+              <span className="badge badge-warning font-weight-bold text-black fs-6">
+                {row.original.total_eoi}
+              </span>
 
               {row.original.unviewed === true ? (
-                <AlertIcon width="20" height="20" />
+                <AlertIcon className="notify-icon" width="20" height="20" />
               ) : (
                 ""
               )}
-            </span>
+            </div>
           );
         },
       },

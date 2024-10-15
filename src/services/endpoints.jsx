@@ -7,8 +7,8 @@ export const endpoints = {
   eoiOnbehaveInventory: (inventory_id, query_params) =>
     `/assets/${inventory_id}/eoi/-1?${query_params}`,
   createEoi: (inventory_id) => `/assets/${inventory_id}/eoi`,
-  inventoryBaseEoiDetails: (inventory_id, eoi_id) =>
-    `assets/${inventory_id}/eoi/${eoi_id}`,
+  inventoryBaseEoiDetails: (inventory_id, eoi_id, query_params) =>
+    `assets/${inventory_id}/eoi/${eoi_id}?${query_params}`,
   eoiActivityTrackingHistory: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/history`,
   eoiUpdateStatus: (inventory_id, eoi_id) =>

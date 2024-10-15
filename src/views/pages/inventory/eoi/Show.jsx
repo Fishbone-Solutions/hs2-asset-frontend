@@ -44,10 +44,15 @@ const Show = () => {
   const fetchData = async () => {
     try {
       setLoader(true);
+      const params = new URLSearchParams({
+        source_module: "INVENTORY",
+      });
+
       const res = await EndPointService.inventoryBaseEoiDetails(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        params
       );
       const resEoiActivities = await EndPointService.eoiActivityTrackingHistory(
         headers,
