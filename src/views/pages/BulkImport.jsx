@@ -75,6 +75,7 @@ const BulkImport = () => {
     setSelectedOption(null); // Reset the file format option to default
     resetUploadedStates();
     setParseFileDisabled(true);
+    setResponseStatus(null);
   };
 
   const onFileUpload = (
@@ -136,16 +137,12 @@ const BulkImport = () => {
       // Log the response for debugging purposes
       console.log("Backend response:", response);
       setResponseStatus(response.appRequestStatus);
-      setToastMessage(response.message || "File uploaded successfully!");
-      setFileFormatVerification(response.file_format_verificatio || []);
-      setTotalRecordsFound(response.total_records_found);
-      setTotalRecordsParsed(response.total_records_parsed || []);
+      //setFileFormatVerification(response.file_format_verificatio || []);
+      setTotalRecordsFound(response?.appRespData?.total_records_found || 0);
+      //setTotalRecordsParsed(response.total_records_parsed || []);
     } catch (error) {
       // Log the error to understand the issue
-      console.error("Error caught during file upload:", error);
-
-      setToastType("error");
-      setToastMessage(error.response?.data?.message || "File upload failed.");
+      console.log("Error caught during file upload:", error);
       setFileUploaded(false);
     } finally {
       setLoader(false);
@@ -203,6 +200,7 @@ const BulkImport = () => {
   const removeFile = () => {
     setParseFileDisabled(true);
     resetUploadedStates();
+    setResponseStatus(null);
   };
 
   useEffect(() => {
@@ -400,10 +398,12 @@ const BulkImport = () => {
                               <span className="text-success font-weight-bold">
                                 Success
                               </span>
-                            ) : (
+                            ) : responseStatus === "ERROR" ? (
                               <span className="text-danger font-weight-bold">
                                 Failed
                               </span>
+                            ) : (
+                              ""
                             )}
                             <br />
                             Description:{" "}
@@ -411,11 +411,13 @@ const BulkImport = () => {
                               <span className="text-success font-weight-bold">
                                 File parsed successfully
                               </span>
-                            ) : (
+                            ) : responseStatus === "ERROR" ? (
                               <span className="text-danger font-weight-bold">
                                 Failed to parse the file. Please verify the
                                 template and try again
                               </span>
+                            ) : (
+                              ""
                             )}
                             <br />
                             Total Records Found:{" "}
