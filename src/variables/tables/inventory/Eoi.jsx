@@ -131,8 +131,8 @@ const useColumns = (handleDelete) => {
           };
 
           return (
-            <>
-              <div
+            <span className="d-flex ">
+              <span
                 className={`badge position-relative ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
               >
                 {style.icon && (
@@ -146,7 +146,7 @@ const useColumns = (handleDelete) => {
                   </>
                 )}
                 {statusCode}
-              </div>
+              </span>
               {row.original.viewed === false ? (
                 <span
                   data-bs-toggle="tooltip"
@@ -162,14 +162,14 @@ const useColumns = (handleDelete) => {
               ) : (
                 ""
               )}
-            </>
+            </span>
           );
         },
       },
       {
         Header: "Seller Status",
         accessor: "seller_eoi_status",
-        width: "1%",
+        width: "2%",
         Cell: ({ row }) => {
           const statusCode = row.original.seller_eoi_status;
           const statusStyles = {

@@ -18,6 +18,8 @@ import {
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { EndPointService } from "@/services/methods";
 import { RiAttachment2 } from "react-icons/ri";
+import CsvIcon from "components/svg/CsvIcon";
+import XlsIcon from "components/svg/XlsIcon";
 
 const BulkImport = () => {
   const [progress, setProgress] = useState(0);
@@ -36,6 +38,10 @@ const BulkImport = () => {
   const [refreshUploadFile, setRefreshUploadFile] = useState(0);
   const [sourceFileFormat, setSourceFileFormat] = useState(false);
 
+  const [selectDisabled, setSelectDisabled] = useState(true);
+  const [parseFileDisabled, setParseFileDisabled] = useState(true);
+  const [responseStatus, setResponseStatus] = useState(null);
+
   const [segmentWidth, setSegmentWidth] = useState(0);
   const [remainingProgress, setRemaingProgress] = useState(0);
   const headers = {
@@ -45,6 +51,7 @@ const BulkImport = () => {
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
+    setSelectDisabled(false);
     resetUploadedStates();
   };
 
@@ -56,6 +63,8 @@ const BulkImport = () => {
     setTotalRecordsParsed([]);
     setUploadedFile(null);
     setFileUploaded(false);
+    setParseFileDisabled(true);
+    setProgress(0);
   };
 
   const resetForm = () => {
@@ -65,6 +74,7 @@ const BulkImport = () => {
     setFileFormatVerification([]);
     setSelectedOption(null); // Reset the file format option to default
     resetUploadedStates();
+    setParseFileDisabled(true);
   };
 
   const onFileUpload = (
@@ -106,52 +116,54 @@ const BulkImport = () => {
     return true;
   };
 
+  const parseFileData = async (e) => {
+    e.preventDefault();
+
+    try {
+      //setLoader(true);
+      const formData = new FormData();
+      formData.append("file", uploadedFile); // Only one file
+      formData.append("user_id", username);
+      setFileUploaded(true); // Ensure this is called on successful upload
+
+      // Call the parse function from the service
+      const response = await EndPointService.parse(
+        headers,
+        formData,
+        (progress) => setProgress(progress)
+      );
+
+      // Log the response for debugging purposes
+      console.log("Backend response:", response);
+      setResponseStatus(response.appRequestStatus);
+      setToastMessage(response.message || "File uploaded successfully!");
+      setFileFormatVerification(response.file_format_verificatio || []);
+      setTotalRecordsFound(response.total_records_found);
+      setTotalRecordsParsed(response.total_records_parsed || []);
+    } catch (error) {
+      // Log the error to understand the issue
+      console.error("Error caught during file upload:", error);
+
+      setToastType("error");
+      setToastMessage(error.response?.data?.message || "File upload failed.");
+      setFileUploaded(false);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   const onUploadDocs = async (event) => {
     if (selectedOption === null || selectedOption === "") {
       setSourceFileFormat(true);
+      setParseFileDisabled(true);
     } else {
       setSourceFileFormat(false);
       console.log("selected option", selectedOption);
       const file = event.files[0];
       setUploadedFile(file); // Save the file to state
-
       const checkValidation = onFileUpload({ files: [file] }, [selectedOption]);
       if (checkValidation) {
-        try {
-          //setLoader(true);
-          const formData = new FormData();
-          formData.append("file", file); // Only one file
-          formData.append("user_id", username);
-          setFileUploaded(true); // Ensure this is called on successful upload
-
-          // Call the parse function from the service
-          const response = await EndPointService.parse(
-            headers,
-            formData,
-            (progress) => setProgress(progress)
-          );
-
-          // Log the response for debugging purposes
-          console.log("Backend response:", response);
-          setData(response);
-
-          setToastType("success");
-          setToastMessage(response.message || "File uploaded successfully!");
-          setFileFormatVerification(response.file_format_verificatio || []);
-          setTotalRecordsFound(response.total_records_found);
-          setTotalRecordsParsed(response.total_records_parsed || []);
-        } catch (error) {
-          // Log the error to understand the issue
-          console.error("Error caught during file upload:", error);
-
-          setToastType("error");
-          setToastMessage(
-            error.response?.data?.message || "File upload failed."
-          );
-          setFileUploaded(false);
-        } finally {
-          setLoader(false);
-        }
+        setParseFileDisabled(false);
       }
     }
   };
@@ -186,6 +198,11 @@ const BulkImport = () => {
         setLoader(false);
       }
     }
+  };
+
+  const removeFile = () => {
+    setParseFileDisabled(true);
+    resetUploadedStates();
   };
 
   useEffect(() => {
@@ -224,7 +241,7 @@ const BulkImport = () => {
                   <Row>
                     <Col sm="6">
                       <div className="form-check-radio">
-                        <FormGroup>
+                        <FormGroup className="d-flex">
                           <Label check>
                             <Input
                               value=".csv"
@@ -233,7 +250,9 @@ const BulkImport = () => {
                               type="radio"
                               onChange={handleRadioChange}
                             />
-                            HS2 CSV <span className="form-check-sign" />
+                            <span className="form-check-sign">
+                              <CsvIcon width="40" height="40" />
+                            </span>
                           </Label>
                         </FormGroup>
                       </div>
@@ -249,7 +268,10 @@ const BulkImport = () => {
                               type="radio"
                               onChange={handleRadioChange}
                             />
-                            HS2 Excel <span className="form-check-sign" />
+                            <span className="form-check-sign">
+                              {" "}
+                              <XlsIcon width="40" height="40" />{" "}
+                            </span>
                           </Label>
                         </FormGroup>
                       </div>
@@ -289,12 +311,14 @@ const BulkImport = () => {
                         maxFileSize={9000000}
                         chooseLabel={<span>Select</span>}
                         onSelect={onUploadDocs}
+                        onRemove={removeFile}
                         className="custom-file-upload"
                         customUpload
+                        disabled={selectDisabled}
                       />
                       <button
-                        // onClick={parseFile}
-                        disabled={true}
+                        onClick={parseFileData}
+                        disabled={parseFileDisabled}
                         className="custom-parse-button btn btn-primary"
                       >
                         Parse File
@@ -354,7 +378,7 @@ const BulkImport = () => {
                   </Card>
 
                   {progress === 100 ? (
-                    <Card>
+                    <Card key={refreshUploadFile}>
                       <CardHeader>
                         <CardTitle
                           tag="h6"
@@ -371,12 +395,28 @@ const BulkImport = () => {
                       <CardBody>
                         <Row>
                           <Col sm="12">
-                            File Format Verification:{" "}
-                            <span className="text-success font-weight-bold">
-                              {Array.isArray(fileFormatVerification)
-                                ? fileFormatVerification.length
-                                : fileFormatVerification}
-                            </span>
+                            Parsing Status:{" "}
+                            {responseStatus === "SUCCESS" ? (
+                              <span className="text-success font-weight-bold">
+                                Success
+                              </span>
+                            ) : (
+                              <span className="text-danger font-weight-bold">
+                                Failed
+                              </span>
+                            )}
+                            <br />
+                            Description:{" "}
+                            {responseStatus === "SUCCESS" ? (
+                              <span className="text-success font-weight-bold">
+                                File parsed successfully
+                              </span>
+                            ) : (
+                              <span className="text-danger font-weight-bold">
+                                Failed to parse the file. Please verify the
+                                template and try again
+                              </span>
+                            )}
                             <br />
                             Total Records Found:{" "}
                             <span className="text-success font-weight-bold">
@@ -397,6 +437,9 @@ const BulkImport = () => {
                               className="btn btn-parimary "
                               color="primary"
                               onClick={handleIngest}
+                              disabled={
+                                responseStatus === "SUCCESS" ? false : true
+                              }
                             >
                               Import Records To Inventory
                             </Button>

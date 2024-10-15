@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { formatApprovalString } from "variables/common";
+import AlertBellIcon from "components/svg/AlertBellIcon";
 
 const getBadgeClass = (activity) => {
   switch (activity) {
@@ -24,6 +25,8 @@ const getBadgeClass = (activity) => {
       return "badge bg-lime"; // Light Green
     case "GOODS-RECEIVED":
       return "badge bg-lime"; // Bright Lime Green
+    case "AWAITING RESPONSE":
+      return "badge badge-danger";
     default:
       return "badge bg-secondary"; // Default grey badge for unrecognized statuses
   }
@@ -76,6 +79,11 @@ const ActivityTable = ({ activities }) => {
                       }} // Render HTML
                     />
                   </span>
+                  {activity.activity === "AWAITING RESPONSE" ? (
+                    <AlertBellIcon />
+                  ) : (
+                    ""
+                  )}
                 </td>
                 <td>{activity.activity_by}</td>
               </tr>
