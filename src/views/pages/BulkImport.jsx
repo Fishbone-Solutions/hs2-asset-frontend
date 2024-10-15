@@ -111,10 +111,10 @@ const BulkImport = () => {
 
       } catch (error) {
         // Log the error to understand the issue
-        console.error("Error caught during file upload:", error);
+        console.error("Error caught during file upload:", error.message);
 
         setToastType("error");
-        setToastMessage(error.response?.data?.message || "File upload failed.");
+        setToastMessage(error.response?.data?.message || error.message || "File upload failed.")
         setFileUploaded(false);
       } finally {
         setLoader(false);
