@@ -206,7 +206,6 @@ const BulkImport = () => {
   useEffect(() => {
     setSegmentWidth(Math.min(progress, 33)); // Limit each segment to 33%
     setRemaingProgress(progress > 66 ? progress - 66 : 0); // Calculate remaining progress for the last segment
-    console.log("segmentwidth", segmentWidth);
   }, [progress]);
 
   return (
@@ -427,9 +426,7 @@ const BulkImport = () => {
                             <br />
                             Total Records Successfully Parsed:{" "}
                             <span className="text-success font-weight-bold">
-                              {Array.isArray(totalRecordsParsed)
-                                ? totalRecordsParsed.length
-                                : totalRecordsParsed}
+                              {totalRecordsFound}
                             </span>
                             <br />
                           </Col>
