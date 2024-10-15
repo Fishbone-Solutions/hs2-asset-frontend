@@ -131,21 +131,38 @@ const useColumns = (handleDelete) => {
           };
 
           return (
-            <span
-              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
-            >
-              {style.icon && (
-                <>
-                  <img
-                    src={style.icon}
-                    width="15px"
-                    alt="status icon"
-                    className="me-1 align-middle"
+            <>
+              <div
+                className={`badge position-relative ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+              >
+                {style.icon && (
+                  <>
+                    <img
+                      src={style.icon}
+                      width="15px"
+                      alt="status icon"
+                      className="me-1 align-middle"
+                    />
+                  </>
+                )}
+                {statusCode}
+              </div>
+              {row.original.viewed === false ? (
+                <span
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Not Viewed"
+                >
+                  <AlertIcon
+                    width="17"
+                    height="17"
+                    className="cursor-pointer"
                   />
-                </>
+                </span>
+              ) : (
+                ""
               )}
-              {statusCode}
-            </span>
+            </>
           );
         },
       },
@@ -233,11 +250,6 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => (
           <div className="action-buttons">
             <div className="position-relative">
-              {row.original.viewed === false ? (
-                <AlertIcon width="16" height="16" className="notify-icon" />
-              ) : (
-                ""
-              )}
               <Link
                 to={`/admin/inventory/${row.original.asset_id}/eois/show/${row.original.id}`}
               >
@@ -245,6 +257,9 @@ const useColumns = (handleDelete) => {
                   className="btn-icon btn-simple text-info"
                   color="info"
                   size="sm"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="View EOI"
                 >
                   <i className="fa fa-eye fs-6"></i>
                 </Button>
@@ -258,6 +273,9 @@ const useColumns = (handleDelete) => {
                   className="btn-icon btn-simple text-success"
                   color="success"
                   size="sm"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Edit EOI"
                 >
                   <i className="fa fa-edit fs-6"></i>
                 </Button>
@@ -283,6 +301,9 @@ const useColumns = (handleDelete) => {
               className="btn-icon btn-simple text-danger"
               size="sm"
               color="danger"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Delete EOI"
               onClick={() =>
                 handleDelete(row.original.asset_id, row.original.id)
               }

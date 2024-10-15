@@ -82,7 +82,7 @@ const useColumns = (handleDelete) => {
       {
         Header: "EOI",
         accessor: "total_eoi",
-        width: "1%",
+        width: "2%",
         isSortable: false,
         Cell: ({ row }) => {
           return (
