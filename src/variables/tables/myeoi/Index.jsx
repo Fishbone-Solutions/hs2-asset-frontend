@@ -31,7 +31,7 @@ const useColumns = (handleDelete) => {
         Header: "Item Name",
         isSortable: true,
         accessor: "asset_name",
-        width: "8%",
+        width: "6%",
       },
       {
         Header: "Seller",
@@ -40,9 +40,9 @@ const useColumns = (handleDelete) => {
       },
       {
         Header: "Buyer Status",
-        isSortable: true,
+        isSortable: false,
         accessor: "buyer_eoi_status",
-        width: "1.1%",
+        width: "2%",
         Cell: ({ row }) => {
           const statusCode = row.original.buyer_eoi_status;
           const statusStyles = {
@@ -117,9 +117,9 @@ const useColumns = (handleDelete) => {
       },
       {
         Header: "Seller Status",
-        isSortable: true,
+        isSortable: false,
         accessor: "seller_eoi_status",
-        width: "1%",
+        width: "2%",
         Cell: ({ row }) => {
           const statusCode = row.original.seller_eoi_status;
           const statusStyles = {

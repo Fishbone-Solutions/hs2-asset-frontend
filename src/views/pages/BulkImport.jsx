@@ -20,6 +20,7 @@ import { EndPointService } from "@/services/methods";
 import { RiAttachment2 } from "react-icons/ri";
 import CsvIcon from "components/svg/CsvIcon";
 import XlsIcon from "components/svg/XlsIcon";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const BulkImport = () => {
   const [progress, setProgress] = useState(0);
@@ -48,6 +49,7 @@ const BulkImport = () => {
     "Content-Type": "multipart/form-data",
     user_id: username,
   };
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
@@ -86,8 +88,13 @@ const BulkImport = () => {
     const file = event.files[0];
 
     if (!file) {
-      setToastType("error");
-      setToastMessage("No file selected.");
+      showAlert({
+        title: "No file selected.",
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
       return false;
     }
 
@@ -96,20 +103,26 @@ const BulkImport = () => {
       .substring(file.name.lastIndexOf("."))
       .toLowerCase();
     if (!allowedExtensions.includes(fileExtension)) {
-      setToastType("error");
-      setToastMessage(
-        `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`
-      );
+      showAlert({
+        title: `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`,
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
       setSourceFileFormat(true);
       return false;
     }
 
     // Check file size
     if (file.size > maxSize) {
-      setToastType("error");
-      setToastMessage(
-        `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`
-      );
+      showAlert({
+        title: `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`,
+        type: "warning",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
       return false;
     }
 
@@ -137,9 +150,7 @@ const BulkImport = () => {
       // Log the response for debugging purposes
       console.log("Backend response:", response);
       setResponseStatus(response.appRequestStatus);
-      //setFileFormatVerification(response.file_format_verificatio || []);
       setTotalRecordsFound(response?.appRespData?.total_records_found || 0);
-      //setTotalRecordsParsed(response.total_records_parsed || []);
     } catch (error) {
       // Log the error to understand the issue
       console.log("Error caught during file upload:", error);
@@ -167,8 +178,13 @@ const BulkImport = () => {
 
   const handleIngest = async () => {
     if (!uploadedFile) {
-      setToastType("error");
-      setToastMessage("No file to ingest. Please upload a file first.");
+      showAlert({
+        title: "No file to ingest. Please upload a file first.",
+        type: "warning",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
       return;
     }
 
@@ -185,12 +201,30 @@ const BulkImport = () => {
         // Call the ingest function from the service
         const response = await EndPointService.ingest(headers, formData);
         console.log(response);
-        setToastMessage(response.message || "Bulk Import Successful");
-        setToastType("success");
+        // setToastMessage(response.message || "Bulk Import Successful");
+        // setToastType("success");
+        showAlert({
+          title: (
+            <h6 className="success-sweet-title">Bulk Import Successful</h6>
+          ),
+          content: "",
+          // content: (
+          //   <h6 className="success-sweet-content-color">
+          //     Item ID = {res.appRespData.asset_id}
+          //   </h6>
+          // ),
+          type: "success",
+          showCancelButton: false,
+          confirmText: "Ok",
+          onConfirm: () => {
+            hideAlert();
+          },
+        });
         resetForm();
       } catch (error) {
-        setToastType("error");
-        setToastMessage(error.response?.data?.message || "Bulk Import failed.");
+        console.log(error);
+        // setToastType("error");
+        // setToastMessage(error.response?.data?.message || "Bulk Import failed.");
       } finally {
         setLoader(false);
       }
@@ -217,6 +251,7 @@ const BulkImport = () => {
           message={toastMessage}
         />
         {loader ? <FullPageLoader /> : ""}
+        {alert}
         <Form>
           <Row>
             <Col md="12">
@@ -273,13 +308,6 @@ const BulkImport = () => {
                         </FormGroup>
                       </div>
                     </Col>
-                    {sourceFileFormat ? (
-                      <span className="text-danger">
-                        Please select a source file format
-                      </span>
-                    ) : (
-                      ""
-                    )}
                   </Row>
                 </CardBody>
               </Card>
@@ -435,7 +463,14 @@ const BulkImport = () => {
                             <Button
                               className="btn btn-parimary "
                               color="primary"
-                              onClick={handleIngest}
+                              onClick={() =>
+                                showAlert({
+                                  title: `Are you sure you wish to Import ${totalRecordsFound} records to Inventory ?`,
+                                  type: "warning",
+                                  onConfirm: () => handleIngest(),
+                                  onCancel: hideAlert,
+                                })
+                              }
                               disabled={
                                 responseStatus === "SUCCESS" ? false : true
                               }

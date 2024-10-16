@@ -43,6 +43,7 @@ import {
   initialInventoryValues,
   inventorySchema,
 } from "variables/Validations/InventorySchema";
+import { ImageType } from "variables/common";
 
 const Edit = () => {
   const { id } = useParams();
@@ -174,9 +175,14 @@ const Edit = () => {
   }, []);
 
   const onUploadImages = (event) => {
+    console.log("repeat", event);
+    const maxFiles = 5;
+    onFileUpload(event, maxFiles, ImageType);
     const files = Array.from(event.files);
-    setFiles(files);
-    console.log("images", event.files, files);
+    // Take only up to the limit
+    const limitedFiles = files.slice(0, maxFiles);
+    //const files = Array.from(event.files);
+    setFiles(limitedFiles);
   };
   const onUploadDocs = (event) => {
     const checkValidation = onFileUpload(event, 3, DocumentType);
@@ -206,8 +212,13 @@ const Edit = () => {
 
     // Limit number of files
     if (files.length > maxFiles) {
-      setToastType("error");
-      setToastMessage(`You can only upload a maximum of ${maxFiles} files.`);
+      showAlert({
+        title: "No file selected.",
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
       return;
     }
 
@@ -217,10 +228,13 @@ const Edit = () => {
         .substring(file.name.lastIndexOf("."))
         .toLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
-        setToastType("error");
-        setToastMessage(
-          `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`
-        );
+        showAlert({
+          title: `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`,
+          type: "error",
+          onConfirm: () => hideAlert(),
+          confirmText: "Ok",
+          showCancelButton: false,
+        });
         return;
       }
 
@@ -275,6 +289,25 @@ const Edit = () => {
     }
   };
 
+  const [formSubmission, setFormSubmission] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
+
+  useEffect(() => {
+    console.log(errorCount, formSubmission);
+
+    if (errorCount > 0 && formSubmission) {
+      showAlert({
+        title: "Please fill all mandatory fields",
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
+
+      setFormSubmission(false);
+    }
+  }, [formSubmission, errorCount]); // Run whenever errors change
+
   return (
     <>
       <div className="content">
@@ -291,650 +324,710 @@ const Edit = () => {
           onSubmit={handleFormSubmission}
           enableReinitialize={true}
         >
-          {({ values, setFieldValue, isValid }) => (
-            <Form>
-              <Row>
-                {/* Asset Seller Detail*/}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize",
-                        }}
-                      >
-                        Seller Information
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Seller Title</Label>
-                          <FormGroup>
-                            <Field type="text" name="seller_title" as={Input} />
-                            <ErrorMessage
-                              name="seller_title"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
+          {({ errors, values, setFieldValue }) => {
+            useEffect(() => {
+              setErrorCount(Object.keys(errors).length);
+            }, [errors]); // Run whenever errors change
 
-                        <Col sm="6">
-                          <Label className="required">Contact No </Label>
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              name="seller_contactno"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="seller_contactno"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Email Address </Label>
-                          <FormGroup>
-                            <Field
-                              type="email"
-                              name="seller_email"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="seller_email"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-
-                        <Col sm="6">
-                          <Label className="required">Location </Label>
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              name="seller_location"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="seller_location"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-                {/* Category Detail*/}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize",
-                        }}
-                      >
-                        Category
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Category</Label>
-                          <FormGroup>
-                            <Select
-                              name="categorycode1"
-                              options={categorycode1}
-                              value={categorycode1.find(
-                                (option) =>
-                                  option.value === values.categorycode1
-                              )}
-                              onChange={(selectedOption) =>
-                                setFieldValue(
-                                  "categorycode1",
-                                  selectedOption.value
-                                )
-                              }
-                            />
-                            <ErrorMessage
-                              name="categorycode1"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-
-                        <Col sm="6">
-                          <Label className="required">Sub Category</Label>
-                          <FormGroup>
-                            <Select
-                              name="categorycode2"
-                              options={subCategory}
-                              value={subCategory.find(
-                                (option) =>
-                                  option.value === values.categorycode2
-                              )}
-                              onChange={(selectedOption) =>
-                                setFieldValue(
-                                  "categorycode2",
-                                  selectedOption.value
-                                )
-                              }
-                            />
-                            <ErrorMessage
-                              name="categorycode2"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-                {/* Item Information*/}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize", // for Safari
-                        }}
-                      >
-                        Item Information
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col sm="6">
-                          <Label>ID</Label>
-                          <FormGroup>
-                            <Field type="text" name="id" as={Input} disabled />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label>Reference Code</Label>
-                          <FormGroup>
-                            <Field type="text" name="code" as={Input} />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label className="required">Name </Label>
-                          <FormGroup>
-                            <Field type="text" name="asset_name" as={Input} />
-                            <ErrorMessage
-                              name="asset_name"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label className="required">Description</Label>
-                          <FormGroup>
-                            <Field type="text" name="description" as={Input} />
-                            <ErrorMessage
-                              name="description"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Condition </Label>
-                          <FormGroup>
-                            <Select
-                              name="asset_condition"
-                              options={conditionOptions}
-                              value={conditionOptions.find(
-                                (option) =>
-                                  option.value === values.asset_condition
-                              )}
-                              onChange={(selectedOption) =>
-                                setFieldValue(
-                                  "asset_condition",
-                                  selectedOption.value
-                                )
-                              }
-                            />
-                            <ErrorMessage
-                              name="asset_condition"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label>Maintenance Requirements </Label>
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              name="maintenance_requirements"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="maintenance_requirements"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Quantity </Label>
-                          <FormGroup>
-                            <Field type="text" name="quantity" as={Input} />
-                            <ErrorMessage
-                              name="quantity"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          {/* Single Label for the Entire Section */}
-                          <Label className="required">Location</Label>
-
-                          <Row>
-                            {/* City Field */}
-                            <Col sm="4 pr-0">
-                              <FormGroup>
-                                <Select
-                                  name="statuscode"
-                                  options={cities.map((city) => ({
-                                    value: city.code,
-                                    label: city.name,
-                                  }))}
-                                  value={
-                                    cities.find(
-                                      (city) =>
-                                        city.code === values.asset_location_city
-                                    )
-                                      ? {
-                                          value: values.asset_location_city,
-                                          label: cities.find(
-                                            (city) =>
-                                              city.code ===
-                                              values.asset_location_city
-                                          ).name,
-                                        }
-                                      : null
-                                  }
-                                  onChange={(selectedOption) =>
-                                    setFieldValue(
-                                      "asset_location_city",
-                                      selectedOption.value
-                                    )
-                                  }
-                                />
-                                <ErrorMessage
-                                  name="asset_location_city"
-                                  component="div"
-                                  className="text-danger"
-                                />
-                              </FormGroup>
-                            </Col>
-
-                            {/* Area Field */}
-                            <Col sm="8">
-                              <FormGroup>
-                                <Field
-                                  type="text"
-                                  placeholder="Area"
-                                  name="asset_location"
-                                  as={Input}
-                                  className="form-control"
-                                />
-                                <ErrorMessage
-                                  name="asset_location"
-                                  component="div"
-                                  className="text-danger"
-                                />
-                              </FormGroup>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <Label className="required">Estimated Value </Label>
-                          <FormGroup>
-                            <InputGroup>
-                              <InputGroupText>£</InputGroupText>
-                              <Field
-                                type="number"
-                                name="value"
-                                as={Input}
-                                min="0" // Ensures no negative values
-                                step="0.01" // Allows decimal/floating-point values
-                              />
-                            </InputGroup>
-                            <ErrorMessage
-                              name="value"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <FormGroup>
-                            <DateRangePicker
-                              label="Forecasted Availability"
-                              requireLabel={true}
-                              name="available_from"
-                              labelType="NonFloating"
-                              selectedDate={values.available_from}
-                              onChange={(date) =>
-                                setFieldValue("available_from", date)
-                              }
-                              mode="single"
-                            />
-                            <ErrorMessage
-                              name="available_from"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <FormGroup>
-                            <DateRangePicker
-                              label="Purchase Date "
-                              name="date_of_purchase"
-                              labelType="NonFloating"
-                              selectedDate={values.date_of_purchase}
-                              onChange={(date) =>
-                                setFieldValue("date_of_purchase", date)
-                              }
-                              mode="single"
-                            />
-                            <ErrorMessage
-                              name="date_of_purchase"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label>Purchase Value </Label>
-                          <FormGroup>
-                            <InputGroup>
-                              <InputGroupText>£</InputGroupText>
-                              <Field
-                                type="number"
-                                name="purchase_price"
-                                as={Input}
-                                min="0" // Ensures no negative values
-                                step="0.01" // Allows decimal/floating-point values
-                              />
-                            </InputGroup>
-                            <ErrorMessage
-                              name="purchase_price"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <Label>Contract No </Label>
-                          <FormGroup>
-                            <Field type="text" name="contract_no" as={Input} />
-                            <ErrorMessage
-                              name="contract_no"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <Label>Residual Forecast Value </Label>
-                          <FormGroup>
-                            <InputGroup>
-                              <InputGroupText>£</InputGroupText>
-                              <Field
-                                type="number"
-                                name="residual_forecast_value"
-                                as={Input}
-                              />
-                            </InputGroup>
-                            <ErrorMessage
-                              name="residual_forecast_value"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <Label>Sold Value </Label>
-                          <FormGroup>
-                            <InputGroup>
-                              <InputGroupText>£</InputGroupText>
+            return (
+              <Form>
+                <Row>
+                  {/* Asset Seller Detail*/}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize",
+                          }}
+                        >
+                          Seller Information
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Seller Title</Label>
+                            <FormGroup>
                               <Field
                                 type="text"
-                                name="sold_value"
-                                value={
-                                  values.sold_value === "null"
-                                    ? ""
-                                    : values.sold_value
-                                }
-                                disabled={values.statuscode !== "Sold"}
+                                name="seller_title"
+                                maxLength={40}
                                 as={Input}
                               />
-                            </InputGroup>
-                            <ErrorMessage
-                              name="sold_value"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Label sm="8">Other Details</Label>
-                        <Col md="12">
-                          <FormGroup>
-                            <Field
-                              type="textarea"
-                              name="additional_info"
-                              as={Input}
-                            />
-                            <ErrorMessage
-                              name="additional_info"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-                {/* Upload Images*/}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize", // for Safari
-                        }}
-                      >
-                        Images{" "}
-                        <span className="upload-image-notification text-danger">
-                          (Max 5, Upto 2MB each)
-                        </span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <AttachmentList
-                        attachments={attachments}
-                        attachmentType="images"
-                        showDeleteIcon="true"
-                        onDelete={handleDeleteAttachment}
-                      />
+                              <ErrorMessage
+                                name="seller_title"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
 
-                      <FileUpload
-                        name="files[]"
-                        multiple
-                        accept="image/*"
-                        chooseLabel={
-                          <span>
-                            <RiAttachment2 className="me-1" />{" "}
-                            {/* Add the icon */}
-                            Attach
-                          </span>
-                        }
-                        onSelect={onUploadImages}
-                        onRemove={deleteImage}
-                        maxFileSize={2000000}
-                        className="custom-file-upload"
-                      />
-                    </CardBody>
-                  </Card>
-                </Col>
-                {/* Upload Documents*/}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize", // for Safari
-                        }}
-                      >
-                        Documents{" "}
-                        <span className="upload-image-notification text-danger">
-                          (Max 3, Upto 2MB each)
-                        </span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <AttachmentList
-                        attachments={attachments}
-                        attachmentType="docs"
-                        showDeleteIcon="true"
-                        onDelete={handleDeleteAttachment}
-                      />
+                          <Col sm="6">
+                            <Label className="required">Contact No </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                maxLength={15}
+                                name="seller_contactno"
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="seller_contactno"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Email Address </Label>
+                            <FormGroup>
+                              <Field
+                                type="email"
+                                name="seller_email"
+                                maxLength={40}
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="seller_email"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
 
-                      <FileUpload
-                        name="docs[]"
-                        multiple
-                        accept=".pdf, .doc, .docx, .odt, .txt"
-                        maxFileSize={2000000}
-                        chooseLabel={
-                          <span>
-                            <RiAttachment2 className="me-1" />{" "}
-                            {/* Add the icon */}
-                            Attach
+                          <Col sm="6">
+                            <Label className="required">Location </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                name="seller_location"
+                                maxLength={50}
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="seller_location"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  {/* Category Detail*/}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize",
+                          }}
+                        >
+                          Category
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Category</Label>
+                            <FormGroup>
+                              <Select
+                                name="categorycode1"
+                                options={categorycode1}
+                                value={categorycode1.find(
+                                  (option) =>
+                                    option.value === values.categorycode1
+                                )}
+                                onChange={(selectedOption) =>
+                                  setFieldValue(
+                                    "categorycode1",
+                                    selectedOption.value
+                                  )
+                                }
+                              />
+                              <ErrorMessage
+                                name="categorycode1"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <Label className="required">Sub Category</Label>
+                            <FormGroup>
+                              <Select
+                                name="categorycode2"
+                                options={subCategory}
+                                value={subCategory.find(
+                                  (option) =>
+                                    option.value === values.categorycode2
+                                )}
+                                onChange={(selectedOption) =>
+                                  setFieldValue(
+                                    "categorycode2",
+                                    selectedOption.value
+                                  )
+                                }
+                              />
+                              <ErrorMessage
+                                name="categorycode2"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  {/* Item Information*/}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize", // for Safari
+                          }}
+                        >
+                          Item Information
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <Row>
+                          <Col sm="6">
+                            <Label>ID</Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                name="id"
+                                as={Input}
+                                disabled
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label>Reference Code</Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                maxLength={15}
+                                name="code"
+                                as={Input}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label className="required">Name </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                maxLength={40}
+                                name="asset_name"
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="asset_name"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label className="required">Description</Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                name="description"
+                                maxLength={50}
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="description"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Condition </Label>
+                            <FormGroup>
+                              <Select
+                                name="asset_condition"
+                                options={conditionOptions}
+                                value={conditionOptions.find(
+                                  (option) =>
+                                    option.value === values.asset_condition
+                                )}
+                                onChange={(selectedOption) =>
+                                  setFieldValue(
+                                    "asset_condition",
+                                    selectedOption.value
+                                  )
+                                }
+                              />
+                              <ErrorMessage
+                                name="asset_condition"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label>Maintenance Requirements </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                maxLength={70}
+                                name="maintenance_requirements"
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="maintenance_requirements"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Quantity </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                maxLength={20}
+                                name="quantity"
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="quantity"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            {/* Single Label for the Entire Section */}
+                            <Label className="required">
+                              Location (City, Compound/Area/PostCode)
+                            </Label>
+
+                            <Row>
+                              {/* City Field */}
+                              <Col sm="4 pr-0">
+                                <FormGroup>
+                                  <Select
+                                    name="statuscode"
+                                    options={cities.map((city) => ({
+                                      value: city.code,
+                                      label: city.name,
+                                    }))}
+                                    value={
+                                      cities.find(
+                                        (city) =>
+                                          city.code ===
+                                          values.asset_location_city
+                                      )
+                                        ? {
+                                            value: values.asset_location_city,
+                                            label: cities.find(
+                                              (city) =>
+                                                city.code ===
+                                                values.asset_location_city
+                                            ).name,
+                                          }
+                                        : null
+                                    }
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "asset_location_city",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="asset_location_city"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </FormGroup>
+                              </Col>
+
+                              {/* Area Field */}
+                              <Col sm="8">
+                                <FormGroup>
+                                  <Field
+                                    type="text"
+                                    placeholder="Compound/Area/PostCode"
+                                    name="asset_location"
+                                    maxLength={40}
+                                    as={Input}
+                                    className="form-control"
+                                  />
+                                  <ErrorMessage
+                                    name="asset_location"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <Label className="required">Estimated Value </Label>
+                            <FormGroup>
+                              <InputGroup>
+                                <InputGroupText>£</InputGroupText>
+                                <Field
+                                  type="number"
+                                  name="value"
+                                  maxLength={7}
+                                  as={Input}
+                                  min="0" // Ensures no negative values
+                                  step="0.01" // Allows decimal/floating-point values
+                                />
+                              </InputGroup>
+                              <ErrorMessage
+                                name="value"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <FormGroup>
+                              <DateRangePicker
+                                label="Forecasted Availability"
+                                requireLabel={true}
+                                name="available_from"
+                                labelType="NonFloating"
+                                selectedDate={values.available_from}
+                                onChange={(date) =>
+                                  setFieldValue("available_from", date)
+                                }
+                                mode="single"
+                              />
+                              <ErrorMessage
+                                name="available_from"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <FormGroup>
+                              <DateRangePicker
+                                label="Purchase Date "
+                                name="date_of_purchase"
+                                labelType="NonFloating"
+                                selectedDate={values.date_of_purchase}
+                                onChange={(date) =>
+                                  setFieldValue("date_of_purchase", date)
+                                }
+                                mode="single"
+                              />
+                              <ErrorMessage
+                                name="date_of_purchase"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label>Purchase Value </Label>
+                            <FormGroup>
+                              <InputGroup>
+                                <InputGroupText>£</InputGroupText>
+                                <Field
+                                  type="number"
+                                  name="purchase_price"
+                                  maxLength={7}
+                                  as={Input}
+                                  min="0" // Ensures no negative values
+                                  step="0.01" // Allows decimal/floating-point values
+                                />
+                              </InputGroup>
+                              <ErrorMessage
+                                name="purchase_price"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <Label>Contract No </Label>
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                name="contract_no"
+                                maxLength={15}
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="contract_no"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col sm="6">
+                            <Label>Residual Forecast Value </Label>
+                            <FormGroup>
+                              <InputGroup>
+                                <InputGroupText>£</InputGroupText>
+                                <Field
+                                  type="number"
+                                  maxLength={7}
+                                  name="residual_forecast_value"
+                                  as={Input}
+                                />
+                              </InputGroup>
+                              <ErrorMessage
+                                name="residual_forecast_value"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col sm="6">
+                            <Label>Sold Value </Label>
+                            <FormGroup>
+                              <InputGroup>
+                                <InputGroupText>£</InputGroupText>
+                                <Field
+                                  type="text"
+                                  name="sold_value"
+                                  maxLength={7}
+                                  value={
+                                    values.sold_value === "null"
+                                      ? ""
+                                      : values.sold_value
+                                  }
+                                  disabled={values.statuscode !== "Sold"}
+                                  as={Input}
+                                />
+                              </InputGroup>
+                              <ErrorMessage
+                                name="sold_value"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Label sm="8">Other Details</Label>
+                          <Col md="12">
+                            <FormGroup>
+                              <Field
+                                type="textarea"
+                                name="additional_info"
+                                as={Input}
+                              />
+                              <ErrorMessage
+                                name="additional_info"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  {/* Upload Images*/}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize", // for Safari
+                          }}
+                        >
+                          Images{" "}
+                          <span className="upload-image-notification text-danger">
+                            (Max 5, Upto 2MB each)
                           </span>
-                        }
-                        onSelect={onUploadDocs}
-                        onRemove={deleteDocs}
-                        className="custom-file-upload"
-                        customUpload
-                      />
-                    </CardBody>
-                  </Card>
-                </Col>
-                {/* Set Asset Status */}
-                <Col md="12">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle
-                        tag="h6"
-                        style={{
-                          color: "rgb(82,203,206)",
-                          fontWeight: "bold",
-                          textTransform: "capitalize",
-                          WebkitTextTransform: "capitalize", // for Safari
-                        }}
-                      >
-                        Item Status
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col sm="6">
-                          <Label>Status *</Label>
-                          <FormGroup>
-                            <Select
-                              name="statuscode"
-                              options={inventoryStatusOptions}
-                              value={inventoryStatusOptions.find(
-                                (option) => option.value === values.statuscode
-                              )}
-                              onChange={(selectedOption) => {
-                                setFieldValue(
-                                  "statuscode",
-                                  selectedOption.value
-                                );
-                                handleSoldToast(selectedOption.value);
-                              }}
-                            />
-                            <ErrorMessage
-                              name="statuscode"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-              {alert}
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  className="buttonClose"
-                  color="primary"
-                  type="button"
-                  onClick={() => navigate("/admin/inventory")}
-                  style={{ visibility: "visible", opacity: 1 }}
-                >
-                  Close
-                </Button>
-                <Button color="primary" type="submit">
-                  Save
-                </Button>
-              </div>
-            </Form>
-          )}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <AttachmentList
+                          attachments={attachments}
+                          attachmentType="images"
+                          showDeleteIcon="true"
+                          onDelete={handleDeleteAttachment}
+                        />
+
+                        <FileUpload
+                          name="files[]"
+                          multiple
+                          accept="image/*"
+                          chooseLabel={
+                            <span>
+                              <RiAttachment2 className="me-1" />{" "}
+                              {/* Add the icon */}
+                              Attach
+                            </span>
+                          }
+                          onSelect={onUploadImages}
+                          onRemove={deleteImage}
+                          maxFileSize={2000000}
+                          className="custom-file-upload"
+                        />
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  {/* Upload Documents*/}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize", // for Safari
+                          }}
+                        >
+                          Documents{" "}
+                          <span className="upload-image-notification text-danger">
+                            (Max 3, Upto 2MB each)
+                          </span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <AttachmentList
+                          attachments={attachments}
+                          attachmentType="docs"
+                          showDeleteIcon="true"
+                          onDelete={handleDeleteAttachment}
+                        />
+
+                        <FileUpload
+                          name="docs[]"
+                          multiple
+                          accept=".pdf, .doc, .docx, .odt, .txt"
+                          maxFileSize={2000000}
+                          chooseLabel={
+                            <span>
+                              <RiAttachment2 className="me-1" />{" "}
+                              {/* Add the icon */}
+                              Attach
+                            </span>
+                          }
+                          onSelect={onUploadDocs}
+                          onRemove={deleteDocs}
+                          className="custom-file-upload"
+                          customUpload
+                        />
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  {/* Set Asset Status */}
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle
+                          tag="h6"
+                          style={{
+                            color: "rgb(82,203,206)",
+                            fontWeight: "bold",
+                            textTransform: "capitalize",
+                            WebkitTextTransform: "capitalize", // for Safari
+                          }}
+                        >
+                          Item Status
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>
+                        <Row>
+                          <Col sm="6">
+                            <Label>Status *</Label>
+                            <FormGroup>
+                              <Select
+                                name="statuscode"
+                                options={inventoryStatusOptions}
+                                value={inventoryStatusOptions.find(
+                                  (option) => option.value === values.statuscode
+                                )}
+                                onChange={(selectedOption) => {
+                                  setFieldValue(
+                                    "statuscode",
+                                    selectedOption.value
+                                  );
+                                  handleSoldToast(selectedOption.value);
+                                }}
+                              />
+                              <ErrorMessage
+                                name="statuscode"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                {alert}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button
+                    className="buttonClose"
+                    color="primary"
+                    type="button"
+                    onClick={() => navigate("/admin/inventory")}
+                    style={{ visibility: "visible", opacity: 1 }}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      console.log(Object.keys(errors).length);
+                      setFormSubmission(true);
+                    }}
+                    color="primary"
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </div>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </>

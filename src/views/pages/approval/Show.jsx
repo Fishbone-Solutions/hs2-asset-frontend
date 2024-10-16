@@ -43,6 +43,7 @@ const Show = () => {
   const [updateInput, setUpdateInput] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
   const openModal = (modalId) => setActiveModal(modalId);
+  const [validationError, setValidationError] = useState(false);
   const [searchParams] = useSearchParams();
   const status = searchParams.get("status"); // "approved"
   console.log("status", status);
@@ -115,6 +116,7 @@ const Show = () => {
       ...prevState,
       approval_ref_no: value,
     }));
+    setValidationError(false);
   };
 
   // Handle approval or rejection action
@@ -634,6 +636,7 @@ const Show = () => {
               type="text"
               key={updateInput} // Forcing re-render when state changes
               className="form-control"
+              maxLength={params.approval_status === "APPROVED" ? 20 : 40}
               value={params.approval_ref_no} // Binding to params state
               onChange={handleModalInput} // Calling handler directly
               placeholder={
@@ -642,17 +645,33 @@ const Show = () => {
                   : `Reason of Rejection`
               }
             />
+            {validationError && (
+              <div className="text-danger mt-1">
+                Please fill the{" "}
+                {params.approval_status === "APPROVED"
+                  ? `CEMAR Ref No`
+                  : `Reason of Rejection`}
+              </div>
+            )}
           </div>
         }
         showModal={activeModal === "approval-modal"}
         onCloseCross={closeModal}
         onSubmit={() => {
-          showAlert({
-            title: "Are you sure?",
-            type: "warning",
-            onConfirm: () => approvalRequest(params.approval_status),
-            onCancel: hideAlert,
-          });
+          if (
+            params.approval_ref_no === null ||
+            params.approval_ref_no === ""
+          ) {
+            setValidationError(true);
+          } else {
+            setValidationError(false);
+            showAlert({
+              title: "Are you sure?",
+              type: "warning",
+              onConfirm: () => approvalRequest(params.approval_status),
+              onCancel: hideAlert,
+            });
+          }
         }}
         onClose={closeModal}
         closeButtonText="Cancel"
