@@ -92,7 +92,14 @@ const useColumns = (handleDelete) => {
               </span>
 
               {row.original.unviewed === true ? (
-                <AlertIcon className="notify-icon" width="20" height="20" />
+                <span
+                  className="cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Some unattended EOIs"
+                >
+                  <AlertIcon className="notify-icon" width="20" height="20" />
+                </span>
               ) : (
                 ""
               )}

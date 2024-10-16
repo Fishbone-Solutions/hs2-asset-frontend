@@ -86,11 +86,15 @@ const Edit = () => {
 
   const fetchData = async () => {
     try {
+      const params = new URLSearchParams({
+        source_module: "INVENTORY",
+      });
       setLoader(true);
       const res = await EndPointService.inventoryBaseEoiDetails(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        params
       );
       const resEoiActivities = await EndPointService.eoiActivityTrackingHistory(
         headers,

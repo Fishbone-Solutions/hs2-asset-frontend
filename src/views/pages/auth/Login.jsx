@@ -43,7 +43,7 @@ function Login() {
     }
   };
   const handleLogin = () => {
-    if (password === "admin") {
+    if (password === "admin" && username) {
       navigate("/admin/inventory");
     } else {
       showAlert({

@@ -367,7 +367,9 @@ const Show = () => {
                     </Col>
                     <Col sm="6">
                       {/* Single Label for the Entire Section */}
-                      <Label className="required">Location</Label>
+                      <Label className="required">
+                        Location (City, Compound/Area/PostCode)
+                      </Label>
 
                       <Row>
                         {/* City Field */}
@@ -404,6 +406,7 @@ const Show = () => {
                           <FormGroup>
                             <Input
                               type="text"
+                              placeholder="Compound/Area/PostCode"
                               name="asset_location"
                               value={formatLocation(formData.asset_location)}
                               readOnly="true"

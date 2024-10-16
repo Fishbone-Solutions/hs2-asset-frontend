@@ -77,8 +77,16 @@ const Create = () => {
       console.log(res);
       setLoader(false);
       showAlert({
-        title: <p class="sweet-title-size">Expression of Interest submitted for <br/>'{formData.asset_name}'</p>,
-        content:  <h6 className="success-sweet-content-color">Reference No: {res.appRespData[0].eoi_add}</h6>,
+        title: (
+          <p class="sweet-title-size">
+            Expression of Interest submitted for <br />'{formData.asset_name}'
+          </p>
+        ),
+        content: (
+          <h6 className="success-sweet-content-color">
+            Reference No: {res.appRespData[0].eoi_add}
+          </h6>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -208,7 +216,12 @@ const Create = () => {
                         <Col sm="6">
                           <Label className="required">Name</Label>
                           <FormGroup>
-                            <Field type="text" name="buyer_name" as={Input} />
+                            <Field
+                              type="text"
+                              maxLength={40}
+                              name="buyer_name"
+                              as={Input}
+                            />
                             <ErrorMessage
                               name="buyer_name"
                               component="div"
@@ -220,7 +233,12 @@ const Create = () => {
                         <Col sm="6">
                           <Label className="required">Company</Label>
                           <FormGroup>
-                            <Field type="text" name="organization" as={Input} />
+                            <Field
+                              type="text"
+                              maxLength={40}
+                              name="organization"
+                              as={Input}
+                            />
                             <ErrorMessage
                               name="organization"
                               component="div"
@@ -233,7 +251,12 @@ const Create = () => {
                         <Col sm="6">
                           <Label className="required">Contact No</Label>
                           <FormGroup>
-                            <Field type="text" name="contact_no" as={Input} />
+                            <Field
+                              type="text"
+                              maxLength={15}
+                              name="contact_no"
+                              as={Input}
+                            />
                             <ErrorMessage
                               name="contact_no"
                               component="div"
@@ -247,7 +270,12 @@ const Create = () => {
                           <FormGroup
                             className={`has-label ${eoiFormData.email}`}
                           >
-                            <Field type="email" name="email" as={Input} />
+                            <Field
+                              type="email"
+                              maxLength={40}
+                              name="email"
+                              as={Input}
+                            />
                             <ErrorMessage
                               name="email"
                               component="div"
@@ -260,7 +288,12 @@ const Create = () => {
                         <Col sm="6">
                           <Label className="required">Buyer Address</Label>
                           <FormGroup>
-                            <Field type="text" name="address" as={Input} />
+                            <Field
+                              type="text"
+                              maxLength={50}
+                              name="address"
+                              as={Input}
+                            />
                             <ErrorMessage
                               name="address"
                               component="div"
@@ -270,12 +303,13 @@ const Create = () => {
                         </Col>
                         <Col sm="6">
                           <Label className="required">
-                          Item Delivery Address
+                            Item Delivery Address
                           </Label>
                           <FormGroup>
                             <Field
                               type="text"
                               name="delivery_location"
+                              maxLength={50}
                               as={Input}
                             />
                             <ErrorMessage
@@ -295,6 +329,7 @@ const Create = () => {
                             <Field
                               type="text"
                               name="contact_time_preference"
+                              maxLength={20}
                               as={Input}
                             />
                             <ErrorMessage
