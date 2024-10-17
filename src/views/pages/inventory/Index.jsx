@@ -65,6 +65,8 @@ const Index = () => {
     statuscode: null,
     cursor_row_no: 0,
     page_size: 10,
+    fltr_only_active_eois: null,
+    fltr_only_unattended_eois: null,
   });
 
   const [filterDataState, setFilterDataState] = useState({
@@ -101,6 +103,12 @@ const Index = () => {
           filterFormData.available_from
         ),
         fltr_to_availability: getValueOrDefault(filterFormData.available_to),
+        fltr_only_active_eois: getValueOrDefault(
+          filterFormData.fltr_only_active_eois
+        ),
+        fltr_only_unattended_eois: getValueOrDefault(
+          filterFormData.fltr_only_unattended_eois
+        ),
         cursor_row_no: filterFormData.cursor_row_no,
         page_size: filterFormData.page_size,
       });
