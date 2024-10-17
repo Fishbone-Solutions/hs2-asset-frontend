@@ -156,6 +156,10 @@ function sentNudgeRequest(headers = null, inventoryId, eoiId) {
   );
 }
 
+function Login(params) {
+  return Post(`${endpoints.login()}`, params);
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -185,4 +189,5 @@ export const EndPointService = {
   parse,
   ingest,
   sentNudgeRequest,
+  Login,
 };

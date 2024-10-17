@@ -25,6 +25,7 @@ import { GlobalContext } from "@/GlobalState";
 import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import { useAlert } from "components/Common/NotificationAlert";
+import { EndPointService } from "@/services/methods";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -42,8 +43,18 @@ function Login() {
       handleLogin();
     }
   };
-  const handleLogin = () => {
-    if (password === "admin" && username) {
+  const handleLogin = async () => {
+    const params = {
+      username: username,
+      password: password,
+    };
+    const res = await EndPointService.Login(params);
+    if (res.appRespData.length > 0) {
+      sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
+      sessionStorage.setItem(
+        "username",
+        !!username ? username : sessionStorage.getItem("username")
+      );
       navigate("/admin/inventory");
     } else {
       showAlert({
