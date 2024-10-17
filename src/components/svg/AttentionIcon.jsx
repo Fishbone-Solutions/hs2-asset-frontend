@@ -1,6 +1,4 @@
-import React from "react";
-
-const AlertIcon = (props) => (
+const AttentionIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
@@ -16,7 +14,7 @@ const AlertIcon = (props) => (
   >
     <g>
       <path
-        fill="#ff1e1e"
+        fill="#ffd21e"
         d="M8.008 55.78a3.002 3.002 0 0 1-2.6-4.503L29.4 9.722a3.002 3.002 0 0 1 5.2 0l23.992 41.556a3.002 3.002 0 0 1-2.6 4.503z"
         opacity="1"
       />
@@ -32,4 +30,4 @@ const AlertIcon = (props) => (
   </svg>
 );
 
-export default AlertIcon;
+export default AttentionIcon;

@@ -27,6 +27,8 @@ import moment from "moment";
 import { Modal } from "bootstrap";
 import ModalComponent from "components/Common/ModalComponent";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
+import BeatingIcon from "components/svg/BeatingIcon";
+import AttentionIcon from "components/svg/AttentionIcon";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -200,6 +202,13 @@ const Index = () => {
     const filters = [];
     if (filterFormData.id)
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
+    if (filterFormData.fltr_only_active_eois)
+      filters.push({ label: "Active items", key: "fltr_only_active_eois" });
+    if (filterFormData.fltr_only_unattended_eois)
+      filters.push({
+        label: "Items Requiring Attention",
+        key: "fltr_only_unattended_eois",
+      });
     if (filterFormData.asset_name)
       filters.push({
         label: `${filterFormData.asset_name}`,
@@ -434,6 +443,20 @@ const Index = () => {
     handleClear();
   };
 
+  const activeItems = () => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      fltr_only_active_eois: 1,
+    }));
+  };
+
+  const itemsRequiringAttention = () => {
+    setFilterFormDate((prevState) => ({
+      ...prevState,
+      fltr_only_unattended_eois: 1,
+    }));
+  };
+
   return (
     <>
       <div className="content">
@@ -464,21 +487,39 @@ const Index = () => {
                       className="icon-btn"
                     />
                   </div>
-                  {/* <div
-                    onClick={handleRefreshComponet}
-                    className="me-2 icon-style"
+                  <div
+                    onClick={activeItems}
+                    className="me-2"
                     style={{ cursor: "pointer" }}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="Refresh Gird"
+                    title="Active Items"
                   >
-                    <RefreshComponetIcon
-                      width="30"
-                      height="30"
+                    <BeatingIcon
+                      width="34"
+                      height="34"
                       color="white"
                       size="2.4em"
+                      className="icon-btn"
                     />
-                  </div> */}
+                  </div>
+
+                  <div
+                    onClick={itemsRequiringAttention}
+                    className="me-2"
+                    style={{ cursor: "pointer" }}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Items requiring attention"
+                  >
+                    <AttentionIcon
+                      width="34"
+                      height="34"
+                      color="white"
+                      size="2.4em"
+                      className="icon-btn"
+                    />
+                  </div>
                   <div
                     onClick={showPieChartInventory}
                     className="mr-2 cursor-pointer"
