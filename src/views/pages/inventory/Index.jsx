@@ -188,6 +188,8 @@ const Index = () => {
       available_from: null,
       available_to: null,
       statuscode: null,
+      fltr_only_active_eois: null,
+      fltr_only_unattended_eois: null,
     }));
     setFilterDataState({
       id: "",
