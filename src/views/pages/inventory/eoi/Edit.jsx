@@ -166,7 +166,7 @@ const Edit = () => {
             <WarningIcon width="60px" height="60px" />
             <span className="text-danger">
               The status you are about to set will instantly become visible to
-              the Buyer, enabling the Buyer to react immediately
+              the Buyer
             </span>
           </h6>
         ),
@@ -205,9 +205,7 @@ const Edit = () => {
               : getStatusMessage(statusCode, "Buyer")}
           </h6>
         ),
-        content: isSuccess ? (
-          <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
-        ) : null, // Only show content for success cases
+        content: "", // Only show content for success cases
         type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
@@ -320,7 +318,7 @@ const Edit = () => {
         />
         {/* Show validation error if no approver is selected */}
         {validationError && (
-          <div className="text-danger mt-1">Please select an approver.</div>
+          <div className="text-danger mt-1">Please select an approver</div>
         )}
         {/* Dynamically show the selected approver's details */}
         <span className="d-flex flex-wrap justify-content-left text-black mt-2">
@@ -811,7 +809,7 @@ const Edit = () => {
                           title="Undo Current Status"
                           onClick={() => {
                             showAlert({
-                              title: `Are you sure you wish to Undo current EOI status?`,
+                              title: `You sure you wish to undo your Current Seller Status?`,
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",

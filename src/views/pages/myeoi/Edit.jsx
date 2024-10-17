@@ -117,7 +117,7 @@ const Edit = () => {
             <WarningIcon width="60px" height="60px" />
             <span className="text-danger">
               The status you are about to set will instantly become visible to
-              the Buyer, enabling the Buyer to react immediately
+              the Buyer
             </span>
           </h6>
         ),
@@ -692,7 +692,7 @@ const Edit = () => {
                           title="Undo Current Status"
                           onClick={() => {
                             showAlert({
-                              title: `Are you sure you wish to Undo current EOI status?`,
+                              title: `You sure you wish to undo your Current Buyer Status?`,
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",
