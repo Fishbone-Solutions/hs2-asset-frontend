@@ -23,9 +23,10 @@ const hasPermission = (module_slug, permission_type) => {
   const user = sessionStorage.getItem("user");
   if (user) {
     const permissions = JSON.parse(user).user_permissions; // Adjust this if the structure is different
-    return permissions.some(permission => 
-      permission.permission_slug === module_slug && 
-      permission.permission_value.includes(permission_type)
+    return permissions.some(
+      (permission) =>
+        permission.permission_slug === module_slug &&
+        permission.permission_value.includes(permission_type)
     );
   }
   return false;
@@ -73,13 +74,13 @@ function Sidebar(props) {
       if (prop.hidden || prop.redirect) {
         return null;
       }
-  
+
       // Handle collapsible routes
       if (prop.collapse) {
         const collapseKey = prop["state"];
         const st = {};
         st[collapseKey] = !collapseStates[collapseKey];
-  
+
         return (
           <li
             className={getCollapseInitialState(prop.views) ? "active" : ""}
@@ -123,7 +124,7 @@ function Sidebar(props) {
       } else {
         // Handle non-collapsible routes
         const hasPermissionToView = hasPermission(prop.permissionSlug, "View");
-  
+
         if (hasPermissionToView) {
           return (
             <li
@@ -150,8 +151,6 @@ function Sidebar(props) {
       }
     });
   };
-  
-  
 
   // Check if the route is active
   const activeRoute = (routeName) => {
@@ -186,11 +185,6 @@ function Sidebar(props) {
         !!username ? username : sessionStorage.getItem("username")
       );
 
-      sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
-      sessionStorage.setItem(
-        "username",
-        !!username ? username : sessionStorage.getItem("username")
-      );
       setDataState(res.appRespData[0]);
       console.log("companyName", dataState, res.appRespData);
     } catch (error) {

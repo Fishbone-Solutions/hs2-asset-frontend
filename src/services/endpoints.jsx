@@ -39,4 +39,5 @@ export const endpoints = {
   ingest: () => `/bulkimport/ingest`,
   sentNudgeRequest: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/nudge`,
+  login: () => `login`,
 };
