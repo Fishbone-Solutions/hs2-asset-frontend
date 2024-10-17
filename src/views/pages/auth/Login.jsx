@@ -26,9 +26,11 @@ import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import { useAlert } from "components/Common/NotificationAlert";
 import { EndPointService } from "@/services/methods";
+import { FullPageLoader } from "components/Common/ComponentLoader";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
+  const [loader, setLoader] = useState(false);
   const usernames = [];
   const [password, setPassword] = useState("");
   const [error, setErrorMessage] = useState("");
@@ -44,38 +46,55 @@ function Login() {
     }
   };
   const handleLogin = async () => {
-    const params = {
-      username: username,
-      password: password,
-    };
-    const res = await EndPointService.Login(params);
-    if (res.appRespData.length > 0) {
-      sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
-      sessionStorage.setItem(
-        "username",
-        !!username ? username : sessionStorage.getItem("username")
-      );
-      navigate("/admin/inventory");
-    } else {
+    setLoader(true);
+    try {
+      const params = {
+        username: username,
+        password: password,
+      };
+      const res = await EndPointService.Login(params);
+      if (res.appRespData.length > 0) {
+        sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
+        sessionStorage.setItem(
+          "username",
+          !!username ? username : sessionStorage.getItem("username")
+        );
+        setLoader(false);
+        navigate("/admin/inventory");
+      } else {
+        showAlert({
+          title: (
+            <h6 className="success-sweet-title">Unable to grant access</h6>
+          ),
+          content: "Invalid Username or Password. Please try again",
+          type: "error",
+          confirmText: "ok",
+          showCancelButton: false,
+          onConfirm: hideAlert,
+        });
+        setLoader(false);
+        // setAlert(
+        //   <ReactBSAlert
+        //     danger
+        //     style={{ display: "block", marginTop: "-100px" }}
+        //     title="Wrong Username or Password"
+        //     onConfirm={() => hideAlert()}
+        //     onCancel={() => hideAlert()}
+        //     confirmBtnBsStyle="info"
+        //     btnSize=""
+        //   />,
+        // );
+      }
+    } catch (e) {
       showAlert({
         title: <h6 className="success-sweet-title">Unable to grant access</h6>,
-        content: "Invalid Username or Password. Please try again",
+        content: "something went wrong",
         type: "error",
         confirmText: "ok",
         showCancelButton: false,
         onConfirm: hideAlert,
       });
-      // setAlert(
-      //   <ReactBSAlert
-      //     danger
-      //     style={{ display: "block", marginTop: "-100px" }}
-      //     title="Wrong Username or Password"
-      //     onConfirm={() => hideAlert()}
-      //     onCancel={() => hideAlert()}
-      //     confirmBtnBsStyle="info"
-      //     btnSize=""
-      //   />,
-      // );
+      setLoader(false);
     }
   };
   // const hideAlert = () => {
@@ -92,6 +111,7 @@ function Login() {
   return (
     <div className="login-page">
       {alert}
+      {loader ? <FullPageLoader /> : ""}
       <AuthNavbar></AuthNavbar>
       <Container>
         <Row>

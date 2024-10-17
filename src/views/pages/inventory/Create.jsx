@@ -306,6 +306,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={40}
                                 name="seller_title"
+                                pattern="^[a-zA-Z0-9]*$"
                                 as={Input}
                               />
                               <ErrorMessage
