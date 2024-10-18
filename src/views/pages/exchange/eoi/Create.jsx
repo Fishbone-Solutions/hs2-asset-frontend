@@ -23,6 +23,7 @@ import { useAlert } from "components/Common/NotificationAlert";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { initialEoiValues, eoiSchema } from "variables/Validations/EoiSchema";
 import { initialInventoryValues } from "variables/Validations/InventorySchema";
+import { handleInput } from "variables/common";
 
 const Create = () => {
   const { id } = useParams();
