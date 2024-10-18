@@ -214,7 +214,7 @@ const Edit = () => {
     // Limit number of files
     if (files.length > maxFiles) {
       showAlert({
-        title: "No file selected.",
+        title: "You can only upload a maximum of ${maxFiles} files",
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
