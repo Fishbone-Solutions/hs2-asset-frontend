@@ -31,6 +31,7 @@ import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import WarningIcon from "components/svg/Warning";
 import { getStatusMessage } from "variables/common";
 import NudgeSvgIcon from "components/svg/Nudge";
+import NudgeApproverSvgIcon from "components/svg/NudgeApproverSvgIcon";
 import { getUndoStatusMessage } from "variables/common";
 
 const Edit = () => {
@@ -846,7 +847,7 @@ const Edit = () => {
                           onClick={() => {
                             if (dataState.approval_status === "Requested") {
                               showAlert({
-                                title: `Are you sure you wish to nudge the seller?`,
+                                title: `Are you sure you wish to nudge the Approver?`,
                                 type: "warning",
                                 showCancelButton: true,
                                 confirmText: "Yes",
@@ -867,7 +868,7 @@ const Edit = () => {
                           }}
                           className="undo-icon p-1 bg-transparent"
                         >
-                          <NudgeSvgIcon />
+                          <NudgeApproverSvgIcon />
                         </Button>
 
                         <Button
