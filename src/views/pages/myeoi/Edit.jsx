@@ -289,22 +289,36 @@ const Edit = () => {
   const handleNudge = async () => {
     setLoader(true);
     try {
+      const params = {
+        send_nudge_to: "SELLER",
+      };
       const res = await EndPointService.sentNudgeRequest(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        params
       );
       setLoader(false);
-      showAlert({
-        title: "Nudge sent to Seller",
-        type: "success",
-        showCancelButton: false,
-        confirmText: "Ok",
-        onConfirm: () => {
-          hideAlert();
-          setRefreshMainComponent(refreshMainComponent + 1);
-        },
-      });
+      if (res.appRespData[0].eoi_nudge > 0) {
+        showAlert({
+          title: "Nudge sent to Seller",
+          type: "success",
+          showCancelButton: false,
+          confirmText: "Ok",
+          onConfirm: () => {
+            hideAlert();
+            setRefreshMainComponent(refreshMainComponent + 1);
+          },
+        });
+      } else if (res.appRespData[0].eoi_nudge === -2) {
+        showAlert({
+          title: `You have already sent a nudge. A nudge can only be sent once a day`,
+          type: "error",
+          showCancelButton: false,
+          confirmText: "ok",
+          onConfirm: hideAlert,
+        });
+      }
     } catch (e) {}
   };
   return (

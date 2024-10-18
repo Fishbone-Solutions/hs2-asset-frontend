@@ -220,6 +220,7 @@ const Create = () => {
                               type="text"
                               maxLength={40}
                               name="buyer_name"
+                              onInput={handleInput("alphaNumeric")}
                               as={Input}
                             />
                             <ErrorMessage
@@ -237,6 +238,7 @@ const Create = () => {
                               type="text"
                               maxLength={40}
                               name="organization"
+                              onInput={handleInput("alphaNumericDashSlash")}
                               as={Input}
                             />
                             <ErrorMessage
@@ -255,6 +257,7 @@ const Create = () => {
                               type="text"
                               maxLength={15}
                               name="contact_no"
+                              onInput={handleInput("numericPlus")}
                               as={Input}
                             />
                             <ErrorMessage
@@ -291,6 +294,7 @@ const Create = () => {
                             <Field
                               type="text"
                               maxLength={50}
+                              onInput={handleInput("alphaNumericDashSlash")}
                               name="address"
                               as={Input}
                             />
@@ -309,6 +313,7 @@ const Create = () => {
                             <Field
                               type="text"
                               name="delivery_location"
+                              onInput={handleInput("alphaNumericDashSlash")}
                               maxLength={50}
                               as={Input}
                             />
@@ -329,6 +334,7 @@ const Create = () => {
                             <Field
                               type="text"
                               name="contact_time_preference"
+                              onInput={handleInput("alphaNumericDashSlash")}
                               maxLength={20}
                               as={Input}
                             />

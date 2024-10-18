@@ -44,6 +44,7 @@ import {
   inventorySchema,
 } from "variables/Validations/InventorySchema";
 import { ImageType } from "variables/common";
+import { handleInput } from "variables/common";
 
 const Edit = () => {
   const { id } = useParams();
@@ -357,6 +358,7 @@ const Edit = () => {
                                 type="text"
                                 name="seller_title"
                                 maxLength={40}
+                                onInput={handleInput("alphaNumeric")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -373,6 +375,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 maxLength={15}
+                                onInput={handleInput("numericPlus")}
                                 name="seller_contactno"
                                 as={Input}
                               />
@@ -408,6 +411,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 name="seller_location"
+                                onInput={handleInput("alphaNumericDash")}
                                 maxLength={50}
                                 as={Input}
                               />
@@ -527,6 +531,7 @@ const Edit = () => {
                             <FormGroup>
                               <Field
                                 type="text"
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 maxLength={15}
                                 name="code"
                                 as={Input}
@@ -540,6 +545,7 @@ const Edit = () => {
                                 type="text"
                                 maxLength={40}
                                 name="asset_name"
+                                onInput={handleInput("alphaNumeric")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -555,6 +561,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 name="description"
+                                onInput={handleInput("alphaNumeric")}
                                 maxLength={50}
                                 as={Input}
                               />
@@ -598,6 +605,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 maxLength={70}
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 name="maintenance_requirements"
                                 as={Input}
                               />
@@ -616,6 +624,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 maxLength={20}
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 name="quantity"
                                 as={Input}
                               />
@@ -680,6 +689,9 @@ const Edit = () => {
                                     type="text"
                                     placeholder="Compound/Area/PostCode"
                                     name="asset_location"
+                                    onInput={handleInput(
+                                      "alphaNumericDashSlash"
+                                    )}
                                     maxLength={40}
                                     as={Input}
                                     className="form-control"
@@ -786,6 +798,7 @@ const Edit = () => {
                               <Field
                                 type="text"
                                 name="contract_no"
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 maxLength={15}
                                 as={Input}
                               />
@@ -849,6 +862,7 @@ const Edit = () => {
                             <FormGroup>
                               <Field
                                 type="textarea"
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 name="additional_info"
                                 as={Input}
                               />

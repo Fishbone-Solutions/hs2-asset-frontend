@@ -371,25 +371,39 @@ const Edit = () => {
     { value: "NOT-PROCEEDING", label: "Not Proceeding" },
   ];
 
-  const handleNudge = async () => {
+  const handleNudge = async (sendNudgeto) => {
     setLoader(true);
+    const params = {
+      send_nudge_to: sendNudgeto,
+    };
     try {
       const res = await EndPointService.sentNudgeRequest(
         headers,
         inventoryId,
-        eoiId
+        eoiId,
+        params
       );
       setLoader(false);
-      showAlert({
-        title: "Nudge sent to Buyer",
-        type: "success",
-        showCancelButton: false,
-        confirmText: "Ok",
-        onConfirm: () => {
-          hideAlert();
-          setRefreshMainComponent(refreshMainComponent + 1);
-        },
-      });
+      if (res.appRespData[0].eoi_nudge > 0) {
+        showAlert({
+          title: `Nudge sent to ${sendNudgeto === "BUYER" ? "Buyer" : "Approver"}`,
+          type: "success",
+          showCancelButton: false,
+          confirmText: "Ok",
+          onConfirm: () => {
+            hideAlert();
+            setRefreshMainComponent(refreshMainComponent + 1);
+          },
+        });
+      } else if (res.appRespData[0].eoi_nudge === -2) {
+        showAlert({
+          title: `You have already sent a nudge. A nudge can only be sent once a day`,
+          type: "error",
+          showCancelButton: false,
+          confirmText: "ok",
+          onConfirm: hideAlert,
+        });
+      }
     } catch (e) {}
   };
 
@@ -409,7 +423,7 @@ const Edit = () => {
       const isSuccess = undoStatus > 0;
 
       showAlert({
-        title: getUndoStatusMessage(undoStatus, "Buyer"),
+        title: getUndoStatusMessage(undoStatus, "BUYER"),
         type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
@@ -828,6 +842,38 @@ const Edit = () => {
                           type="button"
                           data-bs-toggle="tooltip"
                           data-bs-placement="left"
+                          title="Nudge Approver for response"
+                          onClick={() => {
+                            if (dataState.approval_status === "Requested") {
+                              showAlert({
+                                title: `Are you sure you wish to nudge the seller?`,
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmText: "Yes",
+                                onCancel: hideAlert,
+                                onConfirm: () => {
+                                  handleNudge("APPROVER"); // replace with appropriate nudge action
+                                },
+                              });
+                            } else {
+                              showAlert({
+                                title: `No pending request at Approver`,
+                                type: "error",
+                                showCancelButton: false,
+                                confirmText: "ok",
+                                onConfirm: hideAlert,
+                              });
+                            }
+                          }}
+                          className="undo-icon p-1 bg-transparent"
+                        >
+                          <NudgeSvgIcon />
+                        </Button>
+
+                        <Button
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
                           title="Nudge Buyer for response"
                           onClick={() => {
                             showAlert({
@@ -837,7 +883,7 @@ const Edit = () => {
                               confirmText: "Yes",
                               onCancel: hideAlert,
                               onConfirm: () => {
-                                handleNudge(); // replace with appropriate nudge action
+                                handleNudge("Buyer"); // replace with appropriate nudge action
                               },
                             });
                           }}
@@ -888,7 +934,19 @@ const Edit = () => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
               color="primary"
-              onClick={() => openModal("approval-modal")}
+              onClick={() => {
+                if (dataState.approval_status === "Requested") {
+                  showAlert({
+                    title: `Approval for this EOI is already requested`,
+                    type: "error",
+                    showCancelButton: false,
+                    confirmText: "ok",
+                    onConfirm: hideAlert,
+                  });
+                } else {
+                  openModal("approval-modal");
+                }
+              }}
               type="button"
             >
               REQUEST APPROVAL
