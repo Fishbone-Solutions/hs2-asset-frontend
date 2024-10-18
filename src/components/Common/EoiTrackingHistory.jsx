@@ -25,8 +25,12 @@ const getBadgeClass = (activity) => {
       return "badge bg-lime"; // Light Green
     case "GOODS-RECEIVED":
       return "badge bg-lime"; // Bright Lime Green
-    case "AWAITING RESPONSE":
-      return "badge badge-danger";
+    case "AWAITING BUYER RESPONSE":
+      return "badge badge-danger dark-awaiting";
+    case "AWAITING SELLER RESPONSE":
+      return "badge badge-danger dark-awaiting";
+    case "AWAITING APPROVER RESPONSE":
+      return "badge badge-danger dark-awaiting";
     default:
       return "badge bg-secondary"; // Default grey badge for unrecognized statuses
   }
@@ -79,7 +83,9 @@ const ActivityTable = ({ activities }) => {
                       }} // Render HTML
                     />
                   </span>
-                  {activity.activity === "AWAITING RESPONSE" ? (
+                  {activity.activity === "AWAITING BUYER RESPONSE" ||
+                  activity.activity === "AWAITING SELLER RESPONSE" ||
+                  activity.activity === "AWAITING APPROVER RESPONSE" ? (
                     <AlertBellIcon />
                   ) : (
                     ""
