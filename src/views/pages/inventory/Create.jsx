@@ -41,6 +41,7 @@ import {
   inventorySchema,
 } from "variables/Validations/InventorySchema";
 import moment from "moment";
+import { handleInput } from "variables/common";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -307,6 +308,7 @@ const Create = () => {
                                 maxLength={40}
                                 name="seller_title"
                                 pattern="^[a-zA-Z0-9]*$"
+                                onInput={handleInput("alphaNumeric")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -323,6 +325,7 @@ const Create = () => {
                               <Field
                                 type="text"
                                 maxLength={15}
+                                onInput={handleInput("numericPlus")}
                                 name="seller_contactno"
                                 as={Input}
                               />
@@ -359,6 +362,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={50}
                                 name="seller_location"
+                                onInput={handleInput("alphaNumericDash")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -479,6 +483,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={15}
                                 name="code"
+                                onInput={handleInput("alphaNumericDash")}
                                 as={Input}
                               />
                             </FormGroup>
@@ -490,6 +495,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={40}
                                 name="asset_name"
+                                onInput={handleInput("alphaNumeric")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -506,6 +512,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={50}
                                 name="description"
+                                onInput={handleInput("alphaNumeric")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -549,6 +556,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={70}
                                 name="maintenance_requirements"
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -566,6 +574,7 @@ const Create = () => {
                               <Field
                                 type="text"
                                 maxLength={20}
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 name="quantity"
                                 as={Input}
                               />
@@ -620,6 +629,9 @@ const Create = () => {
                                     placeholder="Compound/Area/PostCode"
                                     name="asset_location"
                                     maxLength={40}
+                                    onInput={handleInput(
+                                      "alphaNumericDashSlash"
+                                    )}
                                     as={Input}
                                     className="form-control"
                                   />
@@ -724,6 +736,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={15}
                                 name="contract_no"
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -783,6 +796,7 @@ const Create = () => {
                                 type="textarea"
                                 name="additional_info"
                                 maxLength={250}
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 as={Input}
                               />
                               <ErrorMessage

@@ -1,3 +1,5 @@
+import { validationRules } from "./Validations/Rules";
+
 export const itemStatusOptions = [
   { value: "New", label: "New" },
   { value: "Used-Working", label: "Used - Working" },
@@ -167,5 +169,15 @@ export const getUndoStatusMessage = (status, type = null) => {
       return "No previous status available";
     default:
       return "Current Status reverted";
+  }
+};
+
+export const handleInput = (validationKey) => (event) => {
+  const { value } = event.target;
+  const { pattern, regex } = validationRules[validationKey];
+
+  // Validate input: if it doesn't match the pattern, remove invalid characters
+  if (!pattern.test(value)) {
+    event.target.value = value.replace(regex, "");
   }
 };
