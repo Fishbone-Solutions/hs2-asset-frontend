@@ -994,7 +994,11 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
 }
 
 .sweet-title-size {
-  font-size: 1.2rem !important;
+  font-size: 1.1rem !important;
+}
+.sweet-title-padding {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .upload-image-notification {
   font-size: 0.8rem;
@@ -1064,8 +1068,8 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
   }
 }
 .warning-alert {
-  font-size: 11px !important;
-  font-weight: 300 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
   margin: 0px 40px 0px 50px;
   display: flex; /* Use flexbox for alignment */
   align-items: center;

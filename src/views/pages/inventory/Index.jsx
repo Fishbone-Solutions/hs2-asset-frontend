@@ -152,7 +152,11 @@ const Index = () => {
       const res = await EndPointService.deleteInventoryById(id);
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
-          title: "Can not delete this Asset",
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              Can not delete this Asset
+            </p>
+          ),
           content: `This Asset is being broadcasted Live`,
           type: "error",
           showCancelButton: false,

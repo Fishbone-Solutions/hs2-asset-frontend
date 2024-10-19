@@ -64,7 +64,7 @@ const Edit = () => {
     } else {
       showAlert({
         title: (
-          <h6 className="success-sweet-title">
+          <h6 className="success-sweet-title sweet-title-padding">
             Please update negotiated value before sending the request
           </h6>
         ),
@@ -153,7 +153,11 @@ const Edit = () => {
     event.preventDefault();
     if (updateStatus === null || updateStatus === "") {
       showAlert({
-        title: "Please choose an EoI Status to update",
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Please choose an EoI Status to update
+          </p>
+        ),
         confirmText: "ok",
         onConfirm: hideAlert,
         type: "warning",
@@ -200,7 +204,7 @@ const Edit = () => {
       const isSuccess = statusCode > 0;
       showAlert({
         title: (
-          <h6 className="success-sweet-title">
+          <h6 className="success-sweet-title sweet-title-padding">
             {isSuccess
               ? `EOI status updated`
               : getStatusMessage(statusCode, "Buyer")}
@@ -269,7 +273,11 @@ const Edit = () => {
       );
 
       showAlert({
-        title: `Approval Request sent`,
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Approval Request sent
+          </p>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -387,7 +395,11 @@ const Edit = () => {
       setLoader(false);
       if (res.appRespData[0].eoi_nudge > 0) {
         showAlert({
-          title: `Nudge sent to ${sendNudgeto === "BUYER" ? "Buyer" : "Approver"}`,
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              Nudge sent to {sendNudgeto === "BUYER" ? "Buyer" : "Approver"}
+            </p>
+          ),
           type: "success",
           showCancelButton: false,
           confirmText: "Ok",
@@ -398,7 +410,11 @@ const Edit = () => {
         });
       } else if (res.appRespData[0].eoi_nudge === -2) {
         showAlert({
-          title: `You have already sent a nudge. A nudge can only be sent once a day`,
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              You have already sent a nudge. A nudge can only be sent once a day
+            </p>
+          ),
           type: "error",
           showCancelButton: false,
           confirmText: "ok",
@@ -424,7 +440,11 @@ const Edit = () => {
       const isSuccess = undoStatus > 0;
 
       showAlert({
-        title: getUndoStatusMessage(undoStatus, "BUYER"),
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            {getUndoStatusMessage(undoStatus, "BUYER")}
+          </p>
+        ),
         type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
@@ -450,7 +470,11 @@ const Edit = () => {
       setLoader(false);
       setRefreshMainComponent(refreshMainComponent + 1);
       showAlert({
-        title: `Negotiated value Updated`,
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Negotiated value Updated
+          </p>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -824,7 +848,12 @@ const Edit = () => {
                           title="Undo Current Status"
                           onClick={() => {
                             showAlert({
-                              title: `You sure you wish to undo your Current Seller Status?`,
+                              title: (
+                                <p className="success-sweet-title sweet-title-padding">
+                                  You sure you wish to undo your Current Seller
+                                  Status?
+                                </p>
+                              ),
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",
@@ -847,7 +876,11 @@ const Edit = () => {
                           onClick={() => {
                             if (dataState.approval_status === "Requested") {
                               showAlert({
-                                title: `Are you sure you wish to nudge the Approver?`,
+                                title: (
+                                  <p className="success-sweet-title sweet-title-padding">
+                                    Are you sure you wish to nudge the Approver?
+                                  </p>
+                                ),
                                 type: "warning",
                                 showCancelButton: true,
                                 confirmText: "Yes",
@@ -858,7 +891,11 @@ const Edit = () => {
                               });
                             } else {
                               showAlert({
-                                title: `No pending request at Approver`,
+                                title: (
+                                  <p className="success-sweet-title sweet-title-padding">
+                                    No pending request at Approver
+                                  </p>
+                                ),
                                 type: "error",
                                 showCancelButton: false,
                                 confirmText: "ok",
@@ -878,7 +915,11 @@ const Edit = () => {
                           title="Nudge Buyer for response"
                           onClick={() => {
                             showAlert({
-                              title: `Are you sure you wish to nudge the buyer?`,
+                              title: (
+                                <p className="success-sweet-title sweet-title-padding">
+                                  Are you sure you wish to nudge the buyer?
+                                </p>
+                              ),
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",
@@ -938,7 +979,11 @@ const Edit = () => {
               onClick={() => {
                 if (dataState.approval_status === "Requested") {
                   showAlert({
-                    title: `Approval for this EOI is already requested`,
+                    title: (
+                      <p className="success-sweet-title sweet-title-padding">
+                        Approval for this EOI is already requested
+                      </p>
+                    ),
                     type: "error",
                     showCancelButton: false,
                     confirmText: "ok",
