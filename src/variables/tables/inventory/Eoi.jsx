@@ -54,20 +54,37 @@ const useColumns = (handleDelete) => {
           };
 
           return (
-            <span
-              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
-            >
-              {style.icon && (
-                <>
-                  <img
-                    src={style.icon}
-                    width="15px"
-                    alt="status icon"
-                    className="me-1 align-middle"
+            <span className="d-flex ">
+              <span
+                className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+              >
+                {style.icon && (
+                  <>
+                    <img
+                      src={style.icon}
+                      width="15px"
+                      alt="status icon"
+                      className="me-1 align-middle"
+                    />
+                  </>
+                )}
+                {statusCode === "PENDING" ? "Not-Requested" : statusCode}
+              </span>
+              {row.original.new_approver_status === true ? (
+                <span
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="New Status From Buyer"
+                >
+                  <AlertIcon
+                    width="22"
+                    height="22"
+                    className="cursor-pointer"
                   />
-                </>
+                </span>
+              ) : (
+                ""
               )}
-              {statusCode === "PENDING" ? "Not-Requested" : statusCode}
             </span>
           );
         },
@@ -147,7 +164,7 @@ const useColumns = (handleDelete) => {
                 )}
                 {statusCode}
               </span>
-              {row.original.viewed === false ? (
+              {row.original.new_buyer_status === true ? (
                 <span
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
