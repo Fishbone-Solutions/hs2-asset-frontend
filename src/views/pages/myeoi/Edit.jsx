@@ -55,9 +55,17 @@ const Edit = () => {
   const fetchData = async () => {
     try {
       setLoader(true);
+      const params = new URLSearchParams({
+        source_module: "MYEOI",
+      });
       // Start all the promises simultaneously
       const [res, resEoi, resEoiActivities] = await Promise.all([
-        EndPointService.inventoryBaseEoiDetails(headers, inventoryId, eoiId),
+        EndPointService.inventoryBaseEoiDetails(
+          headers,
+          inventoryId,
+          eoiId,
+          params
+        ),
         EndPointService.getMyEoI(headers, username),
         EndPointService.eoiActivityTrackingHistory(headers, inventoryId, eoiId),
       ]);
@@ -103,7 +111,11 @@ const Edit = () => {
     event.preventDefault();
     if (updateStatus === null || updateStatus === "") {
       showAlert({
-        title: "Please choose an Acknowledgement Status to update",
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Please choose an Acknowledgement Status to update
+          </p>
+        ),
         confirmText: "ok",
         onConfirm: hideAlert,
         type: "warning",
@@ -148,7 +160,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title">
+          <h6 className="success-sweet-title sweet-title-padding">
             {isSuccess
               ? `Acknowledgement Status updated`
               : getStatusMessage(statusCode, "Seller")}
@@ -235,10 +247,13 @@ const Edit = () => {
         eoiId,
         requestBody
       );
-
       setLoader(false);
       showAlert({
-        title: <h6 className="success-sweet-title">Buyer details updated</h6>,
+        title: (
+          <h6 className="success-sweet-title sweet-title-padding">
+            Buyer details updated
+          </h6>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -274,7 +289,11 @@ const Edit = () => {
       const isSuccess = undoStatus > 0;
 
       showAlert({
-        title: getUndoStatusMessage(undoStatus, "Seller"),
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            {getUndoStatusMessage(undoStatus, "Seller")}
+          </p>
+        ),
         type: isSuccess ? "success" : "error",
         showCancelButton: false,
         confirmText: "Ok",
@@ -301,7 +320,11 @@ const Edit = () => {
       setLoader(false);
       if (res.appRespData[0].eoi_nudge > 0) {
         showAlert({
-          title: "Nudge sent to Seller",
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              Nudge sent to Seller
+            </p>
+          ),
           type: "success",
           showCancelButton: false,
           confirmText: "Ok",
@@ -312,7 +335,11 @@ const Edit = () => {
         });
       } else if (res.appRespData[0].eoi_nudge === -2) {
         showAlert({
-          title: `You have already sent a nudge. A nudge can only be sent once a day`,
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              You have already sent a nudge. A nudge can only be sent once a day
+            </p>
+          ),
           type: "error",
           showCancelButton: false,
           confirmText: "ok",
@@ -703,10 +730,15 @@ const Edit = () => {
                           type="button"
                           data-bs-toggle="tooltip"
                           data-bs-placement="left"
-                          title="Undo Current Status"
+                          title="Undo Current Buyer Status"
                           onClick={() => {
                             showAlert({
-                              title: `You sure you wish to undo your Current Buyer Status?`,
+                              title: (
+                                <p className="success-sweet-title sweet-title-padding">
+                                  You sure you wish to undo your Current Buyer
+                                  Status?
+                                </p>
+                              ),
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",
@@ -728,7 +760,11 @@ const Edit = () => {
                           title="Nudge Seller for response"
                           onClick={() => {
                             showAlert({
-                              title: `Are you sure you wish to nudge the seller?`,
+                              title: (
+                                <p className="success-sweet-title sweet-title-padding">
+                                  Are you sure you wish to nudge the seller?
+                                </p>
+                              ),
                               type: "warning",
                               showCancelButton: true,
                               confirmText: "Yes",

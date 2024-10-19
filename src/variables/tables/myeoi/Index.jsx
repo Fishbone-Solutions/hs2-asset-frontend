@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Button } from "reactstrap";
 import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
+import AlertIcon from "components/svg/AlertIcon";
 const useColumns = (handleDelete) => {
   return useMemo(
     () => [
@@ -174,20 +175,38 @@ const useColumns = (handleDelete) => {
           };
 
           return (
-            <span
-              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
-            >
-              {style.icon && (
-                <>
-                  <img
-                    src={style.icon}
-                    width="15px"
-                    alt="status icon"
-                    className="me-1 align-middle"
+            <span className="d-flex ">
+              <span
+                className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
+              >
+                {style.icon && (
+                  <>
+                    <img
+                      src={style.icon}
+                      width="15px"
+                      alt="status icon"
+                      className="me-1 align-middle"
+                    />
+                  </>
+                )}
+
+                {statusCode}
+              </span>
+              {row.original.new_seller_status === true ? (
+                <span
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="New Status From Buyer"
+                >
+                  <AlertIcon
+                    width="22"
+                    height="22"
+                    className="cursor-pointer"
                   />
-                </>
+                </span>
+              ) : (
+                ""
               )}
-              {statusCode}
             </span>
           );
         },

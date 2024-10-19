@@ -147,7 +147,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title">
+          <h6 className="success-sweet-title sweet-title-padding">
             Item '{formData.asset_name}' updated
           </h6>
         ),
@@ -214,7 +214,11 @@ const Edit = () => {
     // Limit number of files
     if (files.length > maxFiles) {
       showAlert({
-        title: "You can only upload a maximum of ${maxFiles} files",
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            You can only upload a maximum of {maxFiles} files
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -230,7 +234,12 @@ const Edit = () => {
         .toLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
-          title: `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`,
+          title: (
+            <p className="success-sweet-title sweet-title-padding">
+              Invalid file type: {file.name}. Only{" "}
+              {allowedExtensions.join(", ")} files are allowed
+            </p>
+          ),
           type: "error",
           onConfirm: () => hideAlert(),
           confirmText: "Ok",
@@ -281,7 +290,11 @@ const Edit = () => {
   const handleSoldToast = (selectedStatus) => {
     if (selectedStatus === "Sold") {
       showAlert({
-        title: "Please enter the final Sold Value.",
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Please enter the final Sold Value
+          </p>
+        ),
         type: "info",
         showCancelButton: false,
         confirmText: "ok",
@@ -298,7 +311,11 @@ const Edit = () => {
 
     if (errorCount > 0 && formSubmission) {
       showAlert({
-        title: "Please fill all mandatory fields",
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            Please fill all mandatory fields
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",

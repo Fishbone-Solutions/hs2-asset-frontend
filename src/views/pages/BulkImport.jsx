@@ -89,7 +89,7 @@ const BulkImport = () => {
 
     if (!file) {
       showAlert({
-        title: "No file selected.",
+        title: <p class="sweet-title-size">No file selected</p>,
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -104,7 +104,12 @@ const BulkImport = () => {
       .toLowerCase();
     if (!allowedExtensions.includes(fileExtension)) {
       showAlert({
-        title: `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`,
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            Invalid file type: {file.name}. Only {allowedExtensions.join(", ")}{" "}
+            files are allowed
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -117,7 +122,11 @@ const BulkImport = () => {
     // Check file size
     if (file.size > maxSize) {
       showAlert({
-        title: `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`,
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            File size exceeds the {maxSize / 1000000} MB limit: {file.name}
+          </p>
+        ),
         type: "warning",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -179,7 +188,11 @@ const BulkImport = () => {
   const handleIngest = async () => {
     if (!uploadedFile) {
       showAlert({
-        title: "No file to ingest. Please upload a file first.",
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            No file to ingest. Please upload a file first
+          </p>
+        ),
         type: "warning",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -465,7 +478,12 @@ const BulkImport = () => {
                               color="primary"
                               onClick={() =>
                                 showAlert({
-                                  title: `Are you sure you wish to Import ${totalRecordsFound} records to Inventory ?`,
+                                  title: (
+                                    <p class="sweet-title-size sweet-title-padding">
+                                      Are you sure you wish to Import
+                                      {totalRecordsFound} records to Inventory ?
+                                    </p>
+                                  ),
                                   type: "warning",
                                   onConfirm: () => handleIngest(),
                                   onCancel: hideAlert,

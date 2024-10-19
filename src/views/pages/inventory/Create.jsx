@@ -118,7 +118,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title">
+          <h6 className="success-sweet-title sweet-title-padding">
             Item '{values.asset_name}' added to inventory
           </h6>
         ),
@@ -203,7 +203,11 @@ const Create = () => {
     // Limit number of files
     if (files.length > maxFiles) {
       showAlert({
-        title: "You can only upload a maximum of ${maxFiles} files",
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            You can only upload a maximum of {maxFiles} files
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -219,7 +223,12 @@ const Create = () => {
         .toLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
-          title: `Invalid file type: ${file.name}. Only ${allowedExtensions.join(", ")} files are allowed.`,
+          title: (
+            <p class="sweet-title-size sweet-title-padding">
+              Invalid file type: {file.name}. Only{" "}
+              {allowedExtensions.join(", ")} files are allowed
+            </p>
+          ),
           type: "error",
           onConfirm: () => hideAlert(),
           confirmText: "Ok",
@@ -248,7 +257,11 @@ const Create = () => {
 
     if (errorCount > 0 && formSubmission) {
       showAlert({
-        title: "Please fill all mandatory fields",
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            Please fill all mandatory fields
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
