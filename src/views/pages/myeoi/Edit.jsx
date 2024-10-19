@@ -124,16 +124,20 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: (
-          <h6 className="warning-alert">
-            <WarningIcon width="60px" height="60px" />
-            <span className="text-danger">
+        title: <h6>Are you sure?</h6>,
+        content: (
+          <h6 className="warning-alert ">
+            <WarningIcon
+              width="50px"
+              height="50px"
+              style={{ marginTop: "-7px", enableBackground: "new 0 0 512 512" }}
+            />
+            <span className="text-danger text-start">
               The status you are about to set will instantly become visible to
               the Buyer
             </span>
           </h6>
         ),
-        content: <h3>Are you sure?</h3>,
         type: "warning",
         onConfirm: () => handleSubmit(),
         onCancel: hideAlert,

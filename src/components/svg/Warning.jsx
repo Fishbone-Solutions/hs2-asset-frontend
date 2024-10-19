@@ -10,7 +10,7 @@ const WarningIcon = (props) => (
     x="0"
     y="0"
     viewBox="0 0 128 128"
-    style={{ enableBackground: "new 0 0 512 512" }}
+    style={props.style}
     xmlSpace="preserve"
   >
     <g>
