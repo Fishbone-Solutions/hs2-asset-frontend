@@ -91,7 +91,7 @@ const useColumns = (handleDelete) => {
                 {row.original.total_eoi}
               </span>
 
-              {row.original.unviewed === true ? (
+              {row.original.un_attended_items === true ? (
                 <span
                   className="cursor-pointer"
                   data-bs-toggle="tooltip"
