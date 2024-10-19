@@ -153,7 +153,7 @@ const Create = () => {
   const onUploadImages = (event) => {
     console.log("repeat", event);
     const maxFiles = 5;
-    onFileUpload(event, maxFiles, ImageType, "images");
+    onFileUpload(event, maxFiles, ImageType, "image");
     const files = Array.from(event.files);
     // Take only up to the limit
     const limitedFiles = files.slice(0, maxFiles);
