@@ -166,16 +166,20 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: (
-          <h6 className="warning-alert">
-            <WarningIcon width="60px" height="60px" />
-            <span className="text-danger">
+        title: <h6>Are you sure?</h6>,
+        content: (
+          <h6 className="warning-alert ">
+            <WarningIcon
+              width="50px"
+              height="50px"
+              style={{ marginTop: "-7px", enableBackground: "new 0 0 512 512" }}
+            />
+            <span className="text-danger text-start">
               The status you are about to set will instantly become visible to
               the Buyer
             </span>
           </h6>
         ),
-        content: <h3>Are you sure?</h3>,
         confirmText: "Yes",
         onConfirm: async () => {
           await handleSubmit(); // No need to pass params, we'll use the ref
@@ -845,7 +849,7 @@ const Edit = () => {
                           type="button"
                           data-bs-toggle="tooltip"
                           data-bs-placement="left"
-                          title="Undo Current Status"
+                          title="Undo Current Seller Status"
                           onClick={() => {
                             showAlert({
                               title: (
@@ -925,7 +929,7 @@ const Edit = () => {
                               confirmText: "Yes",
                               onCancel: hideAlert,
                               onConfirm: () => {
-                                handleNudge("Buyer"); // replace with appropriate nudge action
+                                handleNudge("BUYER"); // replace with appropriate nudge action
                               },
                             });
                           }}
