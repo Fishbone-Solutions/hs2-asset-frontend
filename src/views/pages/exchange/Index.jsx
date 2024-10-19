@@ -38,6 +38,7 @@ import { categorycode1 } from "variables/common";
 import { subCategory } from "variables/common";
 import ModalComponent from "components/Common/ModalComponent";
 import moment from "moment";
+import { handleInput } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -280,7 +281,7 @@ const Index = () => {
   };
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    setInputValue(e);
   };
 
   const clearInput = () => {
@@ -427,8 +428,12 @@ const Index = () => {
                             type="text"
                             id="quickSearch"
                             onKeyPress={handleNameSearch}
-                            onChange={handleInputChange}
-                            value={inputValue}
+                            onChange={(e) => {
+                              const data = handleInput("alphaNumeric")(e);
+                              handleInputChange(data);
+                            }}
+                            maxLength={25}
+                            //value={inputValue}
                             className={`form-control custom-placeholder ${inputValue ? "active-close-btn" : ""}`}
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />

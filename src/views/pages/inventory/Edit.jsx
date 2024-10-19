@@ -178,7 +178,7 @@ const Edit = () => {
   const onUploadImages = (event) => {
     console.log("repeat", event);
     const maxFiles = 5;
-    onFileUpload(event, maxFiles, ImageType);
+    onFileUpload(event, maxFiles, ImageType, "image");
     const files = Array.from(event.files);
     // Take only up to the limit
     const limitedFiles = files.slice(0, maxFiles);
@@ -206,6 +206,7 @@ const Edit = () => {
     event,
     maxFiles = 2,
     allowedExtensions = [".pdf", ".docx"],
+    type,
     maxSize = 2000000
   ) => {
     console.log("hello", event);
@@ -236,8 +237,9 @@ const Edit = () => {
         showAlert({
           title: (
             <p className="success-sweet-title sweet-title-padding">
-              Invalid file type: {file.name}. Only{" "}
-              {allowedExtensions.join(", ")} files are allowed
+              {type === "image"
+                ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
+                : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
             </p>
           ),
           type: "error",
