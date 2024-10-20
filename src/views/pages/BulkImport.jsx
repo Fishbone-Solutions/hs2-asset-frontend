@@ -156,6 +156,32 @@ const BulkImport = () => {
         (progress) => setProgress(progress)
       );
 
+      if (response.appRespCode === "-3") {
+        showAlert({
+          title: (
+            <p class="sweet-title-size sweet-title-padding">
+              Invalid data format. Please ensure dates are in correct format
+            </p>
+          ),
+          type: "error",
+          onConfirm: () => hideAlert(),
+          confirmText: "Ok",
+          showCancelButton: false,
+        });
+      } else if (response.appRespCode === "02") {
+        showAlert({
+          title: (
+            <p class="sweet-title-size sweet-title-padding">
+              Please choose file with correct template
+            </p>
+          ),
+          type: "error",
+          onConfirm: () => hideAlert(),
+          confirmText: "Ok",
+          showCancelButton: false,
+        });
+      }
+
       // Log the response for debugging purposes
       console.log("Backend response:", response);
       setResponseStatus(response.appRequestStatus);
