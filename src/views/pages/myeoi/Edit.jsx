@@ -47,6 +47,7 @@ const Edit = () => {
   const headers = { user_id: sessionStorage.getItem("username") };
   const [refreshMainComponent, setRefreshMainComponent] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(null);
+  const [inventoryData, setInventoryData] = useState(null);
 
   const navigate = useNavigate();
 
@@ -59,7 +60,7 @@ const Edit = () => {
         source_module: "MYEOI",
       });
       // Start all the promises simultaneously
-      const [res, resEoi, resEoiActivities] = await Promise.all([
+      const [res, resEoi, resEoiActivities, inventory] = await Promise.all([
         EndPointService.inventoryBaseEoiDetails(
           headers,
           inventoryId,
@@ -68,12 +69,14 @@ const Edit = () => {
         ),
         EndPointService.getMyEoI(headers, username),
         EndPointService.eoiActivityTrackingHistory(headers, inventoryId, eoiId),
+        EndPointService.getInventoryById(headers, inventoryId),
       ]);
 
       // Update the state with the results
       setEoiState(resEoi.appRespData[0]);
       setDataState(res.appRespData[0]);
       setActivities(resEoiActivities.appRespData);
+      setInventoryData(inventory.appRespData[0]);
     } catch (e) {
       console.log(e);
       setToastType("error");
@@ -708,120 +711,126 @@ const Edit = () => {
             </Col>
 
             {/* Set EoI Status */}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    Acknowledgement To Seller
-                    <span className="float-right p-2">
-                      <div
-                        className="button-container"
-                        style={{
-                          display: "flex",
-                          gap: "2px",
-                          marginTop: "-33px",
-                        }}
-                      >
-                        <Button
-                          type="button"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="left"
-                          title="Undo Current Buyer Status"
-                          onClick={() => {
-                            showAlert({
-                              title: (
-                                <p className="success-sweet-title sweet-title-padding">
-                                  You sure you wish to undo your Current Buyer
-                                  Status?
-                                </p>
-                              ),
-                              type: "warning",
-                              showCancelButton: true,
-                              confirmText: "Yes",
-                              onCancel: hideAlert,
-                              onConfirm: () => {
-                                handleUndoStatus();
-                              },
-                            });
-                          }}
-                          className="undo-icon p-1 bg-transparent"
-                        >
-                          <UndoIcon />
-                        </Button>
-
-                        <Button
-                          type="button"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="left"
-                          title="Nudge Seller for response"
-                          onClick={() => {
-                            showAlert({
-                              title: (
-                                <p className="success-sweet-title sweet-title-padding">
-                                  Are you sure you wish to nudge the seller?
-                                </p>
-                              ),
-                              type: "warning",
-                              showCancelButton: true,
-                              confirmText: "Yes",
-                              onCancel: hideAlert,
-                              onConfirm: () => {
-                                handleNudge(); // replace with appropriate nudge action
-                              },
-                            });
-                          }}
-                          className="undo-icon p-1 bg-transparent"
-                        >
-                          <NudgeSvgIcon />
-                        </Button>
-                      </div>
-                    </span>
-                  </CardTitle>
-                </CardHeader>
-
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label>Status *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="eoi_status"
-                          value={
-                            myEoIUpdateoptions.find(
-                              (option) => option.value === updateStatus
-                            ) || null
-                          }
-                          options={myEoIUpdateoptions.map((option) => ({
-                            ...option,
-                          }))}
-                          onChange={handleSelectChange}
-                          placeholder="Select an option"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button
-                      color="primary"
-                      type="button"
-                      onClick={handleFormSubmission}
+            {inventoryData && inventoryData.statuscode !== "Sold" ? (
+              <Col md="12">
+                <Card>
+                  <CardHeader>
+                    <CardTitle
+                      tag="h6"
+                      style={{
+                        color: "rgb(82,203,206)",
+                        fontWeight: "bold",
+                        textTransform: "capitalize",
+                        WebkitTextTransform: "capitalize", // for Safari
+                      }}
                     >
-                      UPDATE
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
+                      Acknowledgement To Seller
+                      <span className="float-right p-2">
+                        <div
+                          className="button-container"
+                          style={{
+                            display: "flex",
+                            gap: "2px",
+                            marginTop: "-33px",
+                          }}
+                        >
+                          <Button
+                            type="button"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="left"
+                            title="Undo Current Buyer Status"
+                            onClick={() => {
+                              showAlert({
+                                title: (
+                                  <p className="success-sweet-title sweet-title-padding">
+                                    You sure you wish to undo your Current Buyer
+                                    Status?
+                                  </p>
+                                ),
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmText: "Yes",
+                                onCancel: hideAlert,
+                                onConfirm: () => {
+                                  handleUndoStatus();
+                                },
+                              });
+                            }}
+                            className="undo-icon p-1 bg-transparent"
+                          >
+                            <UndoIcon />
+                          </Button>
+
+                          <Button
+                            type="button"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="left"
+                            title="Nudge Seller for response"
+                            onClick={() => {
+                              showAlert({
+                                title: (
+                                  <p className="success-sweet-title sweet-title-padding">
+                                    Are you sure you wish to nudge the seller?
+                                  </p>
+                                ),
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmText: "Yes",
+                                onCancel: hideAlert,
+                                onConfirm: () => {
+                                  handleNudge(); // replace with appropriate nudge action
+                                },
+                              });
+                            }}
+                            className="undo-icon p-1 bg-transparent"
+                          >
+                            <NudgeSvgIcon />
+                          </Button>
+                        </div>
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardBody>
+                    <Row>
+                      <Col sm="6">
+                        <Label>Status *</Label>
+                        <FormGroup>
+                          <Select
+                            className="react-select primary"
+                            classNamePrefix="react-select"
+                            name="eoi_status"
+                            value={
+                              myEoIUpdateoptions.find(
+                                (option) => option.value === updateStatus
+                              ) || null
+                            }
+                            options={myEoIUpdateoptions.map((option) => ({
+                              ...option,
+                            }))}
+                            onChange={handleSelectChange}
+                            placeholder="Select an option"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <div
+                      style={{ display: "flex", justifyContent: "flex-end" }}
+                    >
+                      <Button
+                        color="primary"
+                        type="button"
+                        onClick={handleFormSubmission}
+                      >
+                        UPDATE
+                      </Button>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
           {alert}
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
