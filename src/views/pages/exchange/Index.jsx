@@ -39,6 +39,7 @@ import { subCategory } from "variables/common";
 import ModalComponent from "components/Common/ModalComponent";
 import moment from "moment";
 import { handleInput } from "variables/common";
+import { handleInputFilteration } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -429,7 +430,9 @@ const Index = () => {
                             id="quickSearch"
                             onKeyPress={handleNameSearch}
                             onChange={(e) => {
-                              const data = handleInput("alphaNumeric")(e);
+                              const data = handleInputFilteration(
+                                "alphaNumericDashDot"
+                              )(e);
                               handleInputChange(data);
                             }}
                             maxLength={25}
@@ -558,12 +561,14 @@ const Index = () => {
                     id="id"
                     name="id"
                     value={filterDataState.id}
-                    onChange={(e) =>
+                    maxLength={7}
+                    onChange={(e) => {
+                      const data = handleInputFilteration("numeric")(e);
                       setFilterDataState((previousState) => ({
                         ...previousState,
-                        id: e.target.value,
-                      }))
-                    }
+                        id: data,
+                      }));
+                    }}
                     placeholder="ID"
                     type="number"
                   />
@@ -577,12 +582,15 @@ const Index = () => {
                     id="assetName"
                     name="name"
                     value={filterDataState.asset_name}
-                    onChange={(e) =>
+                    maxLength={20}
+                    onChange={(e) => {
+                      const data =
+                        handleInputFilteration("alphaNumericDash")(e);
                       setFilterDataState((previousState) => ({
                         ...previousState,
-                        asset_name: e.target.value,
-                      }))
-                    }
+                        asset_name: data,
+                      }));
+                    }}
                     placeholder="name"
                     type="text"
                   />
@@ -639,12 +647,14 @@ const Index = () => {
                     id="location"
                     name="name"
                     value={filterDataState.location}
-                    onChange={(e) =>
+                    maxLength={40}
+                    onChange={(e) => {
+                      const data = handleInput("alphaNumericDashSlash")(e);
                       setFilterDataState((previousState) => ({
                         ...previousState,
-                        location: e.target.value,
-                      }))
-                    }
+                        location: data,
+                      }));
+                    }}
                     placeholder="location"
                     type="text"
                   />

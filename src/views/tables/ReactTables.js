@@ -55,7 +55,7 @@ function ReactTables() {
       return {
         id: key,
       };
-    }),
+    })
   );
   return (
     <>

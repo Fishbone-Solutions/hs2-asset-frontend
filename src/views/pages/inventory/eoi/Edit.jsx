@@ -33,6 +33,8 @@ import { getStatusMessage } from "variables/common";
 import NudgeSvgIcon from "components/svg/Nudge";
 import NudgeApproverSvgIcon from "components/svg/NudgeApproverSvgIcon";
 import { getUndoStatusMessage } from "variables/common";
+import { getNudgeMessage } from "variables/common";
+import AlertIcon from "components/svg/AlertIcon";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -155,7 +157,7 @@ const Edit = () => {
       showAlert({
         title: (
           <p className="success-sweet-title sweet-title-padding">
-            Please choose an EoI Status to update
+            Please choose an EOI Status to update
           </p>
         ),
         confirmText: "ok",
@@ -166,20 +168,23 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: <h6>Are you sure?</h6>,
-        content: (
+        title: (
           <h6 className="warning-alert ">
             <WarningIcon
               width="50px"
               height="50px"
-              style={{ marginTop: "-7px", enableBackground: "new 0 0 512 512" }}
+              style={{
+                marginTop: "-7px",
+                enableBackground: "new 0 0 512 512",
+              }}
             />
-            <span className="text-danger text-start">
+            <span className="text-danger-dark text-center">
               The status you are about to set will instantly become visible to
               the Buyer
             </span>
           </h6>
         ),
+        content: <h3>Are you sure?</h3>,
         confirmText: "Yes",
         onConfirm: async () => {
           await handleSubmit(); // No need to pass params, we'll use the ref
@@ -397,34 +402,23 @@ const Edit = () => {
         params
       );
       setLoader(false);
-      if (res.appRespData[0].eoi_nudge > 0) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              Nudge sent to {sendNudgeto === "BUYER" ? "Buyer" : "Approver"}
-            </p>
-          ),
-          type: "success",
-          showCancelButton: false,
-          confirmText: "Ok",
-          onConfirm: () => {
-            hideAlert();
+
+      showAlert({
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            {getNudgeMessage(res.appRespData[0].eoi_nudge, sendNudgeto)}
+          </p>
+        ),
+        type: res.appRespData[0].eoi_nudge > 0 ? "success" : "error",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          if (res.appRespData[0].eoi_nudge > 0) {
             setRefreshMainComponent(refreshMainComponent + 1);
-          },
-        });
-      } else if (res.appRespData[0].eoi_nudge === -2) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              You have already sent a nudge. A nudge can only be sent once a day
-            </p>
-          ),
-          type: "error",
-          showCancelButton: false,
-          confirmText: "ok",
-          onConfirm: hideAlert,
-        });
-      }
+          }
+        },
+      });
     } catch (e) {}
   };
 
@@ -516,13 +510,13 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {"EoI Information"}
+                    {"EOI Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>EoI No</Label>
+                      <Label>EOI No</Label>
                       <FormGroup>
                         <Input type="text" name="id" value={eoiId} readOnly />
                       </FormGroup>
@@ -558,7 +552,7 @@ const Edit = () => {
                           className="bg-current-status"
                           type="text"
                           name="id"
-                          value={dataState.seller_eoi_status}
+                          value={dataState?.seller_eoi_status ?? ""}
                           readOnly
                         />
                       </FormGroup>
@@ -835,7 +829,7 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {"EoI Status"}
+                    {"EOI Status"}
                     <span className="float-right p-2">
                       <div
                         className="button-container"
@@ -853,10 +847,26 @@ const Edit = () => {
                           onClick={() => {
                             showAlert({
                               title: (
-                                <p className="success-sweet-title sweet-title-padding">
+                                <h6 className="warning-alert ">
+                                  <AlertIcon
+                                    width="40px"
+                                    height="40px"
+                                    style={{
+                                      marginTop: "-7px",
+                                      enableBackground: "new 0 0 512 512",
+                                    }}
+                                  />
+                                  <span className="text-danger-dark text-center">
+                                    The Buyer might have already reacted to your
+                                    current status
+                                  </span>
+                                </h6>
+                              ),
+                              content: (
+                                <h6 className=" sweet-title-padding">
                                   You sure you wish to undo your Current Seller
                                   Status?
-                                </p>
+                                </h6>
                               ),
                               type: "warning",
                               showCancelButton: true,

@@ -66,7 +66,11 @@ const Index = () => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item",
+      content: (
+        <p className="text-danger font-weight-bold">
+          You will not be able to recover this item
+        </p>
+      ),
       type: "warning",
       onConfirm: () => successDelete(assetId, eoino),
       onCancel: hideAlert,
@@ -81,7 +85,7 @@ const Index = () => {
       });
       showAlert({
         title: "Deleted!",
-        content: `EoI ${eoiNo} has been deleted successfully`,
+        content: `EOI ${eoiNo} deleted successfully`,
         type: "success",
         showCancelButton: false,
         confirmText: "ok",

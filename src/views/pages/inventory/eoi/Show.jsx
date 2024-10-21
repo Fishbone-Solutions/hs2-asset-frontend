@@ -99,13 +99,13 @@ const Show = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {"EoI Information"}
+                    {"EOI Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>EoI No</Label>
+                      <Label>EOI No</Label>
                       <FormGroup>
                         <Input type="text" name="id" value={eoiId} readOnly />
                       </FormGroup>
@@ -398,7 +398,7 @@ const Show = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {"EoI Status"}
+                    {"EOI Status"}
                   </CardTitle>
                 </CardHeader>
 

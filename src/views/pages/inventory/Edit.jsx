@@ -735,6 +735,7 @@ const Edit = () => {
                                   type="number"
                                   name="value"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   as={Input}
                                   min="0" // Ensures no negative values
                                   step="0.01" // Allows decimal/floating-point values
@@ -797,6 +798,7 @@ const Edit = () => {
                                   type="number"
                                   name="purchase_price"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   as={Input}
                                   min="0" // Ensures no negative values
                                   step="0.01" // Allows decimal/floating-point values
@@ -836,6 +838,7 @@ const Edit = () => {
                                 <Field
                                   type="number"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
                                   as={Input}
                                 />
@@ -858,6 +861,7 @@ const Edit = () => {
                                   type="text"
                                   name="sold_value"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   value={
                                     values.sold_value === "null"
                                       ? ""
