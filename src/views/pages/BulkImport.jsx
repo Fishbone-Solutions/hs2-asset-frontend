@@ -495,7 +495,7 @@ const BulkImport = () => {
                                 responseStatus === "SUCCESS" ? false : true
                               }
                             >
-                              Import Records To Inventory
+                              Import To Inventory
                             </Button>
                           </Col>
                         </Row>

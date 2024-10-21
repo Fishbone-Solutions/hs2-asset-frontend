@@ -195,7 +195,7 @@ const Index = () => {
       filterFormData.available_from !== undefined
     )
       filters.push({
-        label: `Availablility: ${filterFormData.available_from} - ${filterFormData.available_to}`,
+        label: `${filterFormData.available_from} - ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
       });
     if (filterFormData.status)
@@ -393,16 +393,6 @@ const Index = () => {
     }
   };
 
-  // const handleRefreshComponet = () => {
-  //   setRefreshData(refreshData + 1);
-  //   setCurrentPageNumber(1);
-  //   setFilterFormDate((prev) => ({
-  //     ...prev,
-  //     cursor_row_no: 0,
-  //   }));
-  //   handleClear();
-  // };
-
   return (
     <>
       <div className="content">
@@ -436,7 +426,7 @@ const Index = () => {
                               handleInputChange(data);
                             }}
                             maxLength={25}
-                            //value={inputValue}
+                            value={inputValue}
                             className={`form-control custom-placeholder ${inputValue ? "active-close-btn" : ""}`}
                             placeholder="Type name of item you are looking for or use Advanced search"
                           />

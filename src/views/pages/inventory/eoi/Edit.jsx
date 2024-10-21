@@ -35,6 +35,7 @@ import NudgeApproverSvgIcon from "components/svg/NudgeApproverSvgIcon";
 import { getUndoStatusMessage } from "variables/common";
 import { getNudgeMessage } from "variables/common";
 import AlertIcon from "components/svg/AlertIcon";
+import { handleInputFilteration } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -782,10 +783,14 @@ const Edit = () => {
                         <InputGroup>
                           <InputGroupText>£</InputGroupText>
                           <Input
-                            type="number"
+                            type="text"
                             name="negotiated_val"
+                            onInput={(e) => {
+                              const data = handleInputFilteration("numeric")(e);
+
+                              setNegotiatedValue(data);
+                            }}
                             value={negotiatedValue}
-                            onChange={(e) => setNegotiatedValue(e.target.value)}
                             disabled={dataState.approval_status == "APPROVED"}
                           />
                         </InputGroup>
