@@ -173,12 +173,26 @@ export const getUndoStatusMessage = (status, type = null) => {
 };
 
 export const handleInput = (validationKey) => (event) => {
+  console.log("event", event);
   const { value } = event.target;
   const { pattern, regex } = validationRules[validationKey];
 
   // Validate input: if it doesn't match the pattern, remove invalid characters
   if (!pattern.test(value)) {
     event.target.value = value.replace(regex, "");
+  }
+};
+
+export const handleInputFilteration = (validationKey) => (event) => {
+  const { value } = event.target;
+
+  const { pattern, regex } = validationRules[validationKey];
+
+  // Validate input: if it doesn't match the pattern, remove invalid characters
+  if (!pattern.test(value)) {
+    return value.replace(regex, "");
+  } else {
+    return value;
   }
 };
 

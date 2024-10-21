@@ -39,6 +39,7 @@ import { subCategory } from "variables/common";
 import ModalComponent from "components/Common/ModalComponent";
 import moment from "moment";
 import { handleInput } from "variables/common";
+import { handleInputFilteration } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -429,9 +430,9 @@ const Index = () => {
                             id="quickSearch"
                             onKeyPress={handleNameSearch}
                             onChange={(e) => {
-                              const data = handleInput("alphaNumericDashDot")(
-                                e
-                              );
+                              const data = handleInputFilteration(
+                                "alphaNumericDashDot"
+                              )(e);
                               handleInputChange(data);
                             }}
                             maxLength={25}
@@ -562,7 +563,7 @@ const Index = () => {
                     value={filterDataState.id}
                     maxLength={7}
                     onChange={(e) => {
-                      const data = handleInput("numeric")(e);
+                      const data = handleInputFilteration("numeric")(e);
                       setFilterDataState((previousState) => ({
                         ...previousState,
                         id: data,
@@ -583,7 +584,8 @@ const Index = () => {
                     value={filterDataState.asset_name}
                     maxLength={20}
                     onChange={(e) => {
-                      const data = handleInput("alphaNumericDash")(e);
+                      const data =
+                        handleInputFilteration("alphaNumericDash")(e);
                       setFilterDataState((previousState) => ({
                         ...previousState,
                         asset_name: data,
