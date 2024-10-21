@@ -111,7 +111,7 @@ const Index = () => {
       filterFormData.entry_date_to !== null
     )
       filters.push({
-        label: `submission: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
+        label: `${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
         key: ["entry_date_from", "entry_date_to"],
       });
 
