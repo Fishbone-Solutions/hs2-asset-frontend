@@ -137,6 +137,7 @@ const Index = () => {
       entry_date_from: null,
       entry_date_to: null,
     });
+    setSearchFilter(searchFilter + 1);
     setClearDateBoolean(true);
   };
 
