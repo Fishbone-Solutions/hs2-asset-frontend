@@ -174,7 +174,7 @@ const Edit = () => {
           </h6>
         ),
         content: isSuccess ? (
-          <h6 className="success-sweet-content-color">Eoi ID = {eoiId}</h6>
+          <h6 className="success-sweet-content-color">EOI ID = {eoiId}</h6>
         ) : null, // Only show content for success cases
         type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
@@ -325,34 +325,22 @@ const Edit = () => {
         params
       );
       setLoader(false);
-      if (res.appRespData[0].eoi_nudge > 0) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              Nudge sent to Seller
-            </p>
-          ),
-          type: "success",
-          showCancelButton: false,
-          confirmText: "Ok",
-          onConfirm: () => {
-            hideAlert();
+      showAlert({
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            {getNudgeMessage(res.appRespData[0].eoi_nudge, "SELLER")}
+          </p>
+        ),
+        type: res.appRespData[0].eoi_nudge > 0 ? "success" : "error",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          if (res.appRespData[0].eoi_nudge > 0) {
             setRefreshMainComponent(refreshMainComponent + 1);
-          },
-        });
-      } else if (res.appRespData[0].eoi_nudge === -2) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              You have already sent a nudge. A nudge can only be sent once a day
-            </p>
-          ),
-          type: "error",
-          showCancelButton: false,
-          confirmText: "ok",
-          onConfirm: hideAlert,
-        });
-      }
+          }
+        },
+      });
     } catch (e) {}
   };
   return (
@@ -711,7 +699,7 @@ const Edit = () => {
             </Col>
 
             {/* Set EoI Status */}
-            {inventoryData && inventoryData.statuscode !== "Sold" ? (
+            {inventoryData?.statuscode !== "Sold" ? (
               <Col md="12">
                 <Card>
                   <CardHeader>

@@ -33,6 +33,7 @@ import { getStatusMessage } from "variables/common";
 import NudgeSvgIcon from "components/svg/Nudge";
 import NudgeApproverSvgIcon from "components/svg/NudgeApproverSvgIcon";
 import { getUndoStatusMessage } from "variables/common";
+import { getNudgeMessage } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -155,7 +156,7 @@ const Edit = () => {
       showAlert({
         title: (
           <p className="success-sweet-title sweet-title-padding">
-            Please choose an EoI Status to update
+            Please choose an EOI Status to update
           </p>
         ),
         confirmText: "ok",
@@ -397,34 +398,23 @@ const Edit = () => {
         params
       );
       setLoader(false);
-      if (res.appRespData[0].eoi_nudge > 0) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              Nudge sent to {sendNudgeto === "BUYER" ? "Buyer" : "Approver"}
-            </p>
-          ),
-          type: "success",
-          showCancelButton: false,
-          confirmText: "Ok",
-          onConfirm: () => {
-            hideAlert();
+
+      showAlert({
+        title: (
+          <p className="success-sweet-title sweet-title-padding">
+            {getNudgeMessage(res.appRespData[0].eoi_nudge, sendNudgeto)}
+          </p>
+        ),
+        type: res.appRespData[0].eoi_nudge > 0 ? "success" : "error",
+        showCancelButton: false,
+        confirmText: "Ok",
+        onConfirm: () => {
+          hideAlert();
+          if (res.appRespData[0].eoi_nudge > 0) {
             setRefreshMainComponent(refreshMainComponent + 1);
-          },
-        });
-      } else if (res.appRespData[0].eoi_nudge === -2) {
-        showAlert({
-          title: (
-            <p className="success-sweet-title sweet-title-padding">
-              You have already sent a nudge. A nudge can only be sent once a day
-            </p>
-          ),
-          type: "error",
-          showCancelButton: false,
-          confirmText: "ok",
-          onConfirm: hideAlert,
-        });
-      }
+          }
+        },
+      });
     } catch (e) {}
   };
 
@@ -516,13 +506,13 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {"EoI Information"}
+                    {"EOI Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>EoI No</Label>
+                      <Label>EOI No</Label>
                       <FormGroup>
                         <Input type="text" name="id" value={eoiId} readOnly />
                       </FormGroup>
@@ -835,7 +825,7 @@ const Edit = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {"EoI Status"}
+                    {"EOI Status"}
                     <span className="float-right p-2">
                       <div
                         className="button-container"

@@ -140,7 +140,9 @@ const Index = () => {
     showAlert({
       title: "Are you sure?",
       content: (
-        <p className="text-danger">You will not be able to recover this item</p>
+        <p className="text-danger font-weight-bold">
+          You will not be able to recover this item
+        </p>
       ),
       type: "warning",
       onConfirm: () => successDelete(id),
@@ -168,7 +170,7 @@ const Index = () => {
       } else {
         showAlert({
           title: "Deleted!",
-          content: `Asset ID ${id} has been deleted successfully`,
+          content: `Asset ID ${id}  deleted successfully`,
           type: "success",
           showCancelButton: false,
           confirmText: "ok",
@@ -628,12 +630,13 @@ const Index = () => {
                 <Input
                   type="text"
                   value={filterDataState.id}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const data = handleInput("numeric")(e);
                     setFilterDataState((previousState) => ({
                       ...previousState,
-                      id: e.target.value,
-                    }))
-                  }
+                      id: data,
+                    }));
+                  }}
                   name="id"
                   id="id"
                   placeholder="id"
@@ -646,12 +649,13 @@ const Index = () => {
                 <Input
                   id="name"
                   value={filterDataState.asset_name}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const data = handleInput("alphaNumericDash")(e);
                     setFilterDataState((previousState) => ({
                       ...previousState,
-                      asset_name: e.target.value,
-                    }))
-                  }
+                      asset_name: data,
+                    }));
+                  }}
                   type="text"
                   name="asset_name"
                   placeholder="name"

@@ -14,7 +14,9 @@ const getBadgeClass = (activity) => {
     case "PROCESSING":
       return "badge bg-processing";
     case "APPROVED":
-      return "badge bg-purple"; // Light Green
+      return "badge bg-lime"; // Light Green
+    case "REJECTED":
+      return "badge bg-danger"; // Light Green
     case "PAYMENT-REQUESTED":
       return "badge bg-warning-dark"; // Light Orange
     case "PAYMENT-SENT":

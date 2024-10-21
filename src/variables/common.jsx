@@ -181,3 +181,45 @@ export const handleInput = (validationKey) => (event) => {
     event.target.value = value.replace(regex, "");
   }
 };
+
+export const getResponseBulkUploadMessage = (code) => {
+  switch (code) {
+    case "-1":
+      return "Parsing Failed: No valid data found in the file";
+    case "-2":
+      return "An error occurred while processing the request. Please try again later";
+    case "-3":
+      return "Invalid data format. Please ensure dates are in the correct format";
+    case "02":
+      return "Please choose a file with the correct template";
+    default:
+      return "";
+  }
+};
+
+export const getNudgeMessage = (eoi_nudge, sendNudgeto) => {
+  switch (true) {
+    case eoi_nudge > 0:
+      return `Nudge sent to ${
+        sendNudgeto === "BUYER"
+          ? "Buyer"
+          : sendNudgeto === "SELLER"
+            ? "Seller"
+            : "Approver"
+      }`;
+
+    case eoi_nudge === -2:
+      return "You have already sent a nudge. A nudge can only be sent once a day.";
+
+    case eoi_nudge === -3:
+      return `No pending request at ${
+        sendNudgeto === "BUYER"
+          ? "Seller"
+          : sendNudgeto === "SELLER"
+            ? "Buyer"
+            : "Approver"
+      }`;
+    default:
+      return "An unknown error occurred.";
+  }
+};

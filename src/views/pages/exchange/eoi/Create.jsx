@@ -335,7 +335,9 @@ const Create = () => {
                             <Field
                               type="text"
                               name="contact_time_preference"
-                              onInput={handleInput("alphaNumericDashSlash")}
+                              onInput={handleInput(
+                                "alphaNumericDashSlashColun"
+                              )}
                               maxLength={20}
                               as={Input}
                             />
