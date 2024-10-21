@@ -670,6 +670,7 @@ const Create = () => {
                                   type="number"
                                   name="value"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   as={Input}
                                   min="0" // Ensures no negative values
                                   step="0.01" // Allows decimal/floating-point values
@@ -730,6 +731,7 @@ const Create = () => {
                                   type="number"
                                   name="purchase_price"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   as={Input}
                                   min="0" // Ensures no negative values
                                   step="0.01" // Allows decimal/floating-point values
@@ -769,6 +771,7 @@ const Create = () => {
                                 <Field
                                   type="number"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
                                   as={Input}
                                 />
@@ -791,6 +794,7 @@ const Create = () => {
                                   type="number"
                                   name="sold_value"
                                   maxLength={7}
+                                  onInput={handleInput("numeric")}
                                   disabled
                                   as={Input}
                                 />

@@ -63,14 +63,14 @@ function W8() {
       try {
         const response = await fetch(
           `${BACKEND_ADDRESS}/assets/-1`,
-          requestOptions,
+          requestOptions
         );
         const result = await response.json();
         setDataState(result.appRespData);
         console.log(result);
       } catch (error) {
         setErrorMessage(
-          "Unable to load data. Please refresh the page or load after time",
+          "Unable to load data. Please refresh the page or load after time"
         );
         console.error(error);
       }
@@ -126,7 +126,7 @@ function W8() {
     {
       Header: ({ column }) => (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span>EoI Submission Date</span>
+          <span>EOI Submission Date</span>
           <span>
             {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
           </span>

@@ -54,7 +54,11 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item",
+      content: (
+        <p className="text-danger font-weight-bold">
+          You will not be able to recover this item
+        </p>
+      ),
       type: "warning",
       onConfirm: () => successDelete(id),
       onCancel: hideAlert,
@@ -67,7 +71,11 @@ const Index = () => {
       const res = await EndPointService.deleteApprovalRequest(headers, id);
       showAlert({
         title: "Deleted!",
-        content: <h6 className="success-sweet-content-color">Request ID: {id} has been deleted</h6>,
+        content: (
+          <h6 className="success-sweet-content-color">
+            Request ID: {id} has been deleted
+          </h6>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "ok",

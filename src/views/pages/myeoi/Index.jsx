@@ -22,6 +22,7 @@ import { GlobalContext } from "@/GlobalState";
 import TableColumn from "variables/tables/myeoi/Index";
 import ModalComponent from "components/Common/ModalComponent";
 import { useAlert } from "components/Common/NotificationAlert";
+import { handleInput } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -64,13 +65,13 @@ const Index = () => {
   const fetchMyEoI = async () => {
     try {
       setLoader(true);
-      
+
       const params = new URLSearchParams({
         fltr_eoi_id: getValueOrDefault(filterFormData.id),
         fltr_item_id: getValueOrDefault(filterFormData.asset_id),
         fltr_item_name: getValueOrDefault(filterFormData.asset_name),
         fItr_from_subDate: getValueOrDefault(filterFormData.entry_date_from),
-        fItr_to_subDate: getValueOrDefault(filterFormData.entry_date_to)
+        fItr_to_subDate: getValueOrDefault(filterFormData.entry_date_to),
       });
 
       const res = await EndPointService.getMyEoI(
@@ -97,12 +98,17 @@ const Index = () => {
         label: `Asset Id: ${filterFormData.asset_id}`,
         key: "asset_id",
       });
-      if (filterFormData.asset_name)
-        filters.push({
-          label: `${filterFormData.asset_name}`,
-          key: "asset_name",
-        });
-    if ((filterFormData.entry_date_from !== '' && filterFormData.entry_date_from !== null) && (filterFormData.entry_date_to !== '' && filterFormData.entry_date_to !== null))
+    if (filterFormData.asset_name)
+      filters.push({
+        label: `${filterFormData.asset_name}`,
+        key: "asset_name",
+      });
+    if (
+      filterFormData.entry_date_from !== "" &&
+      filterFormData.entry_date_from !== null &&
+      filterFormData.entry_date_to !== "" &&
+      filterFormData.entry_date_to !== null
+    )
       filters.push({
         label: `submission: ${filterFormData.entry_date_from}- ${filterFormData.entry_date_to}`,
         key: ["entry_date_from", "entry_date_to"],
@@ -161,14 +167,17 @@ const Index = () => {
     );
     setClearDateBoolean(true);
     handleFilter();
- 
   };
 
   const handleDelete = (assetId, eoino) => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: "Are you sure?",
-      content: "You will not be able to recover this item",
+      content: (
+        <p className="text-danger font-weight-bold">
+          You will not be able to recover this item
+        </p>
+      ),
       type: "warning",
       onConfirm: () => successDelete(assetId, eoino),
       onCancel: hideAlert,
@@ -178,10 +187,12 @@ const Index = () => {
   const successDelete = async (assetId, eoiNo) => {
     try {
       setLoader(true);
-      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, { user_type: 'BUYER'});
+      const res = await EndPointService.deleteEoiById(headers, assetId, eoiNo, {
+        user_type: "BUYER",
+      });
       showAlert({
         title: "Deleted!",
-        content: `EoI ${eoiNo} has been deleted successfully`,
+        content: `EOI ${eoiNo} deleted successfully`,
         type: "success",
         showCancelButton: false,
         confirmText: "ok",
@@ -206,9 +217,8 @@ const Index = () => {
           <Col md="12">
             <Card>
               <CardBody>
-                      <div className="float-end d-inline-flex p-2 justify-content-end">
-                        
-                        <div
+                <div className="float-end d-inline-flex p-2 justify-content-end">
+                  <div
                     onClick={() => openModal("filter-modal")}
                     className="cursor-pointer"
                     data-bs-placement="top"
@@ -220,9 +230,10 @@ const Index = () => {
                       className="icon-btn"
                     />
                   </div>
-                        </div>
+                </div>
                 <div className="applied-filters">
-                  {appliedFilters && appliedFilters.length > 0 &&
+                  {appliedFilters &&
+                    appliedFilters.length > 0 &&
                     appliedFilters.map((filter) => (
                       <div
                         key={filter.key}
@@ -254,85 +265,88 @@ const Index = () => {
         modalId="filter-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-                        <IoSearchSharp
-                          width="30"
-                          height="30"
-                          size="1.4rem"
-                          className="me-2"
-                        />
-                        Filter
-                      </h6>
+            <IoSearchSharp
+              width="30"
+              height="30"
+              size="1.4rem"
+              className="me-2"
+            />
+            Filter
+          </h6>
         }
         content={
           <>
-          <Row>
-                        <Col sm="6">
-                          <FormGroup floating>
-                            <Input
-                              type="text"
-                              value={filterFormData.id}
-                              onChange={(e) =>
-                                setFilterFormData((previousState) => ({
-                                  ...previousState,
-                                  id: e.target.value,
-                                }))
-                              }
-                              name="id"
-                              id="id"
-                              placeholder="id"
-                            />
-                            <Label for="id">EoI ID</Label>
-                          </FormGroup>
-                        </Col>
-                        <Col sm="6">
-                          <FormGroup floating>
-                            <Input
-                              id="asset_id"
-                              value={filterFormData.asset_id}
-                              onChange={(e) =>
-                                setFilterFormData((previousState) => ({
-                                  ...previousState,
-                                  asset_id: e.target.value,
-                                }))
-                              }
-                              type="text"
-                              name="asset_id"
-                              placeholder="Item ID"
-                            />
-                            <Label for="name">Item ID</Label>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col sm="6">
-                          <div className="placer2">
-                            <FormGroup>
-                              <DateRangePicker
-                                label="Submission Date Range"
-                                onChange={handleEntryDate}
-                                clearDates={clearDateBoolean}
-                              />
-                            </FormGroup>
-                          </div>
-                        </Col>
-                        <Col sm="6">
-                          <FormGroup>
-                            <Input
-                              id="itemname"
-                              type="text"
-                              value={filterFormData.asset_name}
-                              onChange={(e) =>
-                                setFilterFormData((previousState) => ({
-                                  ...previousState,
-                                  asset_name: e.target.value,
-                                }))
-                              }
-                              name="itemname"
-                              placeholder="Item Name"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
+            <Row>
+              <Col sm="6">
+                <FormGroup floating>
+                  <Input
+                    type="text"
+                    value={filterFormData.id}
+                    onChange={(e) => {
+                      const data = handleInput("numeric")(e);
+                      setFilterFormData((previousState) => ({
+                        ...previousState,
+                        id: data,
+                      }));
+                    }}
+                    name="id"
+                    id="id"
+                    placeholder="id"
+                  />
+                  <Label for="id">EOI ID</Label>
+                </FormGroup>
+              </Col>
+              <Col sm="6">
+                <FormGroup floating>
+                  <Input
+                    id="asset_id"
+                    value={filterFormData.asset_id}
+                    onChange={(e) => {
+                      const data = handleInput("numeric")(e);
+                      setFilterFormData((previousState) => ({
+                        ...previousState,
+                        asset_id: data,
+                      }));
+                    }}
+                    type="text"
+                    name="asset_id"
+                    placeholder="Item ID"
+                  />
+                  <Label for="name">Item ID</Label>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm="6">
+                <div className="placer2">
+                  <FormGroup>
+                    <DateRangePicker
+                      label="Submission Date Range"
+                      onChange={handleEntryDate}
+                      clearDates={clearDateBoolean}
+                    />
+                  </FormGroup>
+                </div>
+              </Col>
+              <Col sm="6">
+                <FormGroup>
+                  <Input
+                    id="itemname"
+                    type="text"
+                    value={filterFormData.asset_name}
+                    onChange={(e) => {
+                      const data = handleInput("alphaNumericDash")(e);
+                      setFilterFormData((previousState) => ({
+                        ...previousState,
+                        asset_name: data,
+                      }));
+                    }}
+                    name="itemname"
+                    placeholder="Item Name"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
           </>
         }
         showModal={activeModal === "filter-modal"}

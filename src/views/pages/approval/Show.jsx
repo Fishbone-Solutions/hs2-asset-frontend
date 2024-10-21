@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModalComponent from "components/Common/ModalComponent";
 import { useSearchParams } from "react-router-dom";
+import { handleInput } from "variables/common";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -110,8 +111,7 @@ const Show = () => {
   }, [params]);
 
   // Function to handle modal input
-  const handleModalInput = (e) => {
-    const { value } = e.target;
+  const handleModalInput = (value) => {
     setParams((prevState) => ({
       ...prevState,
       approval_ref_no: value,
@@ -227,13 +227,13 @@ const Show = () => {
                       WebkitTextTransform: "capitalize",
                     }}
                   >
-                    {"EoI Information"}
+                    {"EOI Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>EoI No</Label>
+                      <Label>EOI No</Label>
                       <FormGroup>
                         <Input type="text" name="id" value={eoiId} readOnly />
                       </FormGroup>
@@ -595,7 +595,10 @@ const Show = () => {
                   className="btn btn-success success-btn"
                   color="primary"
                   style={{ visibility: "visible", opacity: 1 }}
-                  onClick={() => handleRequestApprovalOrRejected("APPROVED")}
+                  onClick={() => {
+                    handleRequestApprovalOrRejected("APPROVED");
+                    setValidationError(false);
+                  }}
                 >
                   Approve
                 </Button>
@@ -604,6 +607,7 @@ const Show = () => {
                   color="secondary"
                   onClick={() => {
                     handleRequestApprovalOrRejected("REJECTED");
+                    setValidationError(false);
                   }}
                   style={{ visibility: "visible", opacity: 1 }}
                 >
@@ -638,7 +642,10 @@ const Show = () => {
               className="form-control"
               maxLength={params.approval_status === "APPROVED" ? 20 : 40}
               value={params.approval_ref_no} // Binding to params state
-              onChange={handleModalInput} // Calling handler directly
+              onChange={(e) => {
+                const data = handleInput("alphaNumericDashSlashColun")(e);
+                handleModalInput(data);
+              }} // Calling handler directly
               placeholder={
                 params.approval_status === "APPROVED"
                   ? `CEMAR Ref No`

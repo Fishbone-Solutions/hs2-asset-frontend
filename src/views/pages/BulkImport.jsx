@@ -21,6 +21,7 @@ import { RiAttachment2 } from "react-icons/ri";
 import CsvIcon from "components/svg/CsvIcon";
 import XlsIcon from "components/svg/XlsIcon";
 import { useAlert } from "components/Common/NotificationAlert";
+import { getResponseBulkUploadMessage } from "variables/common";
 
 const BulkImport = () => {
   const [progress, setProgress] = useState(0);
@@ -42,6 +43,7 @@ const BulkImport = () => {
   const [selectDisabled, setSelectDisabled] = useState(true);
   const [parseFileDisabled, setParseFileDisabled] = useState(true);
   const [responseStatus, setResponseStatus] = useState(null);
+  const [responseCode, setResponseCode] = useState(null);
 
   const [segmentWidth, setSegmentWidth] = useState(0);
   const [remainingProgress, setRemaingProgress] = useState(0);
@@ -156,35 +158,10 @@ const BulkImport = () => {
         (progress) => setProgress(progress)
       );
 
-      if (response.appRespCode === "-3") {
-        showAlert({
-          title: (
-            <p class="sweet-title-size sweet-title-padding">
-              Invalid data format. Please ensure dates are in correct format
-            </p>
-          ),
-          type: "error",
-          onConfirm: () => hideAlert(),
-          confirmText: "Ok",
-          showCancelButton: false,
-        });
-      } else if (response.appRespCode === "02") {
-        showAlert({
-          title: (
-            <p class="sweet-title-size sweet-title-padding">
-              Please choose file with correct template
-            </p>
-          ),
-          type: "error",
-          onConfirm: () => hideAlert(),
-          confirmText: "Ok",
-          showCancelButton: false,
-        });
-      }
-
       // Log the response for debugging purposes
       console.log("Backend response:", response);
       setResponseStatus(response.appRequestStatus);
+      setResponseCode(response.appRespCode);
       setTotalRecordsFound(response?.appRespData?.total_records_found || 0);
     } catch (error) {
       // Log the error to understand the issue
@@ -479,8 +456,7 @@ const BulkImport = () => {
                               </span>
                             ) : responseStatus === "ERROR" ? (
                               <span className="text-danger font-weight-bold">
-                                Failed to parse the file. Please verify the
-                                template and try again
+                                {getResponseBulkUploadMessage(responseCode)}
                               </span>
                             ) : (
                               ""
@@ -506,7 +482,7 @@ const BulkImport = () => {
                                 showAlert({
                                   title: (
                                     <p class="sweet-title-size sweet-title-padding">
-                                      Are you sure you wish to Import
+                                      Are you sure you wish to Import{" "}
                                       {totalRecordsFound} records to Inventory ?
                                     </p>
                                   ),
