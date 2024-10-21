@@ -1,14 +1,13 @@
-import React from "react";
-
-const NudgeSvgIcon = () => (
+const NudgeIconApprover = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width="2em"
-    height="2em"
+    width="512"
+    height="512"
     viewBox="0 0 32 32"
     style={{ enableBackground: "new 0 0 512 512" }}
+    {...props} // Pass any props like className or onClick
   >
     <g>
       <path
@@ -71,4 +70,4 @@ const NudgeSvgIcon = () => (
   </svg>
 );
 
-export default NudgeSvgIcon;
+export default NudgeIconApprover;
