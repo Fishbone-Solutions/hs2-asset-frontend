@@ -787,7 +787,6 @@ const Edit = () => {
                             name="negotiated_val"
                             onInput={(e) => {
                               const data = handleInputFilteration("numeric")(e);
-
                               setNegotiatedValue(data);
                             }}
                             value={negotiatedValue}
