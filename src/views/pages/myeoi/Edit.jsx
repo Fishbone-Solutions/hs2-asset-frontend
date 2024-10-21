@@ -34,6 +34,7 @@ import { getStatusMessage } from "variables/common";
 import WarningIcon from "components/svg/Warning";
 import NudgeSvgIcon from "components/svg/Nudge";
 import { getUndoStatusMessage } from "variables/common";
+import { getNudgeMessage } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});

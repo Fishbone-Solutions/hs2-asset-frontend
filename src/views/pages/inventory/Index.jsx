@@ -29,6 +29,7 @@ import ModalComponent from "components/Common/ModalComponent";
 import RefreshComponetIcon from "components/svg/RefreshComponet";
 import BeatingIcon from "components/svg/BeatingIcon";
 import AttentionIcon from "components/svg/AttentionIcon";
+import { handleInputFilteration } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -631,7 +632,7 @@ const Index = () => {
                   type="text"
                   value={filterDataState.id}
                   onChange={(e) => {
-                    const data = handleInput("numeric")(e);
+                    const data = handleInputFilteration("numeric")(e);
                     setFilterDataState((previousState) => ({
                       ...previousState,
                       id: data,
@@ -650,7 +651,7 @@ const Index = () => {
                   id="name"
                   value={filterDataState.asset_name}
                   onChange={(e) => {
-                    const data = handleInput("alphaNumericDash")(e);
+                    const data = handleInputFilteration("alphaNumericDash")(e);
                     setFilterDataState((previousState) => ({
                       ...previousState,
                       asset_name: data,

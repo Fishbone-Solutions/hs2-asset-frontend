@@ -23,6 +23,7 @@ import TableColumn from "variables/tables/myeoi/Index";
 import ModalComponent from "components/Common/ModalComponent";
 import { useAlert } from "components/Common/NotificationAlert";
 import { handleInput } from "variables/common";
+import { handleInputFilteration } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -283,7 +284,7 @@ const Index = () => {
                     type="text"
                     value={filterFormData.id}
                     onChange={(e) => {
-                      const data = handleInput("numeric")(e);
+                      const data = handleInputFilteration("numeric")(e);
                       setFilterFormData((previousState) => ({
                         ...previousState,
                         id: data,
@@ -302,7 +303,7 @@ const Index = () => {
                     id="asset_id"
                     value={filterFormData.asset_id}
                     onChange={(e) => {
-                      const data = handleInput("numeric")(e);
+                      const data = handleInputFilteration("numeric")(e);
                       setFilterFormData((previousState) => ({
                         ...previousState,
                         asset_id: data,
@@ -335,7 +336,8 @@ const Index = () => {
                     type="text"
                     value={filterFormData.asset_name}
                     onChange={(e) => {
-                      const data = handleInput("alphaNumericDash")(e);
+                      const data =
+                        handleInputFilteration("alphaNumericDash")(e);
                       setFilterFormData((previousState) => ({
                         ...previousState,
                         asset_name: data,
