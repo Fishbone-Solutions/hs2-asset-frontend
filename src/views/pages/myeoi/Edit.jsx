@@ -35,6 +35,7 @@ import WarningIcon from "components/svg/Warning";
 import NudgeSvgIcon from "components/svg/Nudge";
 import { getUndoStatusMessage } from "variables/common";
 import { getNudgeMessage } from "variables/common";
+import AlertIcon from "components/svg/AlertIcon";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -128,20 +129,20 @@ const Edit = () => {
       });
     } else {
       showAlert({
-        title: <h6>Are you sure?</h6>,
-        content: (
+        title: (
           <h6 className="warning-alert ">
             <WarningIcon
               width="50px"
               height="50px"
               style={{ marginTop: "-7px", enableBackground: "new 0 0 512 512" }}
             />
-            <span className="text-danger text-start">
+            <span className="text-danger-dark text-center">
               The status you are about to set will instantly become visible to
               the Buyer
             </span>
           </h6>
         ),
+        content: <h3>Are you sure?</h3>,
         type: "warning",
         onConfirm: () => handleSubmit(),
         onCancel: hideAlert,
@@ -175,7 +176,7 @@ const Edit = () => {
           </h6>
         ),
         content: isSuccess ? (
-          <h6 className="success-sweet-content-color">EOI ID = {eoiId}</h6>
+          <h6 className="success-sweet-content-color">EOI ID : {eoiId}</h6>
         ) : null, // Only show content for success cases
         type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
@@ -731,10 +732,26 @@ const Edit = () => {
                             onClick={() => {
                               showAlert({
                                 title: (
-                                  <p className="success-sweet-title sweet-title-padding">
+                                  <h6 className="warning-alert ">
+                                    <AlertIcon
+                                      width="40px"
+                                      height="40px"
+                                      style={{
+                                        marginTop: "-7px",
+                                        enableBackground: "new 0 0 512 512",
+                                      }}
+                                    />
+                                    <span className="text-danger-dark text-center">
+                                      The Buyer might have already reacted to
+                                      your current status
+                                    </span>
+                                  </h6>
+                                ),
+                                content: (
+                                  <h6 className="sweet-title-padding">
                                     You sure you wish to undo your Current Buyer
                                     Status?
-                                  </p>
+                                  </h6>
                                 ),
                                 type: "warning",
                                 showCancelButton: true,

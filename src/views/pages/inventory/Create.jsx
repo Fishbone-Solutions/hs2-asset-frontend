@@ -124,7 +124,7 @@ const Create = () => {
         ),
         content: (
           <h6 className="success-sweet-content-color">
-            Item ID = {res.appRespData.asset_id}
+            Item ID : {res.appRespData.asset_id}
           </h6>
         ),
         type: "success",

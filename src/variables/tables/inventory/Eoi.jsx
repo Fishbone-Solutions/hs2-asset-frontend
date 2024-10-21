@@ -74,7 +74,7 @@ const useColumns = (handleDelete) => {
                 <span
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
-                  title="New Status From Approver"
+                  title="New Update From Approver"
                 >
                   <AlertIcon
                     width="22"
