@@ -29,6 +29,7 @@ import { Link } from "react-router-dom";
 import ModalComponent from "components/Common/ModalComponent";
 import { useSearchParams } from "react-router-dom";
 import { handleInput } from "variables/common";
+import { handleInputFilteration } from "variables/common";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -643,7 +644,9 @@ const Show = () => {
               maxLength={params.approval_status === "APPROVED" ? 20 : 40}
               value={params.approval_ref_no} // Binding to params state
               onChange={(e) => {
-                const data = handleInput("alphaNumericDashSlashColun")(e);
+                const data = handleInputFilteration(
+                  "alphaNumericDashSlashColun"
+                )(e);
                 handleModalInput(data);
               }} // Calling handler directly
               placeholder={
