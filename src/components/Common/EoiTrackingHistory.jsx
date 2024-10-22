@@ -79,7 +79,11 @@ const ActivityTable = ({ activities }) => {
                 <td>
                   <span className={getBadgeClass(activity.activity)}>
                     <div
-                      className="flex text-start"
+                      className={
+                        activity.is_reverted
+                          ? `strike-content flex text-start`
+                          : `flex text-start`
+                      }
                       dangerouslySetInnerHTML={{
                         __html: formatApprovalString(activity.activity),
                       }} // Render HTML
