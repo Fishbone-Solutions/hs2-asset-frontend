@@ -19,6 +19,7 @@ import {
 import { EndPointService } from "@/services/methods";
 import DynamicToast from "components/Common/Toast";
 import { FullPageLoader } from "components/Common/ComponentLoader";
+import { useAlert } from "components/Common/NotificationAlert";
 
 function UserProfile() {
   const [loader, setLoader] = useState(false);
@@ -27,6 +28,13 @@ function UserProfile() {
   const { username } = useContext(GlobalContext);
   const [dataState, setDataState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+  const [dataUpdate, setDataUpdate] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    contact_no: "",
+  });
   const camelCaseWithSpaces = (text) => {
     return text
       .split(" ")
@@ -43,11 +51,42 @@ function UserProfile() {
         headers,
         sessionStorage.getItem("username")
       );
-      setDataState(res.appRespData[0]);
+      const resData = res.appRespData[0];
+      setDataState(resData);
+      setDataUpdate((previousState) => ({
+        ...previousState,
+        first_name: resData.firstname,
+        last_name: resData.lastname,
+        email: resData.email,
+        contact_no: resData.contact_no,
+      }));
       setLoader(false);
     } catch (e) {
       setToastType("error");
       setToastMessage(e.appRespMessage);
+      setLoader(false);
+    }
+  };
+
+  const handleUpdateProfile = () => {
+    setLoader(true);
+    try {
+      const res = EndPointService.updateProfile(
+        headers,
+        sessionStorage.getItem("username"),
+        dataUpdate
+      );
+      setLoader(false);
+      showAlert({
+        title: "Updated Profile",
+        type: "success",
+        onConfirm: () => {
+          hideAlert();
+        },
+        showCancelButton: false,
+        onCancel: hideAlert,
+      });
+    } catch (e) {
       setLoader(false);
     }
   };
@@ -61,6 +100,7 @@ function UserProfile() {
       <div className="content">
         {toastType && <DynamicToast type={toastType} message={toastMessage} />}
         {loader && <FullPageLoader />}
+        {alert}
         <Row>
           <Col md="12">
             <Card>
@@ -85,8 +125,13 @@ function UserProfile() {
                         <label>First Name</label>
                         <Input
                           defaultValue={dataState.firstname}
-                          disabled
-                          placeholder="Company"
+                          placeholder="first name"
+                          onInput={(e) => {
+                            setDataUpdate((previousState) => ({
+                              ...previousState,
+                              first_name: e.target.value,
+                            }));
+                          }}
                           type="text"
                         />
                       </FormGroup>
@@ -97,8 +142,13 @@ function UserProfile() {
                         <label>Last Name</label>
                         <Input
                           defaultValue={dataState.lastname}
-                          placeholder="Username"
-                          disabled
+                          placeholder="last name"
+                          onInput={(e) => {
+                            setDataUpdate((previousState) => ({
+                              ...previousState,
+                              last_name: e.target.value,
+                            }));
+                          }}
                           type="text"
                         />
                       </FormGroup>
@@ -111,8 +161,13 @@ function UserProfile() {
                         <label>Email</label>
                         <Input
                           defaultValue={dataState.email}
-                          disabled
-                          placeholder="Company"
+                          placeholder="email"
+                          onInput={(e) => {
+                            setDataUpdate((previousState) => ({
+                              ...previousState,
+                              email: e.target.value,
+                            }));
+                          }}
                           type="text"
                         />
                       </FormGroup>
@@ -122,13 +177,34 @@ function UserProfile() {
                         <label>Contact No</label>
                         <Input
                           defaultValue={dataState.contact_no}
-                          disabled
-                          placeholder="Last Name"
+                          placeholder="contact no."
+                          onInput={(e) => {
+                            setDataUpdate((previousState) => ({
+                              ...previousState,
+                              contact_no: e.target.value,
+                            }));
+                          }}
                           type="text"
                         />
                       </FormGroup>
                     </Col>
                   </Row>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      color="primary"
+                      type="button"
+                      onClick={() => {
+                        showAlert({
+                          title: "Are you sure?",
+                          type: "warning",
+                          onConfirm: () => handleUpdateProfile(),
+                          onCancel: hideAlert,
+                        });
+                      }}
+                    >
+                      UPDATE
+                    </Button>
+                  </div>
                 </Form>
               </CardBody>
             </Card>

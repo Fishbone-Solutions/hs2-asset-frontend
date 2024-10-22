@@ -334,6 +334,10 @@ const Index = () => {
       setClearCityBoolean(true);
     }
 
+    if (!Array.isArray(filterKeys) && filterKeys === "asset_name") {
+      setInputValue("");
+    }
+
     // Update the filter form state
     setFilterFormDate((prev) => {
       const updatedState = { ...prev };
@@ -412,7 +416,13 @@ const Index = () => {
                       <div className="d-flex justify-content-end align-items-center">
                         {/* Search Input */}
                         <div className="custom-input-search input-group flex-grow-1 mt-2 me-2 col-5">
-                          <span className="input-group-text" id="basic-addon1">
+                          <span
+                            className="input-group-text cursor-pointer"
+                            id="basic-addon1"
+                            onClick={() =>
+                              setFilterFormDate({ asset_name: inputValue })
+                            }
+                          >
                             <IoSearchSharp size="1.5em" color="white" />
                           </span>
                           <input

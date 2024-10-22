@@ -177,16 +177,21 @@ const Edit = () => {
 
   const onUploadImages = (event) => {
     console.log("repeat", event);
-    const maxFiles = 5;
+    const maxFiles =
+      5 - attachments.filter((att) => att.att_type === "images").length;
     onFileUpload(event, maxFiles, ImageType, "image");
-    const files = Array.from(event.files);
+    const filesData = Array.from(event.files);
     // Take only up to the limit
-    const limitedFiles = files.slice(0, maxFiles);
+    const limitedFiles = filesData.slice(0, maxFiles);
     //const files = Array.from(event.files);
     setFiles(limitedFiles);
   };
   const onUploadDocs = (event) => {
-    const checkValidation = onFileUpload(event, 3, DocumentType);
+    const checkValidation = onFileUpload(
+      event,
+      3 - attachments.filter((att) => att.att_type === "docs").length,
+      DocumentType
+    );
     console.log("checkValidation", checkValidation);
     if (checkValidation) {
       const files = Array.from(event.files);

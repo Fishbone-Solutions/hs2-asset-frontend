@@ -77,6 +77,10 @@ function getUserInformation(headers = null, username) {
   return Get(`${endpoints.userProfile(username)}`, headers);
 }
 
+function updateProfile(headers = null, username, params) {
+  return Post(`${endpoints.userProfile(username)}`, params, headers);
+}
+
 function getAttachmentByAssetId(headers = null, assetId) {
   return Get(`${endpoints.getAttachmentByAssetId(assetId)}`, headers);
 }
@@ -175,6 +179,7 @@ export const EndPointService = {
   getExchange,
   getMyEoI,
   getUserInformation,
+  updateProfile,
   getAttachmentByAssetId,
   updateEoiBuyerDetials,
   getApprovalRequests,

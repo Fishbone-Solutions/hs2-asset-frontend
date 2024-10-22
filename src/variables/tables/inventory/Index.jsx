@@ -87,7 +87,7 @@ const useColumns = (handleDelete) => {
         Cell: ({ row }) => {
           return (
             <div className="position-relative">
-              <span className="badge badge-warning font-weight-bold text-black fs-6">
+              <span className="badge badge-warning badge-blue-dark font-weight-bold text-black fs-6">
                 {row.original.total_eoi}
               </span>
 
