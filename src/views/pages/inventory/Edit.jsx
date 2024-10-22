@@ -179,7 +179,7 @@ const Edit = () => {
     console.log("repeat", event);
     const maxFiles =
       5 - attachments.filter((att) => att.att_type === "images").length;
-    onFileUpload(event, maxFiles, ImageType, "image");
+    onFileUpload(event, maxFiles, 5, ImageType, "image");
     const filesData = Array.from(event.files);
     // Take only up to the limit
     const limitedFiles = filesData.slice(0, maxFiles);
@@ -190,6 +190,7 @@ const Edit = () => {
     const checkValidation = onFileUpload(
       event,
       3 - attachments.filter((att) => att.att_type === "docs").length,
+      3,
       DocumentType
     );
     console.log("checkValidation", checkValidation);
@@ -210,6 +211,7 @@ const Edit = () => {
   const onFileUpload = (
     event,
     maxFiles = 2,
+    totalFiles = 5,
     allowedExtensions = [".pdf", ".docx"],
     type,
     maxSize = 2000000
@@ -222,7 +224,7 @@ const Edit = () => {
       showAlert({
         title: (
           <p className="success-sweet-title sweet-title-padding">
-            You can only upload a maximum of {maxFiles} files
+            You can only upload a maximum of {totalFiles} files
           </p>
         ),
         type: "error",

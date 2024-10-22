@@ -171,17 +171,9 @@ const Edit = () => {
       showAlert({
         title: (
           <h6 className="warning-alert ">
-            <WarningIcon
-              width="50px"
-              height="50px"
-              style={{
-                marginTop: "-7px",
-                enableBackground: "new 0 0 512 512",
-              }}
-            />
-            <span className="text-danger-dark text-center">
-              The status you are about to set will instantly become visible to
-              the Buyer
+            <span className="text-danger-dark text-start">
+              WARNING: The status you are about to set will instantly become
+              visible to the Buyer
             </span>
           </h6>
         ),
@@ -852,7 +844,7 @@ const Edit = () => {
                             showAlert({
                               title: (
                                 <h6 className="warning-alert ">
-                                  <span className="text-danger-dark text-center">
+                                  <span className="text-danger-dark text-start">
                                     WARNING: The Buyer might have already
                                     reacted to your current status
                                   </span>
@@ -860,8 +852,8 @@ const Edit = () => {
                               ),
                               content: (
                                 <h6 className="success-sweet-title sweet-title-padding">
-                                  You sure you wish to undo your Current Seller
-                                  Status?
+                                  Are you sure you wish to undo your Current
+                                  Seller Status?
                                 </h6>
                               ),
                               type: "warning",

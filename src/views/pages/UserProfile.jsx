@@ -76,6 +76,14 @@ function UserProfile() {
         sessionStorage.getItem("username"),
         dataUpdate
       );
+      let sessionData = JSON.parse(sessionStorage.getItem("user"));
+      sessionData.firstname = dataUpdate.first_name;
+      sessionData.lastname = dataUpdate.last_name;
+      sessionData.email = dataUpdate.email;
+      sessionData.contact_no = dataUpdate.contact_no;
+
+      sessionStorage.setItem("user", JSON.stringify(sessionData));
+
       setLoader(false);
       showAlert({
         title: "Updated Profile",
