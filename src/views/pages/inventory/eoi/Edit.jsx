@@ -852,22 +852,14 @@ const Edit = () => {
                             showAlert({
                               title: (
                                 <h6 className="warning-alert ">
-                                  <AlertIcon
-                                    width="40px"
-                                    height="40px"
-                                    style={{
-                                      marginTop: "-7px",
-                                      enableBackground: "new 0 0 512 512",
-                                    }}
-                                  />
                                   <span className="text-danger-dark text-center">
-                                    The Buyer might have already reacted to your
-                                    current status
+                                    WARNING: The Buyer might have already
+                                    reacted to your current status
                                   </span>
                                 </h6>
                               ),
                               content: (
-                                <h6 className=" sweet-title-padding">
+                                <h6 className="success-sweet-title sweet-title-padding">
                                   You sure you wish to undo your Current Seller
                                   Status?
                                 </h6>
