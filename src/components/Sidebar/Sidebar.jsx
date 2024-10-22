@@ -39,6 +39,7 @@ function Sidebar(props) {
   const [dataState, setDataState] = React.useState({});
   const sidebar = React.useRef();
   const headers = { user_id: sessionStorage.getItem("username") };
+  const sessionData = JSON.parse(sessionStorage.getItem("user"));
   // Initialize collapse states based on routes
   const getCollapseStates = (routes) => {
     let initialState = {};
@@ -261,7 +262,7 @@ function Sidebar(props) {
               onClick={() => setOpenAvatar(!openAvatar)}
             >
               <span className="profile-view">
-                <span className="user-name">{dataState?.firstname}</span>
+                <span className="user-name">{sessionData.firstname}</span>
                 <br />
                 {dataState && dataState.organization_title && (
                   <span className="company-name">
