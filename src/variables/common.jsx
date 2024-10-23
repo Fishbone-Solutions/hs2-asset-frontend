@@ -152,6 +152,8 @@ export const getStatusMessage = (statusCode, type) => {
         : "Can not Withdraw EOI at this stage";
     case -40:
       return "Can not continue. Approval is required to proceed further";
+    case -50:
+      return "Sorry, you can not update to this Status at this stage";
     default:
       return statusCode > 0
         ? "Acknowledgement Status updated"
