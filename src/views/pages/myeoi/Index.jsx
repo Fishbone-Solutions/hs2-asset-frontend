@@ -96,7 +96,7 @@ const Index = () => {
       filters.push({ label: `EOI Id: ${filterFormData.id}`, key: "id" });
     if (filterFormData.asset_id)
       filters.push({
-        label: `Asset Id: ${filterFormData.asset_id}`,
+        label: `Item Id: ${filterFormData.asset_id}`,
         key: "asset_id",
       });
     if (filterFormData.asset_name)

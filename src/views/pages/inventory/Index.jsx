@@ -171,7 +171,7 @@ const Index = () => {
       } else {
         showAlert({
           title: "Deleted!",
-          content: `Asset ID ${id}  deleted successfully`,
+          content: `Item ID: ${id}  deleted successfully`,
           type: "success",
           showCancelButton: false,
           confirmText: "ok",
