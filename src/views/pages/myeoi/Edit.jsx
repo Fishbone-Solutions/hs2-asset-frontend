@@ -435,7 +435,7 @@ const Edit = () => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Asset Id</Label>
+                      <Label>Item Id</Label>
                       <FormGroup>
                         <Input
                           type="text"

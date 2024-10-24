@@ -144,13 +144,13 @@ const Create = () => {
                           WebkitTextTransform: "capitalize",
                         }}
                       >
-                        Item Referene
+                        Item Reference
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Row>
                         <Col sm="6">
-                          <Label>Asset ID</Label>
+                          <Label>Item ID</Label>
                           <FormGroup>
                             <Input
                               type="text"

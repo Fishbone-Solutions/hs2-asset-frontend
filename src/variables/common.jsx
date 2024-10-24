@@ -152,6 +152,8 @@ export const getStatusMessage = (statusCode, type) => {
         : "Can not Withdraw EOI at this stage";
     case -40:
       return "Can not continue. Approval is required to proceed further";
+    case -50:
+      return "Sorry, you can not update to this Status at this stage";
     default:
       return statusCode > 0
         ? "Acknowledgement Status updated"
@@ -228,12 +230,23 @@ export const getNudgeMessage = (eoi_nudge, sendNudgeto) => {
     case eoi_nudge === -3:
       return `No pending request at ${
         sendNudgeto === "BUYER"
-          ? "Seller"
+          ? "Buyer"
           : sendNudgeto === "SELLER"
-            ? "Buyer"
+            ? "Seller"
             : "Approver"
       }`;
     default:
       return "An unknown error occurred.";
+  }
+};
+
+export const getStatusMessageApprovalRequest = (status) => {
+  switch (status) {
+    case "Requested":
+      return "Approval for this EOI is already requested";
+    case "APPROVED":
+      return "This EOI is already Approved";
+    default:
+      return null; // Return null for other statuses where no message is needed
   }
 };
