@@ -208,7 +208,7 @@ function W8() {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label>Asset ID *</Label>
+                      <Label>Item ID *</Label>
                       <FormGroup>
                         <Input
                           type="text"

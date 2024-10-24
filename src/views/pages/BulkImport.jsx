@@ -77,9 +77,12 @@ const BulkImport = () => {
     setToastType(null);
     setFileFormatVerification([]);
     setSelectedOption(null); // Reset the file format option to default
+    setSelectDisabled(true);
     resetUploadedStates();
     setParseFileDisabled(true);
     setResponseStatus(null);
+    setRefreshUploadFile(refreshUploadFile + 1);
+    setSourceFileFormat(false);
   };
 
   const onFileUpload = (
@@ -173,6 +176,7 @@ const BulkImport = () => {
   };
 
   const onUploadDocs = async (event) => {
+    console.log(selectedOption);
     if (selectedOption === null || selectedOption === "") {
       setSourceFileFormat(true);
       setParseFileDisabled(true);
@@ -296,6 +300,7 @@ const BulkImport = () => {
                               id="hs2csv"
                               name="options"
                               type="radio"
+                              checked={selectedOption == ".csv" ? true : false}
                               onChange={handleRadioChange}
                             />
                             <span className="form-check-sign">
@@ -314,6 +319,7 @@ const BulkImport = () => {
                               id="hs2excel"
                               name="options"
                               type="radio"
+                              checked={selectedOption == ".xlsx" ? true : false}
                               onChange={handleRadioChange}
                             />
                             <span className="form-check-sign">

@@ -36,6 +36,7 @@ import { getUndoStatusMessage } from "variables/common";
 import { getNudgeMessage } from "variables/common";
 import AlertIcon from "components/svg/AlertIcon";
 import { handleInputFilteration } from "variables/common";
+import { getStatusMessageApprovalRequest } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -979,11 +980,16 @@ const Edit = () => {
             <Button
               color="primary"
               onClick={() => {
-                if (dataState.approval_status === "Requested") {
+                if (
+                  dataState.approval_status === "Requested" ||
+                  dataState.approval_status === "APPROVED"
+                ) {
                   showAlert({
                     title: (
                       <p className="success-sweet-title sweet-title-padding">
-                        Approval for this EOI is already requested
+                        {getStatusMessageApprovalRequest(
+                          dataState.approval_status
+                        )}
                       </p>
                     ),
                     type: "error",

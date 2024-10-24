@@ -68,7 +68,7 @@ function ReactTables() {
                   data={dataState}
                   columns={[
                     {
-                      Header: "Asset ID",
+                      Header: "Item ID",
                       accessor: "asset_id",
                     },
                     {

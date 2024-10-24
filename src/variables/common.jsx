@@ -230,12 +230,23 @@ export const getNudgeMessage = (eoi_nudge, sendNudgeto) => {
     case eoi_nudge === -3:
       return `No pending request at ${
         sendNudgeto === "BUYER"
-          ? "Seller"
+          ? "Buyer"
           : sendNudgeto === "SELLER"
-            ? "Buyer"
+            ? "Seller"
             : "Approver"
       }`;
     default:
       return "An unknown error occurred.";
+  }
+};
+
+export const getStatusMessageApprovalRequest = (status) => {
+  switch (status) {
+    case "Requested":
+      return "Approval for this EOI is already requested";
+    case "APPROVED":
+      return "This EOI is already Approved";
+    default:
+      return null; // Return null for other statuses where no message is needed
   }
 };
