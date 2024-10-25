@@ -869,7 +869,7 @@ header.sweet-alert-header {
   background-color: orange;
 }
 .bg-warning-light {
-  background-color: orange;
+  background-color: #ffa500;
 }
 .bg-lime {
   background-color: #42c47c;
@@ -879,6 +879,9 @@ header.sweet-alert-header {
 }
 .bg-current-status {
   background-color: #51cbce54 !important;
+}
+.text-warning-dark {
+  color: #ffa500;
 }
 
 /* Custom Tooltip Styles */

@@ -128,14 +128,33 @@ const Edit = () => {
         showCancelButton: false,
       });
     } else {
+      console.log("udpateStatus", updateStatus);
       showAlert({
         title: (
-          <h6 className="warning-alert ">
-            <span className="text-danger-dark text-center">
-              WARNING: The status you are about to set will instantly become
-              visible to the Buyer
-            </span>
-          </h6>
+          <>
+            {updateStatus === "WITHDRAWN" ? (
+              <h6 className="warning-alert">
+                <span className="text-danger-dark text-start">
+                  WARNING: You will not be able to undo Withdrawal or make any
+                  updates to EOI
+                </span>
+              </h6>
+            ) : (
+              ""
+            )}
+            <h6 className="warning-alert">
+              <span
+                className={
+                  updateStatus === "WITHDRAWN"
+                    ? "text-warning-dark text-start"
+                    : "text-danger-dark text-start"
+                }
+              >
+                WARNING: The status you are about to set will instantly become
+                visible to the Buyer
+              </span>
+            </h6>
+          </>
         ),
         content: <h3>Are you sure?</h3>,
         type: "warning",
@@ -696,7 +715,8 @@ const Edit = () => {
             </Col>
 
             {/* Set EoI Status */}
-            {inventoryData?.statuscode !== "Sold" ? (
+            {inventoryData?.statuscode !== "Sold" &&
+            dataState.buyer_eoi_status !== "WITHDRAWN" ? (
               <Col md="12">
                 <Card>
                   <CardHeader>
