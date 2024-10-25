@@ -30,6 +30,8 @@ import RefreshComponetIcon from "components/svg/RefreshComponet";
 import BeatingIcon from "components/svg/BeatingIcon";
 import AttentionIcon from "components/svg/AttentionIcon";
 import { handleInputFilteration } from "variables/common";
+import { subCategory } from "variables/common";
+import { categorycode1 } from "variables/common";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -42,6 +44,8 @@ const Index = () => {
   const [cursorRowNo, setCursorRowNo] = useState(0);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [totalNumberOfRow, setTotalNumberOfRow] = useState(10);
+  const [clearCategoryBoolean, setClearCategoryBoolean] = useState(false);
+  const [clearSubCategoryBoolean, setClearSubCategoryBoolean] = useState(false);
   const openModal = (modalId) => setActiveModal(modalId);
   const closeModal = () => {
     console.log("click");
@@ -61,6 +65,8 @@ const Index = () => {
   const [filterFormData, setFilterFormDate] = useState({
     id: "",
     asset_name: "",
+    category: null,
+    subCategory: null,
     entry_date_from: null,
     entry_date_to: null,
     available_from: null,
@@ -76,6 +82,8 @@ const Index = () => {
     id: null,
     asset_name: null,
     statuscode: null,
+    category: null,
+    subCategory: null,
   });
   const [clearDateBoolean, setClearDateBoolean] = useState(false);
   const headers = {
@@ -100,6 +108,8 @@ const Index = () => {
         fltr_id: getValueOrDefault(filterFormData.id),
         fltr_name: getValueOrDefault(filterFormData.asset_name),
         fltr_status: getValueOrDefault(filterFormData.statuscode),
+        fltr_category: getValueOrDefault(filterFormData.category),
+        fltr_sub_category: getValueOrDefault(filterFormData.subCategory),
         fltr_from_entry_date: getValueOrDefault(filterFormData.entry_date_from),
         fltr_to_entry_date: getValueOrDefault(filterFormData.entry_date_to),
         fltr_from_availability: getValueOrDefault(
@@ -192,6 +202,8 @@ const Index = () => {
       ...prevState,
       id: "",
       asset_name: "",
+      category: null,
+      subCategory: null,
       entry_date_from: null,
       entry_date_to: null,
       available_from: null,
@@ -204,8 +216,12 @@ const Index = () => {
       id: "",
       asset_name: "",
       statuscode: "",
+      category: null,
+      subCategory: null,
     });
     setClearDateBoolean(true);
+    setClearCategoryBoolean(true);
+    setClearSubCategoryBoolean(true);
   };
 
   useEffect(() => {
@@ -215,6 +231,16 @@ const Index = () => {
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
     if (filterFormData.fltr_only_active_eois)
       filters.push({ label: "Active items", key: "fltr_only_active_eois" });
+    if (filterFormData.category)
+      filters.push({
+        label: `${filterFormData.category}`,
+        key: "category",
+      });
+    if (filterFormData.subCategory)
+      filters.push({
+        label: `${filterFormData.subCategory}`,
+        key: "subCategory",
+      });
     if (filterFormData.fltr_only_unattended_eois)
       filters.push({
         label: "Items Requiring Attention",
@@ -292,6 +318,8 @@ const Index = () => {
         ? rangeDatesEntry.endDate
         : "",
       statuscode: filterDataState.statuscode,
+      category: filterDataState.category,
+      subCategory: filterDataState.subCategory,
       cursor_row_no: 0,
     }));
     setCurrentPageNumber(1);
@@ -376,6 +404,14 @@ const Index = () => {
 
     if (!Array.isArray(filterKeys) && filterKeys === "statuscode") {
       setClearStatusBoolean(true);
+    }
+
+    if (!Array.isArray(filterKeys) && filterKeys === "category") {
+      setClearCategoryBoolean(true);
+    }
+
+    if (!Array.isArray(filterKeys) && filterKeys === "subCategory") {
+      setClearSubCategoryBoolean(true);
     }
 
     // Update the filter form state
@@ -466,6 +502,18 @@ const Index = () => {
       ...prevState,
       fltr_only_unattended_eois: 1,
     }));
+  };
+
+  const handleCategoryChange = (category) => {
+    console.log(category);
+    setFilterDataState({ ...filterDataState, category: category.value });
+    setClearCategoryBoolean(false);
+  };
+
+  const handleSubCategoryChange = (subCategory) => {
+    console.log(subCategory);
+    setFilterDataState({ ...filterDataState, subCategory: subCategory.value });
+    setClearSubCategoryBoolean(false);
   };
 
   return (
@@ -663,6 +711,23 @@ const Index = () => {
                 />
                 <Label for="name">Name</Label>
               </FormGroup>
+            </Col>
+
+            <Col sm="6">
+              <FloatingLabelDropdown
+                label="Category"
+                options={categorycode1}
+                onChange={handleCategoryChange}
+                clearSelection={clearCategoryBoolean}
+              />
+            </Col>
+            <Col sm="6">
+              <FloatingLabelDropdown
+                label="Sub-Category"
+                options={subCategory}
+                onChange={handleSubCategoryChange}
+                clearSelection={clearSubCategoryBoolean}
+              />
             </Col>
 
             <Col sm="6">
