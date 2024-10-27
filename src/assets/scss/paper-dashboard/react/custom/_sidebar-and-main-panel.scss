@@ -1182,3 +1182,16 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
 .p-fileupload-row {
   display: none;
 }
+button.btn-round.mb-3.btn.btn-primary:hover {
+  background: rgb(0 0 0 / 46%) !important;
+}
+.version {
+  position: absolute;
+  font-size: 0.6rem;
+  width: 100%;
+  color: red;
+  margin: 34px 0px 0px -66px;
+}
+.card-login label {
+  color: #fff !important;
+}

@@ -1,243 +1,178 @@
-import React from "react";
-
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Label,
-  FormGroup,
-  Form,
-  InputGroup,
-  InputGroupText,
-  Input,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import React, { useState, useEffect } from "react";
 import Footer from "components/Footer/Footer";
 import AuthNavbar from "components/Navbars/AuthNavbar";
-import { useState } from "react";
-
+import { RxCross2 } from "react-icons/rx";
 
 function Register() {
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    preferred_user_id: "",
+    re_password: "",
+  });
+  const [registerEmailState, setRegisterEmailState] = useState("");
 
-const handleLogin = () => {
+  const handleLogin = () => {
+    // Logic for login/signup
+  };
 
-}
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-const handleChange = (event) => {
-  const { name, value } = event.target;
-  // Only allow changes if not in add mode for id field
-  if (name === "id" && isAddMode) {
-    return; // Prevent changes to id if in add mode
-  }
+  const verifyEmail = (value) => {
+    const emailRex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRex.test(value);
+  };
 
-  setFormData((prevState) => ({
-    ...prevState,
-    [name]: value,
-  }));
-};
-const [formData, setFormData] = useState({
-  first_name: "",
-  last_name: "",
-  email: "",
-  password:"",
-  preferred_user_id: "",
-});
-const [registerEmailState, setRegisterEmailState] = useState("");
-
-const verifyEmail = (value) => {
-  var emailRex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailRex.test(value);
-};
-
-
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.classList.toggle("register-page");
-    return function cleanup() {
+    return () => {
       document.body.classList.toggle("register-page");
     };
-  });
+  }, []);
+
   return (
     <div className="login-page">
-    <AuthNavbar></AuthNavbar>
-    <Container>
-      {alert}
-      <Row>
-        <Col className="ml-auto mr-auto width-login" lg="4" md="6">
-          <p
-            style={{
-              textAlign: "right",
-              color: "#52CBCE",
-              marginBottom: -10,
-            }}
-          >
-           Supporting Reusability
-          </p>
-          <p
-            style={{
-              textAlign: "left",
-              fontSize: "29px",
-              color: "white",
-              marginTop: 0,
-            }}
-          >
-            <span style={{ color: "#52CBCE", fontWeight: "bold" }}>HS2 </span>
-            <span style={{ color: "white", fontWeight: "bold" }}>
-              Exchange Platform
-            </span>
-          </p>
-          <Form action="" className="form" method="">
-            <Card className="card-login">
-              <CardHeader>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+      <AuthNavbar />
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-lg-4 col-md-6 ml-auto mr-auto width-login">
+            <p className="supporting-text">Supporting Reusability</p>
+            <p className="platform-title">
+              <span>HS2 </span>
+              <span>Exchange Platform</span>
+              <span className="version">Beta Version</span>
+            </p>
 
+            <form className="card p-4 shadow card-login">
+              <h4 className="text-center fw-bold mb-3 text-white">
+                Create Account
+              </h4>
+
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  className={`form-control ${
+                    registerEmailState === "has-danger" ? "is-invalid" : ""
+                  } ${registerEmailState === "has-success" ? "is-valid" : ""}`}
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (!verifyEmail(value)) {
+                      setRegisterEmailState("has-danger");
+                    } else {
+                      setRegisterEmailState("has-success");
+                    }
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      email: value,
+                    }));
                   }}
-                >
-                  <p style={{fontWeight: "bold", fontSize:"20px"}}>                  Create Account                  </p>
-                </div>
-              </CardHeader>
-              <CardBody>
-              <CardBody>
-                  <Row>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>First Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="first_name"
-                          value={formData.first_name}
-                          onChange={handleChange}
-                          required
+                  required
+                />
+                {registerEmailState === "has-danger" && (
+                  <div className="invalid-feedback">
+                    Please enter a valid email address.
+                  </div>
+                )}
+              </div>
 
-                        />
-                      </FormGroup>
-                    </Col>
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  Preferred User ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="preferred_user_id"
+                  value={formData.preferred_user_id}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Last Name</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="last_name"
-                          value={formData.last_name}
-                          onChange={handleChange}
-                          required
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>
-                        Email Address *
-                      </Label>
-                      <FormGroup
-                        className={`has-label ${formData.email}`}
-                      >
-                        <Input
-                          type="text"
-                          name="email"
-                          value={formData.email}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (!verifyEmail(value)) {
-                              setRegisterEmailState("has-danger");
-                            } else {
-                              setRegisterEmailState("has-success");
-                            }
-                            setFormData((prevState) => ({
-                              ...prevState,
-                              email: value,
-                            }));
-                          }}
-                          required
+              <div className="mb-3">
+                <label className="form-label" style={{ color: "#36454F" }}>
+                  Retype Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="re_password"
+                  value={formData.re_password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                        />
-                        {registerEmailState === "has-danger" ? (
-                          <label className="error">
-                            Please enter a valid email address.
-                          </label>
-                        ) : null}
-                      </FormGroup>
-                    </Col>
-
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Preferred User ID</Label>
-                      <FormGroup>
-                        <Input
-                          type="text"
-                          name="preferred_user_id"
-                          value={formData.preferred_user_id}
-                          onChange={handleChange}
-                          required
-
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Password</Label>
-                      <FormGroup>
-                        <Input
-                          type="password"
-                          name="password"
-                          value={formData.password}
-                          onChange={handleChange}
-                          required
-
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col sm="12">
-                      <Label style={{ color: "#36454F" }}>Retype Password</Label>
-                      <FormGroup>
-                        <Input
-                          type="password"
-                          name="re_password"
-                          onChange={handleChange}
-                          required
-
-                        />
-                      </FormGroup>
-                    </Col>
-
-                  </Row>
-              
-                </CardBody>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  block
-                  className="btn-round mb-3"
-                  color="primary"
-                  type="submit"
-                  onClick={handleLogin}
-                  style={{ backgroundColor: "rgb(82,203,206)" }}
-                >
-                 Sign Up
-                </Button>
-              </CardFooter>
-            </Card>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-    <Footer></Footer>
-    <div
-      className="full-page-background"
-    
-    />
-  </div>
+              <button
+                type="button"
+                className="btn btn-primary w-100 mt-4"
+                style={{ backgroundColor: "rgb(82,203,206)" }}
+                onClick={handleLogin}
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <Footer />
+      <div className="full-page-background" />
+    </div>
   );
 }
 
