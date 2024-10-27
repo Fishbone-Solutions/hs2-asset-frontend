@@ -45,6 +45,7 @@ import {
 } from "variables/Validations/InventorySchema";
 import { ImageType } from "variables/common";
 import { handleInput } from "variables/common";
+import AttachmentPreview from "components/Common/AttachmentPreview";
 
 const Edit = () => {
   const { id } = useParams();
@@ -946,9 +947,13 @@ const Edit = () => {
                             </span>
                           }
                           onSelect={onUploadImages}
-                          onRemove={deleteImage}
                           maxFileSize={2000000}
+                          itemTemplate={() => null}
                           className="custom-file-upload"
+                        />
+                        <AttachmentPreview
+                          files={files}
+                          deleteFile={deleteImage}
                         />
                       </CardBody>
                     </Card>
@@ -993,9 +998,13 @@ const Edit = () => {
                             </span>
                           }
                           onSelect={onUploadDocs}
-                          onRemove={deleteDocs}
                           className="custom-file-upload"
+                          itemTemplate={() => null}
                           customUpload
+                        />
+                        <AttachmentPreview
+                          files={docs}
+                          deleteFile={deleteDocs}
                         />
                       </CardBody>
                     </Card>

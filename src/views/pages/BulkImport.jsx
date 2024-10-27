@@ -22,6 +22,7 @@ import CsvIcon from "components/svg/CsvIcon";
 import XlsIcon from "components/svg/XlsIcon";
 import { useAlert } from "components/Common/NotificationAlert";
 import { getResponseBulkUploadMessage } from "variables/common";
+import AttachmentPreview from "components/Common/AttachmentPreview";
 
 const BulkImport = () => {
   const [progress, setProgress] = useState(0);
@@ -362,6 +363,7 @@ const BulkImport = () => {
                         className="custom-file-upload"
                         customUpload
                         disabled={selectDisabled}
+                        itemTemplate={() => null}
                       />
                       <button
                         onClick={parseFileData}
@@ -372,6 +374,10 @@ const BulkImport = () => {
                       </button>
                     </Col>
                   </Row>
+                  <AttachmentPreview
+                    files={uploadedFile ?? []}
+                    deleteFile={removeFile}
+                  />
                 </CardBody>
               </Card>
 
