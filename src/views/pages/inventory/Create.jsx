@@ -42,6 +42,8 @@ import {
 } from "variables/Validations/InventorySchema";
 import moment from "moment";
 import { handleInput } from "variables/common";
+import { RxCross2 } from "react-icons/rx";
+import AttachmentPreview from "components/Common/AttachmentPreview";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -163,7 +165,6 @@ const Create = () => {
 
   // Handle deleting an image
   const deleteImage = (imageIndex) => {
-    console.log("deleteImages");
     // Remove the image from the state
     const updatedImages = files.filter((_, index) => index !== imageIndex);
     // Update the state and re-trigger the onUploadImages to handle the updated list
@@ -173,11 +174,12 @@ const Create = () => {
 
   // Handle deleting an image
   const deleteDocs = (imageIndex) => {
-    console.log("deleteDocs");
     // Remove the image from the state
-    const updatedImages = files.filter((_, index) => index !== imageIndex);
+    const updateddocs = docs.filter((_, index) => index !== imageIndex);
+    console.log("deletedocs", updateddocs);
     // Update the state and re-trigger the onUploadImages to handle the updated list
-    setDocs(updatedImages);
+    setDocs(updateddocs);
+    console.log("docs", docs);
     // Optional: you can call onUploadImages again if necessary for further processing
   };
 
@@ -859,9 +861,14 @@ const Create = () => {
                             </span>
                           }
                           onSelect={onUploadImages}
-                          onRemove={deleteImage}
                           maxFileSize={2000000}
+                          itemTemplate={() => null}
                           className="custom-file-upload"
+                        />
+                        {/* Custom Inline Preview with Three per Row */}
+                        <AttachmentPreview
+                          files={files}
+                          deleteFile={deleteImage}
                         />
                       </CardBody>
                     </Card>
@@ -899,9 +906,13 @@ const Create = () => {
                             </span>
                           }
                           onSelect={onUploadDocs}
-                          onRemove={deleteDocs}
                           className="custom-file-upload"
+                          itemTemplate={() => null}
                           customUpload
+                        />
+                        <AttachmentPreview
+                          files={docs}
+                          deleteFile={deleteDocs}
                         />
                       </CardBody>
                     </Card>
