@@ -87,7 +87,70 @@ export const formatLocation = (data) => {
 };
 
 export const formatApprovalString = (input) => {
-  return input.split("%").join(" <br/>").replace(/,/g, "<br/>");
+  const [status, ...rest] = input.split("%");
+
+  const formattedText = rest
+    .join(" ")
+    .replace(/,/g, "<br/>") // Replace commas with line breaks
+    .replace(/(.{40})/g, "$1<br/>"); // Break after every 40 characters
+
+  if (status.trim().toUpperCase() === "REJECTED") {
+    return `
+      ${status}<br />
+      <span class="line-content">${formattedText}</span>
+    `;
+  } else {
+    return `${status}<br/>${formattedText}`;
+  }
+};
+
+export const formatApprovalStringStatus = (input) => {
+  return input.split("%")[0];
+};
+
+export const getBadgeClass = (activity) => {
+  switch (activity) {
+    case "EOI-SUBMITTED":
+      return "badge  bg-dark-sky-blue"; // Light Turquoise
+    case "IN-NEGOTIATION":
+      return "badge  bg-dark-blue"; // Light Blue
+    case "APPROVAL-REQUEST":
+      return "badge bg-purple"; // Dark Purple
+    case "PROCESSING":
+      return "badge bg-processing";
+    case "APPROVED":
+      return "badge bg-lime"; // Light Green
+    case "REJECTED":
+      return "badge bg-danger-dark"; // Light Green
+    case "PAYMENT-REQUESTED":
+      return "badge bg-warning-dark"; // Light Orange
+    case "PAYMENT-SENT":
+      return "badge bg-warning-dark"; // Darker Orange
+    case "PAYMENT-RECEIVED":
+      return "badge bg-warning-light"; // Yellow
+    case "GOODS-SENT":
+      return "badge bg-lime"; // Light Green
+    case "GOODS-RECEIVED":
+      return "badge bg-lime"; // Bright Lime Green
+    case "*REVERTED":
+      return "badge bg-danger-dark";
+    case "AWAITING BUYER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "AWAITING SELLER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "AWAITING APPROVER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "WITHDRAWN":
+      return "badge bg-danger-dark";
+    case "Requested":
+      return "badge  bg-dark-sky-blue";
+    case "Not Requested":
+    case "NOT-PROCEEDING":
+      return "badge bg-secondary";
+    default:
+      return "badge bg-danger-dark";
+    // Default grey badge for unrecognized statuses
+  }
 };
 
 export const ImageType = [
