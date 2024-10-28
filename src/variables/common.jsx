@@ -118,6 +118,8 @@ export const getBadgeClass = (activity) => {
       return "badge bg-lime"; // Light Green
     case "GOODS-RECEIVED":
       return "badge bg-lime"; // Bright Lime Green
+    case "*REVERTED":
+      return "badge bg-danger-dark";
     case "AWAITING BUYER RESPONSE":
       return "badge badge-danger dark-awaiting bg-danger-dark";
     case "AWAITING SELLER RESPONSE":
@@ -126,8 +128,13 @@ export const getBadgeClass = (activity) => {
       return "badge badge-danger dark-awaiting bg-danger-dark";
     case "WITHDRAWN":
       return "badge bg-danger-dark";
+    case "Not Requested":
+    case "Requested":
+    case "NOT-PROCEEDING":
+      return "badge bg-secondary";
     default:
-      return "badge bg-secondary"; // Default grey badge for unrecognized statuses
+      return "badge bg-danger-dark";
+    // Default grey badge for unrecognized statuses
   }
 };
 
