@@ -2,41 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { formatApprovalString } from "variables/common";
 import AlertBellIcon from "components/svg/AlertBellIcon";
-
-const getBadgeClass = (activity) => {
-  switch (activity) {
-    case "EOI-SUBMITTED":
-      return "badge bg-primary-dark"; // Light Turquoise
-    case "IN-NEGOTIATION":
-      return "badge bg-info"; // Light Blue
-    case "APPROVAL-REQUEST":
-      return "badge bg-purple"; // Dark Purple
-    case "PROCESSING":
-      return "badge bg-processing";
-    case "APPROVED":
-      return "badge bg-lime"; // Light Green
-    case "REJECTED":
-      return "badge bg-danger"; // Light Green
-    case "PAYMENT-REQUESTED":
-      return "badge bg-warning-dark"; // Light Orange
-    case "PAYMENT-SENT":
-      return "badge bg-warning-dark"; // Darker Orange
-    case "PAYMENT-RECEIVED":
-      return "badge bg-warning-light"; // Yellow
-    case "GOODS-SENT":
-      return "badge bg-lime"; // Light Green
-    case "GOODS-RECEIVED":
-      return "badge bg-lime"; // Bright Lime Green
-    case "AWAITING BUYER RESPONSE":
-      return "badge badge-danger dark-awaiting";
-    case "AWAITING SELLER RESPONSE":
-      return "badge badge-danger dark-awaiting";
-    case "AWAITING APPROVER RESPONSE":
-      return "badge badge-danger dark-awaiting";
-    default:
-      return "badge bg-secondary"; // Default grey badge for unrecognized statuses
-  }
-};
+import { formatApprovalStringStatus } from "variables/common";
+import { getBadgeClass } from "variables/common";
 
 const ActivityTable = ({ activities }) => {
   return (
@@ -77,7 +44,11 @@ const ActivityTable = ({ activities }) => {
                 <td>{activity.activity_date}</td>
                 <td>{activity.activity_time}</td>
                 <td>
-                  <span className={getBadgeClass(activity.activity)}>
+                  <span
+                    className={getBadgeClass(
+                      formatApprovalStringStatus(activity.activity)
+                    )}
+                  >
                     <div
                       className={
                         activity.is_reverted
