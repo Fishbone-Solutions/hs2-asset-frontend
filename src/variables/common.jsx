@@ -87,7 +87,21 @@ export const formatLocation = (data) => {
 };
 
 export const formatApprovalString = (input) => {
-  return input.split("%").join(" <br/>").replace(/,/g, "<br/>");
+  const [status, ...rest] = input.split("%");
+
+  const formattedText = rest
+    .join(" ")
+    .replace(/,/g, "<br/>") // Replace commas with line breaks
+    .replace(/(.{40})/g, "$1<br/>"); // Break after every 40 characters
+
+  if (status.trim().toUpperCase() === "REJECTED") {
+    return `
+      ${status}<br />
+      <span class="line-content">${formattedText}</span>
+    `;
+  } else {
+    return `${status}<br/>${formattedText}`;
+  }
 };
 
 export const formatApprovalStringStatus = (input) => {
@@ -131,6 +145,7 @@ export const getBadgeClass = (activity) => {
     case "Requested":
       return "badge  bg-dark-sky-blue";
     case "Not Requested":
+      return "badge bg-text-not-requested";
     case "NOT-PROCEEDING":
       return "badge bg-secondary";
     default:
