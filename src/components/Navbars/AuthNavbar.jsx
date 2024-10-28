@@ -15,10 +15,12 @@ import {
   Container,
 } from "reactstrap";
 import { useLocation } from "react-router-dom";
+import { useAlert } from "components/Common/NotificationAlert";
 
 function AuthNavbar(props) {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [color, setColor] = React.useState("navbar-transparent");
+  const { alert, showAlert, hideAlert } = useAlert();
   // this function opens and closes the collapse on small devices
   // it also adds navbar-transparent class to the navbar when closed
   // ad bg-white when opened
@@ -30,11 +32,27 @@ function AuthNavbar(props) {
     }
     setCollapseOpen(!collapseOpen);
   };
+
+  const handleRegister = () => {
+    showAlert({
+      title: (
+        <h6 className="success-sweet-title sweet-title-padding text-start">
+          This feature is not available in BETA Release
+        </h6>
+      ),
+      content: "",
+      type: "warning",
+      confirmText: "ok",
+      showCancelButton: false,
+      onConfirm: hideAlert,
+    });
+  };
   return (
     <Navbar
       className={classnames("navbar-absolute fixed-top", color)}
       expand="lg"
     >
+      {alert}
       <Container>
         <div className="navbar-wrapper">
           <NavbarBrand
@@ -67,7 +85,7 @@ function AuthNavbar(props) {
               </NavItem>
             ) : (
               <NavItem>
-                <Link to="/auth/register" className="nav-link">
+                <Link to="#" onClick={handleRegister} className="nav-link">
                   <PiBookBookmarkFill size="2em" />
                   Register
                 </Link>

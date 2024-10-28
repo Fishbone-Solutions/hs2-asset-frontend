@@ -120,7 +120,7 @@ function Login() {
             <p className="platform-title">
               <span>HS2 </span>
               <span>Exchange Platform</span>
-              <span className="version">Beta Version</span>
+              <span className="version">BETA Release</span>
             </p>
             <Form onSubmit={(e) => e.preventDefault()}>
               <Card className="card-login">

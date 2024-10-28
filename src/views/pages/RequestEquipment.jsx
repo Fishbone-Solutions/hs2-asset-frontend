@@ -19,6 +19,7 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 import BACKEND_ADDRESS from "views/components/serverAddress";
 import { GlobalContext } from "@/GlobalState";
 import DateRangePicker from "components/Common/DateRangePicker";
+import { useAlert } from "components/Common/NotificationAlert";
 
 const camelCaseWithSpaces = (text) => {
   return text
@@ -31,165 +32,10 @@ const RequestEquipment = () => {
   const { id } = useParams();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+
+  const { alert, showAlert, hideAlert } = useAlert();
   const mode = query.get("mode");
   const isAddMode = mode === "add";
-
-  const [registerEmailState, setRegisterEmailState] = useState("");
-  const [rangeDates, setRangeDates] = useState({ startDate: "" });
-
-  const [alert, setAlert] = useState(null);
-  const navigate = useNavigate();
-  const { username } = useContext(GlobalContext);
-  const [formData, setFormData] = useState({
-    id: isAddMode ? "Auto Generated" : "", // Initialize id based on mode
-    code: "",
-    entrydate_formatted: "",
-    categorycode1: "",
-    categorycode2: "",
-    asset_name: "",
-    description: "",
-    asset_condition: "",
-    quantity: "",
-    asset_location: "",
-    value: "",
-    additional_info: "",
-    available_from: "",
-    seller_title: "",
-    seller_contactno: "",
-    seller_email: "",
-    seller_location: "",
-    statuscode: "",
-  });
-
-  const options = [
-    { value: "Listing", label: "Listing" },
-    { value: "Live", label: "Live" },
-    { value: "Sold", label: "Sold" },
-  ];
-  const optionsCategory1 = [
-    { value: "construction-office", label: "Construction Office" },
-    {
-      value: "storage-logistics-facilities",
-      label: "Storage/Logistics Facilities",
-    },
-    { value: "processing-facilities", label: "Processing Facilities" },
-    { value: "fixed-services", label: "Fixed Services" },
-    { value: "temporary-services", label: "Temporary Services" },
-    { value: "security", label: "Security" },
-    {
-      value: "compound-security-safety-infrastructure",
-      label: "Compound Security/Safety Infrastructure",
-    },
-    {
-      value: "site-roads-and-infrastructure",
-      label: "Site Roads and Infrastructure",
-    },
-    { value: "temporary-siding", label: "Temporary Siding" },
-    { value: "consolidation-yards", label: "Consolidation Yards" },
-    { value: "concrete-production", label: "Concrete Production" },
-    { value: "diversions", label: "Diversions" },
-    { value: "earthworks", label: "Earthworks" },
-    { value: "static-plant", label: "Static Plant" },
-    { value: "piling", label: "Piling" },
-    { value: "pipework", label: "Pipework" },
-    {
-      value: "public-highway-traffic-management",
-      label: "Public Highway Traffic Management",
-    },
-    { value: "other-assets", label: "Other Assets" },
-  ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (mode === "edit" || mode === "view") {
-        try {
-          const myHeaders = new Headers();
-          myHeaders.append("accept", "application/json");
-          myHeaders.append("token", "x8F!@p01,*MH");
-          myHeaders.append("user_id", username);
-
-          const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-          };
-
-          const response = await fetch(
-            `${BACKEND_ADDRESS}/assets/${id}`,
-            requestOptions
-          );
-
-          if (response.ok) {
-            const result = await response.json();
-            setFormData(result.appRespData[0]);
-          } else {
-            console.error("Failed to fetch data");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-    };
-
-    fetchData();
-  }, [id, mode]);
-
-  const hideAlert = () => {
-    setAlert(null);
-  };
-
-  const verifyEmail = (value) => {
-    var emailRex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return emailRex.test(value);
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    // Only allow changes if not in add mode for id field
-    if (name === "id" && isAddMode) {
-      return; // Prevent changes to id if in add mode
-    }
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async () => {
-    const url = `${BACKEND_ADDRESS}/assets/${mode === "edit" ? id : ""}`;
-    const requestBody = { ...formData };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          token: "x8F!@p01,*MH",
-          user_id: username,
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      setAlert(
-        <ReactBSAlert
-          success
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Submitted"
-          onConfirm={() => hideAlert()}
-          onCancel={() => hideAlert()}
-          confirmBtnBsStyle="info"
-          btnSize=""
-        >
-          Asset Listing submitted
-        </ReactBSAlert>
-      );
-      navigate("/admin/inventory");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
 
   const handleDate = (startDate, endDate) => {
     setRangeDates((prevState) => ({
@@ -199,66 +45,27 @@ const RequestEquipment = () => {
     }));
   };
 
-  const handleFormSubmission = async (event) => {
-    event.preventDefault();
-
-    const requiredFields = [
-      "seller_title",
-      "seller_contactno",
-      "seller_email",
-      "seller_location",
-      "categorycode1",
-      "categorycode2",
-      "asset_name",
-      "available_from",
-      "asset_condition",
-      "quantity",
-      "asset_location",
-      "value",
-      "statuscode",
-    ];
-
-    for (let field of requiredFields) {
-      if (!formData[field]) {
-        setAlert(
-          <ReactBSAlert
-            warning
-            style={{ display: "block", marginTop: "-100px" }}
-            title="Missing Information"
-            onConfirm={() => hideAlert()}
-            onCancel={() => hideAlert()}
-            confirmBtnBsStyle="info"
-            btnSize=""
-          >
-            Please fill in all required fields.
-          </ReactBSAlert>
-        );
-        return;
-      }
-    }
-    setAlert(
-      <ReactBSAlert
-        warning
-        style={{ display: "block", marginTop: "-100px" }}
-        title="Are you sure?"
-        onConfirm={() => handleSubmit()}
-        onCancel={() => hideAlert()}
-        confirmBtnBsStyle="info"
-        cancelBtnBsStyle="danger"
-        confirmBtnText="Yes"
-        cancelBtnText="Cancel"
-        showCancel
-        btnSize=""
-      />
-    );
-  };
-
   const isReadOnly = mode === "view";
+
+  const handleBroadcastSubmit = () => {
+    showAlert({
+      title: (
+        <h6 className="success-sweet-title sweet-title-padding text-start">
+          This feature is not available in BETA Release
+        </h6>
+      ),
+      content: "",
+      type: "warning",
+      confirmText: "ok",
+      showCancelButton: false,
+      onConfirm: hideAlert,
+    });
+  };
 
   return (
     <>
       <div className="content">
-        <Form onSubmit={handleFormSubmission}>
+        <Form>
           <Row>
             {/* Requested Equipment Details */}
             <Col md="12">
@@ -273,21 +80,15 @@ const RequestEquipment = () => {
                       WebkitTextTransform: "capitalize", // for Safari
                     }}
                   >
-                    {camelCaseWithSpaces("Requested Equipment Details")}
+                    Requested Item Information
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <Label className="required">Equipment Name</Label>
+                      <Label className="required">Item Name</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="H"
-                          onChange={handleChange}
-                          required
-                          readOnly={isReadOnly}
-                        />
+                        <Input type="text" name="H" readOnly={isReadOnly} />
                       </FormGroup>
                     </Col>
 
@@ -297,9 +98,6 @@ const RequestEquipment = () => {
                         <Input
                           type="text"
                           name="Company"
-                          //              value={formData.asset_name}
-                          onChange={handleChange}
-                          required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -324,14 +122,10 @@ const RequestEquipment = () => {
                         Please let us know in the box below what is it that you
                         are looking for
                       </Label>
-                      <FormGroup
-                        className={`has-label ${formData.seller_email}`}
-                      >
+                      <FormGroup className={`has-label`}>
                         <Input
                           type="textarea"
                           name="additional_info"
-                          value={formData.additional_info}
-                          onChange={handleChange}
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -365,9 +159,6 @@ const RequestEquipment = () => {
                         <Input
                           type="text"
                           name="seller_title"
-                          value={formData.seller_title}
-                          onChange={handleChange}
-                          required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -379,8 +170,6 @@ const RequestEquipment = () => {
                         <Input
                           type="text"
                           name="seller_contactno"
-                          onChange={handleChange}
-                          required
                           readOnly={isReadOnly}
                         />
                       </FormGroup>
@@ -390,41 +179,25 @@ const RequestEquipment = () => {
                     <Col sm="6">
                       <Label className="required">Contact No</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_contactno"
-                          value={formData.seller_contactno}
-                        />
+                        <Input type="text" name="seller_contactno" />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
                       <Label className="required">Email Address</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
+                        <Input type="text" name="seller_email" />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
                       <Label className="required">Buyer Address</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
+                        <Input type="text" name="seller_email" />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
                       <Label className="required">Item Delivery Location</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
+                        <Input type="text" name="seller_email" />
                       </FormGroup>
                     </Col>
                     <Col sm="6">
@@ -432,11 +205,7 @@ const RequestEquipment = () => {
                         Preferred Contact Timings
                       </Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="seller_email"
-                          value={formData.seller_email}
-                        />
+                        <Input type="text" name="seller_email" />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -457,7 +226,11 @@ const RequestEquipment = () => {
               Close
             </Button>
             {mode !== "view" && (
-              <Button color="primary" type="submit">
+              <Button
+                color="primary"
+                onClick={handleBroadcastSubmit}
+                type="button"
+              >
                 Broadcast Request
               </Button>
             )}
