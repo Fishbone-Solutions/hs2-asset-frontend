@@ -145,6 +145,7 @@ export const getBadgeClass = (activity) => {
     case "Requested":
       return "badge  bg-dark-sky-blue";
     case "Not Requested":
+      return "badge bg-text-not-requested";
     case "NOT-PROCEEDING":
       return "badge bg-secondary";
     default:
