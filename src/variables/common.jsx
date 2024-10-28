@@ -128,8 +128,9 @@ export const getBadgeClass = (activity) => {
       return "badge badge-danger dark-awaiting bg-danger-dark";
     case "WITHDRAWN":
       return "badge bg-danger-dark";
-    case "Not Requested":
     case "Requested":
+      return "badge  bg-dark-sky-blue";
+    case "Not Requested":
     case "NOT-PROCEEDING":
       return "badge bg-secondary";
     default:
