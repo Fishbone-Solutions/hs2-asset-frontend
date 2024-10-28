@@ -90,6 +90,47 @@ export const formatApprovalString = (input) => {
   return input.split("%").join(" <br/>").replace(/,/g, "<br/>");
 };
 
+export const formatApprovalStringStatus = (input) => {
+  return input.split("%")[0];
+};
+
+export const getBadgeClass = (activity) => {
+  switch (activity) {
+    case "EOI-SUBMITTED":
+      return "badge  bg-dark-sky-blue"; // Light Turquoise
+    case "IN-NEGOTIATION":
+      return "badge  bg-dark-blue"; // Light Blue
+    case "APPROVAL-REQUEST":
+      return "badge bg-purple"; // Dark Purple
+    case "PROCESSING":
+      return "badge bg-processing";
+    case "APPROVED":
+      return "badge bg-lime"; // Light Green
+    case "REJECTED":
+      return "badge bg-danger-dark"; // Light Green
+    case "PAYMENT-REQUESTED":
+      return "badge bg-warning-dark"; // Light Orange
+    case "PAYMENT-SENT":
+      return "badge bg-warning-dark"; // Darker Orange
+    case "PAYMENT-RECEIVED":
+      return "badge bg-warning-light"; // Yellow
+    case "GOODS-SENT":
+      return "badge bg-lime"; // Light Green
+    case "GOODS-RECEIVED":
+      return "badge bg-lime"; // Bright Lime Green
+    case "AWAITING BUYER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "AWAITING SELLER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "AWAITING APPROVER RESPONSE":
+      return "badge badge-danger dark-awaiting bg-danger-dark";
+    case "WITHDRAWN":
+      return "badge bg-danger-dark";
+    default:
+      return "badge bg-secondary"; // Default grey badge for unrecognized statuses
+  }
+};
+
 export const ImageType = [
   ".png",
   ".jpeg",

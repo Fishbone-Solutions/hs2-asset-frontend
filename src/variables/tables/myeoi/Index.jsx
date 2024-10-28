@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
 import AlertIcon from "components/svg/AlertIcon";
+import { getBadgeClass } from "variables/common";
 const useColumns = (handleDelete) => {
   return useMemo(
     () => [
@@ -46,61 +47,10 @@ const useColumns = (handleDelete) => {
         width: "2%",
         Cell: ({ row }) => {
           const statusCode = row.original.buyer_eoi_status;
-          const statusStyles = {
-            SOLD: { bgColor: "bg-danger", textColor: "text-white" },
-            LIVE: {
-              bgColor: "bg-success",
-              textColor: "text-white",
-              icon: "path/to/live-icon.png",
-            },
-            LISTING: { bgColor: "bg-info", textColor: "text-white" },
-            "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
-            "IN-NEGOTIATION": {
-              bgColor: "bg-info",
-              textColor: "text-white",
-            },
-            "APPROVAL-REQUEST": {
-              bgColor: "bg-purple",
-              textColor: "text-white",
-            },
-
-            "PAYMENT-SENT": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            "PAYMENT-RECEIVED": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            "PAYMENT-REQUESTED": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            PROCESSING: {
-              bgColor: "bg-processing",
-              textColor: "text-white",
-            },
-
-            "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
-            "GOODS-RECEIVED": {
-              bgColor: "bg-lime",
-              textColor: "text-white",
-            },
-            "UNAVAILABLE-SOLD": {
-              bgColor: "bg-danger",
-              textColor: "text-white",
-            },
-          };
-
-          const style = statusStyles[statusCode] || {
-            bgColor: "bg-secondary",
-            textColor: "text-white",
-          };
+          const style = getBadgeClass(statusCode);
 
           return (
-            <span
-              className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
-            >
+            <span className={`badge ${style} px-2 py-1 fw-bold`}>
               {style.icon && (
                 <>
                   <img
@@ -123,62 +73,11 @@ const useColumns = (handleDelete) => {
         width: "2%",
         Cell: ({ row }) => {
           const statusCode = row.original.seller_eoi_status;
-          const statusStyles = {
-            SOLD: { bgColor: "bg-danger", textColor: "text-white" },
-            LIVE: {
-              bgColor: "bg-success",
-              textColor: "text-white",
-              icon: "path/to/live-icon.png",
-            },
-            LISTING: { bgColor: "bg-info", textColor: "text-white" },
-            "EOI-SUBMITTED": { bgColor: "bg-primary", textColor: "text-white" },
-            "IN-NEGOTIATION": {
-              bgColor: "bg-info",
-              textColor: "text-white",
-            },
-            "APPROVAL-REQUEST": {
-              bgColor: "bg-purple",
-              textColor: "text-white",
-            },
-
-            "PAYMENT-SENT": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            "PAYMENT-RECEIVED": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            "PAYMENT-REQUESTED": {
-              bgColor: "bg-warning-dark",
-              textColor: "text-white",
-            },
-            PROCESSING: {
-              bgColor: "bg-processing",
-              textColor: "text-white",
-            },
-
-            "GOODS-SENT": { bgColor: "bg-lime", textColor: "text-white" },
-            "GOODS-RECEIVED": {
-              bgColor: "bg-lime",
-              textColor: "text-white",
-            },
-            "UNAVAILABLE-SOLD": {
-              bgColor: "bg-danger",
-              textColor: "text-white",
-            },
-          };
-
-          const style = statusStyles[statusCode] || {
-            bgColor: "bg-secondary",
-            textColor: "text-white",
-          };
+          const style = getBadgeClass(statusCode);
 
           return (
             <span className="d-flex ">
-              <span
-                className={`badge ${style.bgColor} ${style.textColor} px-2 py-1 fw-bold`}
-              >
+              <span className={`badge ${style} px-2 py-1 fw-bold`}>
                 {style.icon && (
                   <>
                     <img

@@ -868,6 +868,7 @@ header.sweet-alert-header {
 .bg-warning-dark {
   background-color: orange;
 }
+
 .bg-warning-light {
   background-color: #ffa500;
 }
@@ -875,7 +876,7 @@ header.sweet-alert-header {
   background-color: #42c47c;
 }
 .bg-processing {
-  background-color: #6366f1 !important;
+  background-color: #ff7f27 !important;
 }
 .bg-current-status {
   background-color: #51cbce54 !important;
@@ -883,7 +884,15 @@ header.sweet-alert-header {
 .text-warning-dark {
   color: #ffa500;
 }
-
+.bg-dark-sky-blue {
+  background-color: #00a2e8;
+}
+.bg-dark-blue {
+  background-color: blue;
+}
+.bg-danger-dark {
+  background-color: #ed1c24;
+}
 /* Custom Tooltip Styles */
 .tooltip .tooltip-inner {
   background-color: black; /* Tooltip background color */
@@ -931,6 +940,10 @@ label.required::after {
 .filter-tag.badge.text-black.rounded-pill {
   border: 1px solid transparent;
   padding-left: 10px;
+}
+.badge {
+  color: #000;
+  border: 1px solid #fff;
 }
 
 .filter-tag {
