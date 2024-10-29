@@ -390,7 +390,7 @@ const Show = () => {
                       <Label>
                         {dataState.approval_status == "APPROVED"
                           ? "CEMAR Ref No"
-                          : dataState.approval_status === "Not Requested" ||
+                          : dataState.approval_status === "NOT-REQUESTED" ||
                               dataState.approval_status === "Requested"
                             ? "CEMAR Ref No Or Rejection Reason"
                             : "Rejection Reason"}
