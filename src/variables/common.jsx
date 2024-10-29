@@ -104,6 +104,12 @@ export const formatApprovalString = (input) => {
   }
 };
 
+export const formatStringWithDash = (input) => {
+  const formattedStatus = input === "Not Requested" ? "Not-Requested" : input;
+
+  return formattedStatus;
+};
+
 export const formatApprovalStringStatus = (input) => {
   return input.split("%")[0];
 };

@@ -4,6 +4,7 @@ import SvgFilePlus from "components/svg/FilePlus";
 import { Link } from "react-router-dom";
 import AlertIcon from "components/svg/AlertIcon";
 import { getBadgeClass } from "variables/common";
+import { formatStringWithDash } from "variables/common";
 const useColumns = (handleDelete) => {
   return useMemo(
     () => [
@@ -61,7 +62,7 @@ const useColumns = (handleDelete) => {
                   />
                 </>
               )}
-              {statusCode}
+              {formatStringWithDash(statusCode)}
             </span>
           );
         },
@@ -89,7 +90,7 @@ const useColumns = (handleDelete) => {
                   </>
                 )}
 
-                {statusCode}
+                {formatStringWithDash(statusCode)}
               </span>
               {row.original.new_seller_status === true ? (
                 <span

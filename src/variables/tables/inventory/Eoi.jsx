@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { RxCrossCircled } from "react-icons/rx";
 import AlertIcon from "components/svg/AlertIcon";
 import { getBadgeClass } from "variables/common";
+import { formatApprovalString } from "variables/common";
+import { formatStringWithDash } from "variables/common";
 
 const useColumns = (handleDelete) => {
   return useMemo(
@@ -56,7 +58,9 @@ const useColumns = (handleDelete) => {
                     />
                   </>
                 )}
-                {statusCode === "PENDING" ? "Not-Requested" : statusCode}
+                {statusCode === "PENDING"
+                  ? "Not-Requested"
+                  : formatStringWithDash(statusCode)}
               </span>
               {row.original.new_approver_status === true ? (
                 <span
@@ -100,7 +104,7 @@ const useColumns = (handleDelete) => {
                     />
                   </>
                 )}
-                {statusCode}
+                {formatStringWithDash(statusCode)}
               </span>
               {row.original.new_buyer_status === true ? (
                 <span
@@ -141,7 +145,7 @@ const useColumns = (handleDelete) => {
                   />
                 </>
               )}
-              {statusCode}
+              {formatStringWithDash(statusCode)}
             </span>
           );
         },
