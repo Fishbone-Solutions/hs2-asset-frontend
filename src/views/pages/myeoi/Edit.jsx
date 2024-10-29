@@ -117,7 +117,7 @@ const Edit = () => {
     if (updateStatus === null || updateStatus === "") {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding">
+          <p className="success-sweet-title sweet-title-padding text-start">
             Please choose an Acknowledgement Status to update
           </p>
         ),
@@ -183,7 +183,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding">
+          <h6 className="success-sweet-title sweet-title-padding text-start">
             {isSuccess
               ? `Acknowledgement Status updated`
               : getStatusMessage(statusCode, "Seller")}
@@ -273,7 +273,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding">
+          <h6 className="success-sweet-title sweet-title-padding text-start">
             Buyer details updated
           </h6>
         ),
@@ -313,7 +313,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding">
+          <p className="success-sweet-title sweet-title-padding text-start">
             {getUndoStatusMessage(undoStatus, "Seller")}
           </p>
         ),
@@ -715,6 +715,7 @@ const Edit = () => {
             </Col>
 
             {/* Set EoI Status */}
+
             {inventoryData?.statuscode !== "Sold" &&
             dataState.buyer_eoi_status !== "WITHDRAWN" ? (
               <Col md="12">
@@ -755,7 +756,7 @@ const Edit = () => {
                                   </h6>
                                 ),
                                 content: (
-                                  <h6 className="success-sweet-title sweet-title-padding">
+                                  <h6 className="success-sweet-title sweet-title-padding text-start">
                                     Are you sure you wish to undo your Current
                                     Buyer Status?
                                   </h6>
@@ -782,7 +783,7 @@ const Edit = () => {
                             onClick={() => {
                               showAlert({
                                 title: (
-                                  <p className="success-sweet-title sweet-title-padding">
+                                  <p className="success-sweet-title sweet-title-padding text-start">
                                     Are you sure you wish to nudge the seller?
                                   </p>
                                 ),
@@ -827,6 +828,7 @@ const Edit = () => {
                         </FormGroup>
                       </Col>
                     </Row>
+
                     <div
                       style={{ display: "flex", justifyContent: "flex-end" }}
                     >

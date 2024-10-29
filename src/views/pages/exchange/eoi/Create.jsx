@@ -79,8 +79,8 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size">
-            Expression of Interest submitted for <br />'{formData.asset_name}'
+          <p class="sweet-title-size text-start sweet-title-padding">
+            Expression of Interest submitted for '{formData.asset_name}'
           </p>
         ),
         content: (
