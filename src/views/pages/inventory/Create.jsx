@@ -120,7 +120,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding">
+          <h6 className="success-sweet-title sweet-title-padding text-start">
             Item '{values.asset_name}' added to inventory
           </h6>
         ),

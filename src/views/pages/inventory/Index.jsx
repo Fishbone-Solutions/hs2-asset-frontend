@@ -168,7 +168,7 @@ const Index = () => {
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
           title: (
-            <p className="success-sweet-title sweet-title-padding">
+            <p className="success-sweet-title sweet-title-padding text-start">
               Can not delete this Asset
             </p>
           ),
