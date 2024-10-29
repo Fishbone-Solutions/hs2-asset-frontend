@@ -893,7 +893,7 @@ const Edit = () => {
                             <FormGroup>
                               <Field
                                 type="textarea"
-                                onInput={handleInput("alphaNumericDashSlash")}
+                                onInput={handleInput("alphaNumericDescription")}
                                 name="additional_info"
                                 as={Input}
                               />

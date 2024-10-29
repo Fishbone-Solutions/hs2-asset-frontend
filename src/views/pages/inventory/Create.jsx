@@ -529,7 +529,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={50}
                                 name="description"
-                                onInput={handleInput("alphaNumeric")}
+                                onInput={handleInput("alphaNumericDescription")}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -817,7 +817,7 @@ const Create = () => {
                                 type="textarea"
                                 name="additional_info"
                                 maxLength={250}
-                                onInput={handleInput("alphaNumericDashSlash")}
+                                onInput={handleInput("alphaNumericDescription")}
                                 as={Input}
                               />
                               <ErrorMessage

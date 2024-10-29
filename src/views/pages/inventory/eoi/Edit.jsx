@@ -88,6 +88,9 @@ const Edit = () => {
       backdropElement.remove();
     }
     setActiveModal(null);
+    setValidationError(false);
+    setSelectedApproval("");
+    setRefreshModal(refreshModal + 1);
   };
 
   const fetchData = async () => {
