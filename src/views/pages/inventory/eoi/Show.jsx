@@ -191,7 +191,7 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     {dataState.approval_status !== "NOT-REQUESTED" &&
-                    dataState.approval_status !== "Requested" ? (
+                    dataState.approval_status !== "REQUESTED" ? (
                       <Col sm="6">
                         <Label>
                           {dataState.approval_status == "APPROVED"
