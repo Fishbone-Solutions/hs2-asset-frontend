@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/css/date-picker.css";
@@ -102,6 +102,18 @@ const DateRangePicker = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+    <input
+      ref={ref}
+      value={value}
+      onClick={onClick}
+      readOnly // Prevent typing in the input field
+      placeholder={label}
+      className="datepicker-input"
+      style={{ cursor: "pointer" }} // Optional: changes the cursor to a pointer
+    />
+  ));
+
   return (
     <div className="floating-label-container">
       <div className="floating-label-group">
@@ -127,6 +139,7 @@ const DateRangePicker = ({
           showMonthDropdown
           showYearDropdown
           disabled={isdisabled}
+          customInput={<CustomInput />} // Use custom input to prevent typing
         />
       </div>
     </div>

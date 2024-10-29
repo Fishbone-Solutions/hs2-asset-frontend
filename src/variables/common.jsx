@@ -152,8 +152,10 @@ export const getBadgeClass = (activity) => {
       return "badge  bg-dark-sky-blue";
     case "Not Requested":
       return "badge bg-text-not-requested";
+    case "Not-Requested":
+      return "badge bg-text-not-requested";
     case "NOT-PROCEEDING":
-      return "badge bg-secondary";
+      return "badge bg-text-not-requested";
     default:
       return "badge bg-danger-dark";
     // Default grey badge for unrecognized statuses

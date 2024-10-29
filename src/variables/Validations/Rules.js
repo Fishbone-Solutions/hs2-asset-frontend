@@ -11,6 +11,10 @@ export const validationRules = {
     pattern: /^[a-zA-Z0-9 ]*$/, // Allows letters, numbers, and spaces
     regex: /[^a-zA-Z0-9 ]/g,
   },
+  alphaNumericDescription: {
+    pattern: /^[a-zA-Z0-9.,-/: ]*$/, // Allows letters, numbers, spaces, commas, and full stops
+    regex: /[^a-zA-Z0-9.,-/: ]/g,
+  },
   alphaNumericDash: {
     pattern: /^[a-zA-Z0-9- ]*$/, // Allows letters, numbers, -, and spaces
     regex: /[^a-zA-Z0-9- ]/g,
