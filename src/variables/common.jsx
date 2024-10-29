@@ -330,7 +330,7 @@ export const getNudgeMessage = (eoi_nudge, sendNudgeto) => {
 
 export const getStatusMessageApprovalRequest = (status) => {
   switch (status) {
-    case "Requested":
+    case "REQUESTED":
       return "Approval for this EOI is already requested";
     case "APPROVED":
       return "This EOI is already Approved";
