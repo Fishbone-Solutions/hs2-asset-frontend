@@ -37,6 +37,7 @@ import { getNudgeMessage } from "variables/common";
 import AlertIcon from "components/svg/AlertIcon";
 import { handleInputFilteration } from "variables/common";
 import { getStatusMessageApprovalRequest } from "variables/common";
+import { formatStringWithDash } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -588,8 +589,8 @@ const Edit = () => {
                           name="approval_status"
                           value={
                             dataState.approval_status === "PENDING"
-                              ? "Not Requested"
-                              : dataState.approval_status
+                              ? "Not-Requested"
+                              : formatStringWithDash(dataState.approval_status)
                           }
                           readOnly
                         />
