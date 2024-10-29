@@ -605,7 +605,7 @@ const Edit = () => {
                         {dataState.approval_status == "APPROVED"
                           ? "CEMAR Ref No"
                           : dataState.approval_status === "NOT-REQUESTED" ||
-                              dataState.approval_status === "Requested"
+                              dataState.approval_status === "REQUESTED"
                             ? "CEMAR Ref No Or Rejection Reason"
                             : "Rejection Reason"}
                       </Label>
@@ -613,7 +613,12 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="approval_ref_no" // Corrected name field
-                          value={dataState.approval_ref_no}
+                          value={
+                            dataState.approval_status === "NOT-REQUESTED" ||
+                            dataState.approval_status === "REQUESTED"
+                              ? ""
+                              : dataState.approval_ref_no
+                          }
                           readOnly
                         />
                       </FormGroup>
@@ -881,7 +886,7 @@ const Edit = () => {
                           data-bs-placement="left"
                           title="Nudge Approver for response"
                           onClick={() => {
-                            if (dataState.approval_status === "Requested") {
+                            if (dataState.approval_status === "REQUESTED") {
                               showAlert({
                                 title: (
                                   <p className="success-sweet-title sweet-title-padding">
@@ -985,7 +990,7 @@ const Edit = () => {
               color="primary"
               onClick={() => {
                 if (
-                  dataState.approval_status === "Requested" ||
+                  dataState.approval_status === "REQUESTED" ||
                   dataState.approval_status === "APPROVED"
                 ) {
                   showAlert({

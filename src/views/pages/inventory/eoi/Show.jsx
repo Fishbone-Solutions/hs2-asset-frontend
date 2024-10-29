@@ -191,7 +191,7 @@ const Show = () => {
                       </FormGroup>
                     </Col>
                     {dataState.approval_status !== "NOT-REQUESTED" &&
-                    dataState.approval_status !== "Requested" ? (
+                    dataState.approval_status !== "REQUESTED" ? (
                       <Col sm="6">
                         <Label>
                           {dataState.approval_status == "APPROVED"
@@ -202,7 +202,12 @@ const Show = () => {
                           <Input
                             type="text"
                             name="approval_ref_no" // Corrected name field
-                            value={dataState.approval_ref_no}
+                            value={
+                              dataState.approval_status === "NOT-REQUESTED" ||
+                              dataState.approval_status === "REQUESTED"
+                                ? ""
+                                : dataState.approval_ref_no
+                            }
                             readOnly
                           />
                         </FormGroup>
