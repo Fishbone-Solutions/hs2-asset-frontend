@@ -69,7 +69,7 @@ const Edit = () => {
     } else {
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             Please update negotiated value before sending the request
           </h6>
         ),
@@ -162,7 +162,7 @@ const Edit = () => {
     if (updateStatus === null || updateStatus === "") {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Please choose an EOI Status to update
           </p>
         ),
@@ -211,7 +211,7 @@ const Edit = () => {
       const isSuccess = statusCode > 0;
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             {isSuccess
               ? `EOI status updated`
               : getStatusMessage(statusCode, "Buyer")}
@@ -281,7 +281,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Approval Request sent
           </p>
         ),
@@ -403,7 +403,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             {getNudgeMessage(res.appRespData[0].eoi_nudge, sendNudgeto)}
           </p>
         ),
@@ -437,7 +437,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             {getUndoStatusMessage(undoStatus, "BUYER")}
           </p>
         ),
@@ -467,7 +467,7 @@ const Edit = () => {
       setRefreshMainComponent(refreshMainComponent + 1);
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Negotiated value Updated
           </p>
         ),
@@ -861,7 +861,7 @@ const Edit = () => {
                                 </h6>
                               ),
                               content: (
-                                <h6 className="success-sweet-title sweet-title-padding text-start">
+                                <h6 className="sweet-title-size sweet-title-padding text-start">
                                   Are you sure you wish to undo your Current
                                   Seller Status?
                                 </h6>
@@ -889,7 +889,7 @@ const Edit = () => {
                             if (dataState.approval_status === "REQUESTED") {
                               showAlert({
                                 title: (
-                                  <p className="success-sweet-title sweet-title-padding text-start">
+                                  <p className="sweet-title-size sweet-title-padding text-start">
                                     Are you sure you wish to nudge the Approver?
                                   </p>
                                 ),
@@ -904,7 +904,7 @@ const Edit = () => {
                             } else {
                               showAlert({
                                 title: (
-                                  <p className="success-sweet-title sweet-title-padding text-start">
+                                  <p className="sweet-title-size sweet-title-padding text-start">
                                     No pending request at Approver
                                   </p>
                                 ),
@@ -928,7 +928,7 @@ const Edit = () => {
                           onClick={() => {
                             showAlert({
                               title: (
-                                <p className="success-sweet-title sweet-title-padding text-start">
+                                <p className="sweet-title-size sweet-title-padding text-start">
                                   Are you sure you wish to nudge the buyer?
                                 </p>
                               ),
@@ -995,7 +995,7 @@ const Edit = () => {
                 ) {
                   showAlert({
                     title: (
-                      <p className="success-sweet-title sweet-title-padding text-start">
+                      <p className="sweet-title-size sweet-title-padding text-start">
                         {getStatusMessageApprovalRequest(
                           dataState.approval_status
                         )}

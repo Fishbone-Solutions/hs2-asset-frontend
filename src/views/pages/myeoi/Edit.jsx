@@ -117,7 +117,7 @@ const Edit = () => {
     if (updateStatus === null || updateStatus === "") {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Please choose an Acknowledgement Status to update
           </p>
         ),
@@ -183,7 +183,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             {isSuccess
               ? `Acknowledgement Status updated`
               : getStatusMessage(statusCode, "Seller")}
@@ -273,7 +273,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             Buyer details updated
           </h6>
         ),
@@ -313,7 +313,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             {getUndoStatusMessage(undoStatus, "Seller")}
           </p>
         ),
@@ -343,7 +343,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding">
+          <p className="sweet-title-size sweet-title-padding">
             {getNudgeMessage(res.appRespData[0].eoi_nudge, "SELLER")}
           </p>
         ),
@@ -756,7 +756,7 @@ const Edit = () => {
                                   </h6>
                                 ),
                                 content: (
-                                  <h6 className="success-sweet-title sweet-title-padding text-start">
+                                  <h6 className="sweet-title-size sweet-title-padding text-start">
                                     Are you sure you wish to undo your Current
                                     Buyer Status?
                                   </h6>
@@ -783,7 +783,7 @@ const Edit = () => {
                             onClick={() => {
                               showAlert({
                                 title: (
-                                  <p className="success-sweet-title sweet-title-padding text-start">
+                                  <p className="sweet-title-size sweet-title-padding text-start">
                                     Are you sure you wish to nudge the seller?
                                   </p>
                                 ),

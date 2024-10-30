@@ -27,6 +27,7 @@ import { CiLock } from "react-icons/ci";
 import { useAlert } from "components/Common/NotificationAlert";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
+import { handleInput } from "variables/common";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -64,9 +65,15 @@ function Login() {
       } else {
         showAlert({
           title: (
-            <h6 className="success-sweet-title">Unable to grant access</h6>
+            <h6 className="sweet-title-size bg-danger-content">
+              Unable to grant access
+            </h6>
           ),
-          content: "Invalid Username or Password. Please try again",
+          content: (
+            <h6 className="sweet-title-size font-weight-bold ">
+              Invalid Username or Password. Please try again
+            </h6>
+          ),
           type: "error",
           confirmText: "ok",
           showCancelButton: false,
@@ -87,7 +94,7 @@ function Login() {
       }
     } catch (e) {
       showAlert({
-        title: <h6 className="success-sweet-title">Unable to grant access</h6>,
+        title: <h6 className="sweet-title-size">Unable to grant access</h6>,
         content: "something went wrong",
         type: "error",
         confirmText: "ok",
@@ -149,6 +156,8 @@ function Login() {
                       placeholder="Username"
                       type="text"
                       value={username}
+                      onInput={handleInput("alphaNumericLogin")}
+                      maxLength={20}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </InputGroup>

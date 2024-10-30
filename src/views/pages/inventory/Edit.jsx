@@ -148,7 +148,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             Item '{formData.asset_name}' updated
           </h6>
         ),
@@ -224,7 +224,7 @@ const Edit = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             You can only upload a maximum of {totalFiles} files
           </p>
         ),
@@ -244,7 +244,7 @@ const Edit = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p className="success-sweet-title sweet-title-padding text-start">
+            <p className="sweet-title-size sweet-title-padding text-start">
               {type === "image"
                 ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
                 : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
@@ -301,7 +301,7 @@ const Edit = () => {
     if (selectedStatus === "Sold") {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Please enter the final Sold Value
           </p>
         ),
@@ -322,7 +322,7 @@ const Edit = () => {
     if (errorCount > 0 && formSubmission) {
       showAlert({
         title: (
-          <p className="success-sweet-title sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding text-start">
             Please fill all mandatory fields
           </p>
         ),

@@ -120,7 +120,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="success-sweet-title sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
             Item '{values.asset_name}' added to inventory
           </h6>
         ),
@@ -207,7 +207,7 @@ const Create = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
+          <p class="sweet-title-size sweet-title-padding text-start">
             You can only upload a maximum of {maxFiles} files
           </p>
         ),

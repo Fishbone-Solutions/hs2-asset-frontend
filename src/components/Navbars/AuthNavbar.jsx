@@ -36,7 +36,7 @@ function AuthNavbar(props) {
   const handleRegister = () => {
     showAlert({
       title: (
-        <h6 className="success-sweet-title sweet-title-padding text-start">
+        <h6 className="sweet-title-size sweet-title-padding text-start">
           This feature is not available in BETA Release
         </h6>
       ),

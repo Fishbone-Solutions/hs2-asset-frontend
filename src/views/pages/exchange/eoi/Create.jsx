@@ -338,7 +338,7 @@ const Create = () => {
                               onInput={handleInput(
                                 "alphaNumericDashSlashColun"
                               )}
-                              maxLength={20}
+                              maxLength={30}
                               as={Input}
                             />
                             <ErrorMessage

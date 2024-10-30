@@ -242,6 +242,8 @@ export const getStatusMessage = (statusCode, type) => {
       return "Can not proceed. The buyer has not sent the payment yet";
     case -52:
       return "Can not proceed. The buyer has not sent the payment yet";
+    case -99:
+      return "Can not proceed further. You have already decided not to proceed with this EOI";
     default:
       return statusCode > 0
         ? "Acknowledgement Status updated"
