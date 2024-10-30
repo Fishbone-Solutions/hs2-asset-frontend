@@ -100,19 +100,24 @@ const Show = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize tooltips
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    const tooltips = Array.from(tooltipTriggerList).map(
-      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
-    );
-
-    // Cleanup tooltips on unmount
-    return () => {
-      tooltips.forEach((tooltip) => tooltip.dispose());
+    const initializeTooltips = () => {
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltips = Array.from(tooltipTriggerList).map(
+        (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+      );
+      return tooltips;
     };
-  }, []);
+
+    const timeoutId = setTimeout(() => {
+      const tooltips = initializeTooltips();
+      // Cleanup tooltips on unmount
+      return () => tooltips.forEach((tooltip) => tooltip.dispose());
+    }, 300); // Slightly longer delay
+
+    return () => clearTimeout(timeoutId);
+  }, [formData.asset_location]);
 
   return (
     <>
