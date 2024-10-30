@@ -47,7 +47,7 @@ export const inventorySchema = Yup.object().shape({
 
   asset_name: Yup.string().required("Name is required"),
   description: Yup.string().required("Description is required"),
-  value: Yup.string().required("Estimatge value is required"),
+  value: Yup.string().required("Estimated value is required"),
   asset_condition: Yup.string().required("Condition is required"),
   quantity: Yup.string().required("Quantity is required"),
   maintenance_requirements: Yup.string().nullable(),

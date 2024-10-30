@@ -571,7 +571,7 @@ const Create = () => {
                             <FormGroup>
                               <Field
                                 type="text"
-                                maxLength={70}
+                                maxLength={60}
                                 name="maintenance_requirements"
                                 onInput={handleInput("alphaNumericDashSlash")}
                                 as={Input}
@@ -613,7 +613,7 @@ const Create = () => {
                               <Col sm="4 pr-0">
                                 <FormGroup>
                                   <Select
-                                    name="statuscode"
+                                    name="city"
                                     options={cities.map((city) => ({
                                       value: city.code,
                                       label: city.name,
@@ -628,6 +628,9 @@ const Create = () => {
                                         "asset_location_city",
                                         selectedOption.value
                                       )
+                                    }
+                                    onInputChange={(e) =>
+                                      handleInput("alphabets")(e)
                                     }
                                   />
                                   <ErrorMessage
@@ -645,7 +648,7 @@ const Create = () => {
                                     type="text"
                                     placeholder="Compound/Area/PostCode"
                                     name="asset_location"
-                                    maxLength={40}
+                                    maxLength={60}
                                     onInput={handleInput(
                                       "alphaNumericDashSlash"
                                     )}
@@ -669,7 +672,7 @@ const Create = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   name="value"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -730,7 +733,7 @@ const Create = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   name="purchase_price"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -771,7 +774,7 @@ const Create = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
@@ -793,7 +796,7 @@ const Create = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   name="sold_value"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
