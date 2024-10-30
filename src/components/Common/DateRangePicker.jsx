@@ -125,7 +125,7 @@ const DateRangePicker = ({
           {label}
         </label>
         <DatePicker
-          className="datepicker-input"
+          className="form-control datepicker-input"
           name={inputName}
           dateFormat="dd MMM yy"
           selected={startDate}

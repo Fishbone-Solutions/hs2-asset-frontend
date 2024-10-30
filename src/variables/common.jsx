@@ -233,7 +233,7 @@ export const getStatusMessage = (statusCode, type) => {
     case -61:
       return "You have already sent the payment and can not Withdraw at this stage";
     case -62:
-      return "The Seller has not yet requested for the Payment";
+      return "The Seller has not yet requested for the payment";
     case -63:
       return "The Seller has not yet dispatched the Goods";
     case -100:
