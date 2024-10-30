@@ -33,6 +33,7 @@ import { conditionOptions } from "variables/common";
 import { categorycode1 } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
 import { formatLocation } from "variables/common";
+import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 
 const Show = () => {
   const { id } = useParams();
@@ -96,6 +97,21 @@ const Show = () => {
   useEffect(() => {
     fetchInventoryById();
     fetchCityData();
+  }, []);
+
+  useEffect(() => {
+    // Initialize tooltips
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    const tooltips = Array.from(tooltipTriggerList).map(
+      (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+    );
+
+    // Cleanup tooltips on unmount
+    return () => {
+      tooltips.forEach((tooltip) => tooltip.dispose());
+    };
   }, []);
 
   return (
@@ -408,8 +424,12 @@ const Show = () => {
                               type="text"
                               placeholder="Compound/Area/PostCode"
                               name="asset_location"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title={formatLocation(formData.asset_location)}
                               value={formatLocation(formData.asset_location)}
                               readOnly="true"
+                              style={{ cursor: "default" }}
                             />
                           </FormGroup>
                         </Col>
