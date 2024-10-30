@@ -324,8 +324,7 @@ const Create = () => {
                                 type="text"
                                 maxLength={40}
                                 name="seller_title"
-                                pattern="^[a-zA-Z0-9]*$"
-                                onInput={handleInput("alphaNumeric")}
+                                onInput={handleInput("alphaNumericDashSlash")}
                                 as={Input}
                               />
                               <ErrorMessage
