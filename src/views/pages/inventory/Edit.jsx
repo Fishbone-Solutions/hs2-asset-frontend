@@ -631,7 +631,7 @@ const Edit = () => {
                             <FormGroup>
                               <Field
                                 type="text"
-                                maxLength={70}
+                                maxLength={60}
                                 onInput={handleInput("alphaNumericDashSlash")}
                                 name="maintenance_requirements"
                                 as={Input}
@@ -700,6 +700,9 @@ const Edit = () => {
                                         selectedOption.value
                                       )
                                     }
+                                    onInputChange={(e) =>
+                                      handleInput("alphabets")(e)
+                                    }
                                   />
                                   <ErrorMessage
                                     name="asset_location_city"
@@ -719,7 +722,7 @@ const Edit = () => {
                                     onInput={handleInput(
                                       "alphaNumericDashSlash"
                                     )}
-                                    maxLength={40}
+                                    maxLength={60}
                                     as={Input}
                                     className="form-control"
                                   />
@@ -740,7 +743,7 @@ const Edit = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   name="value"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -803,7 +806,7 @@ const Edit = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   name="purchase_price"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -844,7 +847,7 @@ const Edit = () => {
                               <InputGroup>
                                 <InputGroupText>£</InputGroupText>
                                 <Field
-                                  type="number"
+                                  type="text"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
