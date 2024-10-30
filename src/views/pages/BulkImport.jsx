@@ -225,9 +225,7 @@ const BulkImport = () => {
         // setToastMessage(response.message || "Bulk Import Successful");
         // setToastType("success");
         showAlert({
-          title: (
-            <h6 className="success-sweet-title">Bulk Import Successful</h6>
-          ),
+          title: <h6 className="sweet-title-size">Bulk Import Successful</h6>,
           content: "",
           // content: (
           //   <h6 className="success-sweet-content-color">

@@ -1,29 +1,36 @@
-/*eslint-disable*/
+/* eslint-disable */
 import React from "react";
-import { Container, Row } from "reactstrap";
-// used for making the prop types of this component
+import { Container, Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
 
 function Footer(props) {
   return (
     <footer className={"footer" + (props.default ? " footer-default" : "")}>
       <Container fluid={props.fluid ? true : false}>
-        <Row>
-          <nav className="footer-nav">
-            <ul>
-              <li>
-                <a href="assetmanagement.fishbonesolutions.co.uk">
-                  POWERED BY FISH PLATFORM
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <div className="credits ml-auto">
-            <span className="copyright">
-              &copy; {1900 + new Date().getYear()} Fishbone Solutions (Project
-              REM Limited)
-            </span>
-          </div>
+        <Row className="d-flex align-items-center justify-content-between">
+          <Col xs="auto">
+            <nav className="footer-nav">
+              <ul className="list-unstyled mb-0">
+                <li>
+                  <a
+                    href="https://assetmanagement.fishbonesolutions.co.uk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    POWERED BY FISH PLATFORM
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </Col>
+          <Col xs="auto" className="text-end">
+            <div className="credits">
+              <span className="copyright">
+                &copy; {1900 + new Date().getYear()} Fishbone Solutions (Project
+                REM Limited)
+              </span>
+            </div>
+          </Col>
         </Row>
       </Container>
     </footer>

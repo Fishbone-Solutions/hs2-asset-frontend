@@ -838,7 +838,7 @@ header.sweet-alert-header {
 .success-sweet-content-color {
   color: rgb(92, 184, 92);
 }
-.success-sweet-title {
+.sweet-title-size {
   font-size: 0.7em !important;
 }
 
@@ -1227,4 +1227,7 @@ button.btn-round.mb-3.btn.btn-primary:hover {
   .react-select__value-container--has-value
   .react-select__multi-value__label {
   color: #66615b !important;
+}
+.bg-danger-content {
+  color: red;
 }
