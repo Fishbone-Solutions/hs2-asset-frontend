@@ -7,6 +7,10 @@ export const validationRules = {
     pattern: /^[0-9+ ]*$/, // Allows numbers, +, and spaces
     regex: /[^0-9+ ]/g,
   },
+  alphabets: {
+    pattern: /^[a-zA-Z ]*$/, // Allows letters, numbers, and spaces
+    regex: /[^a-zA-Z ]/g,
+  },
   alphaNumeric: {
     pattern: /^[a-zA-Z0-9 ]*$/, // Allows letters, numbers, and spaces
     regex: /[^a-zA-Z0-9 ]/g,
