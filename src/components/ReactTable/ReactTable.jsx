@@ -123,11 +123,14 @@ const Table = ({
 
   const handleRowChange = (value) => {
     setPageSize(value.value); // Local table page size update
-    setPageSizeParent(value.value); // Update the parent component's page size
+
     setNumberOfRows(value);
     gotoPage(0); // Reset to page 1 when changing the row count
     handlePageSelect({ value: 0, label: "Page 1" }); // Update page select to page 1
-    setPageNumberParent(1); // Update parent with page 1
+    if (manualPagination) {
+      setPageSizeParent(value.value); // Update the parent component's page size
+      setPageNumberParent(1); // Update parent with page 1
+    }
   };
 
   // Can previous page logic should check whether the pageIndex is greater than 0
@@ -138,7 +141,9 @@ const Table = ({
   const handlePageChange = (newPage) => {
     gotoPage(newPage);
     handlePageSelect({ value: newPage, label: `Page ${newPage + 1}` });
-    setPageNumberParent(newPage + 1); // Update parent with 1-based page number
+    if (manualPagination) {
+      setPageNumberParent(newPage + 1); // Update parent with 1-based page number
+    }
   };
 
   return (
