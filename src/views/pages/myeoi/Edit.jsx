@@ -36,6 +36,7 @@ import NudgeSvgIcon from "components/svg/Nudge";
 import { getUndoStatusMessage } from "variables/common";
 import { getNudgeMessage } from "variables/common";
 import AlertIcon from "components/svg/AlertIcon";
+import { handleInput } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -554,8 +555,10 @@ const Edit = () => {
                       <FormGroup>
                         <Input
                           type="text"
+                          maxLength={40}
                           name="buyer_name"
                           value={dataState.buyer_name}
+                          onInput={handleInput("alphaNumeric")}
                           onChange={(e) =>
                             setDataState((previousState) => ({
                               ...previousState,
@@ -572,6 +575,8 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="organization"
+                          maxLength={40}
+                          onInput={handleInput("alphaNumericDashSlash")}
                           value={dataState.organization}
                           onChange={(e) =>
                             setDataState((previousState) => ({
@@ -590,6 +595,8 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="contact_no"
+                          maxLength={15}
+                          onInput={handleInput("numericPlus")}
                           value={dataState.contact_no}
                           onChange={(e) =>
                             setDataState((previousState) => ({
@@ -607,6 +614,7 @@ const Edit = () => {
                         <Input
                           type="text"
                           name="email"
+                          maxLength={40}
                           value={dataState.email}
                           onChange={(e) =>
                             setDataState((previousState) => ({
@@ -626,6 +634,8 @@ const Edit = () => {
                           type="text"
                           name="address"
                           value={dataState.address}
+                          maxLength={60}
+                          onInput={handleInput("alphaNumericDashSlash")}
                           onChange={(e) =>
                             setDataState((previousState) => ({
                               ...previousState,
@@ -642,6 +652,8 @@ const Edit = () => {
                           type="text"
                           name="delivery_location"
                           value={dataState.delivery_location}
+                          onInput={handleInput("alphaNumericDashSlash")}
+                          maxLength={60}
                           onChange={(e) =>
                             setDataState((previousState) => ({
                               ...previousState,
@@ -660,6 +672,7 @@ const Edit = () => {
                           type="text"
                           name="contact_time_preference"
                           value={dataState.contact_time_preference}
+                          maxLength={30}
                           onChange={(e) =>
                             setDataState((previousState) => ({
                               ...previousState,

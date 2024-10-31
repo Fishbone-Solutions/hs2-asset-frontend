@@ -294,7 +294,7 @@ const Create = () => {
                           <FormGroup>
                             <Field
                               type="text"
-                              maxLength={50}
+                              maxLength={60}
                               onInput={handleInput("alphaNumericDashSlash")}
                               name="address"
                               as={Input}
