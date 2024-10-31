@@ -95,7 +95,11 @@ const BulkImport = () => {
 
     if (!file) {
       showAlert({
-        title: <p class="sweet-title-size">No file selected</p>,
+        title: (
+          <p class="sweet-title-size sweet-title-padding  text-start">
+            No file selected
+          </p>
+        ),
         type: "error",
         onConfirm: () => hideAlert(),
         confirmText: "Ok",
@@ -111,7 +115,7 @@ const BulkImport = () => {
     if (!allowedExtensions.includes(fileExtension)) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
+          <p class="sweet-title-size sweet-title-padding text-start">
             Invalid file type: {file.name}. Only {allowedExtensions.join(", ")}{" "}
             files are allowed
           </p>
@@ -129,7 +133,7 @@ const BulkImport = () => {
     if (file.size > maxSize) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
+          <p class="sweet-title-size sweet-title-padding text-start">
             File size exceeds the {maxSize / 1000000} MB limit: {file.name}
           </p>
         ),
@@ -197,7 +201,7 @@ const BulkImport = () => {
     if (!uploadedFile) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
+          <p class="sweet-title-size sweet-title-padding text-start">
             No file to ingest. Please upload a file first
           </p>
         ),
@@ -491,7 +495,7 @@ const BulkImport = () => {
                               onClick={() =>
                                 showAlert({
                                   title: (
-                                    <p class="sweet-title-size sweet-title-padding">
+                                    <p class="sweet-title-size sweet-title-padding text-start">
                                       Are you sure you wish to Import{" "}
                                       {totalRecordsFound} records to Inventory ?
                                     </p>

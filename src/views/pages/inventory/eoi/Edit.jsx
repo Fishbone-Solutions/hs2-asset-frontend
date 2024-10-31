@@ -211,7 +211,13 @@ const Edit = () => {
       const isSuccess = statusCode > 0;
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6
+            className={
+              isSuccess
+                ? "sweet-title-size sweet-title-padding"
+                : "sweet-title-size sweet-title-padding text-start"
+            }
+          >
             {isSuccess
               ? `EOI status updated`
               : getStatusMessage(statusCode, "Buyer")}
@@ -281,7 +287,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding">
             Approval Request sent
           </p>
         ),
@@ -403,7 +409,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding">
             {getNudgeMessage(res.appRespData[0].eoi_nudge, sendNudgeto)}
           </p>
         ),
@@ -437,7 +443,13 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p
+            className={
+              isSuccess
+                ? "sweet-title-size sweet-title-padding"
+                : "sweet-title-size sweet-title-padding text-start"
+            }
+          >
             {getUndoStatusMessage(undoStatus, "BUYER")}
           </p>
         ),
@@ -467,7 +479,7 @@ const Edit = () => {
       setRefreshMainComponent(refreshMainComponent + 1);
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding">
             Negotiated value Updated
           </p>
         ),
@@ -904,7 +916,7 @@ const Edit = () => {
                             } else {
                               showAlert({
                                 title: (
-                                  <p className="sweet-title-size sweet-title-padding text-start">
+                                  <p className="sweet-title-size sweet-title-padding">
                                     No pending request at Approver
                                   </p>
                                 ),

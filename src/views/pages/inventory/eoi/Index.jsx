@@ -67,7 +67,7 @@ const Index = () => {
     showAlert({
       title: "Are you sure?",
       content: (
-        <p className="text-danger font-weight-bold">
+        <p className="text-danger font-weight-bold sweet-title-size text-start">
           You will not be able to recover this item
         </p>
       ),
@@ -85,7 +85,11 @@ const Index = () => {
       });
       showAlert({
         title: "Deleted!",
-        content: `EOI ${eoiNo} deleted successfully`,
+        content: (
+          <h6 className="sweet-title-size sweet-title-padding">
+            EOI: {eoiNo} deleted successfully
+          </h6>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "ok",

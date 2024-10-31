@@ -227,7 +227,7 @@ const Create = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p class="sweet-title-size sweet-title-padding">
+            <p class="sweet-title-size sweet-title-padding text-start">
               {type === "image"
                 ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
                 : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}

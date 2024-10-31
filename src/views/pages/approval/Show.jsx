@@ -181,7 +181,11 @@ const Show = () => {
       );
 
       showAlert({
-        title: type === "APPROVED" ? `Request Approved` : "Rejection Sent",
+        title: (
+          <p class="sweet-title-size sweet-title-padding text-start">
+            {type === "APPROVED" ? `Request Approved` : "Rejection Sent"}
+          </p>
+        ),
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",

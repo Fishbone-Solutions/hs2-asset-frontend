@@ -301,7 +301,7 @@ const Edit = () => {
     if (selectedStatus === "Sold") {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding ">
             Please enter the final Sold Value
           </p>
         ),
@@ -322,7 +322,7 @@ const Edit = () => {
     if (errorCount > 0 && formSubmission) {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding">
             Please fill all mandatory fields
           </p>
         ),
