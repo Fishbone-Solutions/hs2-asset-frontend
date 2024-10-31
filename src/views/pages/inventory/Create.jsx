@@ -21,6 +21,8 @@ import {
   Modal,
   InputGroup,
   InputGroupText,
+  Popover,
+  PopoverBody,
 } from "reactstrap";
 import Select from "react-select";
 import DateRangePicker from "components/Common/DateRangePicker";
@@ -44,6 +46,7 @@ import moment from "moment";
 import { handleInput } from "variables/common";
 import { RxCross2 } from "react-icons/rx";
 import AttachmentPreview from "components/Common/AttachmentPreview";
+import InfoBulb from "components/svg/InfoBulb";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -59,6 +62,10 @@ const Create = () => {
 
   const [docs, setDocs] = useState([]);
   const [cities, setCities] = useState([]);
+
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const togglePopover = () => setPopoverOpen(!popoverOpen);
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
 
@@ -511,7 +518,10 @@ const Create = () => {
                                 type="text"
                                 maxLength={40}
                                 name="asset_name"
+                                id="assetNameField"
                                 onInput={handleInput("alphaNumeric")}
+                                onClick={() => setPopoverOpen(true)}
+                                onBlur={() => setPopoverOpen(false)}
                                 as={Input}
                               />
                               <ErrorMessage
@@ -520,6 +530,34 @@ const Create = () => {
                                 className="text-danger"
                               />
                             </FormGroup>
+
+                            <Popover
+                              placement="bottom"
+                              isOpen={popoverOpen}
+                              target="assetNameField"
+                              toggle={togglePopover}
+                            >
+                              <PopoverBody>
+                                <div className="d-flex flex-column align-items-center text-center">
+                                  <InfoBulb
+                                    width="35"
+                                    height="35"
+                                    className="mb-3"
+                                  />
+
+                                  <h6 className="popover-text">
+                                    Buyers most commonly search for items by
+                                    Name. Therefore, it is recommended to type
+                                    in a name that is short and common.
+                                  </h6>
+                                  <h6 className="popover-text">
+                                    Imagine what you as a Buyer would type in
+                                    the search if you were looking for this
+                                    item.
+                                  </h6>
+                                </div>
+                              </PopoverBody>
+                            </Popover>
                           </Col>
                           <Col sm="6">
                             <Label className="required">Description</Label>

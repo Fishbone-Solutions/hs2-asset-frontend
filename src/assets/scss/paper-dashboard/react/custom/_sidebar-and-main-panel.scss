@@ -1227,3 +1227,11 @@ button.btn-round.mb-3.btn.btn-primary:hover {
 .bg-danger-content {
   color: red;
 }
+.popover-text {
+  font-size: 0.5rem;
+  text-align: left;
+  padding: 5px;
+  max-width: 165px; /* Adjust width as needed */
+  line-height: 1.5;
+  margin: 0;
+}
