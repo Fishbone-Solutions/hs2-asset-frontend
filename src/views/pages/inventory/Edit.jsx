@@ -439,7 +439,7 @@ const Edit = () => {
                                 type="text"
                                 name="seller_location"
                                 onInput={handleInput("alphaNumericDash")}
-                                maxLength={50}
+                                maxLength={60}
                                 as={Input}
                               />
                               <ErrorMessage

@@ -376,7 +376,7 @@ const Create = () => {
                             <FormGroup>
                               <Field
                                 type="text"
-                                maxLength={50}
+                                maxLength={60}
                                 name="seller_location"
                                 onInput={handleInput("alphaNumericDash")}
                                 as={Input}
