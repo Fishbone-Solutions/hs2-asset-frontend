@@ -59,7 +59,6 @@ const Table = ({
     canPreviousPage: localCanPreviousPage,
     canNextPage,
     setPageSize,
-    pageCount,
   } = useTable(
     {
       columns,
@@ -78,7 +77,7 @@ const Table = ({
       manualPagination,
       pageCount: manualPagination
         ? Math.ceil(totalRowCount / pageSizeParent)
-        : undefined,
+        : Math.ceil(data.length / numberOfRows.value),
     },
     useSortBy,
     usePagination,
@@ -238,11 +237,12 @@ const Table = ({
                 type="button"
                 onClick={() => {
                   previousPage();
-                  setDirection("b");
 
                   // Update pageSelect state and parent component state
                   const newPage = pageIndex - 1;
                   handlePageChange(newPage); // Scroll to top inside handlePageChange
+
+                  setDirection("b");
                 }}
                 disabled={!canPreviousPage} // Check updated canPreviousPage logic
                 className="-btn"
@@ -285,11 +285,12 @@ const Table = ({
                 type="button"
                 onClick={() => {
                   nextPage();
-                  setDirection("f");
 
                   // Update pageSelect state and parent component state
                   const newPage = pageIndex + 1;
                   handlePageChange(newPage); // Scroll to top inside handlePageChange
+
+                  setDirection("f");
                 }}
                 disabled={!canNextPage}
                 className="-btn"
