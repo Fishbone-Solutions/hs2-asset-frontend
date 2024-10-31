@@ -183,7 +183,13 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6
+            className={
+              isSuccess
+                ? "sweet-title-size sweet-title-padding"
+                : "sweet-title-size sweet-title-padding text-start"
+            }
+          >
             {isSuccess
               ? `Acknowledgement Status updated`
               : getStatusMessage(statusCode, "Seller")}
@@ -273,7 +279,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding">
             Buyer details updated
           </h6>
         ),
@@ -343,7 +349,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
+          <p className="sweet-title-size sweet-title-padding text-start">
             {getNudgeMessage(res.appRespData[0].eoi_nudge, "SELLER")}
           </p>
         ),

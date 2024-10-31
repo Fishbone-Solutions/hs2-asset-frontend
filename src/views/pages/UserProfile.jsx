@@ -86,7 +86,11 @@ function UserProfile() {
 
       setLoader(false);
       showAlert({
-        title: "Updated Profile",
+        title: (
+          <p class="sweet-title-size sweet-title-padding text-start">
+            Updated Profile
+          </p>
+        ),
         type: "success",
         onConfirm: () => {
           hideAlert();

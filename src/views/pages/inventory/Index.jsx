@@ -146,12 +146,11 @@ const Index = () => {
       setLoader(false);
     }
   };
-
   const handleDelete = (id) => {
     showAlert({
       title: "Are you sure?",
       content: (
-        <p className="text-danger font-weight-bold">
+        <p className="text-danger font-weight-bold sweet-title-size sweet-title-padding text-start">
           You will not be able to recover this item
         </p>
       ),
@@ -168,8 +167,8 @@ const Index = () => {
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
           title: (
-            <p className="sweet-title-size sweet-title-padding text-start">
-              Can not delete this Asset
+            <p className="sweet-title-size sweet-title-padding">
+              Can not delete this Item
             </p>
           ),
           content: `This Asset is being broadcasted Live`,
@@ -181,7 +180,11 @@ const Index = () => {
       } else {
         showAlert({
           title: "Deleted!",
-          content: `Item ID: ${id}  deleted successfully`,
+          content: (
+            <p class="sweet-title-size sweet-title-padding font-weight-bold">
+              Item ID: {id} deleted successfully
+            </p>
+          ),
           type: "success",
           showCancelButton: false,
           confirmText: "ok",
