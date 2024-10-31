@@ -110,7 +110,7 @@ const DateRangePicker = ({
       readOnly // Prevent typing in the input field
       placeholder={label}
       className="datepicker-input"
-      style={{ cursor: "pointer" }} // Optional: changes the cursor to a pointer
+      style={{ cursor: "default" }} // Optional: changes the cursor to a pointer
     />
   ));
 
