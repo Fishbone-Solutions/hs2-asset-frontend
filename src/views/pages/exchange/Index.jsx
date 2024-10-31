@@ -536,7 +536,7 @@ const Index = () => {
                   setPageNumberParent={setPageNumber} // Updates parent with current page number
                   setDirection={setDirection} // Pass function to set direction
                   className="-striped -highlight primary-pagination mt-2"
-                  manualPagination={false}
+                  manualPagination={true}
                 />
               </CardBody>
             </Card>
