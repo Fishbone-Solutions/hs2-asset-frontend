@@ -1213,8 +1213,7 @@ button.btn-round.mb-3.btn.btn-primary:hover {
 .card-login label {
   color: #fff !important;
 }
-.datepicker-input:disabled,
-.datepicker-input[readonly] {
+.datepicker-input:disabled {
   background-color: rgba(227, 227, 227, 0.4784313725);
   color: #66615b;
 }
