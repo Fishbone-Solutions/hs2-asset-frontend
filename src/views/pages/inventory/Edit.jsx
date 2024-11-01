@@ -584,7 +584,7 @@ const Edit = () => {
                                 onClick={() => setPopoverOpen(true)}
                                 onBlur={() => setPopoverOpen(false)}
                                 as={Input}
-                                autoComplete="off"
+                                autoComplete="new-password"
                               />
                               <ErrorMessage
                                 name="asset_name"
