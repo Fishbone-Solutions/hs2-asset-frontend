@@ -45,6 +45,19 @@ const Table = ({
     ? defaultSortColumn.defaultSortDesc
     : false;
 
+  const initialState = {
+    pageIndex: pageNumberParent ? pageNumberParent - 1 : 0,
+    pageSize: pageSizeParent || 10,
+    ...(defaultSortId && {
+      sortBy: [
+        {
+          id: defaultSortId,
+          desc: defaultSortDesc,
+        },
+      ],
+    }),
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -64,16 +77,7 @@ const Table = ({
       columns,
       data,
       defaultColumn,
-      initialState: {
-        pageIndex: pageNumberParent ? pageNumberParent - 1 : 0,
-        pageSize: pageSizeParent || 10,
-        sortBy: [
-          {
-            id: defaultSortId,
-            desc: defaultSortDesc,
-          },
-        ],
-      },
+      initialState,
       manualPagination,
       pageCount: manualPagination
         ? Math.ceil(totalRowCount / pageSizeParent)

@@ -9,8 +9,6 @@ const useColumns = (data, handleDelete) => {
       {
         Header: "Requested On",
         isSortable: true,
-        defaultSort: true,
-        defaultSortDesc: true,
         accessor: "request_date_formatted",
         width: "4%",
         Cell: ({ row }) => (
