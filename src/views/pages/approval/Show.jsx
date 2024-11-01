@@ -182,7 +182,7 @@ const Show = () => {
 
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
+          <p class="sweet-title-size sweet-title-padding">
             {type === "APPROVED" ? `Request Approved` : "Rejection Sent"}
           </p>
         ),
@@ -680,7 +680,7 @@ const Show = () => {
           } else {
             setValidationError(false);
             showAlert({
-              title: "Are you sure?",
+              title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
               type: "warning",
               onConfirm: () => approvalRequest(params.approval_status),
               onCancel: hideAlert,

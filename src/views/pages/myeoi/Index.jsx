@@ -174,7 +174,7 @@ const Index = () => {
   const handleDelete = (assetId, eoino) => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
-      title: "Are you sure?",
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       content: (
         <p className="text-danger font-weight-bold sweet-title-size  text-start">
           You will not be able to recover this item

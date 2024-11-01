@@ -105,7 +105,7 @@ const Edit = () => {
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
-      title: "Are you sure?",
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
       onConfirm: () => handleUpdateInventory(values),
       onCancel: hideAlert,
@@ -155,7 +155,7 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding">
             Item '{formData.asset_name}' updated
           </h6>
         ),
@@ -231,7 +231,7 @@ const Edit = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding">
             You can only upload a maximum of {totalFiles} files
           </p>
         ),
@@ -251,7 +251,7 @@ const Edit = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p className="sweet-title-size sweet-title-padding text-start">
+            <p className="sweet-title-size sweet-title-padding">
               {type === "image"
                 ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
                 : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}

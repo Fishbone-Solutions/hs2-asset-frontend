@@ -73,7 +73,7 @@ const Create = () => {
     console.log("value", values);
     setFormSubmission(false);
     showAlert({
-      title: "Are you sure?",
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
       onConfirm: () => successSubmit(values),
       onCancel: hideAlert,
@@ -127,7 +127,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding">
             Item '{values.asset_name}' added to inventory
           </h6>
         ),
@@ -214,7 +214,7 @@ const Create = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
+          <p class="sweet-title-size sweet-title-padding">
             You can only upload a maximum of {maxFiles} files
           </p>
         ),
@@ -234,7 +234,7 @@ const Create = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p class="sweet-title-size sweet-title-padding text-start">
+            <p class="sweet-title-size sweet-title-padding">
               {type === "image"
                 ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
                 : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}

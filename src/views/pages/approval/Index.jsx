@@ -53,7 +53,7 @@ const Index = () => {
 
   const handleDelete = (id) => {
     showAlert({
-      title: "Are you sure?",
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       content: (
         <p className="text-danger font-weight-bold">
           You will not be able to recover this item
