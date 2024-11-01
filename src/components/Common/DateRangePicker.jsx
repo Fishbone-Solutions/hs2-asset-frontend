@@ -111,7 +111,7 @@ const DateRangePicker = ({
       disabled={isdisabled}
       placeholder={label}
       className="datepicker-input"
-      style={{ cursor: "default" }} // Optional: changes the cursor to a pointer
+      style={{ cursor: isdisabled ? "not-allowed" : "pointer" }} // Optional: changes the cursor to a pointer
     />
   ));
 
