@@ -87,9 +87,7 @@ function UserProfile() {
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
-            Updated Profile
-          </p>
+          <p class="sweet-title-size sweet-title-padding">Updated Profile</p>
         ),
         type: "success",
         onConfirm: () => {
@@ -207,7 +205,9 @@ function UserProfile() {
                       type="button"
                       onClick={() => {
                         showAlert({
-                          title: "Are you sure?",
+                          title: (
+                            <h4 className="sweet-alert-sure">Are you sure?</h4>
+                          ),
                           type: "warning",
                           onConfirm: () => handleUpdateProfile(),
                           onCancel: hideAlert,

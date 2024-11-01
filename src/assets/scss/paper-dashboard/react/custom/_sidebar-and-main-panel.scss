@@ -1010,11 +1010,15 @@ button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded.p-
 }
 
 .sweet-title-size {
-  font-size: 1rem !important;
+  font-size: 0.9rem !important;
 }
 .sweet-title-padding {
-  padding-left: 87px;
+  padding-left: 16%;
   padding-right: 70px;
+}
+
+.sweet-alert-sure {
+  font-weight: 600;
 }
 .upload-image-notification {
   font-size: 0.8rem;

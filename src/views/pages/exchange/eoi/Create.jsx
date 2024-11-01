@@ -106,7 +106,7 @@ const Create = () => {
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
-      title: "Are you sure?",
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
       onConfirm: () => handleSubmit(values),
       onCancel: hideAlert,
@@ -315,7 +315,7 @@ const Create = () => {
                               type="text"
                               name="delivery_location"
                               onInput={handleInput("alphaNumericDashSlash")}
-                              maxLength={50}
+                              maxLength={60}
                               as={Input}
                             />
                             <ErrorMessage

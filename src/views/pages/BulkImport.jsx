@@ -96,9 +96,7 @@ const BulkImport = () => {
     if (!file) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding  text-start">
-            No file selected
-          </p>
+          <p class="sweet-title-size sweet-title-padding ">No file selected</p>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -115,7 +113,7 @@ const BulkImport = () => {
     if (!allowedExtensions.includes(fileExtension)) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
+          <p class="sweet-title-size sweet-title-padding">
             Invalid file type: {file.name}. Only {allowedExtensions.join(", ")}{" "}
             files are allowed
           </p>
@@ -133,7 +131,7 @@ const BulkImport = () => {
     if (file.size > maxSize) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
+          <p class="sweet-title-size sweet-title-padding">
             File size exceeds the {maxSize / 1000000} MB limit: {file.name}
           </p>
         ),
@@ -201,7 +199,7 @@ const BulkImport = () => {
     if (!uploadedFile) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding text-start">
+          <p class="sweet-title-size sweet-title-padding">
             No file to ingest. Please upload a file first
           </p>
         ),
@@ -297,7 +295,7 @@ const BulkImport = () => {
                     <Col sm="6">
                       <div className="form-check-radio">
                         <FormGroup className="d-flex">
-                          <Label check>
+                          <Label check style={{ cursor: "pointer" }}>
                             <Input
                               value=".csv"
                               id="hs2csv"
@@ -316,8 +314,9 @@ const BulkImport = () => {
                     <Col sm="6">
                       <div className="form-check-radio">
                         <FormGroup>
-                          <Label check>
+                          <Label check style={{ cursor: "pointer" }}>
                             <Input
+                              style={{ cursor: "pointer" }}
                               value=".xlsx"
                               id="hs2excel"
                               name="options"
@@ -495,7 +494,7 @@ const BulkImport = () => {
                               onClick={() =>
                                 showAlert({
                                   title: (
-                                    <p class="sweet-title-size sweet-title-padding text-start">
+                                    <p class="sweet-title-size sweet-title-padding">
                                       Are you sure you wish to Import{" "}
                                       {totalRecordsFound} records to Inventory ?
                                     </p>

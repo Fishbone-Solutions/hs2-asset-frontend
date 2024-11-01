@@ -69,7 +69,7 @@ const Edit = () => {
     } else {
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding text-start">
+          <h6 className="sweet-title-size sweet-title-padding">
             Please update negotiated value before sending the request
           </h6>
         ),
@@ -162,7 +162,7 @@ const Edit = () => {
     if (updateStatus === null || updateStatus === "") {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding text-start">
+          <p className="sweet-title-size sweet-title-padding ">
             Please choose an EOI Status to update
           </p>
         ),
@@ -176,13 +176,13 @@ const Edit = () => {
       showAlert({
         title: (
           <h6 className="warning-alert ">
-            <span className="text-danger-dark text-start">
-              WARNING: The status you are about to set will instantly become
-              visible to the Buyer
+            <span className="text-start">
+              <span className="text-danger-dark">WARNING:</span> The status you
+              are about to set will instantly become visible to the Buyer
             </span>
           </h6>
         ),
-        content: <h3>Are you sure?</h3>,
+        content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
         confirmText: "Yes",
         onConfirm: async () => {
           await handleSubmit(); // No need to pass params, we'll use the ref
@@ -211,13 +211,7 @@ const Edit = () => {
       const isSuccess = statusCode > 0;
       showAlert({
         title: (
-          <h6
-            className={
-              isSuccess
-                ? "sweet-title-size sweet-title-padding"
-                : "sweet-title-size sweet-title-padding text-start"
-            }
-          >
+          <h6 className="sweet-title-size sweet-title-padding">
             {isSuccess
               ? `EOI status updated`
               : getStatusMessage(statusCode, "Buyer")}
@@ -443,13 +437,7 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p
-            className={
-              isSuccess
-                ? "sweet-title-size sweet-title-padding"
-                : "sweet-title-size sweet-title-padding text-start"
-            }
-          >
+          <p className="sweet-title-size sweet-title-padding">
             {getUndoStatusMessage(undoStatus, "BUYER")}
           </p>
         ),
@@ -817,7 +805,11 @@ const Edit = () => {
                         type="button"
                         onClick={() =>
                           showAlert({
-                            title: "Are you sure?",
+                            title: (
+                              <h4 className="sweet-alert-sure">
+                                Are you sure?
+                              </h4>
+                            ),
                             type: "warning",
                             onConfirm: () => handleNegotiatedValue(),
                             onCancel: hideAlert,
@@ -866,14 +858,17 @@ const Edit = () => {
                             showAlert({
                               title: (
                                 <h6 className="warning-alert ">
-                                  <span className="text-danger-dark text-start">
-                                    WARNING: The Buyer might have already
-                                    reacted to your current status
+                                  <span className="text-start">
+                                    <span className="text-danger-dark">
+                                      WARNING:
+                                    </span>{" "}
+                                    The Buyer might have already reacted to your
+                                    current status
                                   </span>
                                 </h6>
                               ),
                               content: (
-                                <h6 className="sweet-title-size sweet-title-padding text-start">
+                                <h6 className="sweet-title-size sweet-title-padding">
                                   Are you sure you wish to undo your Current
                                   Seller Status?
                                 </h6>
@@ -901,7 +896,7 @@ const Edit = () => {
                             if (dataState.approval_status === "REQUESTED") {
                               showAlert({
                                 title: (
-                                  <p className="sweet-title-size sweet-title-padding text-start">
+                                  <p className="sweet-title-size sweet-title-padding">
                                     Are you sure you wish to nudge the Approver?
                                   </p>
                                 ),
@@ -940,7 +935,7 @@ const Edit = () => {
                           onClick={() => {
                             showAlert({
                               title: (
-                                <p className="sweet-title-size sweet-title-padding text-start">
+                                <p className="sweet-title-size sweet-title-padding">
                                   Are you sure you wish to nudge the buyer?
                                 </p>
                               ),
@@ -1007,7 +1002,7 @@ const Edit = () => {
                 ) {
                   showAlert({
                     title: (
-                      <p className="sweet-title-size sweet-title-padding text-start">
+                      <p className="sweet-title-size sweet-title-padding">
                         {getStatusMessageApprovalRequest(
                           dataState.approval_status
                         )}
@@ -1065,7 +1060,7 @@ const Edit = () => {
           } else {
             setValidationError(false);
             showAlert({
-              title: "Are you sure?",
+              title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
               type: "warning",
               onConfirm: () => approvalRequest(),
               onCancel: hideAlert,
