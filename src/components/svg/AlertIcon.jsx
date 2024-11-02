@@ -13,6 +13,9 @@ const AlertIcon = (props) => (
     style={{ enableBackground: "new 0 0 512 512" }}
     xmlSpace="preserve"
     className={props.className}
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    title={props.title}
   >
     <g>
       <path

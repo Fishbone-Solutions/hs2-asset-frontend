@@ -124,7 +124,7 @@ const useColumns = (handleDelete) => {
               <Button
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
-                title="Edit EOI"
+                title="Manage EOI"
                 className="btn-icon btn-simple"
                 color="success"
                 size="sm"
