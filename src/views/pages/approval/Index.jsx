@@ -53,12 +53,12 @@ const Index = () => {
 
   const handleDelete = (id) => {
     showAlert({
-      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
-      content: (
+      title: (
         <p className="text-danger font-weight-bold">
           You will not be able to recover this item
         </p>
       ),
+      content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
       onConfirm: () => successDelete(id),
       onCancel: hideAlert,

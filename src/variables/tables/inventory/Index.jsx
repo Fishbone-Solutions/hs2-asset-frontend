@@ -93,12 +93,19 @@ const useColumns = (handleDelete) => {
 
               {row.original.un_attended_items === true ? (
                 <span
-                  className="cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Some unattended EOIs"
+                  className="d-inline-flex align-items-center cursor-pointer p-1"
+                  style={{
+                    display: "inline-flex",
+                    padding: "4px",
+                    alignItems: "center",
+                  }}
                 >
-                  <AlertIcon className="notify-icon" width="20" height="20" />
+                  <AlertIcon
+                    className="notify-icon"
+                    width="20"
+                    height="20"
+                    title="Some unattended EOIs"
+                  />
                 </span>
               ) : (
                 ""

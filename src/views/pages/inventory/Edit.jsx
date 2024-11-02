@@ -60,6 +60,7 @@ const Edit = () => {
   const [deletedAttachmentsIds, setDeletedAttachmentsIds] = useState([]);
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
+  const [refreshImageComponent, setRefreshImageComponent] = useState(0);
   const [files, setFiles] = useState([]);
 
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -159,9 +160,7 @@ const Edit = () => {
             Item '{formData.asset_name}' updated
           </h6>
         ),
-        content: (
-          <h6 className="success-sweet-content-color">Item ID = {id}</h6>
-        ),
+        content: null,
         type: "success",
         showCancelButton: false,
         confirmText: "Ok",
@@ -187,12 +186,34 @@ const Edit = () => {
     console.log("repeat", event);
     const maxFiles =
       5 - attachments.filter((att) => att.att_type === "images").length;
-    onFileUpload(event, maxFiles, 5, ImageType, "image");
-    const filesData = Array.from(event.files);
-    // Take only up to the limit
-    const limitedFiles = filesData.slice(0, maxFiles);
-    //const files = Array.from(event.files);
-    setFiles(limitedFiles);
+    const validation = onFileUpload(event, maxFiles, 5, ImageType, "image");
+    console.log("validation", validation);
+    if (files.length < maxFiles) {
+      setRefreshImageComponent(refreshImageComponent + 1);
+      if (validation) {
+        const filesData = Array.from(event.files);
+        // Take only up to the limit
+        const limitedFiles = filesData.slice(0, maxFiles);
+        //const files = Array.from(event.files);
+        setFiles((prevFiles) => [
+          ...prevFiles,
+          ...limitedFiles, // Assuming `limitedFiles` is an array of selected and validated files
+        ]);
+      }
+    } else {
+      setRefreshImageComponent(refreshImageComponent + 1);
+      showAlert({
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            You can only upload a maximum of {maxFiles} files
+          </p>
+        ),
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
+    }
   };
   const onUploadDocs = (event) => {
     const checkValidation = onFileUpload(
@@ -293,7 +314,7 @@ const Edit = () => {
     // Remove the image from the state
     const updatedImages = docs.filter((_, index) => index !== imageIndex);
     // Update the state and re-trigger the onUploadImages to handle the updated list
-    setFiles(updatedImages);
+    setDocs(updatedImages);
     // Optional: you can call onUploadImages again if necessary for further processing
   };
 
@@ -979,6 +1000,7 @@ const Edit = () => {
 
                         <FileUpload
                           name="files[]"
+                          key={refreshImageComponent}
                           multiple
                           accept="image/*"
                           chooseLabel={

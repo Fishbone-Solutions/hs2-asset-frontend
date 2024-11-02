@@ -58,6 +58,7 @@ const Create = () => {
     user_id: sessionStorage.getItem("username"),
     "Content-Type": "multipart/form-data",
   };
+  const [refreshImageComponent, setRefreshImageComponent] = useState(0);
   const [files, setFiles] = useState([]);
 
   const [docs, setDocs] = useState([]);
@@ -160,20 +161,44 @@ const Create = () => {
   // };
 
   const onUploadImages = (event) => {
-    console.log("repeat", event);
+    console.log("repeat", event, files.length);
     const maxFiles = 5;
-    onFileUpload(event, maxFiles, ImageType, "image");
-    const files = Array.from(event.files);
-    // Take only up to the limit
-    const limitedFiles = files.slice(0, maxFiles);
-    //const files = Array.from(event.files);
-    setFiles(limitedFiles);
+
+    if (files.length < maxFiles) {
+      const checkValidation = onFileUpload(event, maxFiles, ImageType, "image");
+      setRefreshImageComponent(refreshImageComponent + 1);
+      if (checkValidation) {
+        const files = Array.from(event.files);
+        // Take only up to the limit
+        const limitedFiles = files.slice(0, maxFiles);
+        //const files = Array.from(event.files);
+        setFiles((prevFiles) => [
+          ...prevFiles,
+          ...limitedFiles, // Assuming `limitedFiles` is an array of selected and validated files
+        ]);
+      }
+    } else {
+      setRefreshImageComponent(refreshImageComponent + 1);
+      showAlert({
+        title: (
+          <p class="sweet-title-size sweet-title-padding">
+            You can only upload a maximum of {maxFiles} files
+          </p>
+        ),
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
+    }
   };
 
   // Handle deleting an image
   const deleteImage = (imageIndex) => {
     // Remove the image from the state
     const updatedImages = files.filter((_, index) => index !== imageIndex);
+    console.log("updatedImages", updatedImages);
+    setRefreshImageComponent(refreshImageComponent + 1);
     // Update the state and re-trigger the onUploadImages to handle the updated list
     setFiles(updatedImages);
     // Optional: you can call onUploadImages again if necessary for further processing
@@ -197,7 +222,11 @@ const Create = () => {
     const files = Array.from(event.files);
     // Take only up to the limit
     const limitedFiles = files.slice(0, maxFiles);
-    setDocs(limitedFiles);
+    setDocs((prevFiles) => [
+      ...prevFiles,
+      ...limitedFiles, // Assuming `limitedFiles` is an array of selected and validated files
+    ]);
+    //setDocs(limitedFiles);
   };
 
   const onFileUpload = (
@@ -894,6 +923,7 @@ const Create = () => {
                       <CardBody>
                         <FileUpload
                           name="files[]"
+                          key={refreshImageComponent}
                           multiple
                           accept="image/*"
                           chooseLabel={

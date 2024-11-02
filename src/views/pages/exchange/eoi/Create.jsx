@@ -79,7 +79,7 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size text-start sweet-title-padding">
+          <p class="sweet-title-size sweet-title-padding">
             Expression of Interest submitted for '{formData.asset_name}'
           </p>
         ),

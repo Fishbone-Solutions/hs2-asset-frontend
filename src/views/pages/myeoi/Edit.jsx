@@ -136,7 +136,7 @@ const Edit = () => {
             {updateStatus === "WITHDRAWN" ? (
               <h6 className="warning-alert">
                 <span>
-                  <span className="text-danger-dark">WARNING:</span> You will
+                  <span className="bg-danger-content">WARNING:</span> You will
                   not be able to undo Withdrawal or make any updates to EOI
                 </span>
               </h6>
@@ -145,7 +145,7 @@ const Edit = () => {
             )}
             <h6 className="warning-alert">
               <span>
-                <span className="text-danger-dark">WARNING:</span> The status
+                <span className="bg-danger-content">WARNING:</span> The status
                 you are about to set will instantly become visible to the Buyer
               </span>
             </h6>
@@ -184,9 +184,7 @@ const Edit = () => {
               : getStatusMessage(statusCode, "Seller")}
           </h6>
         ),
-        content: isSuccess ? (
-          <h6 className="success-sweet-content-color">EOI ID : {eoiId}</h6>
-        ) : null, // Only show content for success cases
+        content: null, // Only show content for success cases
         type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
         showCancelButton: false,
         confirmText: "Ok",
@@ -757,7 +755,7 @@ const Edit = () => {
                                 title: (
                                   <h6 className="warning-alert ">
                                     <span className="text-start">
-                                      <span className="text-danger-dark">
+                                      <span className="bg-danger-content">
                                         WARNING:
                                       </span>{" "}
                                       The Buyer might have already reacted to

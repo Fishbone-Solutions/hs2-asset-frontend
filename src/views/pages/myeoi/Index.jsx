@@ -176,7 +176,7 @@ const Index = () => {
     showAlert({
       title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       content: (
-        <p className="text-danger font-weight-bold sweet-title-size  text-start">
+        <p className="text-danger font-weight-bold sweet-title-size ">
           You will not be able to recover this item
         </p>
       ),

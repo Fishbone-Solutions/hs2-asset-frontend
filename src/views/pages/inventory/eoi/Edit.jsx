@@ -177,7 +177,7 @@ const Edit = () => {
         title: (
           <h6 className="warning-alert ">
             <span className="text-start">
-              <span className="text-danger-dark">WARNING:</span> The status you
+              <span className="bg-danger-content">WARNING:</span> The status you
               are about to set will instantly become visible to the Buyer
             </span>
           </h6>
@@ -468,7 +468,7 @@ const Edit = () => {
       showAlert({
         title: (
           <p className="sweet-title-size sweet-title-padding">
-            Negotiated value Updated
+            Negotiated value updated
           </p>
         ),
         type: "success",
@@ -859,7 +859,7 @@ const Edit = () => {
                               title: (
                                 <h6 className="warning-alert ">
                                   <span className="text-start">
-                                    <span className="text-danger-dark">
+                                    <span className="bg-danger-content">
                                       WARNING:
                                     </span>{" "}
                                     The Buyer might have already reacted to your

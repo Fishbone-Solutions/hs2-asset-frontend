@@ -109,7 +109,7 @@ const Show = () => {
     }, 300); // Slightly longer delay
 
     return () => clearTimeout(timeoutId);
-  }, [formData.asset_location]);
+  }, [formData?.asset_location]);
 
   return (
     <>

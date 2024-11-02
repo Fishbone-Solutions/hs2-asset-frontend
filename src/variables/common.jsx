@@ -89,15 +89,13 @@ export const formatLocation = (data) => {
 export const formatApprovalString = (input) => {
   const [status, ...rest] = input.split("%");
 
-  const formattedText = rest
-    .join(" ")
-    .replace(/,/g, "<br/>") // Replace commas with line breaks
-    .replace(/(.{40})/g, "$1<br/>"); // Break after every 40 characters
+  const formattedText = rest.join(" ").replace(/,/g, "<br/>");
 
   if (status.trim().toUpperCase() === "REJECTED") {
+    const rejectReason = formattedText.replace(/(.{40})/g, "$1<br/>"); // Break after every 40 characters
     return `
       ${status}<br />
-      <span class="line-content">${formattedText}</span>
+      <span class="line-content">${rejectReason}</span>
     `;
   } else {
     return `${status}<br/>${formattedText}`;
