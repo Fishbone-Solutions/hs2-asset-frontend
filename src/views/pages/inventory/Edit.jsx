@@ -850,7 +850,11 @@ const Edit = () => {
                                 label="Purchase Date "
                                 name="date_of_purchase"
                                 labelType="NonFloating"
-                                selectedDate={values.date_of_purchase}
+                                selectedDate={
+                                  values.date_of_purchase === "null"
+                                    ? values.date_of_purchase
+                                    : ""
+                                }
                                 onChange={(date) =>
                                   setFieldValue("date_of_purchase", date)
                                 }

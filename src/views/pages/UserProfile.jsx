@@ -231,7 +231,7 @@ function UserProfile() {
                             <FormGroup>
                               <Field
                                 className="form-control"
-                                placeholder="contact no."
+                                placeholder="contact no"
                                 as={Input}
                                 type="text"
                                 name="contact_no"
