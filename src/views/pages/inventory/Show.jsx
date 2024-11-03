@@ -495,7 +495,11 @@ const Show = () => {
                           <Input
                             type="text"
                             name="purchase_price"
-                            value={formData.purchase_price}
+                            value={
+                              formData.purchase_price === "null"
+                                ? ""
+                                : formData.purchase_price
+                            }
                             readOnly
                           />
                         </InputGroup>
@@ -521,8 +525,12 @@ const Show = () => {
                           <InputGroupText>£</InputGroupText>
                           <Input
                             type="text"
-                            value={formData.residual_forecast_value}
                             name="residual_forecast_value"
+                            value={
+                              formData.residual_forecast_value === "null"
+                                ? ""
+                                : formData.residual_forecast_value
+                            }
                             readOnly
                           />
                         </InputGroup>
