@@ -139,6 +139,7 @@ const DateRangePicker = ({
           dropdownMode="select"
           showMonthDropdown
           showYearDropdown
+          isClearable
           disabled={isdisabled}
           customInput={<CustomInput />} // Use custom input to prevent typing
         />
