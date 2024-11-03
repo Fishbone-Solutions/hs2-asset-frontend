@@ -107,7 +107,10 @@ const Create = () => {
           // Format the date to your desired format, e.g., 'YYYY-MM-DD'
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
-          value = moment(value).format("DD/MM/YYYY");
+          value =
+            moment(value).format("DD/MM/YYYY") !== "Invalid date"
+              ? moment(value).format("DD/MM/YYYY")
+              : "";
         }
 
         // Append the value (formatted or not) to the formDataWithFiles object
