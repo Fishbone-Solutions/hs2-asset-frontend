@@ -781,7 +781,10 @@ const Edit = () => {
                         color="primary"
                         type="button"
                         onClick={() => {
-                          if (negotiatedValue !== null) {
+                          if (
+                            negotiatedValue !== null &&
+                            negotiatedValue !== ""
+                          ) {
                             showAlert({
                               title: (
                                 <h4 className="sweet-alert-sure">

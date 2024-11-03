@@ -479,12 +479,24 @@ const BulkImport = () => {
                             )}
                             <br />
                             Total Records Found:{" "}
-                            <span className="text-success font-weight-bold">
+                            <span
+                              className={
+                                responseStatus === "SUCCESS"
+                                  ? "text-success font-weight-bold"
+                                  : "text-danger font-weight-bold"
+                              }
+                            >
                               {totalRecordsFound}
                             </span>
                             <br />
                             Total Records Successfully Parsed:{" "}
-                            <span className="text-success font-weight-bold">
+                            <span
+                              className={
+                                responseStatus === "SUCCESS"
+                                  ? "text-success font-weight-bold"
+                                  : "text-danger font-weight-bold"
+                              }
+                            >
                               {totalRecordsFound}
                             </span>
                             <br />
