@@ -11,7 +11,6 @@ import {
   CardFooter,
   CardTitle,
   FormGroup,
-  Form,
   Input,
   Row,
   Col,
@@ -20,6 +19,9 @@ import { EndPointService } from "@/services/methods";
 import DynamicToast from "components/Common/Toast";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { useAlert } from "components/Common/NotificationAlert";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { initialProfilValues } from "variables/Validations/Profile";
+import { profileSchema } from "variables/Validations/Profile";
 
 function UserProfile() {
   const [loader, setLoader] = useState(false);
@@ -29,12 +31,9 @@ function UserProfile() {
   const [dataState, setDataState] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
-  const [dataUpdate, setDataUpdate] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    contact_no: "",
-  });
+  const [dataUpdate, setDataUpdate] = useState(initialProfilValues);
+  const [formSubmission, setFormSubmission] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
   const camelCaseWithSpaces = (text) => {
     return text
       .split(" ")
@@ -55,8 +54,8 @@ function UserProfile() {
       setDataState(resData);
       setDataUpdate((previousState) => ({
         ...previousState,
-        first_name: resData.firstname,
-        last_name: resData.lastname,
+        firstname: resData.firstname,
+        lastname: resData.lastname,
         email: resData.email,
         contact_no: resData.contact_no,
       }));
@@ -68,26 +67,35 @@ function UserProfile() {
     }
   };
 
-  const handleUpdateProfile = () => {
+  const handleFormSubmission = async (values, { setSubmitting }) => {
+    showAlert({
+      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
+      type: "warning",
+      onConfirm: () => handleUpdateProfile(values),
+      onCancel: hideAlert,
+    });
+  };
+
+  const handleUpdateProfile = (values) => {
     setLoader(true);
     try {
       const res = EndPointService.updateProfile(
         headers,
         sessionStorage.getItem("username"),
-        dataUpdate
+        values
       );
       let sessionData = JSON.parse(sessionStorage.getItem("user"));
-      sessionData.firstname = dataUpdate.first_name;
-      sessionData.lastname = dataUpdate.last_name;
-      sessionData.email = dataUpdate.email;
-      sessionData.contact_no = dataUpdate.contact_no;
+      sessionData.firstname = values.firstname;
+      sessionData.lastname = values.lastname;
+      sessionData.email = values.email;
+      sessionData.contact_no = values.contact_no;
 
       sessionStorage.setItem("user", JSON.stringify(sessionData));
 
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">Updated Profile</p>
+          <p class="sweet-title-size sweet-title-padding">Profile updated</p>
         ),
         type: "success",
         onConfirm: () => {
@@ -104,6 +112,26 @@ function UserProfile() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(errorCount, formSubmission);
+
+    if (errorCount > 0 && formSubmission) {
+      showAlert({
+        title: (
+          <p className="sweet-title-size sweet-title-padding">
+            Please fill all mandatory fields
+          </p>
+        ),
+        type: "error",
+        onConfirm: () => hideAlert(),
+        confirmText: "Ok",
+        showCancelButton: false,
+      });
+
+      setFormSubmission(false);
+    }
+  }, [formSubmission, errorCount]); // Run whenever errors change
 
   return (
     <>
@@ -128,96 +156,116 @@ function UserProfile() {
                 </CardTitle>
               </CardHeader>
               <CardBody>
-                <Form>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>First Name</label>
-                        <Input
-                          defaultValue={dataState.firstname}
-                          placeholder="first name"
-                          onInput={(e) => {
-                            setDataUpdate((previousState) => ({
-                              ...previousState,
-                              first_name: e.target.value,
-                            }));
-                          }}
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
+                <Formik
+                  initialValues={dataUpdate}
+                  validationSchema={profileSchema}
+                  onSubmit={handleFormSubmission}
+                  enableReinitialize={true}
+                  //validate={handleValidationFailure}
+                >
+                  {({ errors, values, setFieldValue }) => {
+                    useEffect(() => {
+                      setErrorCount(Object.keys(errors).length);
+                    }, [errors]); // Run whenever errors change
 
-                    <Col md="6">
-                      <FormGroup>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue={dataState.lastname}
-                          placeholder="last name"
-                          onInput={(e) => {
-                            setDataUpdate((previousState) => ({
-                              ...previousState,
-                              last_name: e.target.value,
-                            }));
-                          }}
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                    return (
+                      <Form>
+                        <Row>
+                          <Col className="pr-1" md="6">
+                            <label className="required">First Name</label>
+                            <FormGroup>
+                              <Field
+                                placeholder="first name"
+                                type="text"
+                                as={Input}
+                                name="firstname"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="firstname"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
 
-                  <Row>
-                    <Col md="6">
-                      <FormGroup>
-                        <label>Email</label>
-                        <Input
-                          defaultValue={dataState.email}
-                          placeholder="email"
-                          onInput={(e) => {
-                            setDataUpdate((previousState) => ({
-                              ...previousState,
-                              email: e.target.value,
-                            }));
+                          <Col md="6">
+                            <label className="required">Last Name</label>
+                            <FormGroup>
+                              <Field
+                                placeholder="last name"
+                                as={Input}
+                                type="text"
+                                className="form-control"
+                                name="lastname"
+                              />
+                              <ErrorMessage
+                                name="lastname"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col md="6">
+                            <label className="required">Email</label>
+                            <FormGroup>
+                              <Field
+                                placeholder="email"
+                                className="form-control"
+                                as={Input}
+                                type="text"
+                                name="email"
+                              />
+                              <ErrorMessage
+                                name="email"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <label>Contact No</label>
+                            <FormGroup>
+                              <Field
+                                className="form-control"
+                                placeholder="contact no."
+                                as={Input}
+                                type="text"
+                                name="contact_no"
+                                value={values.contact_no}
+                              />
+                              <ErrorMessage
+                                name="contact_no"
+                                component="div"
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
                           }}
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col md="6">
-                      <FormGroup>
-                        <label>Contact No</label>
-                        <Input
-                          defaultValue={dataState.contact_no}
-                          placeholder="contact no."
-                          onInput={(e) => {
-                            setDataUpdate((previousState) => ({
-                              ...previousState,
-                              contact_no: e.target.value,
-                            }));
-                          }}
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button
-                      color="primary"
-                      type="button"
-                      onClick={() => {
-                        showAlert({
-                          title: (
-                            <h4 className="sweet-alert-sure">Are you sure?</h4>
-                          ),
-                          type: "warning",
-                          onConfirm: () => handleUpdateProfile(),
-                          onCancel: hideAlert,
-                        });
-                      }}
-                    >
-                      UPDATE
-                    </Button>
-                  </div>
-                </Form>
+                        >
+                          <Button
+                            color="primary"
+                            type="submit"
+                            onClick={() => {
+                              console.log(Object.keys(errors).length);
+                              setFormSubmission(true);
+                            }}
+                          >
+                            UPDATE
+                          </Button>
+                        </div>
+                      </Form>
+                    );
+                  }}
+                </Formik>
               </CardBody>
             </Card>
 

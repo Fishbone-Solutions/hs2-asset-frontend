@@ -130,7 +130,10 @@ const Edit = () => {
           // Format the date to your desired format, e.g., 'YYYY-MM-DD'
           value = moment(value).format("DD/MM/YYYY");
         } else if (key === "date_of_purchase") {
-          value = moment(value).format("DD/MM/YYYY");
+          value =
+            moment(value).format("DD/MM/YYYY") !== "Invalid date"
+              ? moment(value).format("DD/MM/YYYY")
+              : "";
         } else if (key === "sold_value" && value === "null") {
           value = "";
         }
@@ -575,7 +578,7 @@ const Edit = () => {
                             <FormGroup>
                               <Field
                                 type="text"
-                                name="id"
+                                name="asset_id"
                                 as={Input}
                                 disabled
                               />
@@ -871,6 +874,11 @@ const Edit = () => {
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   as={Input}
+                                  value={
+                                    values.purchase_price === "null"
+                                      ? ""
+                                      : values.purchase_price
+                                  }
                                   min="0" // Ensures no negative values
                                   step="0.01" // Allows decimal/floating-point values
                                 />
@@ -911,6 +919,11 @@ const Edit = () => {
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
+                                  value={
+                                    values.residual_forecast_value === "null"
+                                      ? ""
+                                      : values.residual_forecast_value
+                                  }
                                   as={Input}
                                 />
                               </InputGroup>
