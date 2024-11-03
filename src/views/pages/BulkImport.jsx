@@ -45,6 +45,7 @@ const BulkImport = () => {
   const [parseFileDisabled, setParseFileDisabled] = useState(true);
   const [responseStatus, setResponseStatus] = useState(null);
   const [responseCode, setResponseCode] = useState(null);
+  const [responseMessage, setResponseMessage] = useState(null);
 
   const [segmentWidth, setSegmentWidth] = useState(0);
   const [remainingProgress, setRemaingProgress] = useState(0);
@@ -168,6 +169,7 @@ const BulkImport = () => {
       console.log("Backend response:", response);
       setResponseStatus(response.appRequestStatus);
       setResponseCode(response.appRespCode);
+      setResponseMessage(response.appRespMessage);
       setTotalRecordsFound(response?.appRespData?.total_records_found || 0);
     } catch (error) {
       // Log the error to understand the issue
@@ -469,7 +471,8 @@ const BulkImport = () => {
                               </span>
                             ) : responseStatus === "ERROR" ? (
                               <span className="text-danger font-weight-bold">
-                                {getResponseBulkUploadMessage(responseCode)}
+                                {/* {getResponseBulkUploadMessage(responseCode)} */}
+                                {responseMessage}
                               </span>
                             ) : (
                               ""

@@ -356,29 +356,6 @@ const Edit = () => {
     );
   };
 
-  // const handleApprove = () => {
-  //   showAlert({
-  //     customHeader: (
-  //       <header class="py-2 mb-4 border-bottom sweet-alert-header">
-  //         <div class="container d-flex flex-wrap justify-content-left">
-  //           <span class="fs-6 text-white">REQUEST APPROVAL</span>
-  //         </div>
-  //       </header>
-  //     ),
-  //     confirmText: "Send Request",
-  //     onConfirm: async () => {
-  //       await approvalRequest(); // No need to pass params, we'll use the ref
-  //     },
-  //     onCancel: hideAlert,
-  //     showCancelButton: true,
-  //     content: <ApproverSelectionContent />, // Use functional component here
-  //   });
-  // };
-
-  const submitApproval = () => {
-    console.log("approval");
-  };
-
   var options = [
     { value: "IN-NEGOTIATION", label: "In Negotiation" },
     { value: "PAYMENT-REQUESTED", label: "Payment Requested" },
@@ -803,18 +780,32 @@ const Edit = () => {
                       <Button
                         color="primary"
                         type="button"
-                        onClick={() =>
-                          showAlert({
-                            title: (
-                              <h4 className="sweet-alert-sure">
-                                Are you sure?
-                              </h4>
-                            ),
-                            type: "warning",
-                            onConfirm: () => handleNegotiatedValue(),
-                            onCancel: hideAlert,
-                          })
-                        }
+                        onClick={() => {
+                          if (negotiatedValue !== null) {
+                            showAlert({
+                              title: (
+                                <h4 className="sweet-alert-sure">
+                                  Are you sure?
+                                </h4>
+                              ),
+                              type: "warning",
+                              onConfirm: () => handleNegotiatedValue(),
+                              onCancel: hideAlert,
+                            });
+                          } else {
+                            showAlert({
+                              title: (
+                                <p className="sweet-title-size sweet-title-padding">
+                                  Please fill the Negotiated Value
+                                </p>
+                              ),
+                              type: "error",
+                              showCancelButton: false,
+                              confirmText: "ok",
+                              onConfirm: hideAlert,
+                            });
+                          }
+                        }}
                       >
                         update
                       </Button>
