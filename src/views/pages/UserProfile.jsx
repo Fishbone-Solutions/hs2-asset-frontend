@@ -307,6 +307,28 @@ function UserProfile() {
                       />
                     </FormGroup>
                   </Col>
+                  <Col md="6">
+                    <FormGroup>
+                      <label>Email</label>
+                      <Input
+                        defaultValue={dataState.organization_email}
+                        disabled
+                        placeholder="Home Address"
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md="6">
+                    <FormGroup>
+                      <label>Contact No</label>
+                      <Input
+                        defaultValue={dataState.organization_contact_no}
+                        disabled
+                        placeholder="City"
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
                 </Row>
               </CardBody>
             </Card>
