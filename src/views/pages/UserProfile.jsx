@@ -227,7 +227,7 @@ function UserProfile() {
                             </FormGroup>
                           </Col>
                           <Col md="6">
-                            <label>Contact No</label>
+                            <label className="required">Contact No</label>
                             <FormGroup>
                               <Field
                                 className="form-control"
