@@ -764,6 +764,7 @@ const Edit = () => {
                           <Input
                             type="text"
                             name="negotiated_val"
+                            maxLength={7}
                             onInput={(e) => {
                               const data = handleInputFilteration("numeric")(e);
                               setNegotiatedValue(data);
