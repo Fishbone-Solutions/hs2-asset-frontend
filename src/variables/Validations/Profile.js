@@ -13,5 +13,5 @@ export const profileSchema = Yup.object({
   firstname: Yup.string().required("First name is required"),
   lastname: Yup.string().required("Last name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  contact_no: Yup.string().optional(),
+  contact_no: Yup.string().required("Contact no is required"),
 });
