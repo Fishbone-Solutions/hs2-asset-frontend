@@ -225,6 +225,7 @@ const Index = () => {
     setClearDateBoolean(true);
     setClearCategoryBoolean(true);
     setClearSubCategoryBoolean(true);
+    setClearStatusBoolean(true);
   };
 
   useEffect(() => {

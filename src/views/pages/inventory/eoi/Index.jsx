@@ -66,7 +66,7 @@ const Index = () => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: (
-        <p className="text-danger font-weight-bold sweet-title-size text-start">
+        <p className="text-danger font-weight-bold sweet-title-size">
           You will not be able to recover this item
         </p>
       ),
