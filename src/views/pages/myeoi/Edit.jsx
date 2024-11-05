@@ -135,7 +135,7 @@ const Edit = () => {
           <>
             {updateStatus === "WITHDRAWN" ? (
               <h6 className="warning-alert">
-                <span>
+                <span className="text-center">
                   <span className="bg-danger-content">WARNING:</span> You will
                   not be able to undo Withdrawal or make any updates to EOI
                 </span>
@@ -144,7 +144,7 @@ const Edit = () => {
               ""
             )}
             <h6 className="warning-alert">
-              <span>
+              <span className="text-center">
                 <span className="bg-danger-content">WARNING:</span> The status
                 you are about to set will instantly become visible to the Buyer
               </span>
@@ -754,7 +754,7 @@ const Edit = () => {
                               showAlert({
                                 title: (
                                   <h6 className="warning-alert ">
-                                    <span className="text-start">
+                                    <span className="text-center">
                                       <span className="bg-danger-content">
                                         WARNING:
                                       </span>{" "}
