@@ -172,11 +172,33 @@ const Edit = () => {
         onCancel: hideAlert,
         showCancelButton: false,
       });
+    } else if (
+      updateStatus === "IN-NEGOTIATION" &&
+      dataState.approval_status == "APPROVED"
+    ) {
+      showAlert({
+        title: (
+          <h6 className="warning-alert ">
+            <span className="text-center">
+              <span className="bg-danger-content">WARNING:</span> You are going
+              back into Negotiation. This will discard your current Approval
+            </span>
+          </h6>
+        ),
+        content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
+        confirmText: "Yes",
+        onConfirm: async () => {
+          await handleSubmit(); // No need to pass params, we'll use the ref
+        },
+        type: "warning",
+        onCancel: hideAlert,
+        showCancelButton: true,
+      });
     } else {
       showAlert({
         title: (
           <h6 className="warning-alert ">
-            <span className="text-start">
+            <span className="text-center">
               <span className="bg-danger-content">WARNING:</span> The status you
               are about to set will instantly become visible to the Buyer
             </span>
@@ -852,7 +874,7 @@ const Edit = () => {
                             showAlert({
                               title: (
                                 <h6 className="warning-alert ">
-                                  <span className="text-start">
+                                  <span className="text-center">
                                     <span className="bg-danger-content">
                                       WARNING:
                                     </span>{" "}
