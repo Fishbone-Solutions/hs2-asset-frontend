@@ -749,17 +749,13 @@ const Create = () => {
                                     placeholder="Currency.."
                                     classNamePrefix="currency-select"
                                     isClearable={false}
+                                    defaultValue={currencyOptions[0]}
                                     onChange={(selectedOption) =>
                                       setFieldValue(
                                         "value_curr",
                                         selectedOption.value
                                       )
                                     }
-                                  />
-                                  <ErrorMessage
-                                    name="value_curr"
-                                    component="div"
-                                    className="text-danger"
                                   />
                                 </div>
                                 <Field
@@ -777,7 +773,7 @@ const Create = () => {
                               <ErrorMessage
                                 name="value"
                                 component="div"
-                                className="text-danger currency-error-msg"
+                                className="text-danger"
                               />
                             </FormGroup>
                           </Col>
@@ -831,6 +827,7 @@ const Create = () => {
                                     placeholder="Currency.."
                                     classNamePrefix="currency-select"
                                     isClearable={false}
+                                    defaultValue={currencyOptions[0]}
                                     onChange={(selectedOption) =>
                                       setFieldValue(
                                         "purchase_price_curr",
@@ -893,6 +890,7 @@ const Create = () => {
                                     classNamePrefix="currency-select"
                                     placeholder="Currency.."
                                     isClearable={false}
+                                    defaultValue={currencyOptions[0]}
                                     onChange={(selectedOption) =>
                                       setFieldValue(
                                         "residual_forecast_value_curr",
@@ -936,16 +934,17 @@ const Create = () => {
                                     classNamePrefix="currency-select"
                                     isClearable={false}
                                     placeholder="Currency.."
+                                    defaultValue={currencyOptions[0]}
                                     isDisabled="true"
                                     onChange={(selectedOption) =>
                                       setFieldValue(
-                                        "purchase_price_curr",
+                                        "sold_value_curr",
                                         selectedOption.value
                                       )
                                     }
                                   />
                                   <ErrorMessage
-                                    name="purchase_price_curr"
+                                    name="sold_value_curr"
                                     component="div"
                                     className="text-danger"
                                   />

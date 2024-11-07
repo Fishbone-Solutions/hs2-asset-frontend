@@ -14,7 +14,7 @@ export const initialInventoryValues = {
   asset_location: "",
   asset_location_city: "",
   value: "",
-  value_curr: "",
+  value_curr: "GBP",
   additional_info: "",
   available_from: "",
   seller_title: "",
@@ -25,13 +25,13 @@ export const initialInventoryValues = {
   asset_id: "",
   maintenance_requirements: "",
   residual_forecast_value: "",
-  residual_forecast_value_curr: "",
+  residual_forecast_value_curr: "GBP",
   date_of_purchase: "",
   contract_no: "",
   purchase_price: "",
-  purchase_price_curr: "",
+  purchase_price_curr: "GBP",
   sold_value: null, // Initial value as null
-  sold_value_curr: "",
+  sold_value_curr: "GBP",
 };
 
 // Validation schema using Yup
@@ -51,7 +51,7 @@ export const inventorySchema = Yup.object().shape({
 
   asset_name: Yup.string().required("Name is required"),
   description: Yup.string().required("Description is required"),
-  value: Yup.string().required("Estimated value is required"),
+  value: Yup.string().required("Estimated value with currency is required"),
   value_curr: Yup.string().required("Currency is required"),
   asset_condition: Yup.string().required("Condition is required"),
   quantity: Yup.string().required("Quantity is required"),
