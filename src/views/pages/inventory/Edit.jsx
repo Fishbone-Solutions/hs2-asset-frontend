@@ -49,6 +49,7 @@ import { ImageType } from "variables/common";
 import { handleInput } from "variables/common";
 import AttachmentPreview from "components/Common/AttachmentPreview";
 import InfoBulb from "components/svg/InfoBulb";
+import { currencyOptions } from "variables/common";
 
 const Edit = () => {
   const { id } = useParams();
@@ -804,11 +805,35 @@ const Edit = () => {
                             <Label className="required">Estimated Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div className={{ width: "30%" }}>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="currency"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    value={currencyOptions.find(
+                                      (option) =>
+                                        option.value === values.value_curr
+                                    )}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "value_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="value_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="value"
                                   maxLength={7}
+                                  className="currency-input"
                                   onInput={handleInput("numeric")}
                                   as={Input}
                                   min="0" // Ensures no negative values
@@ -818,7 +843,7 @@ const Edit = () => {
                               <ErrorMessage
                                 name="value"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -867,11 +892,36 @@ const Edit = () => {
                             <Label>Purchase Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div className={{ width: "30%" }}>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="purchase_price_curr"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    value={currencyOptions.find(
+                                      (option) =>
+                                        option.value ===
+                                        values.purchase_price_curr
+                                    )}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "purchase_price_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="value_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="purchase_price"
                                   maxLength={7}
+                                  className="currency-input"
                                   onInput={handleInput("numeric")}
                                   as={Input}
                                   value={
@@ -886,7 +936,7 @@ const Edit = () => {
                               <ErrorMessage
                                 name="purchase_price"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -913,10 +963,35 @@ const Edit = () => {
                             <Label>Residual Forecast Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div className={{ width: "30%" }}>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="residual_forecast_value_curr"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    value={currencyOptions.find(
+                                      (option) =>
+                                        option.value ===
+                                        values.residual_forecast_value_curr
+                                    )}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "residual_forecast_value_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="value_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   maxLength={7}
+                                  className="currency-input"
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
                                   value={
@@ -930,7 +1005,7 @@ const Edit = () => {
                               <ErrorMessage
                                 name="residual_forecast_value"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -940,11 +1015,36 @@ const Edit = () => {
                             <Label>Sold Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div className={{ width: "30%" }}>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="sold_value_curr"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    isDisabled={values.statuscode !== "Sold"}
+                                    value={currencyOptions.find(
+                                      (option) =>
+                                        option.value === values.sold_value_curr
+                                    )}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "sold_value_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="sold_value_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="sold_value"
                                   maxLength={7}
+                                  className="currency-input"
                                   onInput={handleInput("numeric")}
                                   value={
                                     values.sold_value === "null"
@@ -958,7 +1058,7 @@ const Edit = () => {
                               <ErrorMessage
                                 name="sold_value"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>

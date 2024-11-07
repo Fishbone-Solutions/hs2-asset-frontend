@@ -14,6 +14,7 @@ export const initialInventoryValues = {
   asset_location: "",
   asset_location_city: "",
   value: "",
+  value_curr: "",
   additional_info: "",
   available_from: "",
   seller_title: "",
@@ -24,10 +25,13 @@ export const initialInventoryValues = {
   asset_id: "",
   maintenance_requirements: "",
   residual_forecast_value: "",
+  residual_forecast_value_curr: "",
   date_of_purchase: "",
   contract_no: "",
   purchase_price: "",
+  purchase_price_curr: "",
   sold_value: null, // Initial value as null
+  sold_value_curr: "",
 };
 
 // Validation schema using Yup
@@ -48,10 +52,12 @@ export const inventorySchema = Yup.object().shape({
   asset_name: Yup.string().required("Name is required"),
   description: Yup.string().required("Description is required"),
   value: Yup.string().required("Estimated value is required"),
+  value_curr: Yup.string().required("Currency is required"),
   asset_condition: Yup.string().required("Condition is required"),
   quantity: Yup.string().required("Quantity is required"),
   maintenance_requirements: Yup.string().nullable(),
   residual_forecast_value: Yup.string().nullable(),
+  residual_forecast_value_curr: Yup.string().nullable(),
   date_of_purchase: Yup.string().nullable(),
   contract_no: Yup.string()
     .matches(
@@ -60,6 +66,7 @@ export const inventorySchema = Yup.object().shape({
     )
     .nullable(),
   purchase_price: Yup.string().nullable(),
+  purchase_price_curr: Yup.string().nullable(),
   code: Yup.string().nullable(), // Optional
   entrydate_formatted: Yup.string().nullable(), // Optional
   id: Yup.string().nullable(),
@@ -75,7 +82,7 @@ export const inventorySchema = Yup.object().shape({
       then: (schema) => schema.required("Sold value is required"),
       otherwise: (schema) => schema.nullable(),
     }),
-
+  sold_value_curr: Yup.string().nullable(),
   additional_info: Yup.string().nullable(),
   asset_location_city: Yup.string().required("City is required"),
   asset_location: Yup.string().required("Compound/Area/PostCode is required"),

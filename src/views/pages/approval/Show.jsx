@@ -30,6 +30,7 @@ import ModalComponent from "components/Common/ModalComponent";
 import { useSearchParams } from "react-router-dom";
 import { handleInput } from "variables/common";
 import { handleInputFilteration } from "variables/common";
+import { currencyOptions } from "variables/common";
 
 const Show = () => {
   const [dataState, setDataState] = useState({});
@@ -568,10 +569,25 @@ const Show = () => {
                       <Label>Value</Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="negotiated_val_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) =>
+                                  option.value ===
+                                  formData.negotiated_value_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="number"
                             name="negotiated_val"
+                            className="currency-input"
                             value={dataState.negotiated_value}
                             readOnly
                           />

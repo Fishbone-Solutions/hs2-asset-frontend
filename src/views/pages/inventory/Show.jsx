@@ -35,6 +35,7 @@ import { conditionOptions } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
 import { formatLocation } from "variables/common";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import { currencyOptions } from "variables/common";
 
 const Show = () => {
   const { id, requestId } = useParams();
@@ -447,10 +448,23 @@ const Show = () => {
                       <Label className="required">Estimated Value</Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="value_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) => option.value === formData.value_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="number"
                             name="value"
+                            className="currency-input"
                             value={formData.value}
                             min="0" // Ensures no negative values
                             step="0.01" // Allows decimal/floating-point values
@@ -491,10 +505,24 @@ const Show = () => {
                       <Label>Purchase Value </Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="purchase_price_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) =>
+                                  option.value === formData.purchase_price_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="text"
                             name="purchase_price"
+                            className="currency-input"
                             value={
                               formData.purchase_price === "null"
                                 ? ""
@@ -522,10 +550,25 @@ const Show = () => {
                       <Label>Residual Forecast Value </Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="residual_forecast_value_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) =>
+                                  option.value ===
+                                  formData.residual_forecast_value_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="text"
                             name="residual_forecast_value"
+                            className="currency-input"
                             value={
                               formData.residual_forecast_value === "null"
                                 ? ""
@@ -542,9 +585,23 @@ const Show = () => {
                       <Label>Sold Value </Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="sold_value_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) =>
+                                  option.value === formData.sold_value_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="text"
+                            className="currency-input"
                             value={
                               formData.sold_value === "null"
                                 ? ""
