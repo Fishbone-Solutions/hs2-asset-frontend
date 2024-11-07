@@ -823,11 +823,6 @@ const Edit = () => {
                                       )
                                     }
                                   />
-                                  <ErrorMessage
-                                    name="value_curr"
-                                    component="div"
-                                    className="text-danger"
-                                  />
                                 </div>
                                 <Field
                                   type="text"
@@ -843,7 +838,7 @@ const Edit = () => {
                               <ErrorMessage
                                 name="value"
                                 component="div"
-                                className="text-danger currency-error-msg"
+                                className="text-danger"
                               />
                             </FormGroup>
                           </Col>
