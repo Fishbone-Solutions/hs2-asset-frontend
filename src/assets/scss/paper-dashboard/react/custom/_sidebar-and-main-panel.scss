@@ -1244,3 +1244,18 @@ h4 {
 .react-datepicker__close-icon::after {
   background-color: #ff002b;
 }
+.currency-input {
+  width: 70%;
+  //border-left: 1px solid #dddddd !important;
+  margin-left: 0px !important;
+  height: 38px;
+}
+.currency-select__control {
+  border-radius: 4px 0px 0px 4px !important;
+  border-color: #ddd !important;
+}
+.currency-error-msg {
+  margin-left: 23.5%;
+  position: absolute;
+  top: 64px;
+}

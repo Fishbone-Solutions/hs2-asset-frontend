@@ -44,6 +44,9 @@ importers:
       formik:
         specifier: ^2.4.6
         version: 2.4.6(react@18.3.1)
+      jquery:
+        specifier: ^3.7.1
+        version: 3.7.1
       match-sorter:
         specifier: 6.3.1
         version: 6.3.1
@@ -80,6 +83,9 @@ importers:
       react-chartjs-2:
         specifier: 3.3.0
         version: 3.3.0(chart.js@3.9.1)(react@18.3.1)
+      react-country-flag:
+        specifier: ^3.1.0
+        version: 3.1.0(react@18.3.1)
       react-data-table-component:
         specifier: ^7.6.2
         version: 7.6.2(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -2778,6 +2784,12 @@ packages:
     peerDependencies:
       chart.js: ^3.5.0
       react: ^16.8.0 || ^17.0.0
+
+  react-country-flag@3.1.0:
+    resolution: {integrity: sha512-JWQFw1efdv9sTC+TGQvTKXQg1NKbDU2mBiAiRWcKM9F1sK+/zjhP2yGmm8YDddWyZdXVkR8Md47rPMJmo4YO5g==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
 
   react-data-table-component@7.6.2:
     resolution: {integrity: sha512-nHe7040fmtrJyQr/ieGrTfV0jBflYGK4sLokC6/AFOv3ThjmA9WzKz8Z8/2wMxzRqLU+Rn0CVFg+8+frKLepWQ==}
@@ -6622,6 +6634,10 @@ snapshots:
   react-chartjs-2@3.3.0(chart.js@3.9.1)(react@18.3.1):
     dependencies:
       chart.js: 3.9.1
+      react: 18.3.1
+
+  react-country-flag@3.1.0(react@18.3.1):
+    dependencies:
       react: 18.3.1
 
   react-data-table-component@7.6.2(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):

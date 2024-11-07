@@ -1,3 +1,4 @@
+import ReactCountryFlag from "react-country-flag";
 import { validationRules } from "./Validations/Rules";
 
 export const itemStatusOptions = [
@@ -348,3 +349,34 @@ export const getStatusMessageApprovalRequest = (status) => {
       return null; // Return null for other statuses where no message is needed
   }
 };
+
+export const currencyOptions = [
+  {
+    value: "GBP",
+    label: (
+      <>
+        <ReactCountryFlag countryCode="GB" svg style={{ marginRight: "8px" }} />{" "}
+        GBP
+      </>
+    ),
+  },
+  {
+    value: "USD",
+    label: (
+      <>
+        <ReactCountryFlag countryCode="US" svg style={{ marginRight: "8px" }} />{" "}
+        USD
+      </>
+    ),
+  },
+  {
+    value: "EUR",
+    label: (
+      <>
+        <ReactCountryFlag countryCode="EU" svg style={{ marginRight: "8px" }} />{" "}
+        EUR
+      </>
+    ),
+  },
+  // Add more currencies as needed
+];

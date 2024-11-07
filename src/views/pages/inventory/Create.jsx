@@ -47,6 +47,8 @@ import { handleInput } from "variables/common";
 import { RxCross2 } from "react-icons/rx";
 import AttachmentPreview from "components/Common/AttachmentPreview";
 import InfoBulb from "components/svg/InfoBulb";
+import ReactCountryFlag from "react-country-flag";
+import { currencyOptions } from "variables/common";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -740,10 +742,31 @@ const Create = () => {
                             <Label className="required">Estimated Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div className={{ width: "30%" }}>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="currency"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "value_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="value_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="value"
+                                  placeholder="Estimated value"
+                                  className="currency-input "
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   as={Input}
@@ -754,7 +777,7 @@ const Create = () => {
                               <ErrorMessage
                                 name="value"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -801,10 +824,31 @@ const Create = () => {
                             <Label>Purchase Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="purchase_price_curr"
+                                    placeholder="Currency.."
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "purchase_price_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="purchase_price_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="purchase_price"
+                                  placeholder="Purchase price"
+                                  className="currency-input"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   as={Input}
@@ -815,7 +859,7 @@ const Create = () => {
                               <ErrorMessage
                                 name="purchase_price"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -842,10 +886,31 @@ const Create = () => {
                             <Label>Residual Forecast Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="residual_forecast_value_curr"
+                                    classNamePrefix="currency-select"
+                                    placeholder="Currency.."
+                                    isClearable={false}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "residual_forecast_value_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="residual_forecast_value_curr"
+                                    component="div"
+                                    className="text-danger "
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   maxLength={7}
+                                  placeholder="Residual forecast value"
+                                  className="currency-input"
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"
                                   as={Input}
@@ -854,7 +919,7 @@ const Create = () => {
                               <ErrorMessage
                                 name="residual_forecast_value"
                                 component="div"
-                                className="text-danger"
+                                className="text-danger currency-error-msg"
                               />
                             </FormGroup>
                           </Col>
@@ -864,10 +929,31 @@ const Create = () => {
                             <Label>Sold Value </Label>
                             <FormGroup>
                               <InputGroup>
-                                <InputGroupText>£</InputGroupText>
+                                <div>
+                                  <Select
+                                    options={currencyOptions}
+                                    name="currency"
+                                    classNamePrefix="currency-select"
+                                    isClearable={false}
+                                    placeholder="Currency.."
+                                    isDisabled="true"
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "purchase_price_curr",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="purchase_price_curr"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
                                 <Field
                                   type="text"
                                   name="sold_value"
+                                  className="currency-input"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
                                   disabled

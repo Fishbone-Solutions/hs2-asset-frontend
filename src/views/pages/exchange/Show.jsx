@@ -34,6 +34,7 @@ import { categorycode1 } from "variables/common";
 import AttachmentList from "components/Common/AttachmentList";
 import { formatLocation } from "variables/common";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import { currencyOptions } from "variables/common";
 
 const Show = () => {
   const { id } = useParams();
@@ -446,10 +447,23 @@ const Show = () => {
                       <Label>Estimated Value *</Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="negotiated_val_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled="false"
+                              value={currencyOptions.find(
+                                (option) => option.value === formData.value_curr
+                              )}
+                            />
+                          </div>
                           <Input
                             type="text"
                             name="value"
+                            className="currency-input"
                             value={formData.value}
                             readOnly="true"
                           />

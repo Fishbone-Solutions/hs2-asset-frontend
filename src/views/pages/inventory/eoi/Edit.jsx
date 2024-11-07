@@ -38,6 +38,7 @@ import AlertIcon from "components/svg/AlertIcon";
 import { handleInputFilteration } from "variables/common";
 import { getStatusMessageApprovalRequest } from "variables/common";
 import { formatStringWithDash } from "variables/common";
+import { currencyOptions } from "variables/common";
 
 const Edit = () => {
   const [dataState, setDataState] = useState({});
@@ -53,6 +54,7 @@ const Edit = () => {
   const [approvals, setApprovals] = useState([]);
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [negotiatedValue, setNegotiatedValue] = useState(null);
+  const [negotiatedValueCurrency, setNegotiatedValueCurrency] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
   // Create a ref to hold the latest params value
   const latestSelectedApprovalRef = useRef(selectedApproval);
@@ -111,6 +113,7 @@ const Edit = () => {
         eoiId
       );
       setNegotiatedValue(res.appRespData[0].negotiated_value);
+      setNegotiatedValueCurrency(res.appRespData[0].negotiated_value_curr);
       setDataState(res.appRespData[0]);
       setActivities(resEoiActivities.appRespData);
 
@@ -460,6 +463,7 @@ const Edit = () => {
         eoiId,
         {
           negotiated_value: negotiatedValue,
+          negotiated_value_curr: negotiatedValueCurrency,
         }
       );
       setLoader(false);
@@ -782,10 +786,30 @@ const Edit = () => {
                       <Label>Value</Label>
                       <FormGroup>
                         <InputGroup>
-                          <InputGroupText>£</InputGroupText>
+                          <div className={{ width: "30%" }}>
+                            <Select
+                              options={currencyOptions}
+                              name="negotiated_val_curr"
+                              placeholder="Currency.."
+                              classNamePrefix="currency-select"
+                              isClearable={false}
+                              isDisabled={
+                                dataState.approval_status == "APPROVED"
+                              }
+                              value={currencyOptions.find(
+                                (option) =>
+                                  option.value === negotiatedValueCurrency
+                              )}
+                              onChange={(selectedOption) =>
+                                setNegotiatedValueCurrency(selectedOption.value)
+                              }
+                            />
+                          </div>
                           <Input
                             type="text"
                             name="negotiated_val"
+                            placeholder="Negotiated value"
+                            className="currency-input"
                             maxLength={7}
                             onInput={(e) => {
                               const data = handleInputFilteration("numeric")(e);
