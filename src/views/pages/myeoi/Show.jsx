@@ -441,6 +441,7 @@ const Show = () => {
                                 name="negotiated_val_curr"
                                 placeholder="Currency.."
                                 classNamePrefix="currency-select"
+                                defaultValue={currencyOptions[0]}
                                 isClearable={false}
                                 isDisabled="false"
                                 value={currencyOptions.find(
