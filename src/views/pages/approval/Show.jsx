@@ -580,7 +580,7 @@ const Show = () => {
                               value={currencyOptions.find(
                                 (option) =>
                                   option.value ===
-                                  formData.negotiated_value_curr
+                                  dataState.negotiated_value_curr
                               )}
                             />
                           </div>

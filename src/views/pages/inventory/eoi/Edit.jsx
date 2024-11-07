@@ -793,6 +793,7 @@ const Edit = () => {
                               placeholder="Currency.."
                               classNamePrefix="currency-select"
                               isClearable={false}
+                              defaultValue={currencyOptions[0]}
                               isDisabled={
                                 dataState.approval_status == "APPROVED"
                               }
