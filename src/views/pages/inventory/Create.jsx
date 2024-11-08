@@ -678,12 +678,6 @@ const Create = () => {
                                     className="text-danger error-message"
                                   />
                                 )}
-                                {/* Error message for quantity_unit_required */}
-                                {errors.quantity_unit_required && (
-                                  <div className="text-danger error-message">
-                                    {errors.quantity_unit_required}
-                                  </div>
-                                )}
 
                                 <div>
                                   <Select
@@ -790,7 +784,6 @@ const Create = () => {
                                 <Field
                                   type="text"
                                   name="value"
-                                  placeholder="Estimated value"
                                   className="currency-input "
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -873,7 +866,6 @@ const Create = () => {
                                 <Field
                                   type="text"
                                   name="purchase_price"
-                                  placeholder="Purchase price"
                                   className="currency-input"
                                   maxLength={7}
                                   onInput={handleInput("numeric")}
@@ -936,7 +928,6 @@ const Create = () => {
                                 <Field
                                   type="text"
                                   maxLength={7}
-                                  placeholder="Residual forecast value"
                                   className="currency-input"
                                   onInput={handleInput("numeric")}
                                   name="residual_forecast_value"

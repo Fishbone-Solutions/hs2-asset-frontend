@@ -1287,11 +1287,11 @@ h4 {
 .unit-select__menu {
   max-width: 160px;
 }
-input::placeholder,
-textarea::placeholder {
-  color: #b59cbe !important;
-  font-size: 13px !important;
-}
+// input::placeholder,
+// textarea::placeholder {
+//   color: #b59cbe !important;
+//   font-size: 13px !important;
+// }
 .error-message {
   position: absolute;
   margin-top: 38px;

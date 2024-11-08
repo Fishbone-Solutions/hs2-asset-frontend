@@ -752,11 +752,15 @@ const Edit = () => {
                                       )
                                     }
                                   />
-                                  <ErrorMessage
-                                    name="quantity_unit"
-                                    component="div"
-                                    className="text-danger"
-                                  />
+                                  {/* Combined error message for both fields */}
+                                  {(errors.quantity ||
+                                    errors.quantity_unit) && (
+                                    <ErrorMessage
+                                      name="quantity"
+                                      component="div"
+                                      className="text-danger error-message"
+                                    />
+                                  )}
                                 </div>
                               </InputGroup>
                             </FormGroup>

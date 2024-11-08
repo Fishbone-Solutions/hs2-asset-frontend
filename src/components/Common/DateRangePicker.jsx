@@ -109,7 +109,7 @@ const DateRangePicker = ({
       onClick={onClick}
       readOnly // Prevent typing in the input field
       disabled={isdisabled}
-      placeholder={label}
+      placeholder={labelType === "floating" ? label : ""}
       className="datepicker-input"
       style={{ cursor: isdisabled ? "not-allowed" : "pointer" }} // Optional: changes the cursor to a pointer
     />
