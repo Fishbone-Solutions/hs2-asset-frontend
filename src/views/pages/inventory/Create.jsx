@@ -333,7 +333,7 @@ const Create = () => {
           onSubmit={handleFormSubmission}
           //validate={handleValidationFailure}
         >
-          {({ errors, values, setFieldValue }) => {
+          {({ errors, touched, values, setFieldValue, handleBlur }) => {
             useEffect(() => {
               setErrorCount(Object.keys(errors).length);
             }, [errors]); // Run whenever errors change
@@ -670,18 +670,27 @@ const Create = () => {
                                   name="quantity"
                                   as={Input}
                                 />
-                                <ErrorMessage
-                                  name="quantity_unit"
-                                  component="div"
-                                  className="text-danger error-message"
-                                />
+                                {/* Combined error message for both fields */}
+                                {(errors.quantity || errors.quantity_unit) && (
+                                  <ErrorMessage
+                                    name="quantity"
+                                    component="div"
+                                    className="text-danger error-message"
+                                  />
+                                )}
+                                {/* Error message for quantity_unit_required */}
+                                {errors.quantity_unit_required && (
+                                  <div className="text-danger error-message">
+                                    {errors.quantity_unit_required}
+                                  </div>
+                                )}
+
                                 <div>
                                   <Select
                                     options={getUkUnits}
-                                    name="quantity_unit"
+                                    name="quantity_unit_required.quantity_unit"
                                     classNamePrefix="unit-select"
                                     isClearable={false}
-                                    defaultValue={getUkUnits[0]}
                                     placeholder="Measurement units.."
                                     onChange={(selectedOption) =>
                                       setFieldValue(

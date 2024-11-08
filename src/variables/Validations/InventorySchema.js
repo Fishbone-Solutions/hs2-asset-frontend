@@ -2,16 +2,16 @@ import * as Yup from "yup";
 
 // Initial schema for form values
 export const initialInventoryValues = {
-  id: "Auto Generated", // Not validated (auto-generated)
-  code: "", // Not validated (can be optional)
-  entrydate_formatted: "", // Not validated (formatted date)
+  id: "Auto Generated",
+  code: "",
+  entrydate_formatted: "",
   categorycode1: "",
   categorycode2: "",
   asset_name: "",
   description: "",
   asset_condition: "",
-  quantity: "",
-  quantity_unit: "",
+  quantity: "", // Top-level quantity
+  quantity_unit: "", // Top-level quantity_unit
   asset_location: "",
   asset_location_city: "",
   value: "",
@@ -31,11 +31,11 @@ export const initialInventoryValues = {
   contract_no: "",
   purchase_price: "",
   purchase_price_curr: "GBP",
-  sold_value: null, // Initial value as null
+  sold_value: null,
   sold_value_curr: "GBP",
 };
 
-// Validation schema using Yup
+// Updated Validation schema
 export const inventorySchema = Yup.object().shape({
   seller_title: Yup.string()
     .required("Seller Title is required")
@@ -55,10 +55,30 @@ export const inventorySchema = Yup.object().shape({
   value: Yup.string().required("Estimated value with currency is required"),
   value_curr: Yup.string().required("Currency is required"),
   asset_condition: Yup.string().required("Condition is required"),
-  quantity: Yup.string().required("Quantity with measurement unit is required"),
-  quantity_unit: Yup.string().required(
-    "Quantity with measurement unit is required"
-  ),
+
+  // Combined validation for quantity and quantity_unit
+  quantity: Yup.string()
+    .required("Quantity is required")
+    .test(
+      "quantity-unit-required",
+      "Quantity with measurement unit is required",
+      function (value) {
+        const { quantity, quantity_unit } = this.parent;
+        // Error if either field is empty
+        return Boolean(quantity && quantity_unit);
+      }
+    ),
+  quantity_unit: Yup.string()
+    .required("Measurement unit is required")
+    .test(
+      "quantity-unit-required",
+      "Quantity with measurement unit is required",
+      function (value) {
+        const { quantity, quantity_unit } = this.parent;
+        return Boolean(quantity && quantity_unit);
+      }
+    ),
+
   maintenance_requirements: Yup.string().nullable(),
   residual_forecast_value: Yup.string().nullable(),
   residual_forecast_value_curr: Yup.string().nullable(),
@@ -71,8 +91,8 @@ export const inventorySchema = Yup.object().shape({
     .nullable(),
   purchase_price: Yup.string().nullable(),
   purchase_price_curr: Yup.string().nullable(),
-  code: Yup.string().nullable(), // Optional
-  entrydate_formatted: Yup.string().nullable(), // Optional
+  code: Yup.string().nullable(),
+  entrydate_formatted: Yup.string().nullable(),
   id: Yup.string().nullable(),
 
   // Conditional validation for sold_value
@@ -82,7 +102,7 @@ export const inventorySchema = Yup.object().shape({
       originalValue === "null" ? null : value
     )
     .when("statuscode", {
-      is: (val) => val === "Sold", // Use a function here
+      is: (val) => val === "Sold",
       then: (schema) => schema.required("Sold value is required"),
       otherwise: (schema) => schema.nullable(),
     }),
