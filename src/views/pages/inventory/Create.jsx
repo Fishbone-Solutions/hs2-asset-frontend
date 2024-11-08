@@ -670,7 +670,11 @@ const Create = () => {
                                   name="quantity"
                                   as={Input}
                                 />
-
+                                <ErrorMessage
+                                  name="quantity_unit"
+                                  component="div"
+                                  className="text-danger error-message"
+                                />
                                 <div>
                                   <Select
                                     options={getUkUnits}
@@ -685,11 +689,6 @@ const Create = () => {
                                         selectedOption.value
                                       )
                                     }
-                                  />
-                                  <ErrorMessage
-                                    name="quantity_unit"
-                                    component="div"
-                                    className="text-danger"
                                   />
                                 </div>
                               </InputGroup>
