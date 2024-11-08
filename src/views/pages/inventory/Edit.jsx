@@ -106,8 +106,19 @@ const Edit = () => {
   };
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
+    console.log("values", values.statuscode);
+    const updateStatus = values.statuscode;
     showAlert({
-      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
+      title: updateStatus === "Live" && (
+        <h6 className="warning-alert">
+          <span className="text-center">
+            <span className="bg-danger-content">WARNING:</span> This item will
+            be listed on the Exchange Register and will become visible to the
+            Buyers
+          </span>
+        </h6>
+      ),
+      content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
       onConfirm: () => handleUpdateInventory(values),
       onCancel: hideAlert,
