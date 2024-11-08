@@ -1250,6 +1250,7 @@ h4 {
   margin-left: 0px !important;
   height: 38px;
 }
+
 .currency-select__control {
   border-radius: 4px 0px 0px 4px !important;
   border-color: #ddd !important;
@@ -1259,6 +1260,35 @@ h4 {
   position: absolute;
   top: 64px;
 }
-.currency-select__indicator-separator {
+.currency-select__indicator-separator,
+.unit-select__indicator-separator {
   display: none;
+}
+.unit-select__control {
+  border-radius: 0px 4px 4px 0px !important;
+  border-color: #ddd !important;
+}
+.quantity-input {
+  width: 70%;
+  //border-left: 1px solid #dddddd !important;
+  margin-left: 0px !important;
+  height: 38px;
+}
+/* Set a fixed width for the options */
+.unit-select__option,
+.unit-select__single-value {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Optionally set a max-width for the dropdown container */
+.unit-select__menu {
+  max-width: 160px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #b59cbe !important;
+  font-size: 13px !important;
 }

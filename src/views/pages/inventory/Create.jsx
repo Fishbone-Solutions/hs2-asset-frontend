@@ -49,6 +49,7 @@ import AttachmentPreview from "components/Common/AttachmentPreview";
 import InfoBulb from "components/svg/InfoBulb";
 import ReactCountryFlag from "react-country-flag";
 import { currencyOptions } from "variables/common";
+import { getUkUnits } from "variables/common";
 
 const Create = () => {
   const [loader, setLoader] = useState(false);
@@ -660,18 +661,38 @@ const Create = () => {
                           <Col sm="6">
                             <Label className="required">Quantity </Label>
                             <FormGroup>
-                              <Field
-                                type="text"
-                                maxLength={20}
-                                onInput={handleInput("alphaNumericDashSlash")}
-                                name="quantity"
-                                as={Input}
-                              />
-                              <ErrorMessage
-                                name="quantity"
-                                component="div"
-                                className="text-danger"
-                              />
+                              <InputGroup>
+                                <Field
+                                  type="text"
+                                  maxLength={7}
+                                  className="quantity-input"
+                                  onInput={handleInput("numeric")}
+                                  name="quantity"
+                                  as={Input}
+                                />
+
+                                <div>
+                                  <Select
+                                    options={getUkUnits}
+                                    name="quantity_unit"
+                                    classNamePrefix="unit-select"
+                                    isClearable={false}
+                                    defaultValue={getUkUnits[0]}
+                                    placeholder="Measurement units.."
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "quantity_unit",
+                                        selectedOption.value
+                                      )
+                                    }
+                                  />
+                                  <ErrorMessage
+                                    name="quantity_unit"
+                                    component="div"
+                                    className="text-danger"
+                                  />
+                                </div>
+                              </InputGroup>
                             </FormGroup>
                           </Col>
                           <Col sm="6">

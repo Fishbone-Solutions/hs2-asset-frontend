@@ -380,3 +380,19 @@ export const currencyOptions = [
   },
   // Add more currencies as needed
 ];
+
+export const getUkUnits = [
+  { value: "units", label: "Units", symbol: "units", type: "units" },
+  { value: "kg", label: "Kilograms", symbol: "kg", type: "Weight" },
+  { value: "g", label: "Grams", symbol: "g", type: "Weight" },
+  { value: "m", label: "Meters", symbol: "m", type: "Length" },
+  { value: "cm", label: "Centimeters", symbol: "cm", type: "Length" },
+  { value: "L", label: "Liters", symbol: "L", type: "Volume" },
+  { value: "ml", label: "Milliliters", symbol: "ml", type: "Volume" },
+  { value: "mi", label: "Miles", symbol: "mi", type: "Length" },
+  { value: "yd", label: "Yards", symbol: "yd", type: "Length" },
+  { value: "ft", label: "Feet", symbol: "ft", type: "Length" },
+  { value: "in", label: "Inches", symbol: "in", type: "Length" },
+  { value: "lb", label: "Pounds", symbol: "lb", type: "Weight" },
+  { value: "oz", label: "Ounces", symbol: "oz", type: "Weight" },
+];

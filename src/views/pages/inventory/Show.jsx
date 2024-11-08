@@ -36,6 +36,7 @@ import AttachmentList from "components/Common/AttachmentList";
 import { formatLocation } from "variables/common";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import { currencyOptions } from "variables/common";
+import { getUkUnits } from "variables/common";
 
 const Show = () => {
   const { id, requestId } = useParams();
@@ -55,6 +56,7 @@ const Show = () => {
     description: "",
     asset_condition: "",
     quantity: "",
+    quantity_unit: "",
     asset_location: "",
     value: "",
     additional_info: "",
@@ -380,12 +382,30 @@ const Show = () => {
                     <Col sm="6">
                       <Label className="required">Quantity</Label>
                       <FormGroup>
-                        <Input
-                          type="text"
-                          name="quantity"
-                          value={formData.quantity}
-                          readOnly="true"
-                        />
+                        <InputGroup>
+                          <Input
+                            type="text"
+                            name="quantity"
+                            className="quantity-input"
+                            value={formData.quantity}
+                            readOnly="true"
+                          />
+                          <div style={{ width: "30%" }}>
+                            <Select
+                              options={getUkUnits}
+                              name="quantity_unit"
+                              classNamePrefix="unit-select"
+                              isClearable={false}
+                              isDisabled="true"
+                              defaultValue={getUkUnits[0]}
+                              placeholder="Measurement units.."
+                              value={getUkUnits.find(
+                                (option) =>
+                                  option.value === formData.quantity_unit
+                              )}
+                            />
+                          </div>
+                        </InputGroup>
                       </FormGroup>
                     </Col>
                     <Col sm="6">

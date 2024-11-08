@@ -11,6 +11,7 @@ export const initialInventoryValues = {
   description: "",
   asset_condition: "",
   quantity: "",
+  quantity_unit: "",
   asset_location: "",
   asset_location_city: "",
   value: "",
@@ -55,6 +56,9 @@ export const inventorySchema = Yup.object().shape({
   value_curr: Yup.string().required("Currency is required"),
   asset_condition: Yup.string().required("Condition is required"),
   quantity: Yup.string().required("Quantity is required"),
+  quantity_unit: Yup.string().required(
+    "Quantity with measurement unit is required."
+  ),
   maintenance_requirements: Yup.string().nullable(),
   residual_forecast_value: Yup.string().nullable(),
   residual_forecast_value_curr: Yup.string().nullable(),
