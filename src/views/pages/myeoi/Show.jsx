@@ -323,6 +323,7 @@ const Show = () => {
                             isdisabled={true}
                             labelType="NonFloating"
                             mode="single"
+                            selectedDate={formData.available_from}
                           />
                         </FormGroup>
                       </Col>

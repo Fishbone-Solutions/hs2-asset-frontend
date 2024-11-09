@@ -809,7 +809,6 @@ const Edit = () => {
                           <Input
                             type="text"
                             name="negotiated_val"
-                            placeholder="Negotiated value"
                             className="currency-input"
                             maxLength={7}
                             onInput={(e) => {
