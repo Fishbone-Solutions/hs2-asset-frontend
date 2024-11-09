@@ -724,6 +724,7 @@ const Edit = () => {
                           <Input
                             type="number"
                             name="negotiated_val"
+                            className="currency-input"
                             value={dataState.negotiated_value}
                             readOnly
                           />

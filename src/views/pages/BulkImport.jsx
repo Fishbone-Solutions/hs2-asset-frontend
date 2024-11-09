@@ -511,7 +511,8 @@ const BulkImport = () => {
                                   title: (
                                     <p class="sweet-title-size sweet-title-padding">
                                       Are you sure you wish to Import{" "}
-                                      {totalRecordsFound} records to Inventory ?
+                                      {totalRecordsFound} Record(s) to Inventory
+                                      ?
                                     </p>
                                   ),
                                   type: "warning",
