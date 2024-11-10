@@ -54,7 +54,7 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: (
-        <p className="text-danger font-weight-bold">
+        <p className="text-danger font-weight-bold sweet-title-size ">
           You will not be able to recover this item
         </p>
       ),

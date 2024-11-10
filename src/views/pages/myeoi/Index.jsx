@@ -193,13 +193,15 @@ const Index = () => {
         user_type: "BUYER",
       });
       showAlert({
-        title: "Deleted!",
+        title: res.appRespData[0].eoi_delete === -2 ? "" : "Deleted!",
         content: (
           <h6 className="sweet-title-size sweet-title-padding">
-            EOI: {eoiNo} deleted successfully
+            {res.appRespData[0].eoi_delete === -2
+              ? "EOI can not be deleted at this stage"
+              : `EOI: {eoiNo} deleted successfully`}
           </h6>
         ),
-        type: "success",
+        type: res.appRespData[0].eoi_delete === -2 ? "error" : "success",
         showCancelButton: false,
         confirmText: "ok",
         onConfirm: hideAlert,

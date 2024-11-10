@@ -228,7 +228,7 @@ export const getStatusMessage = (statusCode, type) => {
     case -50:
       return "Sorry, you can not update to this Status at this stage";
     case -60:
-      return "You can not Widthdraw at this Stage. Then Buyer already dispatched the Goods";
+      return "You can not Widthdraw at this Stage. The Buyer already dispatched the Goods";
     case -61:
       return "You have already sent the payment and can not Withdraw at this stage";
     case -62:
