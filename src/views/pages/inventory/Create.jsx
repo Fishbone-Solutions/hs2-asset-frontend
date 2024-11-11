@@ -671,7 +671,9 @@ const Create = () => {
                         </Row>
                         <Row>
                           <Col sm="6">
-                            <Label className="required">Quantity </Label>
+                            <Label className="required">
+                              Quantity (Value, Unit){" "}
+                            </Label>
                             <FormGroup>
                               <InputGroup>
                                 <Field
@@ -679,6 +681,7 @@ const Create = () => {
                                   maxLength={7}
                                   className="quantity-input"
                                   onInput={handleInput("numeric")}
+                                  placeholder=""
                                   name="quantity"
                                   as={Input}
                                 />
@@ -694,14 +697,15 @@ const Create = () => {
                                 <div>
                                   <Select
                                     options={getUkUnits}
-                                    name="quantity_unit_required.quantity_unit"
+                                    name="quantity_unit"
                                     classNamePrefix="unit-select"
                                     isClearable={false}
                                     placeholder="Measurement units.."
+                                    defaultValue={getUkUnits[0]}
                                     onChange={(selectedOption) =>
                                       setFieldValue(
                                         "quantity_unit",
-                                        selectedOption.value
+                                        selectedOption.value ?? getUkUnits[0]
                                       )
                                     }
                                   />
