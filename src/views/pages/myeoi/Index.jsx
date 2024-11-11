@@ -175,9 +175,11 @@ const Index = () => {
     console.log("handleDelete", assetId, eoino);
     showAlert({
       title: (
-        <p className="text-danger font-weight-bold sweet-title-size ">
-          You will not be able to recover this item
-        </p>
+        <div className="alert-content-padding">
+          <p className="text-danger font-weight-bold sweet-title-size ">
+            You will not be able to recover this item
+          </p>
+        </div>
       ),
       content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
@@ -195,11 +197,13 @@ const Index = () => {
       showAlert({
         title: res.appRespData[0].eoi_delete === -2 ? "" : "Deleted!",
         content: (
-          <h6 className="sweet-title-size sweet-title-padding">
-            {res.appRespData[0].eoi_delete === -2
-              ? "EOI can not be deleted at this stage"
-              : `EOI: {eoiNo} deleted successfully`}
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="sweet-title-size sweet-title-padding">
+              {res.appRespData[0].eoi_delete === -2
+                ? "EOI can not be deleted at this stage"
+                : `EOI: {eoiNo} deleted successfully`}
+            </h6>
+          </div>
         ),
         type: res.appRespData[0].eoi_delete === -2 ? "error" : "success",
         showCancelButton: false,

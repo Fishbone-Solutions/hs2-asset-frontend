@@ -97,7 +97,9 @@ const BulkImport = () => {
     if (!file) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding ">No file selected</p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">No file selected</p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -114,10 +116,12 @@ const BulkImport = () => {
     if (!allowedExtensions.includes(fileExtension)) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            Invalid file type: {file.name}. Only {allowedExtensions.join(", ")}{" "}
-            files are allowed
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding text-start">
+              Invalid file type: {file.name}. Only{" "}
+              {allowedExtensions.join(", ")} files are allowed
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -132,9 +136,11 @@ const BulkImport = () => {
     if (file.size > maxSize) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            File size exceeds the {maxSize / 1000000} MB limit: {file.name}
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding text-start">
+              File size exceeds the {maxSize / 1000000} MB limit: {file.name}
+            </p>
+          </div>
         ),
         type: "warning",
         onConfirm: () => hideAlert(),
@@ -201,9 +207,11 @@ const BulkImport = () => {
     if (!uploadedFile) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            No file to ingest. Please upload a file first
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              No file to ingest. Please upload a file first
+            </p>
+          </div>
         ),
         type: "warning",
         onConfirm: () => hideAlert(),
@@ -229,13 +237,12 @@ const BulkImport = () => {
         // setToastMessage(response.message || "Bulk Import Successful");
         // setToastType("success");
         showAlert({
-          title: <h6 className="sweet-title-size">Bulk Import Successful</h6>,
+          title: (
+            <div className="alert-content-padding">
+              <h6 className="sweet-title-size">Bulk Import Successful</h6>
+            </div>
+          ),
           content: "",
-          // content: (
-          //   <h6 className="success-sweet-content-color">
-          //     Item ID = {res.appRespData.asset_id}
-          //   </h6>
-          // ),
           type: "success",
           showCancelButton: false,
           confirmText: "Ok",
@@ -509,11 +516,13 @@ const BulkImport = () => {
                               onClick={() =>
                                 showAlert({
                                   title: (
-                                    <p class="sweet-title-size sweet-title-padding">
-                                      Are you sure you wish to Import{" "}
-                                      {totalRecordsFound} Record(s) to Inventory
-                                      ?
-                                    </p>
+                                    <div className="alert-content-padding">
+                                      <p class="sweet-title-size sweet-title-padding text-start">
+                                        Are you sure you wish to Import{" "}
+                                        {totalRecordsFound} Record(s) to
+                                        Inventory ?
+                                      </p>
+                                    </div>
                                   ),
                                   type: "warning",
                                   onConfirm: () => handleIngest(),

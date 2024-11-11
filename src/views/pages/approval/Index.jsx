@@ -54,9 +54,11 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: (
-        <p className="text-danger font-weight-bold sweet-title-size ">
-          You will not be able to recover this item
-        </p>
+        <div className="alert-content-padding">
+          <p className="text-danger font-weight-bold sweet-title-size text-start">
+            You will not be able to recover this item
+          </p>
+        </div>
       ),
       content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
@@ -72,9 +74,11 @@ const Index = () => {
       showAlert({
         title: "Deleted!",
         content: (
-          <h6 className="success-sweet-content-color">
-            Request ID: {id} has been deleted
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="success-sweet-content-color">
+              Request ID: {id} has been deleted
+            </h6>
+          </div>
         ),
         type: "success",
         showCancelButton: false,

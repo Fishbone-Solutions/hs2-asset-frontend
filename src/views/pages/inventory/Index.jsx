@@ -149,9 +149,11 @@ const Index = () => {
   const handleDelete = (id) => {
     showAlert({
       title: (
-        <p className="text-danger font-weight-bold sweet-title-size ">
-          You will not be able to recover this item
-        </p>
+        <div className="alert-content-padding">
+          <p className="text-danger font-weight-bold sweet-title-size ">
+            You will not be able to recover this item
+          </p>
+        </div>
       ),
       content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
@@ -167,9 +169,11 @@ const Index = () => {
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
           title: (
-            <p className="sweet-title-size sweet-title-padding">
-              Can not delete this Item
-            </p>
+            <div className="alert-content-padding">
+              <p className="sweet-title-size sweet-title-padding">
+                Can not delete this Item
+              </p>
+            </div>
           ),
           content: `This Asset is being broadcasted Live`,
           type: "error",
@@ -181,9 +185,11 @@ const Index = () => {
         showAlert({
           title: "Deleted!",
           content: (
-            <p class="sweet-title-size sweet-title-padding font-weight-bold">
-              Item ID: {id} deleted successfully
-            </p>
+            <div className="alert-content-padding">
+              <p class="sweet-title-size sweet-title-padding font-weight-bold">
+                Item ID: {id} deleted successfully
+              </p>
+            </div>
           ),
           type: "success",
           showCancelButton: false,

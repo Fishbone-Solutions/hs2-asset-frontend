@@ -36,9 +36,11 @@ function AuthNavbar(props) {
   const handleRegister = () => {
     showAlert({
       title: (
-        <h6 className="sweet-title-size sweet-title-padding">
-          This feature is not available in BETA Release
-        </h6>
+        <div className="alert-content-padding">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
+            This feature is not available in BETA Release
+          </h6>
+        </div>
       ),
       content: "",
       type: "warning",

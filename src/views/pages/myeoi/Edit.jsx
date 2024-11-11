@@ -119,9 +119,11 @@ const Edit = () => {
     if (updateStatus === null || updateStatus === "") {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            Please choose an Acknowledgement Status to update
-          </p>
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding text-start">
+              Please choose an Acknowledgement Status to update
+            </p>
+          </div>
         ),
         confirmText: "ok",
         onConfirm: hideAlert,
@@ -135,21 +137,36 @@ const Edit = () => {
         title: (
           <>
             {updateStatus === "WITHDRAWN" ? (
-              <h6 className="warning-alert">
-                <span className="text-center">
-                  <span className="bg-danger-content">WARNING:</span> You will
-                  not be able to undo Withdrawal or make any updates to EOI
-                </span>
-              </h6>
+              <div className="alert-content-padding">
+                <h6 className="warning-alert ">
+                  <div className="text-start d-flex align-items-start">
+                    <span className="fw-bold bg-danger-content me-2 warning-heading">
+                      WARNING:
+                    </span>{" "}
+                    <span className="warning-text">
+                      You will not be able to undo Withdrawal or make any
+                      updates to EOI
+                    </span>
+                  </div>
+                </h6>
+              </div>
             ) : (
               ""
             )}
-            <h6 className="warning-alert">
-              <span className="text-center">
-                <span className="bg-danger-content">WARNING:</span> The status
-                you are about to set will instantly become visible to the Buyer
-              </span>
-            </h6>
+            <div className="alert-content-padding">
+              <h6 className="warning-alert ">
+                <div className="text-start d-flex align-items-start">
+                  <span className="fw-bold bg-danger-content me-2 warning-heading">
+                    WARNING:
+                  </span>
+                  <span className="warning-text">
+                    {" "}
+                    The status you are about to set will instantly become
+                    visible to the Buyer
+                  </span>
+                </div>
+              </h6>
+            </div>
           </>
         ),
         content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
@@ -179,11 +196,19 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding ">
-            {isSuccess
-              ? `Acknowledgement Status updated`
-              : getStatusMessage(statusCode, "Seller")}
-          </h6>
+          <div className="alert-content-padding">
+            <h6
+              className={
+                isSuccess
+                  ? "sweet-title-size sweet-title-padding "
+                  : "sweet-title-size sweet-title-padding text-start"
+              }
+            >
+              {isSuccess
+                ? `Acknowledgement Status updated`
+                : getStatusMessage(statusCode, "Seller")}
+            </h6>
+          </div>
         ),
         content: null, // Only show content for success cases
         type: isSuccess ? "success" : "error", // Default to "success", otherwise "error"
@@ -307,9 +332,17 @@ const Edit = () => {
 
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            {getUndoStatusMessage(undoStatus, "Seller")}
-          </p>
+          <div className="alert-content-padding">
+            <p
+              className={
+                undoStatus === -1
+                  ? "sweet-title-size sweet-title-padding text-start"
+                  : "sweet-title-size sweet-title-padding"
+              }
+            >
+              {getUndoStatusMessage(undoStatus, "Seller")}
+            </p>
+          </div>
         ),
         type: isSuccess ? "success" : "error",
         showCancelButton: false,
@@ -337,9 +370,17 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            {getNudgeMessage(res.appRespData[0].eoi_nudge, "SELLER")}
-          </p>
+          <div className="alert-content-padding">
+            <p
+              className={
+                res.appRespData[0].eoi_nudge === -2
+                  ? "sweet-title-size sweet-title-padding text-start"
+                  : "sweet-title-size sweet-title-padding"
+              }
+            >
+              {getNudgeMessage(res.appRespData[0].eoi_nudge, "SELLER")}
+            </p>
+          </div>
         ),
         type: res.appRespData[0].eoi_nudge > 0 ? "success" : "error",
         showCancelButton: false,
@@ -770,15 +811,19 @@ const Edit = () => {
                             onClick={() => {
                               showAlert({
                                 title: (
-                                  <h6 className="warning-alert ">
-                                    <span className="text-center">
-                                      <span className="bg-danger-content">
-                                        WARNING:
-                                      </span>{" "}
-                                      The Buyer might have already reacted to
-                                      your current status
-                                    </span>
-                                  </h6>
+                                  <div className="alert-content-padding">
+                                    <h6 className="warning-alert ">
+                                      <div className="text-start d-flex align-items-start">
+                                        <span className="fw-bold bg-danger-content me-2 warning-heading">
+                                          WARNING:
+                                        </span>{" "}
+                                        <span className="warning-text">
+                                          The Buyer might have already reacted
+                                          to your current status
+                                        </span>
+                                      </div>
+                                    </h6>
+                                  </div>
                                 ),
                                 content: (
                                   <h6 className="sweet-title-size sweet-title-padding">
@@ -808,9 +853,11 @@ const Edit = () => {
                             onClick={() => {
                               showAlert({
                                 title: (
-                                  <p className="sweet-title-size sweet-title-padding">
-                                    Are you sure you wish to nudge the seller?
-                                  </p>
+                                  <div className="alert-content-padding">
+                                    <p className="sweet-title-size sweet-title-padding text-start">
+                                      Are you sure you wish to nudge the seller?
+                                    </p>
+                                  </div>
                                 ),
                                 type: "warning",
                                 showCancelButton: true,

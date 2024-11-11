@@ -111,13 +111,19 @@ const Edit = () => {
     const updateStatus = values.statuscode;
     showAlert({
       title: updateStatus === "Live" && (
-        <h6 className="warning-alert">
-          <span className="text-center">
-            <span className="bg-danger-content">WARNING:</span> This item will
-            be listed on the Exchange Register and will become visible to the
-            Buyers
-          </span>
-        </h6>
+        <div className="alert-content-padding">
+          <h6 className="warning-alert ">
+            <div className="text-start d-flex align-items-start">
+              <span className="fw-bold bg-danger-content me-2 warning-heading">
+                WARNING:
+              </span>
+              <span className="warning-text">
+                This item will be listed on the Exchange Register and will
+                become visible to the Buyers.
+              </span>
+            </div>
+          </h6>
+        </div>
       ),
       content: <h4 className="sweet-alert-sure">Are you sure?</h4>,
       type: "warning",
@@ -172,9 +178,11 @@ const Edit = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding">
-            Item '{formData.asset_name}' updated
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="sweet-title-size sweet-title-padding">
+              Item '{formData.asset_name}' updated
+            </h6>
+          </div>
         ),
         content: null,
         type: "success",
@@ -220,9 +228,11 @@ const Edit = () => {
       setRefreshImageComponent(refreshImageComponent + 1);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            You can only upload a maximum of {maxFiles} files
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              You can only upload a maximum of {maxFiles} files
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -268,9 +278,11 @@ const Edit = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            You can only upload a maximum of {totalFiles} files
-          </p>
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding text-start">
+              You can only upload a maximum of {totalFiles} files
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -288,11 +300,13 @@ const Edit = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p className="sweet-title-size sweet-title-padding">
-              {type === "image"
-                ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
-                : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
-            </p>
+            <div className="alert-content-padding">
+              <p className="sweet-title-size sweet-title-padding text-start">
+                {type === "image"
+                  ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
+                  : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
+              </p>
+            </div>
           ),
           type: "error",
           onConfirm: () => hideAlert(),
@@ -345,9 +359,11 @@ const Edit = () => {
     if (selectedStatus === "Sold") {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding ">
-            Please enter the final Sold Value
-          </p>
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding ">
+              Please enter the final Sold Value
+            </p>
+          </div>
         ),
         type: "info",
         showCancelButton: false,
@@ -366,9 +382,11 @@ const Edit = () => {
     if (errorCount > 0 && formSubmission) {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            Please fill all mandatory fields
-          </p>
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding">
+              Please fill all mandatory fields
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),

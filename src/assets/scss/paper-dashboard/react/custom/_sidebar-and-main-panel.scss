@@ -1296,3 +1296,13 @@ h4 {
   position: absolute;
   margin-top: 38px;
 }
+
+.warning-heading {
+  white-space: "nowrap";
+}
+.warning-text {
+  flex: 1;
+}
+.alert-content-padding {
+  padding: 0 20px; /* Adjust padding as needed */
+}
