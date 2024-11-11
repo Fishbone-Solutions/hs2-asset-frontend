@@ -9,8 +9,7 @@ const useColumns = () => {
       {
         Header: "ID",
         isSortable: true,
-        defaultSort: true, // Indicates this column should be the default sort
-        defaultSortDesc: true, // Indicates the sort direction (descending)
+
         accessor: "asset_id",
         width: "2%",
       },
@@ -30,7 +29,8 @@ const useColumns = () => {
       {
         Header: "Name",
         isSortable: true,
-
+        defaultSort: true, // Indicates this column should be the default sort
+        defaultSortDesc: false, // Indicates the sort direction (descending)
         accessor: "asset_name",
         width: "10%",
       },
