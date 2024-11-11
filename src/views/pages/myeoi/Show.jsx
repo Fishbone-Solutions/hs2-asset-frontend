@@ -366,14 +366,32 @@ const Show = () => {
                     </Row>
                     <Row>
                       <Col sm="6">
-                        <Label>Quantity *</Label>
+                        <Label>Quantity (Value, Unit) *</Label>
                         <FormGroup>
-                          <Input
-                            type="text"
-                            name="quantity"
-                            value={formData.quantity}
-                            readOnly
-                          />
+                          <InputGroup>
+                            <Input
+                              type="text"
+                              name="quantity"
+                              className="quantity-input"
+                              value={formData.quantity}
+                              readOnly="true"
+                            />
+                            <div style={{ width: "30%" }}>
+                              <Select
+                                options={getUkUnits}
+                                name="quantity_unit"
+                                classNamePrefix="unit-select"
+                                isClearable={false}
+                                isDisabled="true"
+                                defaultValue={getUkUnits[0]}
+                                placeholder="Measurement units.."
+                                value={getUkUnits.find(
+                                  (option) =>
+                                    option.value === formData.quantity_unit
+                                )}
+                              />
+                            </div>
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                       <Col sm="6">

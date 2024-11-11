@@ -380,7 +380,7 @@ const Show = () => {
                   </Row>
                   <Row>
                     <Col sm="6">
-                      <Label className="required">Quantity</Label>
+                      <Label className="required">Quantity (Value, Unit)</Label>
                       <FormGroup>
                         <InputGroup>
                           <Input
