@@ -79,14 +79,18 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            Expression of Interest submitted for '{formData.asset_name}'
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              Expression of Interest submitted for '{formData.asset_name}'
+            </p>
+          </div>
         ),
         content: (
-          <h6 className="success-sweet-content-color">
-            Reference No: {res.appRespData[0].eoi_add}
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="success-sweet-content-color">
+              Reference No: {res.appRespData[0].eoi_add}
+            </h6>
+          </div>
         ),
         type: "success",
         showCancelButton: false,

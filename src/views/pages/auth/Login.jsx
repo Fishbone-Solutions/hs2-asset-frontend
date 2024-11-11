@@ -65,14 +65,18 @@ function Login() {
       } else {
         showAlert({
           title: (
-            <h6 className="sweet-title-size bg-danger-content">
-              Unable to grant access
-            </h6>
+            <div className="alert-content-padding">
+              <h6 className="sweet-title-size bg-danger-content">
+                Unable to grant access
+              </h6>
+            </div>
           ),
           content: (
-            <h6 className="sweet-title-size font-weight-bold ">
-              Invalid Username or Password. Please try again
-            </h6>
+            <div className="alert-content-padding">
+              <h6 className="sweet-title-size font-weight-bold ">
+                Invalid Username or Password
+              </h6>
+            </div>
           ),
           type: "error",
           confirmText: "ok",

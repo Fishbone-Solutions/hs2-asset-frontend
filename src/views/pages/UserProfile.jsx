@@ -69,7 +69,11 @@ function UserProfile() {
 
   const handleFormSubmission = async (values, { setSubmitting }) => {
     showAlert({
-      title: <h4 className="sweet-alert-sure">Are you sure?</h4>,
+      title: (
+        <div className="alert-content-padding">
+          <h4 className="sweet-alert-sure">Are you sure?</h4>
+        </div>
+      ),
       type: "warning",
       onConfirm: () => handleUpdateProfile(values),
       onCancel: hideAlert,
@@ -95,7 +99,9 @@ function UserProfile() {
       setLoader(false);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">Profile updated</p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">Profile updated</p>
+          </div>
         ),
         type: "success",
         onConfirm: () => {
@@ -119,9 +125,11 @@ function UserProfile() {
     if (errorCount > 0 && formSubmission) {
       showAlert({
         title: (
-          <p className="sweet-title-size sweet-title-padding">
-            Please fill all mandatory fields
-          </p>
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding text-start">
+              Please fill all mandatory fields
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),

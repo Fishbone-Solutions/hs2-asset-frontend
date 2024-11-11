@@ -134,14 +134,18 @@ const Create = () => {
       setLoader(false);
       showAlert({
         title: (
-          <h6 className="sweet-title-size sweet-title-padding">
-            Item '{values.asset_name}' added to inventory
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="sweet-title-size sweet-title-padding">
+              Item '{values.asset_name}' added to inventory
+            </h6>
+          </div>
         ),
         content: (
-          <h6 className="success-sweet-content-color">
-            Item ID : {res.appRespData.asset_id}
-          </h6>
+          <div className="alert-content-padding">
+            <h6 className="success-sweet-content-color">
+              Item ID : {res.appRespData.asset_id}
+            </h6>
+          </div>
         ),
         type: "success",
         showCancelButton: false,
@@ -187,9 +191,11 @@ const Create = () => {
       setRefreshImageComponent(refreshImageComponent + 1);
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            You can only upload a maximum of {maxFiles} files
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              You can only upload a maximum of {maxFiles} files
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -249,9 +255,11 @@ const Create = () => {
     if (files.length > maxFiles) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            You can only upload a maximum of {maxFiles} files
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              You can only upload a maximum of {maxFiles} files
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
@@ -269,11 +277,13 @@ const Create = () => {
       if (!allowedExtensions.includes(fileExtension)) {
         showAlert({
           title: (
-            <p class="sweet-title-size sweet-title-padding">
-              {type === "image"
-                ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
-                : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
-            </p>
+            <div className="alert-content-padding">
+              <p class="sweet-title-size sweet-title-padding text-start">
+                {type === "image"
+                  ? `File type ${fileExtension} is not supported. Please upload Images only in .png, .jpeg, .jpg, .bmp`
+                  : `File type ${fileExtension} is not supported. Please upload Documents only in Text, Word, Excel, Pdf format`}
+              </p>
+            </div>
           ),
           type: "error",
           onConfirm: () => hideAlert(),
@@ -304,9 +314,11 @@ const Create = () => {
     if (errorCount > 0 && formSubmission) {
       showAlert({
         title: (
-          <p class="sweet-title-size sweet-title-padding">
-            Please fill all mandatory fields
-          </p>
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding">
+              Please fill all mandatory fields
+            </p>
+          </div>
         ),
         type: "error",
         onConfirm: () => hideAlert(),
