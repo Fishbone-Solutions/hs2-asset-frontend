@@ -6,13 +6,6 @@ import { formatLocation } from "variables/common";
 const useColumns = () => {
   return useMemo(
     () => [
-      {
-        Header: "ID",
-        isSortable: true,
-
-        accessor: "asset_id",
-        width: "2%",
-      },
       // {
       //   Header: "Category",
       //   isSortable: true,

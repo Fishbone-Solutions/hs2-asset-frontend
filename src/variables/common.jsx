@@ -228,7 +228,7 @@ export const getStatusMessage = (statusCode, type) => {
     case -50:
       return "Sorry, you can not update to this Status at this stage";
     case -60:
-      return "You can not Widthdraw at this Stage. The Buyer already dispatched the Goods";
+      return "You can not Widthdraw at this Stage. The Buyer has already dispatched the Goods";
     case -61:
       return "You have already sent the payment and can not Withdraw at this stage";
     case -62:
@@ -382,7 +382,7 @@ export const currencyOptions = [
 ];
 
 export const getUkUnits = [
-  { value: "Unit", label: "Unit", symbol: "Unit", type: "Unit" },
+  { value: "Unit", label: "Unit(s)", symbol: "Unit", type: "Unit" },
   { value: "kg", label: "Kg", symbol: "kg", type: "Weight" },
 
   { value: "Litre", label: "Litre", symbol: "L", type: "Volume" },

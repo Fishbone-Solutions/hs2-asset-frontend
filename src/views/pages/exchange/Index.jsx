@@ -504,7 +504,7 @@ const Index = () => {
                     </Col>
                   </Row>
                 </Container>
-                <div className="applied-filters">
+                <div className="applied-filters exchange-tags">
                   {appliedFilters &&
                     appliedFilters.length > 0 &&
                     appliedFilters.map((filter) => (

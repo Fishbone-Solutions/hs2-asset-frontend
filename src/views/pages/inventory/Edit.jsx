@@ -741,7 +741,7 @@ const Edit = () => {
                         <Row>
                           <Col sm="6">
                             <Label className="required">
-                              Quantity (Value, Unit){" "}
+                              Quantity (Value, Measurement){" "}
                             </Label>
                             <FormGroup>
                               <InputGroup>

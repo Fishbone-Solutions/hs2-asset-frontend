@@ -366,7 +366,7 @@ const Show = () => {
                     </Row>
                     <Row>
                       <Col sm="6">
-                        <Label>Quantity (Value, Unit) *</Label>
+                        <Label>Quantity (Value, Measurement) *</Label>
                         <FormGroup>
                           <InputGroup>
                             <Input

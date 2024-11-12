@@ -6,7 +6,7 @@ const ItemRequest = () => {
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">
       <FeatureNotAvailabe width="120" height="120" />
       <h2 className="mt-4 text-center">
-        This feature is not available in BETA Release
+        This feature is not available in BETA Version
       </h2>
     </div>
   );
