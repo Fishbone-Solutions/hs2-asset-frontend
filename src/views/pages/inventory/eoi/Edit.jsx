@@ -340,7 +340,7 @@ const Edit = () => {
         confirmText: "Ok",
         onConfirm: () => {
           hideAlert();
-          navigate(`/admin/eois/inventory/${inventoryId}`);
+          navigate(`/admin/inventory/eois/${inventoryId}`);
         },
       });
 

@@ -65,9 +65,10 @@ const hasPermission = (module_slug, permission_type) => {
   const user = sessionStorage.getItem("user");
   if (user) {
     const permissions = JSON.parse(user).user_permissions; // Adjust this if the structure is different
-    return permissions.some(permission => 
-      permission.permission_slug === module_slug && 
-      permission.permission_value.includes(permission_type)
+    return permissions.some(
+      (permission) =>
+        permission.permission_slug === module_slug &&
+        permission.permission_value.includes(permission_type)
     );
   }
   return false;
@@ -97,7 +98,7 @@ const routes = [
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.inventory} />,
     layout: "/admin",
-    permissionSlug: 'inventory',
+    permissionSlug: "inventory",
   },
   {
     path: "/exchange",
@@ -110,7 +111,7 @@ const routes = [
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
     layout: "/admin",
-    permissionSlug: 'exchange-register',
+    permissionSlug: "exchange-register",
   },
   {
     path: "/inventory/create",
@@ -156,8 +157,8 @@ const routes = [
   },
 
   {
-    path: "/eois/inventory/:id",
-    pathName: "/admin/eois/inventory/:id",
+    path: "/inventory/eois/:id",
+    pathName: "/admin/inventory/eois/:id",
     name: "Inventory | Item",
     component: <InventoryEoi />,
     layout: "/admin",
@@ -204,7 +205,6 @@ const routes = [
     },
     hidden: true,
   },
-
 
   {
     path: "/exchange/show/:id",
@@ -261,7 +261,7 @@ const routes = [
       <HiRectangleStack size="2em" color="white" style={{ float: "left" }} />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.bulkImport} />,
-    permissionSlug: 'bulk-import',
+    permissionSlug: "bulk-import",
   },
 
   {
@@ -275,7 +275,7 @@ const routes = [
       <BsMegaphoneFill size="2em" color="white" style={{ float: "left" }} />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.itemRequest} />,
-    permissionSlug: 'items-request',
+    permissionSlug: "items-request",
   },
   {
     path: "/approval-requests",
@@ -290,7 +290,7 @@ const routes = [
     breadcrumbComponent: (
       <Breadcrumb items={breadcrumbConfig.approvalRequests} />
     ),
-    permissionSlug: 'approval-requests',
+    permissionSlug: "approval-requests",
   },
   {
     path: "/approval/request/show/:eoiId/:inventoryId/:requestId",
@@ -347,7 +347,7 @@ const routes = [
       />
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.myEoi} />,
-    permissionSlug: 'my-eoi',
+    permissionSlug: "my-eoi",
   },
   {
     path: "/myeoi/:inventoryId/show/:eoiId",
@@ -523,6 +523,5 @@ const routes = [
     layout: "/auth",
   },
 ];
-
 
 export default routes;

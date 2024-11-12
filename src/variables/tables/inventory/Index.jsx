@@ -148,7 +148,7 @@ const useColumns = (handleDelete) => {
                 <i className="fa fa-edit" style={{ fontSize: "0.9em" }}></i>
               </Button>
             </Link>
-            <Link to={`/admin/eois/inventory/${row.original.asset_id}`}>
+            <Link to={`/admin/inventory/eois/${row.original.asset_id}`}>
               <Button
                 type="button"
                 className="btn-icon btn-simple"
