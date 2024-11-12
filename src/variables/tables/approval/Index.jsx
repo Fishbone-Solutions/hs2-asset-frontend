@@ -18,7 +18,7 @@ const useColumns = (data, handleDelete) => {
         ),
       },
       {
-        Header: "EOI Id",
+        Header: "EOI No",
         isSortable: true,
         accessor: "eoi_id",
         width: "2%",

@@ -52,7 +52,7 @@ const RequestEquipment = () => {
       title: (
         <div className="alert-content-padding">
           <h6 className="sweet-title-size sweet-title-padding text-start">
-            This feature is not available in BETA Release
+            This feature is not available in BETA Version
           </h6>
         </div>
       ),

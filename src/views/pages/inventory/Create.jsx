@@ -670,9 +670,9 @@ const Create = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <Col sm="6">
+                          <Col sm="6 mb-2">
                             <Label className="required">
-                              Quantity (Value, Unit){" "}
+                              Quantity (Value, Measurement){" "}
                             </Label>
                             <FormGroup>
                               <InputGroup>
@@ -690,7 +690,7 @@ const Create = () => {
                                   <ErrorMessage
                                     name="quantity"
                                     component="div"
-                                    className="text-danger error-message"
+                                    className="text-danger error-message mb-2"
                                   />
                                 )}
 

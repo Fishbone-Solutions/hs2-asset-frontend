@@ -108,6 +108,23 @@ function Login() {
       setLoader(false);
     }
   };
+
+  const handleRegister = () => {
+    showAlert({
+      title: (
+        <div className="alert-content-padding">
+          <h6 className="sweet-title-size sweet-title-padding text-start">
+            This feature is not available in BETA Version
+          </h6>
+        </div>
+      ),
+      content: "",
+      type: "warning",
+      confirmText: "ok",
+      showCancelButton: false,
+      onConfirm: hideAlert,
+    });
+  };
   // const hideAlert = () => {
   //   setAlert(null);
   // };
@@ -195,7 +212,12 @@ function Login() {
                   >
                     Login
                   </Button>
-                  <Button block className="btn-round mb-3" color="primary">
+                  <Button
+                    block
+                    onClick={handleRegister}
+                    className="btn-round mb-3"
+                    color="primary"
+                  >
                     Sign in with O365
                   </Button>
                 </CardFooter>

@@ -170,12 +170,18 @@ const Index = () => {
         showAlert({
           title: (
             <div className="alert-content-padding">
-              <p className="sweet-title-size sweet-title-padding">
+              <p className="sweet-title-size sweet-title-padding text-danger">
                 Can not delete this Item
               </p>
             </div>
           ),
-          content: `This Asset is being broadcasted Live`,
+          content: (
+            <div className="alert-content-padding">
+              <p class="sweet-title-size sweet-title-padding font-weight-bold">
+                This Asset is being broadcasted Live
+              </p>
+            </div>
+          ),
           type: "error",
           showCancelButton: false,
           confirmText: "ok",

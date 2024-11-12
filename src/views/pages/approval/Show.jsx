@@ -319,7 +319,7 @@ const Show = () => {
                     </Col>
 
                     <Col sm="6">
-                      <Label>Asset Name</Label>
+                      <Label>Item Name</Label>
                       <FormGroup>
                         <Input
                           type="text"

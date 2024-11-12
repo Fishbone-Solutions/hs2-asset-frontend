@@ -79,6 +79,7 @@ const Edit = () => {
         ),
         type: "info",
         onConfirm: hideAlert,
+        confirmText: "ok",
         showCancelButton: false,
       });
     }
