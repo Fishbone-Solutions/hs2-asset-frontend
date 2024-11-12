@@ -27,6 +27,7 @@ import { formatLocation } from "variables/common";
 
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import { currencyOptions } from "variables/common";
+import { getUkUnits } from "variables/common";
 
 const Show = () => {
   const { inventoryId } = useParams();
