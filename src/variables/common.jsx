@@ -245,6 +245,8 @@ export const getStatusMessage = (statusCode, type) => {
       return "Can not proceed further. You have already decided not to proceed with this EOI";
     case -101:
       return "Can not go into Negotiation. This EOI is awaiting an Approval";
+    case -102:
+      return "Can not set status to GOODS-SENT. There is no evidence of Payment being received";
     default:
       return statusCode > 0
         ? "Acknowledgement Status updated"
@@ -324,7 +326,7 @@ export const getNudgeMessage = (eoi_nudge, sendNudgeto) => {
       }`;
 
     case eoi_nudge === -2:
-      return "You have already sent a nudge. A nudge can only be sent once a day.";
+      return "You have already sent a nudge. A nudge can only be sent once a day";
 
     case eoi_nudge === -3:
       return `No pending request at ${
