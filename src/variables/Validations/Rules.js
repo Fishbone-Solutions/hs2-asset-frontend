@@ -1,7 +1,7 @@
 export const validationRules = {
   numeric: {
-    pattern: /^[0-9 ]*$/, // Allows numbers, +, and spaces
-    regex: /[^0-9 ]/g,
+    pattern: /^[0-9. ]*$/, // Allows numbers, +, and spaces
+    regex: /[^0-9. ]/g,
   },
   numericPlus: {
     pattern: /^[0-9+ ]*$/, // Allows numbers, +, and spaces
