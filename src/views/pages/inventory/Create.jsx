@@ -295,10 +295,20 @@ const Create = () => {
 
       // Check file size
       if (file.size > maxSize) {
-        setToastType("error");
-        setToastMessage(
-          `File size exceeds the ${maxSize / 1000000}MB limit: ${file.name}`
-        );
+        showAlert({
+          title: (
+            <div className="alert-content-padding">
+              <p class="sweet-title-size sweet-title-padding">
+                File size exceeds the {maxSize / 1000000}MB limit: {file.name}
+              </p>
+            </div>
+          ),
+          type: "error",
+          onConfirm: () => hideAlert(),
+          confirmText: "Ok",
+          showCancelButton: false,
+        });
+
         return;
       }
     }
@@ -1056,7 +1066,6 @@ const Create = () => {
                             </span>
                           }
                           onSelect={onUploadImages}
-                          maxFileSize={2000000}
                           itemTemplate={() => null}
                           className="custom-file-upload"
                         />
@@ -1092,7 +1101,6 @@ const Create = () => {
                           name="docs[]"
                           multiple
                           accept=".pdf, .doc, .docx, .odt, .txt"
-                          maxFileSize={2000000}
                           chooseLabel={
                             <span>
                               <RiAttachment2 className="me-1" />{" "}

@@ -493,7 +493,7 @@ const Index = () => {
                             className="p-0 icon-style"
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
-                            title="Request Equipment"
+                            title="Request Item"
                           >
                             <div>
                               <IoMegaphoneOutline color="white" size="2.2em" />
