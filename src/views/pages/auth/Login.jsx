@@ -28,6 +28,8 @@ import { useAlert } from "components/Common/NotificationAlert";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { handleInput } from "variables/common";
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -54,12 +56,12 @@ function Login() {
         password: password,
       };
       const res = await EndPointService.Login(params);
-      if (res.appRespData.length > 0) {
-        sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
-        sessionStorage.setItem(
-          "username",
-          !!username ? username : sessionStorage.getItem("username")
-        );
+      if (res.appRespData !== null) {
+        const loginUserData = res.appRespData;
+        console.log("userlogin", loginUserData["user"]);
+        sessionStorage.setItem("user", JSON.stringify(loginUserData.user));
+        sessionStorage.setItem("username", loginUserData.username);
+        sessionStorage.setItem("token", loginUserData.token);
         setLoader(false);
         navigate("/admin/inventory");
       } else {
@@ -98,8 +100,14 @@ function Login() {
       }
     } catch (e) {
       showAlert({
-        title: <h6 className="sweet-title-size">Unable to grant access</h6>,
-        content: "something went wrong",
+        title: <h6 className="sweet-title-size">{e.message}</h6>,
+        content: (
+          <div className="alert-content-padding">
+            <h6 className="sweet-title-size font-weight-bold bg-danger-content">
+              {e.error.error_description}
+            </h6>
+          </div>
+        ),
         type: "error",
         confirmText: "ok",
         showCancelButton: false,
@@ -171,20 +179,18 @@ function Login() {
                 <CardBody>
                   <InputGroup>
                     <InputGroupText>
-                      <IoPersonOutline size="1.2em" />
+                      <MdEmail size="1.2em" />
                     </InputGroupText>
                     <Input
-                      placeholder="Username"
+                      placeholder="User Email"
                       type="text"
                       value={username}
-                      onInput={handleInput("alphaNumericLogin")}
-                      maxLength={20}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </InputGroup>
                   <InputGroup>
                     <InputGroupText>
-                      <CiLock size="1.2em" />
+                      <RiLockPasswordFill size="1.2em" />
                     </InputGroupText>
                     <Input
                       placeholder="Password"

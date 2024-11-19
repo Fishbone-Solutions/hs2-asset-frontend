@@ -19,13 +19,13 @@ serviceProvider.interceptors.request.use(
   async (config) => {
     // Retrieve the token from localStorage
     //const token = localStorage.getItem("authToken");
-    const token = "x8F!@p01,*MH";
+    const token = sessionStorage.getItem("token");
     // const user_id = sessionStorage.getItem("username");
     // console.log("username", user_id);
 
     // If the token exists, set it in the Authorization header
     if (token) {
-      //config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
       config.headers["token"] = token;
     }
 
@@ -45,11 +45,14 @@ serviceProvider.interceptors.response.use(
   },
   async (error) => {
     // Handle errors (e.g., unauthorized, token expiration)
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === 403) {
       // Optionally, handle specific cases like token expiration
       console.error(
         "Unauthorized access - possibly due to invalid/expired token"
       );
+      sessionStorage.clear();
+      window.location.href = "/auth/login";
+
       // You can also redirect to login page or refresh token here
     }
 
