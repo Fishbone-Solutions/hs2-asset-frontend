@@ -38,7 +38,10 @@ const breadcrumbConfig = {
     { label: "Broadcast Item Request", to: "#" },
   ],
   exchangeShow: [
-    { label: "Exchange", to: "/admin/exchange" },
+    {
+      label: "Exchange",
+      to: "/admin/exchange?state=true",
+    },
     { label: "View Details", to: "#" },
   ],
   exchangeEoiSubmission: [

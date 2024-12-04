@@ -40,6 +40,9 @@ import ModalComponent from "components/Common/ModalComponent";
 import moment from "moment";
 import { handleInput } from "variables/common";
 import { handleInputFilteration } from "variables/common";
+import { useLocation } from "react-router-dom";
+
+import debounce from "lodash/debounce";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -58,6 +61,9 @@ const Index = () => {
   const [cursorRowNo, setCursorRowNo] = useState(0);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [totalNumberOfRow, setTotalNumberOfRow] = useState(10);
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
 
   const [appliedFilters, setAppliedFilters] = useState([]);
 
@@ -108,6 +114,7 @@ const Index = () => {
 
   const fetchInventory = async () => {
     try {
+      console.log("filter form data", filterFormData);
       setLoader(true);
       // Construct the query parameters
       const params = new URLSearchParams({
@@ -125,37 +132,86 @@ const Index = () => {
         cursor_row_no: filterFormData.cursor_row_no,
         page_size: filterFormData.page_size,
       });
-
+      console.log("params", params);
       const res = await EndPointService.getExchange(headers, params);
-      setDataState(res.appRespData);
+      // Update dataState reactively
+      setDataState(res?.appRespData);
 
-      if (res.appRespData.length > 0) {
-        console.log(
-          res.appRespData,
-          res.appRespData.length,
-          res.appRespData[res.appRespData.length - 1].row_no
-        );
-        setCursorRowNo(res.appRespData[res.appRespData.length - 1].row_no);
-        setTotalNumberOfRow(
-          res.appRespData[res.appRespData.length - 1].row_count
-        );
+      // Update pagination-related states
+      if (res?.appRespData?.length > 0) {
+        const lastItem = res.appRespData[res.appRespData.length - 1];
+        setCursorRowNo(lastItem.row_no);
+        setTotalNumberOfRow(lastItem.row_count);
+      } else {
+        setCursorRowNo(null); // Reset cursor if no data
       }
 
+      // Increment refresh counter
+      setRefreshData((prev) => prev + 1);
       setLoader(false);
     } catch (e) {
       console.log(e);
       setToastType("error");
-      setToastMessage(e.appRespMessage);
       setLoader(false);
     }
   };
 
-  const handleEoI = () => {};
+  useEffect(() => {
+    if (!location.state && !queryParams.get("state")) return;
+
+    const savedFilters =
+      JSON.parse(localStorage.getItem("filters")) ??
+      JSON.parse(localStorage.getItem("asset_name"));
+    console.log("saved filters effect", savedFilters);
+    if (
+      savedFilters &&
+      (location.state?.from === "exchange" || queryParams.get("state"))
+    ) {
+      setFilterFormDate((prev) => ({
+        ...prev,
+        id: savedFilters?.id,
+        asset_name: savedFilters?.asset_name,
+        available_from: moment(
+          rangeDates.startDate,
+          "DD/MM/YYYY",
+          true
+        ).isValid()
+          ? rangeDates.startDate
+          : "",
+        available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid
+          ? rangeDates.endDate
+          : "",
+        category: savedFilters?.category,
+        subCategory: savedFilters?.subCategory,
+        city: savedFilters?.city,
+        cityName: savedFilters?.cityName,
+        location: savedFilters?.location,
+      }));
+      setInputValue(savedFilters?.asset_name);
+    } else {
+      localStorage.removeItem("filters");
+      localStorage.removeItem("asset_name");
+    }
+
+    // Fetch inventory after filters are updated
+  }, [location.state]);
 
   useEffect(() => {
-    fetchInventory();
-    fetchCityData();
-    console.log(filterDataState);
+    const fetchDataSequentially = async () => {
+      const state = queryParams.get("state"); // Get the value of 'state'
+      if (location.state === null && !state) {
+        console.log("fetchd data sequentially", location.state, state);
+        await fetchInventory();
+      } else {
+        debouncedFetchInventory(); // Use debounced version
+      }
+      fetchCityData(); // Fetch next after inventory
+    };
+
+    fetchDataSequentially();
+  }, [filterFormData]);
+
+  useEffect(() => {
     const filters = [];
     if (filterFormData.id)
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
@@ -165,48 +221,156 @@ const Index = () => {
         key: "asset_name",
       });
     if (filterFormData.city)
-      filters.push({
-        label: `${filterFormData.cityName}`,
-        key: "city",
-      });
+      filters.push({ label: `${filterFormData.cityName}`, key: "city" });
     if (filterFormData.location)
-      filters.push({
-        label: `${filterFormData.location}`,
-        key: "location",
-      });
-
+      filters.push({ label: `${filterFormData.location}`, key: "location" });
     if (filterFormData.category)
-      filters.push({
-        label: `${filterFormData.category}`,
-        key: "category",
-      });
+      filters.push({ label: `${filterFormData.category}`, key: "category" });
     if (filterFormData.subCategory)
       filters.push({
         label: `${filterFormData.subCategory}`,
         key: "subCategory",
       });
-
-    if (
-      filterFormData.available_from !== "" &&
-      filterFormData.available_from !== null &&
-      filterFormData.available_to !== "" &&
-      filterFormData.available_to !== null &&
-      filterFormData.available_to !== undefined &&
-      filterFormData.available_from !== undefined
-    )
+    if (filterFormData.available_from && filterFormData.available_to) {
       filters.push({
         label: `${filterFormData.available_from} - ${filterFormData.available_to}`,
         key: ["available_from", "available_to"],
       });
+    }
     if (filterFormData.status)
-      filters.push({
-        label: `${filterFormData.status.label}`,
-        key: "status",
-      });
+      filters.push({ label: `${filterFormData.status.label}`, key: "status" });
 
     setAppliedFilters(filters);
-    console.log("applied filter", appliedFilters, filterFormData);
   }, [filterFormData]);
+
+  // Wrap fetchInventory with debounce
+  const debouncedFetchInventory = debounce(fetchInventory, 300);
+
+  const handleEoI = () => {};
+
+  // // Load filters on component mount
+  // useEffect(() => {
+  //   console.log("location state", location.state);
+  //   const savedFilters =
+  //     JSON.parse(localStorage.getItem("filters")) ??
+  //     JSON.parse(localStorage.getItem("asset_name"));
+
+  //   console.log("saved filters", savedFilters);
+
+  //   // Retain filters only if from the same module
+  //   if (savedFilters && location.state?.from === "exchange") {
+  //     if (JSON.parse(localStorage.getItem("filters"))) {
+  //       setFilterFormDate((prevState) => ({
+  //         ...prevState,
+  //         id: savedFilters?.id,
+  //         asset_name: savedFilters?.asset_name,
+  //         available_from: moment(
+  //           rangeDates.startDate,
+  //           "DD/MM/YYYY",
+  //           true
+  //         ).isValid()
+  //           ? rangeDates.startDate
+  //           : "",
+  //         available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid
+  //           ? rangeDates.endDate
+  //           : "",
+  //         category: savedFilters?.category,
+  //         subCategory: savedFilters?.subCategory,
+  //         city: savedFilters?.city,
+  //         cityName: savedFilters?.cityName,
+  //         location: savedFilters?.location,
+  //       }));
+  //       setFilterDataState({
+  //         ...filterDataState,
+  //         id: savedFilters?.id,
+  //         asset_name: savedFilters?.asset_name,
+  //         category: savedFilters?.category,
+  //         subCategory: savedFilters?.subCategory,
+  //         city: savedFilters?.city,
+  //         cityName: savedFilters?.cityName,
+  //         location: savedFilters?.location,
+  //       });
+
+  //       localStorage.removeItem("asset_name");
+  //     } else {
+  //       setFilterFormDate({ asset_name: savedFilters?.asset_name });
+  //       setFilterDataState({
+  //         ...filterDataState,
+  //         asset_name: savedFilters?.asset_name,
+  //       });
+  //       setFilterFormDate((prevState) => ({
+  //         ...prevState,
+  //         asset_name: savedFilters?.asset_name,
+  //       }));
+  //       setInputValue(savedFilters?.asset_name);
+  //     }
+
+  //     // Increment refresh counter
+  //     setRefreshData((prev) => prev + 1);
+  //   } else {
+  //     // Clear saved filters for new module
+  //     localStorage.removeItem("filters");
+  //   }
+  // }, [location.state]);
+
+  // useEffect(() => {
+  //   const filters = [];
+  //   if (filterFormData.id)
+  //     filters.push({ label: ` ${filterFormData.id}`, key: "id" });
+  //   if (filterFormData.asset_name)
+  //     filters.push({
+  //       label: `${filterFormData.asset_name}`,
+  //       key: "asset_name",
+  //     });
+  //   if (filterFormData.city)
+  //     filters.push({
+  //       label: `${filterFormData.cityName}`,
+  //       key: "city",
+  //     });
+  //   if (filterFormData.location)
+  //     filters.push({
+  //       label: `${filterFormData.location}`,
+  //       key: "location",
+  //     });
+
+  //   if (filterFormData.category)
+  //     filters.push({
+  //       label: `${filterFormData.category}`,
+  //       key: "category",
+  //     });
+  //   if (filterFormData.subCategory)
+  //     filters.push({
+  //       label: `${filterFormData.subCategory}`,
+  //       key: "subCategory",
+  //     });
+
+  //   if (
+  //     filterFormData.available_from !== "" &&
+  //     filterFormData.available_from !== null &&
+  //     filterFormData.available_to !== "" &&
+  //     filterFormData.available_to !== null &&
+  //     filterFormData.available_to !== undefined &&
+  //     filterFormData.available_from !== undefined
+  //   )
+  //     filters.push({
+  //       label: `${filterFormData.available_from} - ${filterFormData.available_to}`,
+  //       key: ["available_from", "available_to"],
+  //     });
+  //   if (filterFormData.status)
+  //     filters.push({
+  //       label: `${filterFormData.status.label}`,
+  //       key: "status",
+  //     });
+
+  //   setAppliedFilters(filters);
+
+  //   console.log("asfdsadf - execute", filterFormData);
+  //   fetchInventory();
+  //   fetchCityData();
+
+  //   // Increment refresh counter
+  //   setRefreshData((prev) => prev + 1);
+  // }, [filterFormData]);
 
   const handleDate = (startDate, endDate) => {
     setRangeDates((prevState) => ({
@@ -242,7 +406,8 @@ const Index = () => {
       cityName: "",
       location: "",
     });
-
+    localStorage.removeItem("filters");
+    localStorage.removeItem("asset_name");
     setClearDateBoolean(true);
     setClearCityBoolean(true);
   };
@@ -264,17 +429,26 @@ const Index = () => {
       cityName: filterDataState.cityName,
       location: filterDataState.location,
     }));
+    console.log("filter data", filterFormData);
+    localStorage.setItem("filters", JSON.stringify(filterDataState));
   };
 
   const handleNameSearch = (e) => {
     if (e.key === "Enter") {
       setFilterFormDate({ asset_name: e.target.value });
+      console.log("filter form data", filterFormData);
+      localStorage.setItem(
+        "asset_name",
+        JSON.stringify({ asset_name: e.target.value })
+      );
+      localStorage.removeItem("filters");
     }
   };
 
   const openModal = (modalId) => {
     setModalIsOpen(true);
-    if (inputValue.length > 0) {
+    console.log("inputValue", inputValue);
+    if (inputValue && inputValue.length > 0) {
       setFilterFormDate({ ...filterFormData, asset_name: "" });
       clearInput();
     }
@@ -289,11 +463,12 @@ const Index = () => {
     setFilterFormDate({ ...filterFormData, asset_name: "" });
     handleClearClick();
     setInputValue("");
+    localStorage.removeItem("asset_name");
   };
 
   const handleRefreshComponet = () => {
-    const refreshUpdateData = refreshData + 1;
-    setRefreshData(refreshUpdateData);
+    // Increment refresh counter
+    setRefreshData((prev) => prev + 1);
     setCurrentPageNumber(1);
     setFilterFormDate((prev) => ({
       ...prev,
@@ -336,6 +511,7 @@ const Index = () => {
 
     if (!Array.isArray(filterKeys) && filterKeys === "asset_name") {
       setInputValue("");
+      localStorage.removeItem("asset_name");
     }
 
     // Update the filter form state
@@ -360,6 +536,15 @@ const Index = () => {
       });
       return updatedState;
     });
+
+    // Update localStorage
+    const savedFilters = JSON.parse(localStorage.getItem("filters")) || null;
+    if (savedFilters) {
+      keys.forEach((key) => {
+        savedFilters[key] = ""; // Set the specific key to null instead of deleting
+      });
+      localStorage.setItem("filters", JSON.stringify(savedFilters)); // Save the updated filters back to localStorage
+    }
   };
 
   const setDirection = (direction) => {
