@@ -36,6 +36,7 @@ import { formatLocation } from "variables/common";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import { currencyOptions } from "variables/common";
 import { getUkUnits } from "variables/common";
+import { useNavigate } from "react-router-dom";
 
 const Show = () => {
   const { id } = useParams();
@@ -45,6 +46,7 @@ const Show = () => {
   const { username } = useContext(GlobalContext);
   const [cities, setCities] = useState([]);
   const [attachments, setAttachments] = useState([]);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
     code: "",
@@ -65,6 +67,12 @@ const Show = () => {
     seller_location: "",
     statuscode: "",
   });
+
+  const goToViewModule = () => {
+    navigate("/admin/exchange", {
+      state: { from: "exchange" },
+    });
+  };
 
   const fetchInventoryById = async () => {
     try {
@@ -583,7 +591,9 @@ const Show = () => {
             <Button
               className="buttonClose"
               color="primary"
-              onClick={() => window.history.back()}
+              onClick={() => {
+                goToViewModule();
+              }}
               style={{ visibility: "visible", opacity: 1 }}
             >
               Close
