@@ -1,6 +1,6 @@
 import Login from "./views/pages/auth/Login";
 // inventory or asset
-import Inventory from "./views/pages/inventory/Index";
+import Inventory from "./views/pages/inventory/IndexRedux";
 import InventoryCreate from "./views/pages/inventory/Create.jsx";
 import InventoryShow from "./views/pages/inventory/Show.jsx";
 import InventoryEdit from "./views/pages/inventory/Edit.jsx";
@@ -12,7 +12,7 @@ import InventoryEoiEdit from "./views/pages/inventory/eoi/Edit";
 
 //exchange
 
-import Exchange from "./views/pages/exchange/Index";
+import Exchange from "./views/pages/exchange/IndexRedux";
 import ExchangeShow from "./views/pages/exchange/Show";
 import ExchangeEoiCreate from "./views/pages/exchange/eoi/Create";
 
@@ -112,6 +112,7 @@ const routes = [
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchange} />,
     layout: "/admin",
     permissionSlug: "exchange-register",
+    from: "exchange",
   },
   {
     path: "/inventory/create",
@@ -218,6 +219,7 @@ const routes = [
     ),
     breadcrumbComponent: <Breadcrumb items={breadcrumbConfig.exchangeShow} />,
     hidden: true,
+    from: "exchange",
   },
   {
     path: "/exchange/eoi-submission/:id",
@@ -233,6 +235,7 @@ const routes = [
       <Breadcrumb items={breadcrumbConfig.exchangeEoiSubmission} />
     ),
     hidden: true,
+    from: "exchange",
   },
 
   {

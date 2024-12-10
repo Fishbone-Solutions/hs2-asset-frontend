@@ -15,6 +15,8 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { GlobalProvider } from "./GlobalState";
 import ErrorComponent from "./ErrorBoundary";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 // Create the router using createBrowserRouter
 const router = createBrowserRouter([
@@ -53,9 +55,11 @@ const App = () => {
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <GlobalProvider>
-      <App />
-    </GlobalProvider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <GlobalProvider>
+        <App />
+      </GlobalProvider>
+    </React.StrictMode>
+  </Provider>
 );

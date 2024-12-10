@@ -7,28 +7,28 @@ const breadcrumbConfig = {
   inventory: [{ label: "Inventory", to: "#" }],
   itemRequest: [{ label: "Item Request", to: "#" }],
   inventoryCreate: [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "Create", to: "#" },
   ],
   inventoryShow: [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "View Details", to: "#" },
   ],
   inventoryEdit: [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "Edit Details", to: "#" },
   ],
   inventoryEoi: [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "EOI List", to: "#" },
   ],
   inventoryEoiDetails: (inventoryId) => [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "EOI List", to: `/admin/inventory/eois/${inventoryId}` },
     { label: "View EOI Details", to: "#" },
   ],
   inventoryEoiEdit: (inventoryId) => [
-    { label: "Inventory", to: "/admin/inventory" },
+    { label: "Inventory", to: "/admin/inventory?state=true" },
     { label: "EOI List", to: `/admin/inventory/eois/${inventoryId}` },
     { label: "Edit EOI Details", to: "#" },
   ],
