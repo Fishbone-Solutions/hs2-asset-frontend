@@ -438,7 +438,6 @@ const Index = () => {
 
     if (!Array.isArray(filterKeys) && filterKeys === "asset_name") {
       setInputValue("");
-      localStorage.removeItem("asset_name");
     }
 
     // Update the filter form state
@@ -463,15 +462,6 @@ const Index = () => {
       });
       return updatedState;
     });
-
-    // Update localStorage
-    const savedFilters = JSON.parse(localStorage.getItem("filters")) || null;
-    if (savedFilters) {
-      keys.forEach((key) => {
-        savedFilters[key] = ""; // Set the specific key to null instead of deleting
-      });
-      localStorage.setItem("filters", JSON.stringify(savedFilters)); // Save the updated filters back to localStorage
-    }
   };
 
   const setDirection = (direction) => {

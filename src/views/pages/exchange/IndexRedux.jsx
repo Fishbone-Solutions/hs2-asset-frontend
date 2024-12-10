@@ -152,7 +152,8 @@ const IndexRedux = () => {
       dispatch(
         setFilterFormData({
           ...filterFormData,
-          cursor_row_no: totalNumberOfRow - filterFormData.page_size * 2,
+          cursor_row_no:
+            filterFormData.cursor_row_no - filterFormData.page_size,
         })
       );
     }
@@ -175,7 +176,10 @@ const IndexRedux = () => {
         key: "fltr_location_city",
       });
     if (newFilters.fltr_location && newFilters.fltr_location !== -1)
-      filters.push({ label: `${newFilters.fltr_location}`, key: "location" });
+      filters.push({
+        label: `${newFilters.fltr_location}`,
+        key: "fltr_location",
+      });
     if (newFilters.fltr_category1 && newFilters.fltr_category1 !== -1)
       filters.push({
         label: `${newFilters.fltr_category1}`,
@@ -220,9 +224,10 @@ const IndexRedux = () => {
   const openModal = (modalId) => {
     //setModalIsOpen(true);
     if (inputValue && inputValue.length > 0) {
-      dispatch(setFilterFormData({ fltr_asset_name: -1 }));
+      dispatch(setFilterFormData({ fltr_name: -1 }));
       clearInput();
     }
+    applyFilters({});
     setActiveModal(modalId);
   };
 
@@ -361,13 +366,16 @@ const IndexRedux = () => {
     const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
     console.log("filterKeys", keys);
 
-    if (!Array.isArray(filterKeys) && filterKeys === "fltr_city") {
+    if (!Array.isArray(filterKeys) && filterKeys === "fltr_location_city") {
       setClearCityBoolean(true);
     }
-
+    if (!Array.isArray(filterKeys) && filterKeys === "fltr_category1") {
+      setClearDateBoolean(true);
+    }
     if (!Array.isArray(filterKeys) && filterKeys === "fltr_name") {
       setInputValue("");
     }
+
     const updatedStateApp = { ...filterFormData };
     keys.forEach((key) => {
       updatedStateApp[key] = key === "status" ? null : -1; // Handle special cases like 'status'
@@ -387,14 +395,16 @@ const IndexRedux = () => {
       }
     });
 
+    console.log("final apply filters", finalAppliedFilters);
+
     // Remove the filter(s) from the applied filters array
-    applyFilters(finalAppliedFilters);
+    dispatch(setAppliedFilters(finalAppliedFilters));
 
     // Update filter data state
     setFilterDataState((prev) => {
       const updatedState = { ...prev };
       keys.forEach((key) => {
-        updatedState[key] = ""; // Reset the field in filterDataState
+        updatedState[key] = null; // Reset the field in filterDataState
       });
 
       console.log("okay", updatedState);
@@ -651,7 +661,7 @@ const IndexRedux = () => {
                   <Input
                     id="location"
                     name="name"
-                    value={filterDataState.location}
+                    value={filterDataState.fltr_location}
                     maxLength={40}
                     onChange={(e) => {
                       const data = handleInput("alphaNumericDashSlash")(e);
