@@ -224,9 +224,10 @@ const IndexRedux = () => {
   const openModal = (modalId) => {
     //setModalIsOpen(true);
     if (inputValue && inputValue.length > 0) {
-      dispatch(setFilterFormData({ fltr_asset_name: -1 }));
+      dispatch(setFilterFormData({ fltr_name: -1 }));
       clearInput();
     }
+    applyFilters({});
     setActiveModal(modalId);
   };
 
@@ -660,7 +661,7 @@ const IndexRedux = () => {
                   <Input
                     id="location"
                     name="name"
-                    value={filterDataState.location}
+                    value={filterDataState.fltr_location}
                     maxLength={40}
                     onChange={(e) => {
                       const data = handleInput("alphaNumericDashSlash")(e);

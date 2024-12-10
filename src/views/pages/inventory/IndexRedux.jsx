@@ -193,18 +193,18 @@ const IndexRedux = () => {
   const handleClear = () => {
     const updateFilter = {
       fltr_id: -1,
-      asset_name: -1,
-      category: -1,
-      subCategory: -1,
-      entry_date_from: -1,
-      entry_date_to: -1,
-      available_from: -1,
-      available_to: -1,
-      statuscode: -1,
-      fltr_only_active_eois: -1,
-      fltr_only_unattended_eois: -1,
+      fltr_name: -1,
+      fltr_category: -1,
+      fltr_sub_Category: -1,
+      fltr_from_entry_date: -1,
+      fltr_to_entry_date: -1,
+      fltr_from_availability: -1,
+      fltr_to_availability: -1,
+      fltr_status: -1,
       cursor_row_no: 0,
       page_size: 10,
+      fltr_only_active_eois: -1,
+      fltr_only_unattended_eois: -1,
     };
     dispatch(setFilterFormData(updateFilter));
     setFilterDataState({
@@ -226,7 +226,7 @@ const IndexRedux = () => {
     console.log("inventroy", filterAttribute);
     const filters = [];
     if (filterAttribute.fltr_id && filterAttribute.fltr_id !== -1)
-      filters.push({ label: ` ${filterAttribute.id}`, key: "fltr_id" });
+      filters.push({ label: ` ${filterAttribute.fltr_id}`, key: "fltr_id" });
     if (
       filterAttribute.fltr_only_active_eois &&
       filterAttribute.fltr_only_active_eois !== -1
