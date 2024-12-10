@@ -470,7 +470,8 @@ const IndexRedux = () => {
       dispatch(
         setFilterFormData({
           ...filterFormData,
-          cursor_row_no: totalNumberOfRow - filterFormData.page_size * 2,
+          cursor_row_no:
+            filterFormData.cursor_row_no - filterFormData.page_size,
         })
       );
     }
