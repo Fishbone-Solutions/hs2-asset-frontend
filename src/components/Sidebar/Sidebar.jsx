@@ -183,7 +183,7 @@ function Sidebar(props) {
     try {
       const res = await EndPointService.getUserInformation(
         headers,
-        !!username ? username : sessionStorage.getItem("username")
+        sessionStorage.getItem("username")
       );
 
       setDataState(res.appRespData[0]);

@@ -3,6 +3,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import DynamicToast from "components/Common/Toast";
@@ -43,6 +44,7 @@ import { handleInputFilteration } from "variables/common";
 import { useLocation } from "react-router-dom";
 
 import debounce from "lodash/debounce";
+import { useNavigationType } from "react-router-dom";
 
 const Index = () => {
   const [dataState, setDataState] = useState([]);
@@ -62,6 +64,7 @@ const Index = () => {
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [totalNumberOfRow, setTotalNumberOfRow] = useState(10);
   const location = useLocation();
+  const navigationType = useNavigationType();
 
   const queryParams = new URLSearchParams(location.search);
 
@@ -73,7 +76,7 @@ const Index = () => {
     endDate: "",
   });
 
-  const [filterFormData, setFilterFormDate] = useState({
+  const [filterFormData, setFilterFormData] = useState({
     id: "",
     asset_name: "",
     category: null,
@@ -105,7 +108,7 @@ const Index = () => {
   const fetchCityData = async () => {
     try {
       const res = await EndPointService.getCityData();
-      console.log("city", res);
+      //console.log("city", res);
       setCities(res.appRespData);
     } catch (e) {
       console.log(e);
@@ -132,7 +135,7 @@ const Index = () => {
         cursor_row_no: filterFormData.cursor_row_no,
         page_size: filterFormData.page_size,
       });
-      console.log("params", params);
+      //console.log("params", params);
       const res = await EndPointService.getExchange(headers, params);
       // Update dataState reactively
       setDataState(res?.appRespData);
@@ -156,62 +159,96 @@ const Index = () => {
     }
   };
 
-  useEffect(() => {
-    if (!location.state && !queryParams.get("state")) return;
+  const hasFetchedInitially = useRef(false);
 
+  // Debounced version of fetchInventory
+  const debouncedFetchInventory = debounce(fetchInventory, 500);
+
+  const filterationSet = (savedFilters) => {
+    setFilterFormData((prev) => ({
+      ...prev,
+      id: savedFilters?.id,
+      asset_name: savedFilters?.asset_name,
+      available_from: moment(
+        savedFilters?.available_from,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? savedFilters.available_from
+        : "",
+      available_to: moment(
+        savedFilters?.available_to,
+        "DD/MM/YYYY",
+        true
+      ).isValid()
+        ? savedFilters.available_to
+        : "",
+      category: savedFilters?.category,
+      subCategory: savedFilters?.subCategory,
+      city: savedFilters?.city,
+      cityName: savedFilters?.cityName,
+      location: savedFilters?.location,
+    }));
+  };
+
+  const handleFiltersAndPagination = () => {
     const savedFilters =
       JSON.parse(localStorage.getItem("filters")) ??
       JSON.parse(localStorage.getItem("asset_name"));
-    console.log("saved filters effect", savedFilters);
+    const paginationConstant =
+      localStorage.getItem("exchange_current_page") ??
+      localStorage.getItem("exchange_current_page_size");
+
     if (
       savedFilters &&
+      (location.state?.from === "exchange" ||
+        queryParams.get("state") ||
+        navigationType === "POP")
+    ) {
+      filterationSet(savedFilters);
+    } else if (
+      paginationConstant &&
       (location.state?.from === "exchange" || queryParams.get("state"))
     ) {
-      setFilterFormDate((prev) => ({
+      const currentPage = localStorage.getItem("exchange_current_page");
+      const pageSize = localStorage.getItem("exchange_current_page_size");
+
+      setCurrentPageNumber(currentPage);
+      setFilterFormData((prev) => ({
         ...prev,
-        id: savedFilters?.id,
-        asset_name: savedFilters?.asset_name,
-        available_from: moment(
-          rangeDates.startDate,
-          "DD/MM/YYYY",
-          true
-        ).isValid()
-          ? rangeDates.startDate
-          : "",
-        available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid
-          ? rangeDates.endDate
-          : "",
-        category: savedFilters?.category,
-        subCategory: savedFilters?.subCategory,
-        city: savedFilters?.city,
-        cityName: savedFilters?.cityName,
-        location: savedFilters?.location,
+        page_size: pageSize,
+        cursor_row_no: pageSize * currentPage - pageSize,
       }));
-      setInputValue(savedFilters?.asset_name);
     } else {
       localStorage.removeItem("filters");
       localStorage.removeItem("asset_name");
     }
-
-    // Fetch inventory after filters are updated
-  }, [location.state]);
+  };
 
   useEffect(() => {
-    const fetchDataSequentially = async () => {
-      const state = queryParams.get("state"); // Get the value of 'state'
-      if (location.state === null && !state) {
-        console.log("fetchd data sequentially", location.state, state);
-        await fetchInventory();
-      } else {
-        debouncedFetchInventory(); // Use debounced version
-      }
-      fetchCityData(); // Fetch next after inventory
-    };
-
-    fetchDataSequentially();
-  }, [filterFormData]);
+    if (
+      !location.state &&
+      !queryParams.get("state") &&
+      navigationType !== "POP"
+    ) {
+      localStorage.removeItem("exchange_current_page");
+      localStorage.removeItem("exchange_current_page_size");
+      localStorage.removeItem("filters");
+      localStorage.removeItem("asset_name");
+      return;
+    }
+    handleFiltersAndPagination();
+  }, [location.state, navigationType]);
 
   useEffect(() => {
+    if (!hasFetchedInitially.current) {
+      hasFetchedInitially.current = true;
+      return;
+    }
+
+    // Fetch inventory and update applied filters when filterFormData changes
+    debouncedFetchInventory();
+
     const filters = [];
     if (filterFormData.id)
       filters.push({ label: ` ${filterFormData.id}`, key: "id" });
@@ -243,134 +280,24 @@ const Index = () => {
     setAppliedFilters(filters);
   }, [filterFormData]);
 
-  // Wrap fetchInventory with debounce
-  const debouncedFetchInventory = debounce(fetchInventory, 300);
+  useEffect(() => {
+    const fetchDataSequentially = async () => {
+      const state = queryParams.get("state");
+
+      if (location.state === null && !state && navigationType !== "POP") {
+        await fetchInventory();
+      } else if (location.state !== null || state || navigationType === "POP") {
+        debouncedFetchInventory();
+      }
+
+      await fetchCityData();
+    };
+
+    fetchDataSequentially();
+    return () => debouncedFetchInventory.cancel(); // Clean up
+  }, [location.state, navigationType]);
 
   const handleEoI = () => {};
-
-  // // Load filters on component mount
-  // useEffect(() => {
-  //   console.log("location state", location.state);
-  //   const savedFilters =
-  //     JSON.parse(localStorage.getItem("filters")) ??
-  //     JSON.parse(localStorage.getItem("asset_name"));
-
-  //   console.log("saved filters", savedFilters);
-
-  //   // Retain filters only if from the same module
-  //   if (savedFilters && location.state?.from === "exchange") {
-  //     if (JSON.parse(localStorage.getItem("filters"))) {
-  //       setFilterFormDate((prevState) => ({
-  //         ...prevState,
-  //         id: savedFilters?.id,
-  //         asset_name: savedFilters?.asset_name,
-  //         available_from: moment(
-  //           rangeDates.startDate,
-  //           "DD/MM/YYYY",
-  //           true
-  //         ).isValid()
-  //           ? rangeDates.startDate
-  //           : "",
-  //         available_to: moment(rangeDates.endDate, "DD/MM/YYYY", true).isValid
-  //           ? rangeDates.endDate
-  //           : "",
-  //         category: savedFilters?.category,
-  //         subCategory: savedFilters?.subCategory,
-  //         city: savedFilters?.city,
-  //         cityName: savedFilters?.cityName,
-  //         location: savedFilters?.location,
-  //       }));
-  //       setFilterDataState({
-  //         ...filterDataState,
-  //         id: savedFilters?.id,
-  //         asset_name: savedFilters?.asset_name,
-  //         category: savedFilters?.category,
-  //         subCategory: savedFilters?.subCategory,
-  //         city: savedFilters?.city,
-  //         cityName: savedFilters?.cityName,
-  //         location: savedFilters?.location,
-  //       });
-
-  //       localStorage.removeItem("asset_name");
-  //     } else {
-  //       setFilterFormDate({ asset_name: savedFilters?.asset_name });
-  //       setFilterDataState({
-  //         ...filterDataState,
-  //         asset_name: savedFilters?.asset_name,
-  //       });
-  //       setFilterFormDate((prevState) => ({
-  //         ...prevState,
-  //         asset_name: savedFilters?.asset_name,
-  //       }));
-  //       setInputValue(savedFilters?.asset_name);
-  //     }
-
-  //     // Increment refresh counter
-  //     setRefreshData((prev) => prev + 1);
-  //   } else {
-  //     // Clear saved filters for new module
-  //     localStorage.removeItem("filters");
-  //   }
-  // }, [location.state]);
-
-  // useEffect(() => {
-  //   const filters = [];
-  //   if (filterFormData.id)
-  //     filters.push({ label: ` ${filterFormData.id}`, key: "id" });
-  //   if (filterFormData.asset_name)
-  //     filters.push({
-  //       label: `${filterFormData.asset_name}`,
-  //       key: "asset_name",
-  //     });
-  //   if (filterFormData.city)
-  //     filters.push({
-  //       label: `${filterFormData.cityName}`,
-  //       key: "city",
-  //     });
-  //   if (filterFormData.location)
-  //     filters.push({
-  //       label: `${filterFormData.location}`,
-  //       key: "location",
-  //     });
-
-  //   if (filterFormData.category)
-  //     filters.push({
-  //       label: `${filterFormData.category}`,
-  //       key: "category",
-  //     });
-  //   if (filterFormData.subCategory)
-  //     filters.push({
-  //       label: `${filterFormData.subCategory}`,
-  //       key: "subCategory",
-  //     });
-
-  //   if (
-  //     filterFormData.available_from !== "" &&
-  //     filterFormData.available_from !== null &&
-  //     filterFormData.available_to !== "" &&
-  //     filterFormData.available_to !== null &&
-  //     filterFormData.available_to !== undefined &&
-  //     filterFormData.available_from !== undefined
-  //   )
-  //     filters.push({
-  //       label: `${filterFormData.available_from} - ${filterFormData.available_to}`,
-  //       key: ["available_from", "available_to"],
-  //     });
-  //   if (filterFormData.status)
-  //     filters.push({
-  //       label: `${filterFormData.status.label}`,
-  //       key: "status",
-  //     });
-
-  //   setAppliedFilters(filters);
-
-  //   console.log("asfdsadf - execute", filterFormData);
-  //   fetchInventory();
-  //   fetchCityData();
-
-  //   // Increment refresh counter
-  //   setRefreshData((prev) => prev + 1);
-  // }, [filterFormData]);
 
   const handleDate = (startDate, endDate) => {
     setRangeDates((prevState) => ({
@@ -383,7 +310,7 @@ const Index = () => {
   };
 
   const handleClearClick = () => {
-    setFilterFormDate((prevState) => ({
+    setFilterFormData((prevState) => ({
       ...prevState,
       id: "",
       asset_name: "",
@@ -413,7 +340,7 @@ const Index = () => {
   };
 
   const handleAdvancedFilter = () => {
-    setFilterFormDate((prevState) => ({
+    setFilterFormData((prevState) => ({
       ...prevState,
       id: filterDataState.id,
       asset_name: filterDataState.asset_name,
@@ -435,7 +362,7 @@ const Index = () => {
 
   const handleNameSearch = (e) => {
     if (e.key === "Enter") {
-      setFilterFormDate({ asset_name: e.target.value });
+      setFilterFormData({ asset_name: e.target.value });
       console.log("filter form data", filterFormData);
       localStorage.setItem(
         "asset_name",
@@ -449,7 +376,7 @@ const Index = () => {
     setModalIsOpen(true);
     console.log("inputValue", inputValue);
     if (inputValue && inputValue.length > 0) {
-      setFilterFormDate({ ...filterFormData, asset_name: "" });
+      setFilterFormData({ ...filterFormData, asset_name: "" });
       clearInput();
     }
     setActiveModal(modalId);
@@ -460,7 +387,7 @@ const Index = () => {
   };
 
   const clearInput = () => {
-    setFilterFormDate({ ...filterFormData, asset_name: "" });
+    setFilterFormData({ ...filterFormData, asset_name: "" });
     handleClearClick();
     setInputValue("");
     localStorage.removeItem("asset_name");
@@ -470,7 +397,7 @@ const Index = () => {
     // Increment refresh counter
     setRefreshData((prev) => prev + 1);
     setCurrentPageNumber(1);
-    setFilterFormDate((prev) => ({
+    setFilterFormData((prev) => ({
       ...prev,
       cursor_row_no: 0,
     }));
@@ -515,7 +442,7 @@ const Index = () => {
     }
 
     // Update the filter form state
-    setFilterFormDate((prev) => {
+    setFilterFormData((prev) => {
       const updatedState = { ...prev };
       keys.forEach((key) => {
         updatedState[key] = key === "status" ? null : ""; // Handle special cases like 'status'
@@ -550,12 +477,12 @@ const Index = () => {
   const setDirection = (direction) => {
     console.log(direction);
     if (direction === "f") {
-      setFilterFormDate((prev) => ({
+      setFilterFormData((prev) => ({
         ...prev,
         cursor_row_no: cursorRowNo,
       }));
     } else {
-      setFilterFormDate((prev) => ({
+      setFilterFormData((prev) => ({
         ...prev,
         cursor_row_no: cursorRowNo - filterFormData.page_size * 2,
       }));
@@ -564,17 +491,25 @@ const Index = () => {
 
   const setPageSize = (pageSize) => {
     console.log();
-    setFilterFormDate((prev) => ({
+    setFilterFormData((prev) => ({
       ...prev,
       page_size: pageSize,
     }));
+
+    localStorage.setItem("exchange_current_page_size", pageSize);
   };
 
   const setPageNumber = (pageNumber) => {
-    console.log(pageNumber);
+    console.log(
+      "page number ",
+      pageNumber,
+      filterFormData.page_size,
+      filterFormData.page_size * pageNumber - filterFormData.page_size
+    );
     if (pageNumber !== currentPageNumber) {
       setCurrentPageNumber(pageNumber);
-      setFilterFormDate((prev) => ({
+      localStorage.setItem("exchange_current_page", pageNumber);
+      setFilterFormData((prev) => ({
         ...prev,
         cursor_row_no:
           filterFormData.page_size * pageNumber - filterFormData.page_size,
@@ -605,7 +540,7 @@ const Index = () => {
                             className="input-group-text cursor-pointer"
                             id="basic-addon1"
                             onClick={() =>
-                              setFilterFormDate({ asset_name: inputValue })
+                              setFilterFormData({ asset_name: inputValue })
                             }
                           >
                             <IoSearchSharp size="1.5em" color="white" />
