@@ -96,12 +96,22 @@ const IndexRedux = () => {
   const location = useLocation();
   const navigationType = useNavigationType();
   const queryParams = new URLSearchParams(location.search);
+  const [cities, setCities] = useState([]);
 
   // Debounce API calls to prevent excessive requests
   const debouncedFetchTableData = debounce(() => {
     dispatch(fetchTableData(filterFormData));
   }, 300);
 
+  const fetchCityData = async () => {
+    try {
+      const res = await EndPointService.getCityData();
+      //console.log("city", res);
+      setCities(res.appRespData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   // Initial data fetch on component mount
   useEffect(() => {
     debouncedFetchTableData();
@@ -115,6 +125,7 @@ const IndexRedux = () => {
     ) {
       handleClearClick();
     }
+    fetchCityData();
   }, []);
 
   // Handlers for table interactions
@@ -158,8 +169,11 @@ const IndexRedux = () => {
         label: `${newFilters.fltr_name}`,
         key: "fltr_name",
       });
-    if (newFilters.fltr_city)
-      filters.push({ label: `${newFilters.fltr_cityName}`, key: "city" });
+    if (newFilters.fltr_location_city && newFilters.fltr_location_city !== -1)
+      filters.push({
+        label: `${newFilters.cityName}`,
+        key: "fltr_location_city",
+      });
     if (newFilters.fltr_location && newFilters.fltr_location !== -1)
       filters.push({ label: `${newFilters.fltr_location}`, key: "location" });
     if (newFilters.fltr_category1 && newFilters.fltr_category1 !== -1)
@@ -284,6 +298,7 @@ const IndexRedux = () => {
         fltr_city: -1,
         cityName: -1,
         fltr_location: -1,
+        fltr_location_city: -1,
         cursor_row_no: 0,
         page_size: 10,
       })
@@ -324,13 +339,20 @@ const IndexRedux = () => {
       fltr_category1: getValueOrDefault(filterDataState.fltr_category1),
       fltr_category2: getValueOrDefault(filterDataState.fltr_category2),
       fltr_location_city: getValueOrDefault(filterDataState.fltr_city),
-      //cityName: filterDataState.cityName,
+      cityName: filterDataState.cityName,
       fltr_location: getValueOrDefault(filterDataState.fltr_location),
     };
     dispatch(setFilterFormData(searchFilter));
 
     applyFilters(searchFilter);
     closeModal();
+    const modalElement = document.getElementById("filter-modal");
+    modalElement.classList.remove("show");
+    modalElement.style.display = "none"; // Hides the modal
+    const backdropElement = document.querySelector(".modal-backdrop");
+    if (backdropElement) {
+      backdropElement.remove();
+    }
   };
 
   const handleRemoveFilter = (filterKeys) => {
@@ -614,10 +636,10 @@ const IndexRedux = () => {
                 <FormGroup>
                   <FloatingLabelDropdown
                     label="Location-City"
-                    // options={cities.map((city) => ({
-                    //   value: city.code,
-                    //   label: city.name,
-                    // }))}
+                    options={cities.map((city) => ({
+                      value: city.code,
+                      label: city.name,
+                    }))}
                     onChange={handleCityChange}
                     clearSelection={clearCityBoolean}
                   />

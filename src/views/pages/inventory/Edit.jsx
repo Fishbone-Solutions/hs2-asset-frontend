@@ -408,6 +408,12 @@ const Edit = () => {
     }
   }, [formSubmission, errorCount]); // Run whenever errors change
 
+  const goToViewModule = () => {
+    navigate("/admin/inventory", {
+      state: { from: "inventory" },
+    });
+  };
+
   return (
     <>
       <div className="content">
@@ -1301,7 +1307,7 @@ const Edit = () => {
                     className="buttonClose"
                     color="primary"
                     type="button"
-                    onClick={() => navigate("/admin/inventory")}
+                    onClick={() => goToViewModule()}
                     style={{ visibility: "visible", opacity: 1 }}
                   >
                     Close

@@ -37,6 +37,7 @@ import { formatLocation } from "variables/common";
 import { Tooltip } from "bootstrap"; // Import Bootstrap's Tooltip
 import { currencyOptions } from "variables/common";
 import { getUkUnits } from "variables/common";
+import { useNavigate } from "react-router-dom";
 
 const Show = () => {
   const { id, requestId } = useParams();
@@ -45,6 +46,7 @@ const Show = () => {
   const [toastMessage, setToastMessage] = useState();
   const { username } = useContext(GlobalContext);
   const [attachments, setAttachments] = useState([]);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "", // Initialize id based on mode
     asset_id: "",
@@ -123,6 +125,12 @@ const Show = () => {
 
     return () => clearTimeout(timeoutId);
   }, [formData.asset_location]);
+
+  const goToViewModule = () => {
+    navigate("/admin/inventory", {
+      state: { from: "inventory" },
+    });
+  };
 
   return (
     <>
@@ -759,7 +767,7 @@ const Show = () => {
             <Button
               className="buttonClose"
               color="primary"
-              onClick={() => window.history.back()}
+              onClick={() => goToViewModule()}
               style={{ visibility: "visible", opacity: 1 }}
             >
               Close
