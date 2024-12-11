@@ -19,7 +19,8 @@ serviceProvider.interceptors.request.use(
   async (config) => {
     // Retrieve the token from localStorage
     //const token = localStorage.getItem("authToken");
-    const token = sessionStorage.getItem("token");
+    //const token = sessionStorage.getItem("token");
+    const token = "x8F!@p01,*MH";
     // const user_id = sessionStorage.getItem("username");
     // console.log("username", user_id);
 
