@@ -507,6 +507,10 @@ const IndexRedux = () => {
       console.log("working handle clear");
       handleClear();
     }
+    const params = new URLSearchParams({
+      organisation_id: user.organization_id,
+    });
+    dispatch(getPieChartState(params));
   }, []);
 
   return (
