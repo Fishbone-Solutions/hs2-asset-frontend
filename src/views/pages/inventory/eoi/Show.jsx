@@ -408,44 +408,6 @@ const Show = () => {
             </Col>
 
             {/* Set EoI Status */}
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle
-                    tag="h6"
-                    style={{
-                      color: "rgb(82,203,206)",
-                      fontWeight: "bold",
-                      textTransform: "capitalize",
-                      WebkitTextTransform: "capitalize", // for Safari
-                    }}
-                  >
-                    {"EOI Status"}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
-                      <Label> Status *</Label>
-                      <FormGroup>
-                        <Select
-                          className="react-select primary"
-                          classNamePrefix="react-select"
-                          name="eoi_status"
-                          value={options.find(
-                            (option) => option.value === dataState.eoi_status
-                          )}
-                          options={options}
-                          placeholder="Select an option"
-                          isDisabled="true"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
           </Row>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

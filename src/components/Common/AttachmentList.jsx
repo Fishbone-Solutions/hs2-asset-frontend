@@ -123,7 +123,7 @@ const AttachmentList = ({
                     <a
                       onClick={() => openLightbox(index)}
                       className="d-block"
-                      href="#"
+                      href="javascript:void()"
                       aria-label={`Open lightbox for image ${index}`}
                     >
                       <img

@@ -880,7 +880,7 @@ const Edit = () => {
                   <CardBody>
                     <Row>
                       <Col sm="6">
-                        <Label>Status *</Label>
+                        <Label>Buyer Status *</Label>
                         <FormGroup>
                           <Select
                             className="react-select primary"
