@@ -36,8 +36,8 @@ export const validationRules = {
     regex: /[^a-zA-Z0-9-/: ]/g,
   },
   alphaNumericLogin: {
-    pattern: /^[a-zA-Z0-9-,. ]*$/, // Allows letters, numbers, -, /, and spaces
-    regex: /[^a-zA-Z0-9-,. ]/g,
+    pattern: /^[a-zA-Z0-9-,.]*$/, // Allows letters, numbers, -, /, and spaces
+    regex: /[^a-zA-Z0-9-,.]/g,
   },
   alphaNumericDashDot: {
     pattern: /^[a-zA-Z0-9-. ]*$/, // Allows letters, numbers, -, and spaces
