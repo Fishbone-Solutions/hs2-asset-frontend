@@ -220,6 +220,7 @@ const IndexRedux = () => {
     setClearSubCategoryBoolean(true);
     setClearStatusBoolean(true);
     setRefreshData(refreshData + 1);
+    dispatch(setCurrentPageNumber(1));
   };
 
   const appliedFilter = (filterAttribute) => {

@@ -322,6 +322,7 @@ const IndexRedux = () => {
     setClearDateBoolean(true);
     setClearCityBoolean(true);
     setRefreshData(refreshData + 1);
+    dispatch(setPagination({ page: 1 }));
   };
 
   const getValueOrDefault = (value) => (value ? value : -1);
