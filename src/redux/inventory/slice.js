@@ -163,7 +163,7 @@ const inventorySlice = createSlice({
         state.toastMessage = action.payload;
       })
       .addCase(getPieChartState.pending, (state) => {
-        state.fullLoader = true;
+        //state.fullLoader = true;
       })
       .addCase(getPieChartState.fulfilled, (state, action) => {
         state.graphData = action.payload;
