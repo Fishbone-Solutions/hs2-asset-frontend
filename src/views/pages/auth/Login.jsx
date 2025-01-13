@@ -205,6 +205,7 @@ function Login() {
                       type={passwordType}
                       autoComplete="off"
                       value={password}
+                      onInput={handleInput("passwordInput")}
                       onChange={(e) => setPassword(e.target.value)}
                       onKeyPress={handleKeyPress} // Add this line
                     />

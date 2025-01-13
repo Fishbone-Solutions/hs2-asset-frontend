@@ -43,4 +43,8 @@ export const validationRules = {
     pattern: /^[a-zA-Z0-9-. ]*$/, // Allows letters, numbers, -, and spaces
     regex: /[^a-zA-Z0-9-. ]/g,
   },
+  passwordInput: {
+    pattern: /^[^\s]*$/, // This pattern excludes spaces
+    regex: /\s/g, // This regex matches spaces
+  },
 };
