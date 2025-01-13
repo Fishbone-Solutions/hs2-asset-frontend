@@ -59,5 +59,12 @@
 }
 
 .full-page-background {
-  background-image: url('assets/img/bg/bg.png');
+  background-image: url("assets/img/bg/bg.png");
+}
+.password-eye-icon {
+  float: right;
+  right: 8%;
+  top: 44%;
+  cursor: pointer;
+  z-index: 999;
 }

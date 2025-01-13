@@ -28,6 +28,8 @@ import { useAlert } from "components/Common/NotificationAlert";
 import { EndPointService } from "@/services/methods";
 import { FullPageLoader } from "components/Common/ComponentLoader";
 import { handleInput } from "variables/common";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const { username, setUsername } = useContext(GlobalContext);
@@ -35,6 +37,8 @@ function Login() {
   const usernames = [];
   const [password, setPassword] = useState("");
   const [error, setErrorMessage] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordEyeBool, setPasswordEyeBool] = useState(false);
   // const [alert, setAlert] = useState("");
   const navigate = useNavigate();
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
@@ -106,6 +110,16 @@ function Login() {
         onConfirm: hideAlert,
       });
       setLoader(false);
+    }
+  };
+
+  const handlePasswordShow = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      setPasswordEyeBool(true);
+    } else {
+      setPasswordType("password");
+      setPasswordEyeBool(false);
     }
   };
 
@@ -188,13 +202,19 @@ function Login() {
                     </InputGroupText>
                     <Input
                       placeholder="Password"
-                      type="password"
+                      type={passwordType}
                       autoComplete="off"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       onKeyPress={handleKeyPress} // Add this line
                     />
                   </InputGroup>
+                  <div
+                    className="position-absolute password-eye-icon"
+                    onClick={handlePasswordShow}
+                  >
+                    {passwordEyeBool ? <FaEyeSlash /> : <FaEye />}
+                  </div>
                   {error && (
                     <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
                   )}
