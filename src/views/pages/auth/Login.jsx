@@ -218,7 +218,7 @@ function Login() {
                   {error && (
                     <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
                   )}
-                  <br />
+
                   <FormGroup>{/* ... (form group content) */}</FormGroup>
                 </CardBody>
                 <CardFooter>
