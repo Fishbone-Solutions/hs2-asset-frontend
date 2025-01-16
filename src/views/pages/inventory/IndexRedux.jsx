@@ -40,6 +40,7 @@ import {
   setFilterFormData,
   setAppliedFilters,
   setCurrentPageNumber,
+  setFullLoader,
 } from "@/redux/inventory/slice";
 import { useNavigationType } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -142,7 +143,9 @@ const IndexRedux = () => {
 
   const successDelete = async (id) => {
     try {
+      dispatch(setFullLoader(true));
       const res = await EndPointService.deleteInventoryById(id);
+      dispatch(setFullLoader(false));
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
           title: (
@@ -185,6 +188,27 @@ const IndexRedux = () => {
     } catch (e) {
       setToastType("error");
       setToastMessage(e.appRespMessage);
+      dispatch(setFullLoader(false));
+      showAlert({
+        title: (
+          <div className="alert-content-padding">
+            <p className="sweet-title-size sweet-title-padding text-danger">
+              Can not delete this Item
+            </p>
+          </div>
+        ),
+        content: (
+          <div className="alert-content-padding">
+            <p class="sweet-title-size sweet-title-padding font-weight-bold">
+              Unknow Error occur
+            </p>
+          </div>
+        ),
+        type: "error",
+        showCancelButton: false,
+        confirmText: "ok",
+        onConfirm: hideAlert,
+      });
     }
   };
 
