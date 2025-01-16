@@ -123,7 +123,6 @@ const IndexRedux = () => {
   const queryParams = new URLSearchParams(location.search);
   const user = JSON.parse(sessionStorage.getItem("user"));
   const getValueOrDefault = (value) => (value ? value : -1);
-  const [loader1, setLoader1] = useState(false);
 
   const handleDelete = (id) => {
     showAlert({
@@ -143,7 +142,6 @@ const IndexRedux = () => {
 
   const successDelete = async (id) => {
     try {
-      setLoader1(true);
       const res = await EndPointService.deleteInventoryById(id);
       if (res.appRespData[0].asset_delete === -2) {
         showAlert({
@@ -184,12 +182,9 @@ const IndexRedux = () => {
         debouncedFetchTableData();
         setRefreshData(refreshData + 1);
       }
-
-      setLoader1(false);
     } catch (e) {
       setToastType("error");
       setToastMessage(e.appRespMessage);
-      setLoader1(false);
     }
   };
 
