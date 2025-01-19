@@ -92,7 +92,7 @@ const Index = () => {
             <h6 className="sweet-title-size sweet-title-padding">
               {res.appRespData[0].eoi_delete === -2
                 ? "EOI can not be deleted at this stage"
-                : `EOI: {eoiNo} deleted successfully`}
+                : `EOI: ${eoiNo} deleted successfully`}
             </h6>
           </div>
         ),
