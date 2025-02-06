@@ -60,6 +60,7 @@ const Edit = () => {
   const { username } = useContext(GlobalContext);
   const [attachments, setAttachments] = useState([]);
   const [deletedAttachmentsIds, setDeletedAttachmentsIds] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState('');
 
   const { alert, showAlert, hideAlert } = useAlert(); // use the hook here
   const [refreshImageComponent, setRefreshImageComponent] = useState(0);
@@ -80,7 +81,9 @@ const Edit = () => {
       const headers = { user_id: sessionStorage.getItem("username") };
       const res = await EndPointService.getInventoryById(headers, id);
       setFormData(res.appRespData[0]);
-
+      if(res.appRespData.length > 0) {
+        setCurrentStatus(res.appRespData[0]?.statuscode)
+        }
       console.log(formData);
 
       const resAttachment = await EndPointService.getAttachmentByAssetId(
@@ -88,7 +91,7 @@ const Edit = () => {
         id
       );
       setAttachments(resAttachment.appRespData);
-
+     
       setLoader(false);
     } catch (e) {
       setToastType("error");
@@ -110,7 +113,7 @@ const Edit = () => {
     console.log("values", values.statuscode);
     const updateStatus = values.statuscode;
     showAlert({
-      title: updateStatus === "Live" && (
+      title: updateStatus === "Live"  &&  (
         <div className="alert-content-padding">
           <h6 className="warning-alert ">
             <div className="text-start d-flex align-items-start">
@@ -118,9 +121,10 @@ const Edit = () => {
                 WARNING:
               </span>
               <span className="warning-text">
-                This item will be listed on the Exchange Register and will
-                become visible to the Buyers.
+                {currentStatus === 'Live' && currentStatus === updateStatus ? 'This Item is currently Live. Any changes you make will be instantly reflected on the Exchange Register.': 
+                'This item will be listed on the Exchange Register and will become visible to the Buyers.'}
               </span>
+              
             </div>
           </h6>
         </div>
