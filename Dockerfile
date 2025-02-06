@@ -1,5 +1,5 @@
 # build environment
-FROM node:gallium-buster-slim AS builder
+FROM node:23.7.0-bullseye AS builder
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
