@@ -1,7 +1,7 @@
 # dependencies
 /node_modules
 package-lock.json
-pnpm-lock.yaml
+/pnpm-lock.yaml
 .env
 
 # Vite build output
