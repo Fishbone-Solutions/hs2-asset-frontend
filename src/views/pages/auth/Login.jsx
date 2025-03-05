@@ -58,7 +58,7 @@ function Login() {
         password: password,
       };
       const res = await EndPointService.Login(params);
-      if (res.appRespData.length > 0) {
+      if (res.appRespData && res.appRespData.token) {
         sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
         sessionStorage.setItem(
           "username",
@@ -191,8 +191,6 @@ function Login() {
                       placeholder="Username"
                       type="text"
                       value={username}
-                      onInput={handleInput("alphaNumericLogin")}
-                      maxLength={20}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </InputGroup>
