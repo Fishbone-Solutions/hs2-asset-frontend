@@ -56,14 +56,15 @@ function Login() {
       const params = {
         username: username,
         password: password,
-      };
+      }; 
       const res = await EndPointService.Login(params);
       if (res.appRespData && res.appRespData.token) {
-        sessionStorage.setItem("user", JSON.stringify(res.appRespData[0]));
+        sessionStorage.setItem("user", JSON.stringify(res.appRespData.user));
         sessionStorage.setItem(
           "username",
-          !!username ? username : sessionStorage.getItem("username")
+          res.appRespData.user.user_id
         );
+        sessionStorage.setItem('token', res.appRespData.token);
         setLoader(false);
         navigate("/admin/inventory");
       } else {
