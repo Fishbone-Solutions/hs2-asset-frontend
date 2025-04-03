@@ -710,12 +710,12 @@ const Create = () => {
                                     name="quantity_unit"
                                     classNamePrefix="unit-select"
                                     isClearable={false}
-                                    placeholder="Measurement units.."
-                                    defaultValue={getUkUnits[0]}
+                                    //placeholder="Measurement units.."
+                                    //defaultValue={getUkUnits[0]}
                                     onChange={(selectedOption) =>
                                       setFieldValue(
                                         "quantity_unit",
-                                        selectedOption.value ?? getUkUnits[0]
+                                        selectedOption.value
                                       )
                                     }
                                   />
