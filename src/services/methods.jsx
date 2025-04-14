@@ -164,6 +164,18 @@ function Login(params) {
   return Post(`${endpoints.login()}`, params, null);
 }
 
+function ssoLogin(headers = null) {
+  return Get(`${endpoints.ssoLogin()}`, headers)
+}
+
+function generatedSsoSessionOnBehaveCode(params, headers = null) {
+  return Post(
+    `${endpoints.generatedSsoSessionOnBehaveCode()}`,
+    params,
+    headers
+  );
+}
+
 export const EndPointService = {
   getInventory,
   getInventoryById,
@@ -195,4 +207,6 @@ export const EndPointService = {
   ingest,
   sentNudgeRequest,
   Login,
+  ssoLogin,
+  generatedSsoSessionOnBehaveCode,
 };

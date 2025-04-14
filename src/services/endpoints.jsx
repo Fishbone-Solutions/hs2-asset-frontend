@@ -40,4 +40,7 @@ export const endpoints = {
   sentNudgeRequest: (inventory_id, eoi_id) =>
     `assets/${inventory_id}/eoi/${eoi_id}/nudge`,
   login: () => `login`,
+  ssoLogin: () => `login/sso`,
+  generatedSsoSessionOnBehaveCode: () => '/sso/session',
+
 };

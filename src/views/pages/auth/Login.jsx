@@ -140,6 +140,25 @@ function Login() {
       onConfirm: hideAlert,
     });
   };
+
+  const ssoLogin = async () =>  {
+    setLoader(true);
+    try {
+      const res = await EndPointService.ssoLogin();
+      if (res?.appRespData?.redirectUrl) {
+        window.location.href = res.appRespData.redirectUrl; // Redirect the user
+      } else {
+        console.error('Redirect URL not found in response');
+      }
+    } catch (error) {
+      setLoader(false);
+      console.error('SSO Login failed:', error);
+    } finally {
+
+      setLoader(false);
+    }
+
+  }
   // const hideAlert = () => {
   //   setAlert(null);
   // };
@@ -234,7 +253,7 @@ function Login() {
                   </Button>
                   <Button
                     block
-                    onClick={handleRegister}
+                    onClick={() => ssoLogin()}
                     className="btn-round mb-3"
                     color="primary"
                   >

@@ -60,6 +60,7 @@ import breadcrumbConfig from "variables/breadcrumbsConfig";
 import { CgProfile } from "react-icons/cg";
 import NotAuthorized from "views/pages/NotAuthorized";
 import ItemRequest from "views/pages/item_request";
+import Sso from "views/pages/auth/sso";
 
 const hasPermission = (module_slug, permission_type) => {
   const user = sessionStorage.getItem("user");
@@ -509,6 +510,11 @@ const routes = [
         layout: "/admin",
       },
     ],
+  },
+  {
+    path: "/sso/callback",
+    component: <Sso />,
+    layout: "/auth",
   },
   {
     path: "/not-authorized",
