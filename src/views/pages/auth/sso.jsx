@@ -82,7 +82,7 @@ function Sso() {
             ),
             type: 'error',
             confirmText: 'OK',
-            onConfirm: navigate('/auth/login'),
+            onConfirm: () => navigate('/auth/login'),
           });
       console.error('SSO Login failed:', error);
     }
