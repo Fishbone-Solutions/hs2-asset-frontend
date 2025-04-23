@@ -103,8 +103,8 @@ function Login() {
       }
     } catch (e) {
       showAlert({
-        title: <h6 className="sweet-title-size">Unable to grant access</h6>,
-        content: "something went wrong",
+        title: <h6 className="fs-6">System was unable to grant access</h6>,
+        content: (<span className="sweet-title-size fw-normal">Please verify Login ID and Password and retry or contact Application Maintenance Team</span>),
         type: "error",
         confirmText: "ok",
         showCancelButton: false,
