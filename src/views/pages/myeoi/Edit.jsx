@@ -818,7 +818,7 @@ const Edit = () => {
                                           WARNING:
                                         </span>{" "}
                                         <span className="warning-text">
-                                          The Buyer might have already reacted
+                                          The Seller might have already reacted
                                           to your current status
                                         </span>
                                       </div>
