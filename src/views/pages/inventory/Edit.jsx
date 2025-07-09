@@ -121,7 +121,7 @@ const Edit = () => {
                 WARNING:
               </span>
               <span className="warning-text">
-                {currentStatus === 'Live' && currentStatus === updateStatus ? 'This Item is currently Live. Any changes you make will be instantly reflected on the Exchange Register.': 
+                {currentStatus === 'Live' && currentStatus === updateStatus ? 'This Item is currently in Live state. Any change you make with instantly reflect on the Exchange Register.': 
                 'This item will be listed on the Exchange Register and will become visible to the Buyers.'}
               </span>
               

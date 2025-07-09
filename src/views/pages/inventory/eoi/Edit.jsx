@@ -1141,7 +1141,7 @@ const Edit = () => {
         modalId="approval-modal"
         title={
           <h6 className="text-white m-0 d-flex align-items-center">
-            APPROVE REQUEST
+            APPROVAL REQUEST
           </h6>
         }
         content={<ApproverSelectionContent key={refreshModal} />}
