@@ -22,7 +22,8 @@ serviceProvider.interceptors.request.use(
     //const token = localStorage.getItem("authToken");
     const token = sessionStorage.getItem("token");
     //const token = "x8F!@p01,*MH";
-    // const user_id = sessionStorage.getItem("username");
+    const user_id = sessionStorage.getItem("username");
+    config.headers["user_id"] = user_id;
     // console.log("username", user_id);
 
     // If the token exists, set it in the Authorization header
@@ -36,7 +37,7 @@ serviceProvider.interceptors.request.use(
   (error) => {
     // Handle request error
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor to handle responses and errors
@@ -50,7 +51,7 @@ serviceProvider.interceptors.response.use(
     if (error.response && error.response.status === 403) {
       // Optionally, handle specific cases like token expiration
       console.error(
-        "Unauthorized access - possibly due to invalid/expired token"
+        "Unauthorized access - possibly due to invalid/expired token",
       );
       sessionStorage.clear();
       window.location.href = "/auth/login";
@@ -60,7 +61,7 @@ serviceProvider.interceptors.response.use(
 
     // Reject the promise with the error object
     return Promise.reject(error?.response?.data);
-  }
+  },
 );
 
 export default serviceProvider;
