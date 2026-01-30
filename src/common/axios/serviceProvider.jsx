@@ -23,13 +23,14 @@ serviceProvider.interceptors.request.use(
     const token = sessionStorage.getItem("token");
     //const token = "x8F!@p01,*MH";
     const user_id = sessionStorage.getItem("username");
-    config.headers["user_id"] = user_id;
+
     // console.log("username", user_id);
 
     // If the token exists, set it in the Authorization header
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
       config.headers["token"] = token;
+      config.headers["user"] = user_id;
     }
 
     return config;
